@@ -1,0 +1,11 @@
+{
+  "name": "easihub",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.14.0"
+}
