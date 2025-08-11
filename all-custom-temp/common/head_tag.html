@@ -1,0 +1,3377 @@
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="text/discourse-plugin" version="0.8">
+
+const User = require("discourse/models/user").default;
+
+// Performance utilities
+const Utils = {
+  debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  },
+  
+  throttle(func, limit) {
+    let inThrottle;
+    return function() {
+      const args = arguments;
+      const context = this;
+      if (!inThrottle) {
+        func.apply(context, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    }
+  },
+  
+  observeIntersection(element, callback, options = {}) {
+    if (!window.IntersectionObserver) return;
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(element);
+    return observer;
+  }
+};
+
+// Main component manager
+const ComponentManager = {
+  init() {
+    this.setupPageChangeHandlers();
+    this.initializeComponents();
+  },
+  
+  setupPageChangeHandlers() {
+    api.onPageChange(Utils.debounce((url) => {
+      $('.custom-banner1').first().prependTo($('#main-outlet-wrapper'));
+      this.handlePageChange(url);
+    }, 100));
+  },
+  
+  handlePageChange(url) {
+    reArrangeAndSetMenu();
+    forCustmenuPage();
+    forLatestPage();
+    createNewTextEditor();
+    removeAndClss();
+    getCatDetialByUserAndCatId();
+    $('.category-heading .banner-title').remove();
+    $('.category-heading br').remove();
+    $('.topic-footer-main-buttons button.btn.btn-icon-text.btn-primary.create .d-button-label').text('Apply Now');
+    getCategoryLevel();
+    
+    // Ensure DOM elements are ready before manipulation
+    setTimeout(() => {
+        this.handleExploreButtons();
+    }, 100);
+    
+      
+    editTextfunction();
+    logoutUserButtons();
+    $('.save-or-cancel .new-button').remove();
+    $('.save-or-cancel .btn.btn-icon-text.btn-primary.create').show();
+    sideMenuHighlight();
+    openMessageHubs();
+    
+    if(!User.current()){
+      $('.cursor-pointer.myposts').remove();
+      $('.cursor-pointer.deafts').remove();
+      $('.submenu-toggle.messages').remove();
+    }
+    
+    // checkAdmin();
+    
+    buttonTextAndFormText();
+    // $('.submenu-toggle-more').find('.fa-chevron-down-custom-menu').removeClass('rotate-180');
+    // $('.custom-banner1').first().prependTo($('#main-outlet-wrapper'));
+    
+    this.handleTopicFetching();
+    // this.handleExploreButtons();
+    // this.handleBadges();
+    DomainPageChanges();
+    updateCategoryBanner();
+  },
+  
+  initializeComponents() {
+    UIManager.init();
+    NavigationManager.init();
+    ComposerManager.init();
+    ChatBotManager.init();
+  }
+};
+
+$(document).ready(function() {
+    var isExpanded = $('.btn.btn-flat.btn-sidebar-toggle.no-text.btn-icon').attr('aria-expanded') === "false";
+    if(isExpanded) {
+    $('.custom-banner1').css('display', 'none');
+    }
+    $(document).on('click', '.btn.btn-flat.btn-sidebar-toggle.no-text.btn-icon', function(){
+    $('.custom-banner1').toggle();
+    });
+});
+
+function logoutUserMenu() {
+    var dis = User.current();
+    if (!dis) {
+        setTimeout(function(){
+            $('.min-h-screen.flex .w-64.bg-white.shadow-md ul.mt-6').html(`
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-home fa-icon"></i>
+                <a href="#" class="text-gray-8001">Home</a>
+            </li>
+            <li class="submenu-toggle-more">
+                <div class="flex items-center hover:bg-gray-200 cursor-pointer">
+                    <i class="fas fa-ellipsis-h fa-icon"></i>
+                    <span class="flex-grow text-gray-8001">More</span>
+                    <i class="fas fa-chevron-down-custom-menu"></i>
+                </div>
+                <ul class="more-submenu" style="display:none;">
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-info-circle fa-icon"></i><a href="#">About</a></li>
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-question fa-icon"></i><a href="#">FAQs</a></li>
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-users fa-icon"></i><a href="#">Groups</a></li>
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-award fa-icon"></i><a href="#">Badges</a></li>
+                </ul>
+            </li>
+            <li class="hub-cat-listing pain-parent-cat">
+                <div class="flex items-center hover:bg-gray-200 cursor-pointer">
+                    <i class="fas fa-network-wired fa-icon"></i>
+                    <span class="flex-grow text-gray-8001">Hubs</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="submenu"></ul>
+            </li>
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-question-circle fa-icon"></i>
+                <a href="#" class="text-gray-8001">Questions</a>
+            </li>
+            <li class="submenu-toggle">
+                <div class="flex items-center hover:bg-gray-200 cursor-pointer">
+                    <i class="fas fa-tags fa-icon"></i>
+                    <span class="flex-grow text-gray-8001">Tags</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="submenu">
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-tag fa-icon"></i><a href="#">Tag 1</a></li>
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-tag fa-icon"></i><a href="#">Tag 2</a></li>
+                </ul>
+            </li>
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-users fa-icon"></i>
+                <a href="#" class="text-gray-8001">Users</a>
+            </li>
+            <li class="submenu-toggle">
+                <div class="flex items-center hover:bg-gray-200 cursor-pointer">
+                    <i class="fas fa-building fa-icon"></i>
+                    <span class="flex-grow text-gray-8001">Companies</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="submenu">
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-briefcase fa-icon"></i><a href="#">Jobs</a></li>
+                </ul>
+            </li>
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-comments fa-icon"></i>
+                <a href="#" class="text-gray-8001">Discussions</a>
+            </li>
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-file-alt fa-icon"></i>
+                <a href="#" class="text-gray-8001">Articles</a>
+            </li>
+            <li class="submenu-toggle">
+                <div class="flex items-center hover:bg-gray-200 cursor-pointer">
+                    <i class="fas fa-file-alt fa-icon"></i>
+                    <span class="flex-grow text-gray-8001">Resume Builder</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="submenu">
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-file-upload fa-icon"></i><a href="#">Create Resume</a></li>
+                    <li class="flex items-center hover:bg-gray-200 cursor-pointer"><i class="fas fa-file-edit fa-icon"></i><a href="#">Update Resume</a></li>
+                </ul>
+            </li>
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-briefcase fa-icon"></i>
+                <a href="#" class="text-gray-8001">Use Cases</a>
+            </li>
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-calendar-alt fa-icon"></i>
+                <a href="#" class="text-gray-8001">Events</a>
+            </li>
+            <li class="flex items-center hover:bg-gray-200 cursor-pointer">
+                <i class="fas fa-bell fa-icon"></i>
+                <a href="#" class="text-gray-8001">Bulletins</a>
+            </li>
+        `);
+        },100);
+    }
+}
+
+$(document).on('click', '.submenu-toggle-more', function() {
+    $(this).find('.more-submenu').toggle();
+    $(this).find('.fa-chevron-down-custom-menu').toggle('rotate-180');
+    $(this).find('.fa-chevron-down-custom-menu').show();
+});
+
+// function getTagListing() {
+//     $.ajax({
+//     url: 'https://easihub.com/tags.json',
+//     type: 'GET',
+//     dataType: 'json',
+//     success: function(response) {
+//         var tagArr = response.tags;
+//         if (!tagArr) {
+//             console.error('Tags not found in the response');
+//             return;
+//         }
+//         var $ul = $('.submenu-toggle.tags > ul.submenu');
+//         $ul.empty();
+//         tagArr.forEach(function(tag) {
+//             var tagName = tag.name.charAt(0).toUpperCase() + tag.name.slice(1);
+//             var categoryUrl = 'https://easihub.com/tag/' + tag.id;
+//             var $li = $('<li data-id="' + tag.id + '"></li>')
+//                 .addClass('flex items-center hover:bg-gray-200 cursor-pointer')
+//                 .html('<i class="fas fa-tag fa-icon"></i><a href="' + categoryUrl + '">' + tagName + '</a>');
+            
+//             $ul.append($li);
+//         });
+//     },
+//     error: function(xhr, status, error) {
+//         console.error('Error:', error);
+//     }
+//     });
+// }
+// function getCategory() {
+//     $.ajax({
+//     url: 'https://easihub.com/categories.json',
+//     type: 'GET',
+//     dataType: 'json',
+//     success: function(response) {
+//         var categories = response.category_list;
+//         if (!categories) {
+//             console.error('Categories not found in the response');
+//             return;
+//         }
+//         var categoryArr = categories.categories;
+//         var $ul = $('.hub-cat-listing > ul.submenu');
+//         $ul.removeClass('submenu').addClass('category-submenu');
+//         $ul.empty();
+//         var allowedCategories = ['ERP', 'CRM', 'PLM', 'SCM', 'HCM', 'Cloud Platforms', 'BA/BI', 'MES', 'QMS'];
+//         var orderedCategories = ['ERP', 'CRM', 'PLM', 'SCM', 'HCM', 'Cloud Platforms', 'BA/BI', 'MES', 'QMS'];
+//         var filteredCategories = categoryArr.filter(function(category) {
+//             return allowedCategories.includes(category.name);
+//         });
+        
+//         filteredCategories.sort(function(a, b) {
+//             return orderedCategories.indexOf(a.name) - orderedCategories.indexOf(b.name);
+//         });
+//         let fullUrl  = window.location.href;
+       
+//         filteredCategories.forEach(function(category) {
+//              let activeClass = '';
+//             var categoryUrl = 'https://easihub.com/c/' + category.slug + '/' + category.id;
+//             if(categoryUrl === fullUrl){
+//                 activeClass = 'active';
+//             }
+//             var $li = $('<li data-id="' + category.id + '"></li>')
+//                 .addClass('flex items-center hover:bg-gray-200 cursor-pointer ' + activeClass);
+            
+//             var chevronHtml = (category.subcategory_ids && category.subcategory_ids.length > 0)
+//                 ? '<i class="fas fa-chevron-down"></i>' 
+//                 : '';
+            
+//             $li.html('<i class="fas fa-sitemap fa-icon"></i><a href="' + categoryUrl + '">' + category.name + '</a>' + chevronHtml);
+//             $ul.append($li);
+//         });
+
+
+//     },
+//     error: function(xhr, status, error) {
+//         console.error('Error:', error);
+//     }
+//     });
+// }
+// Topic fetching functionality
+ComponentManager.handleTopicFetching = function() {
+  function getCategoryAndGenericUrlIfExists() {
+    const pathSegments = window.location.pathname.split("/").filter(Boolean);
+    
+    if (
+      pathSegments.length >= 6 &&
+      pathSegments[0] === "tags" &&
+      pathSegments[1] === "c" &&
+      pathSegments[3].includes("generic")
+    ) {
+      const productCategory = pathSegments[2];
+      return `https://easihub.com/tags/c/${productCategory}/questions.json`;
+    }
+    else if (
+      pathSegments.length >= 6 &&
+      pathSegments[0] === "tags" &&
+      pathSegments[1] === "c" &&
+      !pathSegments[3].includes("generic")
+    ) {
+      const productCategory = pathSegments[2];
+      const subCategory = pathSegments[3];
+      return `https://easihub.com/tags/c/${productCategory}/${subCategory}/questions.json`;
+    }
+    
+    return null;
+  }
+  
+  async function fetchTopics(url, containerId, limit = 4, filterTags = [], requireSolved = null, zeroRepliesOnly = false) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Failed to fetch data from ${url}`);
+      
+      const data = await response.json();
+      const container = document.getElementById(containerId);
+      
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      const topics = data.topic_list.topics.filter(topic => {
+        const hasRequiredTag = filterTags.length === 0 || filterTags.some(tag => topic.tags.includes(tag));
+        const matchesSolvedStatus = requireSolved === null || (requireSolved ? topic.has_accepted_answer : !topic.has_accepted_answer);
+        const matchesZeroReplies = !zeroRepliesOnly || topic.posts_count === 1;
+        
+        if (containerId === 'unsolved-questions' && (!matchesSolvedStatus || !hasRequiredTag)) return false;
+        if (containerId === 'answered-questions' && (!matchesSolvedStatus || !hasRequiredTag)) return false;
+        
+        return hasRequiredTag;
+      });
+      
+      topics.slice(0, limit).forEach(topic => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('py-4');
+        listItem.innerHTML = `
+          <a href="https://easihub.com/t/${topic.slug}/${topic.id}" style="color: rgb(73, 73, 253); font-size: 100%;">${topic.title}</a>
+          <p class="text-gray-700 text-sm">Tags: ${topic.tags.join(', ')}</p>
+        `;
+        container.appendChild(listItem);
+      });
+      
+      if (topics.length === 0) {
+        container.innerHTML = '<p class="text-gray-500" style="font-size:14px;">No topics available.</p>';
+      }
+    } catch (error) {
+      console.error(`Error fetching topics: ${error}`);
+    }
+  }
+  
+  const dynamicCategoryUrl = getCategoryAndGenericUrlIfExists();
+  
+  const sections = dynamicCategoryUrl ? [
+    {
+      url: dynamicCategoryUrl,
+      containerId: 'unsolved-questions',
+      filterTags: ['questions'],
+      requireSolved: false,
+      zeroRepliesOnly: false
+    },
+    {
+      url: dynamicCategoryUrl,
+      containerId: 'answered-questions',
+      filterTags: ['questions'],
+      requireSolved: true
+    }
+  ] : [
+    {
+      url: 'https://easihub.com/tag/questions.json',
+      containerId: 'unsolved-questions',
+      filterTags: ['questions'],
+      requireSolved: false,
+      zeroRepliesOnly: false
+    },
+    {
+      url: 'https://easihub.com/tag/questions.json',
+      containerId: 'answered-questions',
+      filterTags: ['questions'],
+      requireSolved: true
+    },
+    {
+      url: 'https://easihub.com/latest.json',
+      containerId: 'latest-topics',
+      filterTags: [],
+      requireSolved: null
+    },
+    {
+      url: 'https://easihub.com/tag/articles.json',
+      containerId: 'articles',
+      filterTags: [],
+      requireSolved: null
+    }
+  ];
+  
+  sections.forEach(section => {
+    fetchTopics(section.url, section.containerId, section.limit, section.filterTags, section.requireSolved, section.zeroRepliesOnly);
+  });
+};
+// Explore buttons functionality
+ComponentManager.handleExploreButtons = function() {
+      const currentPath = window.location.pathname;
+      
+    // Wait for DOM to be fully ready
+    const initExploreButtons = () => {
+      // Main page explore buttons
+      if (currentPath === "/" || currentPath === "/categories") {
+        const categories = document.querySelectorAll(".category");
+        if (categories.length === 0) {
+          // If categories not found, try again after delay
+          setTimeout(initExploreButtons, 200);
+          return;
+        }
+        
+        categories.forEach(categoryEl => {
+          const existingButton = categoryEl.querySelector(".explore-main-post");
+          const categoryLink = categoryEl.querySelector("a.category-title-link")?.getAttribute("href");
+          if (categoryEl && !existingButton && categoryLink){
+              const exploreWrap = document.createElement("div");
+              exploreWrap.className = "explore-cont";
+              
+              const btn = document.createElement("a");
+              btn.className = "explore-main-post";
+              btn.textContent = "Explore & Post";
+              btn.href = categoryLink;
+              
+              exploreWrap.appendChild(btn);
+              categoryEl.appendChild(exploreWrap);
+          }
+        });
+      }
+      
+      // Category page explore buttons
+      const isCategoryPage = /^\/c\/[^/]+\/\d+$/.test(currentPath);
+      
+      if (isCategoryPage) {
+        const categories = $(".category");
+        if (categories.length === 0) {
+          // If categories not found, try again after delay
+          setTimeout(initExploreButtons, 200);
+          return;
+        }
+        
+        categories.each(function () {
+          const $el = $(this);
+          
+          if ($el.attr("class").includes("category-box-generic-")) return;
+          
+          const container = $el.find(".category-details")[0];
+          const categoryLink = $el.find(".category-box-inner a").attr("href");
+          
+          if (!container || $el.find(".explore-container").length > 0 || !categoryLink) return;
+          
+          const btnWrap = document.createElement("div");
+          btnWrap.className = "explore-container";
+          
+          const btn = document.createElement("a");
+          btn.className = "explore-post";
+          btn.textContent = "Explore & Post";
+          btn.href = categoryLink;
+          
+          btnWrap.appendChild(btn);
+          container.after(btnWrap);
+        });
+      }
+    };
+    
+    // Execute immediately and with delay
+    initExploreButtons();
+    setTimeout(initExploreButtons, 100);
+};
+
+// Badge functionality
+ComponentManager.handleBadges = function() {
+  const currentURL = window.location.href;
+  const pattern = /^https:\/\/easihub\.com\/c\/[a-z0-9-]+(?:\/[a-z0-9-]+)?\/\d+$/i;
+  
+  if (!pattern.test(currentURL)) return;
+  
+  const cards = document.querySelectorAll('.category.category-box');
+  cards.forEach(card => {
+    const heading = card.querySelector('.category-box-heading');
+    if (!heading || heading.querySelector('.cat_badge')) return;
+    
+    const isGeneric = Array.from(card.classList).some(className =>
+      className.startsWith('category-box-generic') || className.startsWith('category-box-general'));
+    
+    const typeBadge = document.createElement('span');
+    typeBadge.className = 'cat_badge';
+    typeBadge.textContent = isGeneric ? 'General Topics' : 'Software Hub';
+    
+    Object.assign(typeBadge.style, {
+      background: isGeneric ? '#d6f5e3' : '#eef2f5',
+      color: isGeneric ? '#065f46' : '#333',
+      padding: '2px 6px',
+      borderRadius: '4px',
+      fontSize: '11px',
+      marginRight: '4px',
+      display: 'inline-block'
+    });
+    
+    heading.before(typeBadge);
+  });
+};
+// UI Manager
+const UIManager = {
+  init() {
+    this.setupResponsiveHandlers();
+    this.initializeOverviewPage();
+  },
+  
+  setupResponsiveHandlers() {
+    const resizeHandler = Utils.throttle(() => {
+      this.handleResize();
+    }, 250);
+    
+    window.addEventListener('resize', resizeHandler);
+  },
+  
+  handleResize() {
+    // Handle responsive adjustments
+    this.adjustMobileLayout();
+  },
+  
+  adjustMobileLayout() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+      $('.category-boxes').addClass('mobile-layout');
+    } else {
+      $('.category-boxes').removeClass('mobile-layout');
+    }
+  },
+  
+  initializeOverviewPage() {
+    api.onPageChange(() => {
+      this.showOverviewPage();
+      
+    });
+  },
+  
+  showOverviewPage() {
+    const urlSegments = window.location.pathname.split('/');
+    const lastSegment = urlSegments[urlSegments.length - 1];
+    
+    if (lastSegment === "overview") {
+      const targetContainer = $('.container.list-container');
+      
+      if (targetContainer.length) {
+        const listArea = targetContainer.find('.row .full-width #header-list-area');
+        listArea.html(this.getOverView());
+        $('.topic-list').hide();
+      }
+    } else {
+      $('.topic-list').show();
+      const listArea = $('.container.list-container .row .full-width #header-list-area');
+      if (listArea.find('.overview').length) {
+        listArea.empty();
+      }
+    }
+  },
+  
+  getOverView() {
+    return `<div class="container overview mx-auto space-y-8">
+      <section>
+        <style>
+          .custom-button {
+            flex: 1 1 30%;
+            min-width: 120px;
+            text-align: center;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            color: #000;
+            transition: background-color 0.3s ease;
+          }
+          a:visited { color: black; }
+          .btn-ask { background-color: #e0f0ff; }
+          .btn-ask:hover { background-color: #cce6fc; color: #000; }
+          .btn-discussion { background-color: #d5f2db; }
+          .btn-discussion:hover { background-color: #bfe6c8; color: #000; }
+          .btn-usecases { background-color: #fdf2cb; }
+          .btn-usecases:hover { background-color: #f8e8a8; color: #000; }
+          .btn-articles { background-color: #e9ebff; }
+          .btn-articles:hover { background-color: #d3d6fb; color: #000; }
+          .btn-events { background-color: #fdecea; }
+          .btn-events:hover { background-color: #f7d6d3; color: #000; }
+          .btn-jobs { background-color: #fbe9ef; }
+          .btn-jobs:hover { background-color: #f5d0db; color: #000; }
+        </style>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0;">
+          <a href="${this.OverviewPageUrl("questions")}" class="custom-button btn-ask">Ask Questions</a>
+          <a href="${this.OverviewPageUrl("discussion")}" class="custom-button btn-discussion">Discussions</a>
+          <a href="${this.OverviewPageUrl("use-cases")}" class="custom-button btn-usecases">Use-Cases</a>
+          <a href="${this.OverviewPageUrl("articles")}" class="custom-button btn-articles">Articles</a>
+          <a href="${this.OverviewPageUrl("events")}" class="custom-button btn-events">Events</a>
+          <a href="${this.OverviewPageUrl("jobs")}" class="custom-button btn-jobs">Jobs</a>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Can you solve these questions?</h2>
+            <a href="https://easihub.com/latest?tags=questions&solved=no" class="hover:underline text-lg" style="color: rgb(73, 73, 253);">View all unsolved questions</a>
+          </div>
+          <ul id="unsolved-questions" class="divide-y divide-gray-200"></ul>
+        </div>
+      </section>
+      
+      <section>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Recommended answers</h2>
+            <a href="https://easihub.com/latest?tags=questions&solved=yes" class="hover:underline text-lg" style="color: rgb(73, 73, 253);">View all recommended answers</a>
+          </div>
+          <ul id="answered-questions" class="divide-y divide-gray-200"></ul>
+        </div>
+      </section>
+      
+      <section>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">See what's trending</h2>
+            <a href="https://easihub.com/latest" class="hover:underline text-lg" style="color: rgb(73, 73, 253);">View all trending questions</a>
+          </div>
+          <ul id="latest-topics" class="divide-y divide-gray-200"></ul>
+        </div>
+      </section>
+      
+      <section>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold">Learn something new</h2>
+            <a href="https://easihub.com/tag/articles" class="hover:underline text-lg" style="color: rgb(73, 73, 253);">View all articles</a>
+          </div>
+          <ul id="articles" class="divide-y divide-gray-200"></ul>
+        </div>
+      </section>
+    </div>`;
+  },
+  
+  OverviewPageUrl(section) {
+    const path = window.location.pathname;
+    let pathSegments = path.split("/").filter(Boolean);
+    
+    if (pathSegments[0] === 'tags' && pathSegments[1] === 'c' && pathSegments.length === 6) {
+      const parentCategory = pathSegments[2];
+      const subcategory = pathSegments[3];
+      const id = pathSegments[4];
+      
+      if (!subcategory.includes('generic')) {
+        pathSegments = ['tags', 'c', parentCategory, subcategory, 'generic-topics', id, section];
+      } else if(['articles', 'events', 'jobs'].includes(section)){
+        pathSegments = ['tags', 'c', parentCategory, subcategory, id, section];
+      } else {
+        pathSegments = ['tags', 'c', ...pathSegments.slice(2, -1), section];
+      }
+    } else if(pathSegments[0] === 'tags' && pathSegments[1] === 'c' && pathSegments.length === 7) {
+      const parentCategory = pathSegments[2];
+      const subcategory = pathSegments[3];
+      const category = pathSegments[4];
+      const id = pathSegments[5];
+      
+      if (!category.includes('generic')) {
+        pathSegments = ['tags', 'c', parentCategory, subcategory, 'generic-topics', id, section];
+      } else if(['articles', 'events', 'jobs'].includes(section)){
+        pathSegments = ['tags', 'c', parentCategory, subcategory, id, section];
+      } else {
+        pathSegments = ['tags', 'c', ...pathSegments.slice(2, -1), section];
+      }
+    } else {
+      return path;
+    }
+    
+    return `/${pathSegments.join('/')}`;
+  }
+};
+// Navigation Manager
+const NavigationManager = {
+  init() {
+    this.setupNavigationHandlers();
+  },
+  
+  setupNavigationHandlers() {
+    api.onPageChange(() => {
+      this.updateNavigation();
+    });
+  },
+  
+  updateNavigation() {
+    reArrangeAndSetMenu();
+  }
+};
+
+// Composer Manager
+const ComposerManager = {
+  init() {
+    this.setupComposerHandlers();
+  },
+  
+  setupComposerHandlers() {
+    $(document).ready(() => {
+      this.initializeComposerFeatures();
+    });
+  },
+  
+  initializeComposerFeatures() {
+    editTextfunction();
+    this.setupButtonHandlers();
+  },
+  
+  setupButtonHandlers() {
+    $('.topic-footer-main-buttons button.btn.btn-icon-text.btn-primary.create, .widget-button.btn-flat.reply.create.fade-out.btn-icon-text').on('click', function() {
+      $('.save-or-cancel a.new-button').css('display', 'none');
+      $('.save-or-cancel button').css('display', 'block');
+    });
+  }
+};
+
+// ChatBot Manager
+const ChatBotManager = {
+  init() {
+    this.createChatButton();
+  },
+  
+  createChatButton() {
+    // Chat bot functionality would go here
+    // Keeping minimal for performance
+  }
+};
+
+// Performance Manager
+const PerformanceManager = {
+  init() {
+    this.setupPerformanceOptimizations();
+  },
+  
+  setupPerformanceOptimizations() {
+    // Lazy load images
+    this.setupLazyLoading();
+    
+    // Optimize DOM queries
+    this.cacheCommonElements();
+  },
+  
+  setupLazyLoading() {
+    const images = document.querySelectorAll('img[data-lazy]');
+    
+    images.forEach(img => {
+      Utils.observeIntersection(img, (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.lazy;
+            img.removeAttribute('data-lazy');
+          }
+        });
+      });
+    });
+  },
+  
+  cacheCommonElements() {
+    this.cache = {
+      body: document.body,
+      mainOutlet: document.getElementById('main-outlet'),
+      navigationBar: document.getElementById('navigation-bar')
+    };
+  }
+};
+
+// Robust initialization system
+const EasihubInitializer = {
+  initialized: false,
+  retryCount: 0,
+  maxRetries: 10,
+  
+  init() {
+    if (this.initialized) return;
+    
+    // Check if essential DOM elements exist
+    const hasNavigation = document.querySelector('.navigation-container') !== null;
+    const hasCategories = document.querySelectorAll('.category').length > 0;
+    
+    if (!hasNavigation && this.retryCount < this.maxRetries) {
+      this.retryCount++;
+      setTimeout(() => this.init(), 200);
+      return;
+    }
+    
+    // Initialize components
+    ComponentManager.init();
+    PerformanceManager.init();
+    
+    // Force initial execution
+    ComponentManager.handleExploreButtons();
+    reArrangeAndSetMenu();
+    
+    this.initialized = true;
+  },
+  
+  reinit() {
+    this.initialized = false;
+    this.retryCount = 0;
+    this.init();
+  }
+};
+
+// Initialize on DOM ready
+$(document).ready(() => {
+    checkAdmin();
+  setTimeout(() => EasihubInitializer.init(), 300);
+});
+
+// Initialize on window load as backup
+$(window).on('load', () => {
+  setTimeout(() => EasihubInitializer.init(), 100);
+});
+
+// Original API page change handler - this was working in the old code
+api.onPageChange(() => {
+    reArrangeAndSetMenu();
+})
+
+// Discourse API initialization
+if (typeof api !== 'undefined') {
+  api.onPageChange(() => {
+    setTimeout(() => {
+      ComponentManager.handleExploreButtons();
+      reArrangeAndSetMenu();
+    }, 80);
+  });
+} else {
+  // Fallback for when API is not immediately available
+  setTimeout(() => {
+    if (typeof api !== 'undefined') {
+      api.onPageChange(() => {
+        setTimeout(() => {
+          ComponentManager.handleExploreButtons();
+          reArrangeAndSetMenu();
+        }, 80);
+      });
+    }
+  }, 300);
+}
+
+// Export for external use
+window.EasihubComponents = {
+  Utils,
+  ComponentManager,
+  UIManager,
+  NavigationManager,
+  ComposerManager,
+  ChatBotManager,
+  PerformanceManager
+};
+// Original functions - keeping all functionality
+function forLatestPage() {
+  $("#create-topic").click(function(){
+    setTimeout(function () {
+      $(".save-or-cancel .btn-primary .d-button-label").text("Post Question");
+      $(".action-title").text("Create New Question");
+      
+      $(".category-jobs .save-or-cancel .btn-primary .d-button-label").text("Submit Job");
+      $(".category-jobs .action-title").text("Create Job Listing");
+      
+      $(".category-questions .save-or-cancel .btn-primary .d-button-label").text("Post Question");
+      $(".category-questions .action-title").text("Create Your Question");
+      
+      $(".category-articles .save-or-cancel .btn-primary .d-button-label").text("Submit for Review & Approval");
+      $(".category-articles .action-title").text("Propose New Article");
+      
+      $(".category-use-cases .save-or-cancel .btn-primary .d-button-label").text("Submit Use Case");
+      $(".category-use-cases .action-title").text("Describe Your Use Case");
+      
+      $(".category-discussion .save-or-cancel .btn-primary .d-button-label").text("Post Discussion");
+      $(".category-discussion .action-title").text("Create New Discussion");
+      
+      $("body.category-bulletins .save-or-cancel .btn-primary .d-button-label").text("Post Bulletin");
+      $("body.category-bulletins .action-title").text("Write Bulletin");
+      
+      $("body.category-events .save-or-cancel .btn-primary .d-button-label").text("Publish Event");
+      $("body.category-events .action-title").text("Create Event Details");
+      
+      $("body.category-feedback .save-or-cancel .btn-primary .d-button-label").text("Post Feedback");
+      $("body.category-feedback .action-title").text("Submit Your Feedback");
+      
+      $(".navigation-categories  .save-or-cancel .btn-primary .d-button-label").text("Post Question");
+      $(".navigation-categories  .action-title").text("Create New Question");
+      
+      $(".tag-articles .save-or-cancel .btn-primary .d-button-label").text("Submit for Review & Approval");
+      $(".tag-articles .reply-details  span.action-title").html("Propose a New Article");
+      
+      $(".tag-discussion .save-or-cancel .btn-primary .d-button-label").text("Post Discussion");
+      $(".tag-discussion .reply-details  span.action-title").html("Create a New Discussion");
+      
+      $(".tag-use-cases .save-or-cancel .btn-primary .d-button-label").text("Submit Use Case");
+      $(".tag-use-cases .reply-details  span.action-title").html("Describe Your Use Case");
+      
+      $(".tag-jobs .save-or-cancel .btn-primary .d-button-label").text("Submit Job");
+      $(".tag-jobs .reply-details  span.action-title").html("Describe Your Job");
+      
+      $(".tag-bulletins .save-or-cancel .btn-primary .d-button-label").text("Post Bulletin");
+      $(".tag-bulletins .reply-details  span.action-title").html("Write a Bulletin");
+      
+      $(".tag-events .save-or-cancel .btn-primary .d-button-label").text("Publish Event");
+      $(".tag-events .reply-details  span.action-title").html("Create Event Details");
+    }, 600);
+  });
+}
+
+function forCustmenuPage() {
+  const container = Discourse.__container__;
+  const controller = container.lookup('controller:navigation/category');
+  var curr_cat = controller.get("category.id");
+  
+  api.onPageChange((url, title) => {
+    var curr_cat = controller.get("category.id");
+  });
+  
+  if(curr_cat!='' && curr_cat!=undefined){
+    $.ajax({
+      url: 'https://leadforest.net/do_not_delete/kumar_discourse/get_category_image.php',
+      type: 'POST',
+      dataType: 'json',
+      data:{cat_id:curr_cat},
+      success: function(response) {
+        $(".banner_background").empty();
+        if (response && response.cat_image) {
+          const catImageUrl = response.cat_image;
+          $('.category-heading').before('<div class="banner_background"><img src="'+catImageUrl+'" alt="Cat Image" /></div>');
+          $('.category-heading').addClass('banner-exist');
+          $('.navigation-container.category-navigation').addClass('add-border-section-line');
+        } else {
+          $('.category-heading').removeClass('banner-exist');
+          $('.navigation-container.category-navigation').removeClass('add-border-section-line');
+          $(".banner_background").remove();
+        }
+        
+        let imageUrl = "";
+        if (response && response.cat_image) {
+          imageUrl = response.cat_image;
+        }
+        
+        getCatDetialByUserAndCatId(curr_cat);
+        $.ajax({
+          url: `https://easihub.com/c/${curr_cat}/show.json`,
+          type: 'GET',
+          dataType: 'json',
+          success: function(response) {
+            if (response) {
+              var categoryDetail = response.category;
+              
+              if (categoryDetail.custom_fields && categoryDetail.custom_fields.background_image) {
+                imageUrl = categoryDetail.custom_fields.background_image;
+              }
+              
+              $(".banner_background").remove();
+              $('.banner-title').remove();
+              
+              if (imageUrl) {
+                const bannerImg = $('.banner_background img');
+                if (!bannerImg.length) {
+                  $('.list-controls .container .category-heading').before(
+                    `<div class="banner_background"><img src="${imageUrl}" alt="Cat Image" /></div>`
+                  );
+                }
+                $('.category-heading').addClass('banner-exist');
+                $('.navigation-container.category-navigation').addClass('add-border-section-line');
+              }
+              
+              function updateDescription(categorySelector, title, description) {
+                const element = $(categorySelector);
+                if (element.length) {
+                  element.siblings('.banner-title').remove();
+                  element.text('');
+                  element.append(
+                    '<span class="banner-title">' + title + '</span><br>' +
+                    '<span>' + description + '</span>'
+                  );
+                }
+              }
+              
+              if ($('.category-heading p span').length) {
+                $('.category-heading p span, .category-heading span').text('').siblings('.banner-title').remove();
+                updateDescription('.category-heading p', categoryDetail.name, categoryDetail.description);
+              } else if ($('.category-heading span').length) {
+                $('.category-heading p span, .category-heading span').text('').siblings('.banner-title').remove();
+                updateDescription('.category-heading span', categoryDetail.name, categoryDetail.description);
+              }
+            }
+          },
+        });
+      },
+      error: function(xhr, status, error) {
+        console.error('Error:', error);
+      }
+    });
+  }
+}
+
+function createNewTextEditor(){
+  var bannerTitle = $('.banner-title').text().trim();
+  const textareaWrappers = document.querySelectorAll('.d-editor-textarea-wrapper');
+  if (bannerTitle === 'Job' || bannerTitle === 'Jobs') {
+    if (textareaWrappers.length > 1) {
+      for (let i = 1; i < textareaWrappers.length; i++) {
+        textareaWrappers[i].remove();
+      }
+    }
+    return;
+  }
+  
+  if (textareaWrappers.length >= 2) {
+    return;
+  }
+  
+  const textareaWrapper = document.querySelector('.d-editor-textarea-wrapper');
+  if (textareaWrapper) {
+    const newEditorWrapper = textareaWrapper.cloneNode(true);
+    const textarea = newEditorWrapper.querySelector('textarea');
+    if (textarea) {
+      textarea.value = '';
+    }
+    textareaWrapper.insertAdjacentElement('afterend', newEditorWrapper);
+  }
+}
+
+function removeAndClss(){
+  $('.flex-grow.text-gray-8001:contains("Hubs")').closest('li').addClass('hub-cat-listing').removeClass('submenu-active').removeClass('submenu-toggle').addClass('pain-parent-cat');
+  $('.hub-cat-listing .fas.fa-chevron-down').removeClass('rotate-180');
+  $('.hub-cat-listing ul.submenu').empty();
+  setTimeout(function() {
+    $('.hub-cat-listing pain-parent-cat').click();
+  }, 100);
+}
+
+function getCatDetialByUserAndCatId(cat_id){
+  if(!cat_id){
+    $('.category-heading .join-cat-detail').remove();
+    return false;
+  }
+  var dis = User.current();
+  if(!dis){
+    return false;
+  }
+  $.ajax({
+    url: 'https://leadforest.net/do_not_delete/kumar_discourse/get_user.php',
+    type: 'POST',
+    dataType: 'json',
+    data:{username:dis.username},
+    success: function(response) {
+      var cateArr = response[0];
+      var spanText = $('.category-heading span').text();
+      var wordCount = spanText.trim().split(/\s+/).filter(Boolean).length;
+      var maxWordsClass;
+      if (wordCount > 30) {
+        maxWordsClass = 'max-word-available';
+      } else {
+        maxWordsClass = 'below-max-word';
+      }
+      
+      var emptyBox;
+      if ($('.category-heading .category-logo.aspect-image').length === 0) {
+        emptyBox = 'empty-box';
+      }else{
+        emptyBox = '';
+      }
+      if (cateArr?.includes(cat_id)) {
+        $('.category-heading').append('<button class="join-cat-detail category-detail-page-btn ' + maxWordsClass + ' '+ emptyBox +'">Joined</button>');
+      } else {
+        $('.category-heading').append('<button class="join-cat-detail category-detail-page-btn ' + maxWordsClass + '" data-id="' + cat_id + ' '+ emptyBox +'">Join Now</button>');
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error('Error:', error);
+    }
+  });
+}
+
+function getCategoryLevel() {
+  $('.category-box .category.category-box').removeClass('third-label-cat');
+  setInterval(function() {
+    const path = window.location.pathname;
+    const segments = path.split('/').filter(Boolean);
+    if (segments[0] === 'c') {
+      if (segments.length === 4) {
+        $('.category-boxes .category.category-box').addClass('third-label-cat');
+      }
+    }
+  }, 0);
+}
+
+
+function buttonTextAndFormText() {
+  const pathSegments = window.location.pathname.split("/").filter(Boolean);
+  
+  const isCategoryView = pathSegments[0] === "c" && !pathSegments.includes("feedback");
+  const isMainPage = window.location.pathname === '/' || window.location.pathname === '/categories';
+  const isOverviewPage = pathSegments[pathSegments.length - 1] === "overview";
+  const isFiveSegmentQuestions =
+    pathSegments.length === 6 &&
+    pathSegments[pathSegments.length - 1] === "questions" &&
+    !pathSegments[pathSegments.length - 3].includes("generic");
+  
+  const shouldHideButton =
+    isFiveSegmentQuestions || isCategoryView || isOverviewPage || isMainPage;
+  
+  $(".fk-d-button-tooltip .d-button-label").next("p").remove();
+  $(".fk-d-button-tooltip span.d-button-label").css("display", "none");
+  
+  const newTopicButton = $(".fk-d-button-tooltip");
+  if (shouldHideButton) {
+    newTopicButton.css("display", "none");
+  } else {
+    newTopicButton.css("display", "inline-flex");
+  }
+  
+  const mappings = [
+    { selector: "#navigation-bar li", title: "Questions", header: "Question"},
+    { selector: ".tag-questions", label: "Ask Question", header: "Question" },
+    { selector: ".tag-articles", label: "Propose Article", header: "Articles" },
+    { selector: ".tag-jobs", label: "Post Job", header: "Jobs" },
+    { selector: ".tag-use-cases", label: "Share Use Case", header: "Use Case" },
+    { selector: ".tag-bulletins", label: "Post Bulletin", header: "Bulletins" },
+    { selector: ".tag-events", label: "Add Event", header: "Events" },
+    { selector: ".tag-discussion", label: "Start Discussion", header: "Discussions" },
+    { selector: ".tag-feedback", label: "Create Feedback", header: "Feedback" },
+    { selector: ".category-jobs", label: "Post Job", header: "Jobs" },
+    { selector: ".category-questions", label: "Ask Question", header: "Question" },
+    { selector: ".category-articles", label: "Propose Article", header: "Articles" },
+    { selector: ".category-discussion", label: "New Topic", header: "Topic" },
+    { selector: ".category-use-cases", label: "Share Use Case", header: "Use Case" },
+    { selector: ".category-bulletins", label: "Post Bulletin", header: "Bulletins" },
+    { selector: ".category-events", label: "Add Event", header: "Events" },
+    { selector: ".category-feedback", label: "Create Feedback", header: "Feedback" },
+  ];
+  
+  setTimeout(() => {
+    mappings.forEach(({ selector, label,title, header }) => {
+      const labelEl = $(`${selector} .fk-d-button-tooltip .d-button-label`);
+      const headingEl = $(`${selector} th.default.topic-list-data span`);
+      if (labelEl.length && labelEl.next("p").length === 0) {
+        labelEl.after(`<p style="font-size:14px;color:#fff;">${label}</p>`);
+      }
+      if (headingEl.length) {
+        headingEl.html(header);
+      }
+    });
+    
+    const siblingParagraphs = $(".fk-d-button-tooltip .d-button-label").nextAll("p");
+    if (siblingParagraphs.length > 1) {
+      siblingParagraphs.first().remove();
+    }
+  }, 600);
+}
+
+function homePageCatUrl(cat_name, type) {
+  const baseUrl = "https://easihub.com/tags";
+  const urlPath = `${cat_name}/${type.toLowerCase()}`;
+  const fullUrl = baseUrl + urlPath;
+  return fullUrl;
+}
+
+function editTextfunction(){
+  const intervalId = setInterval(function() {
+    const textareaWrappers = document.querySelectorAll('.d-editor-textarea-column');
+    if (textareaWrappers.length > 0) {
+      var texts = getTextEditerValue();
+      if (texts.some(text => text.includes('\n<br><b></b><br>'))) {
+        createNewTextEditor();
+        devideVaule();
+      }
+    }
+  }, 100);
+}
+
+function getTextEditerValue(){
+  const texts = $('.ember-text-area').map(function() {
+    return $(this).val();
+  }).get();
+  return texts;
+}
+
+function convertStringToObject(inputString) {
+  const parts = inputString.split('<br><b>');
+  let part0 = null;
+  let part1 = null;
+  if (parts[0]) {
+    part0 = parts[0].replace(/\n/g, '').trim() || null;
+  }
+  if (parts[1]) {
+    part1 = '<br><b>' + parts[1].replace(/\n/g, '').trim() || null;
+  }
+  
+  return [part0, part1];
+}
+
+function devideVaule(){
+  setTimeout(function(){
+    var interval = setInterval(function() {
+      var texts = getTextEditerValue();
+      if (texts && texts.length > 0 && texts.some(text => text.length > 0)) {
+        const nonEmptyText = texts.find(text => text.length > 0);
+        var convertArr = convertStringToObject(nonEmptyText);
+        if (convertArr[1]) {
+          convertArr[1] = convertArr[1].replace(/<br><b><\/b><br>/, '');
+        }
+        if (convertArr.length >= 2 && convertArr[0] && convertArr[1]) {
+          const editors = $('.ember-text-area.d-editor-input');
+          
+          if (editors.length >= 2) {
+            $(editors[0]).val(convertArr[0]);
+            $(editors[1]).val(convertArr[1]);
+            $(editors[0]).trigger('input');
+            $(editors[1]).trigger('input');
+          }
+          clearInterval(interval);
+        }
+      }
+    }, 1000);
+  },500);
+}
+
+function logoutUserButtons() {
+  var dis = User.current();
+  setInterval(function(){
+    if (!dis && $('#create-topic-logout').length === 0) {
+      $('.navigation-container').append(`
+        <div class="fk-d-button-tooltip non-login-user">
+          <button class="btn btn-icon-text btn-default" id="create-topic-logout" type="button">
+            <svg class="fa d-icon d-icon-plus svg-icon svg-string" xmlns="http://www.w3.org/2000/svg">
+              <use href="#plus"></use>
+            </svg>
+            <span class="d-button-label">Ask Question</span>
+          </button>
+        </div>
+      `);
+    }
+  }, 500);
+}
+
+// function checkAdmin() {
+//   var dis = User.current();
+//   if (!dis) {
+//     $('#d-sidebar').parent('.sidebar-wrapper').remove();
+//     return false;
+//   }
+//   $.ajax({
+//     url: 'https://easihub.com/admin/users/' + dis.id + '.json',
+//     type: 'GET',
+//     dataType: 'json',
+//     success: function(response) {
+//       if(response.admin === true){
+//         return true;
+//       }
+//       $('.cursor-pointer.admin').remove();
+//       $('.cursor-pointer.review').remove();
+//       $('#main-outlet-wrapper .sidebar-wrapper').remove();
+//       return true;
+//     },
+//     error: function(xhr, status, error) {
+//       $('.cursor-pointer.admin').remove();
+//       $('.cursor-pointer.review').remove();
+//       $('#d-sidebar').parent('.sidebar-wrapper').remove();
+//       return false;
+//     }
+//   });
+// }
+
+function checkAdmin() {
+  var dis = User.current();
+  if (!dis) {
+    // Remove admin/review menu items and sidebar for non-logged-in users
+    $('.cursor-pointer.admin').remove();
+    $('.cursor-pointer.review').remove();
+    $('#d-sidebar').parent('.sidebar-wrapper').remove();
+    return false;
+  }
+  
+  $.ajax({
+    url: 'https://easihub.com/admin/users/' + dis.id + '.json',
+    type: 'GET',
+    dataType: 'json',
+    success: function(response) {
+      if(response.admin === true){
+        // User is admin - keep everything visible
+        $('.custom-banner1').css('z-index', '-1');
+        return true;
+      }
+      // User is not admin - remove admin elements and sidebar
+      $('.cursor-pointer.admin').remove();
+      $('.cursor-pointer.review').remove();
+      $('#d-sidebar').parent('.sidebar-wrapper').remove();
+      return true;
+    },
+    error: function(xhr, status, error) {
+      // Error occurred (likely user doesn't have admin access) - remove admin elements
+      $('.cursor-pointer.admin').remove();
+      $('.cursor-pointer.review').remove();
+      $('#d-sidebar').parent('.sidebar-wrapper').remove();
+      return false;
+    }
+  });
+}
+
+function sideMenuHighlight(){
+  $('ul.mt-6 li.flex.items-center').removeClass('active');
+  var path = window.location.pathname;
+  setTimeout(function(){
+    if (!path.startsWith("/c/")) {
+      $('.category-submenu').removeClass('visible');
+    }else{
+      $('.category-submenu').addClass('visible');
+    }
+  }, 1000);
+  
+  if (path === '/') {
+    $('ul.mt-6 li.flex.items-center.home').addClass('active');
+  } else if(path === '/u/easihub/activity'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.myposts').addClass('active');
+  }else if(path === '/tag/bulletins'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.bulletins').addClass('active');
+  }else if(path === '/tag/questions'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.questions').addClass('active');
+  }else if(path === '/u/easihub/activity/drafts'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.deafts').addClass('active');
+  }else if(path === '/u'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.users').addClass('active');
+  }else if(path === '/tag/discussion'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.discussion').addClass('active');
+  }else if(path === '/tag/articles'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.articles').addClass('active');
+  }else if(path === '/tags/articles'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.resumebuilder').addClass('active');
+  }else if(path === '/tag/use-cases'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.usercases').addClass('active');
+  }else if(path === '/tag/events'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.events').addClass('active');
+  }else if(path === '/tags/bulletins'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.bulletins').addClass('active');
+  }else if(path === '/tag/jobs'){
+    $('ul.mt-6 li.submenu-toggle.companies .job').addClass('active');
+  }else if(path === '/about'){
+    $('ul.mt-6 .submenu-toggle.more .submenu .cursor-pointer.about').toggleClass('active');
+    $('ul.mt-6 .submenu-toggle.more').toggleClass('active submenu-active');
+    $('ul.mt-6 .submenu-toggle.more').find('.fas.fa-chevron-down').toggleClass('rotate-180');
+  }else if(path === '/admin'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.admin').addClass('active');
+  }else if(path === '/review'){
+    $('ul.mt-6 li.flex.items-center.cursor-pointer.review').addClass('active');
+  }else if(path === '/faq'){
+    $('ul.mt-6 .submenu-toggle.more .submenu .cursor-pointer.faqs').toggleClass('active');
+    $('ul.mt-6 .submenu-toggle.more').toggleClass('active submenu-active');
+    $('ul.mt-6 .submenu-toggle.more').find('.fas.fa-chevron-down').toggleClass('rotate-180');
+  }else if(path === '/g'){
+    $('ul.mt-6 .submenu-toggle.more .submenu .cursor-pointer.groups').toggleClass('active');
+    $('ul.mt-6 .submenu-toggle.more').toggleClass('active submenu-active');
+    $('ul.mt-6 .submenu-toggle.more').find('.fas.fa-chevron-down').toggleClass('rotate-180');
+  }else if(path === '/badges'){
+    $('ul.mt-6 .submenu-toggle.more .submenu .cursor-pointer.badges').toggleClass('active');
+    $('ul.mt-6 .submenu-toggle.more').toggleClass('active submenu-active');
+    $('ul.mt-6 .submenu-toggle.more').find('.fas.fa-chevron-down').toggleClass('rotate-180');
+  }else if(path === '/tag/job'){
+    $('ul.mt-6 .submenu-toggle.companies .submenu .job').toggleClass('active');
+    $('ul.mt-6 .submenu-toggle.companies').toggleClass('active submenu-active');
+    $('ul.mt-6 .submenu-toggle.companies').find('.fas.fa-chevron-down').toggleClass('rotate-180');
+  }else if(path === '/u/easihub/messages'){
+    $('ul.mt-6 .submenu-toggle.messages .submenu .inbox').toggleClass('active');
+    $('ul.mt-6 .submenu-toggle.messages').toggleClass('active submenu-active');
+    $('ul.mt-6 .submenu-toggle.messages').find('.fas.fa-chevron-down').toggleClass('rotate-180');
+  }else if(path === '/categories'){
+    $('ul.mt-6 .cursor-pointer.allhubs').toggleClass('active');
+  }else if(path === '/tags'){
+    $('ul.mt-6 .cursor-pointer.all-tags').toggleClass('active');
+  }
+  
+  var currentUrl = window.location.href;
+  if (window.location.pathname.startsWith('/c/')) {
+    var idMatch = currentUrl.split('/').pop();
+    if ($.isNumeric(idMatch)) {
+      $('.category-submenu li[data-id="' + idMatch + '"]').addClass('active');
+      $('.hub.hub-cat-listing.pain-parent-cat').addClass('active');
+      $('.hub.hub-cat-listing.pain-parent-cat .fas.fa-chevron-down:first').addClass('rotate-180');
+    }
+  }else{
+    $('.hub.hub-cat-listing.pain-parent-cat').removeClass('active');
+  }
+  
+  setTimeout(function(){
+    if (window.location.pathname.startsWith('/tag/')) {
+      $('.submenu-toggle.tags').toggleClass('active submenu-active');
+      $('.submenu-toggle.tags').find('.flex.items-center .fas.fa-chevron-down').toggleClass('rotate-180');
+      var tagMatch = currentUrl.split('/').pop();
+      $('ul.submenu li[data-id="' + tagMatch + '"]').addClass('active');
+    }else{
+      $('.submenu-toggle.tags').removeClass('active submenu-active');
+    }
+  }, 1000);
+}
+
+function openMessageHubs() {
+  const path = window.location.pathname;
+  if (path === '/u/easdevub_admin/messages') {
+    $('.submenu-toggle.messages ul li.inbox').addClass('active');
+  } else if (path === '/u/easdevub_admin/messages/archive') {
+    $('.submenu-toggle.messages ul li.archive').addClass('active');
+  } else if (path === '/u/easdevub_admin/messages/sent') {
+    $('.submenu-toggle.messages ul li.sent').addClass('active');
+  } else if (path === '/u/easdevub_admin/messages/new') {
+    $('.submenu-toggle.messages ul li.new').addClass('active');
+  }
+}
+
+function reArrangeAndSetMenu() {
+    $('.navigation-container #navigation-bar').addClass('hide-menu');
+    $('.navigation-container .second-menu').removeClass('hide-menu');
+    $('.navigation-container .second-menu').remove();
+
+    const path = window.location.pathname;
+    const homePagePath = '/';
+    const segments = path.split('/').filter(Boolean);
+    const isNumber = (val) => !isNaN(val);
+
+    let cate_level = '';
+
+    // Determine category level based on URL structure
+    if (segments[0] === 'c' && isNumber(segments[segments.length - 1]) || segments[0] === 'tags') {
+        let categorySegments = [];
+        
+        if (segments[0] === 'tags' && segments[1] === 'c') {
+            categorySegments = segments.slice(2, -2); // skip 'tags', 'c', and remove ID + tab
+        } else if (segments[0] === 'c') {
+            categorySegments = segments.slice(1, -1); // skip 'c' and remove ID
+        }
+        
+        const categoryDepth = categorySegments.length;
+        
+        if (categoryDepth === 1) cate_level = 'first_label';
+        else if (categoryDepth === 2) cate_level = 'second_label';
+        else if (categoryDepth >= 3) cate_level = 'third_label';
+    }
+
+    if (path === homePagePath) {
+        $('.fk-d-button-tooltip').hide();
+    } else {
+        $('.fk-d-button-tooltip').show();
+    }
+
+    // Only inject menu if not already added
+    if ($('#navigation-bar.second-menu').length === 0) {
+        let menuHtml = '';
+        if (path === homePagePath) {
+            menuHtml = homePageMenu();
+        } else if (cate_level === 'first_label') {
+            menuHtml = firstLabelCat();
+        } else if (cate_level === 'second_label') {
+            menuHtml = secondLabelCat();
+        } else if (cate_level === 'third_label') {
+            menuHtml = categoryPageMenu();
+        } else {
+            menuHtml = homePageMenu();
+        }
+
+        $('.navigation-container #navigation-bar').before(
+            '<ul id="navigation-bar" class="nav nav-pills second-menu">' + menuHtml + '</ul>'
+        );
+    }
+
+    addActionButton();
+}
+
+function addActionButton() {
+  var buttonLabel = $('.save-or-cancel button .d-button-label').text() || 'Post Your Question';
+  $('.save-or-cancel button').hide();
+  if ($('.save-or-cancel').find('.new-button').length === 0) {
+    const newButton = $('<a class="new-button btn" style="background-color:#4949fc; color:#fff;" aria-label="'+buttonLabel+'">' +
+      '<svg class="fa d-icon d-icon-plus svg-icon svg-string" xmlns="http://www.w3.org/2000/svg" style="color: white;"><use href="#plus"></use></svg>' +
+      '<span class="d-button-label"> '+buttonLabel+'</span>' +
+      '</a>');
+    $('.save-or-cancel .btn.btn-icon-text.btn-primary.create').first().before(newButton);
+    newButton.on('click', function(event) {
+      if (!User.current()) {
+        event.preventDefault();
+        window.location.href = '/signup';
+      }
+    });
+  }
+}
+function homePageMenu() {
+  const fullpath = window.location.href;
+  let questionClass = '', latestClass = '', hotClass = '', unreadClass = '', discussionClass = '', hubsClass = '', useCasesClass = '';
+  const pathSegments = fullpath.split("/").filter(Boolean);
+  const lastSegment = pathSegments[pathSegments.length - 1].toLowerCase();
+  
+  if (lastSegment === "questions") {
+    questionClass = 'active';
+  } else if (lastSegment === "latest") {
+    latestClass = 'active';
+  }else if (lastSegment === "use-cases") {
+    useCasesClass = 'active';
+  } else if (lastSegment === "hot") {
+    hotClass = 'active';
+  } else if (lastSegment === "unread") {
+    unreadClass = 'active';
+  } else if (lastSegment === "discussion") {
+    discussionClass = 'active';
+  } else {
+    hubsClass = 'active';
+  }
+  
+  var menuItems = `
+    <li title="Hubs" class="${hubsClass} categories ember-view nav-item_categories">
+      <a href="${categoryOriginalUrl(fullpath)}" aria-current="page"><i class="fas fa-network-wired" style="margin-right: 6px;"></i>Hubs</a>
+    </li>
+  `;
+  return menuItems;
+}
+
+function categoryPageMenu() {
+  const fullpath = window.location.href;
+  const pathSegments = window.location.pathname.split("/").filter(Boolean);
+  const lastSegment = pathSegments[pathSegments.length - 1]?.toLowerCase();
+  
+  const isTagPage = pathSegments[0] === "tags";
+  const isCategory = pathSegments[1] === "c";
+  const idSegment = pathSegments.findIndex(segment => /^\d+$/.test(segment));
+  const topicType = pathSegments[idSegment - 1]?.toLowerCase();
+  const isGenericCategory = isTagPage && isCategory && topicType === "generic-topics";
+  
+  let questionClass = '', articlesClass = '', useCaseClass = '', bulletinsClass = '', eventsClass = '', discussionClass = '', jobClass = '', overviewClass = '', hubsClass = '', unansweredClass = '', latestClass = '', hotClass = '';
+  
+  if (lastSegment === "questions") questionClass = 'active';
+  else if (lastSegment === "articles") articlesClass = 'active';
+  else if (lastSegment === "events") eventsClass = 'active';
+  else if (lastSegment === "jobs") jobClass = 'active';
+  else if (lastSegment === "discussion") discussionClass = 'active';
+  else if (lastSegment === "use-cases") useCaseClass = 'active';
+  else if (lastSegment === "bulletins") bulletinsClass = 'active';
+  else if (lastSegment === "unanswered") unansweredClass = 'active';
+  else if (lastSegment === "latest") latestClass = 'active';
+  else if (lastSegment === "hot") hotClass = 'active';
+  else if (lastSegment === "overview") overviewClass = 'active';
+  else hubsClass = 'active';
+  
+  let menuItems = '';
+  
+  if (isGenericCategory) {
+    menuItems = `
+      <li title="Discussion" class="${overviewClass} custom-class-extened-discussion custom_discussion ember-view nav-item_custom_discussion">
+        <a href="${convertCategoryPageUrl(fullpath, 'overview')}"><i class="fas fa-table-columns" style="margin-right: 6px;"></i>Overview</a>
+      </li>
+      <li title="Ask Questions" class="${questionClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertCategoryPageUrl(fullpath, 'questions')}"><i class="fas fa-circle-question" style="margin-right: 6px;"></i>Ask Questions</a>
+      </li>
+      <li title="Talk" class="${discussionClass} custom-class-extened-discussion custom_discussion ember-view nav-item_custom_discussion">
+        <a href="${convertCategoryPageUrl(fullpath, 'discussion')}"><i class="fas fa-comments" style="margin-right: 6px;"></i>Discussion</a>
+      </li>
+      <li title="Use Cases" class="${useCaseClass} custom-class-extened-discussion custom_use_case ember-view nav-item_custom_use_cases">
+        <a href="${convertCategoryPageUrl(fullpath, 'use-cases')}"><i class="fas fa-briefcase" style="margin-right: 6px;"></i>Use Cases</a>
+      </li>
+    `;
+  } else {
+    menuItems = `
+      <li title="Ask Questions" class="${questionClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertCategoryPageUrl(fullpath, 'questions')}"><i class="fas fa-circle-question" style="margin-right: 6px;"></i>Ask Questions</a>
+      </li>
+      <li title="Talk" class="${discussionClass} custom-class-extened-discussion custom_discussion ember-view nav-item_custom_discussion">
+        <a href="${convertCategoryPageUrl(fullpath, 'discussion')}"><i class="fas fa-comments" style="margin-right: 6px;"></i>Discussion</a>
+      </li>
+      <li title="Use Cases" class="${useCaseClass} custom-class-extened-discussion custom_useCasen ember-view nav-item_custom_use_case">
+        <a href="${convertCategoryPageUrl(fullpath, 'use-cases')}"><i class="fas fa-briefcase" style="margin-right: 6px;"></i>Use Cases</a>
+      </li>
+      <li title="Unanswered" class="${unansweredClass} unanswered ember-view nav-item_unanswered">
+        <a href="${convertCategoryPageUrl(fullpath, 'unanswered')}"><i class="fas fa-question-circle" style="margin-right: 6px;"></i>Unanswered</a>
+      </li>
+      <li title="Latest" class="${latestClass} latest ember-view nav-item_latest">
+        <a href="${convertCategoryPageUrl(fullpath, 'latest')}"><i class="fas fa-clock" style="margin-right: 6px;"></i>Latest</a>
+      </li>
+      <li title="Hot" class="${hotClass} hot ember-view nav-item_hot">
+        <a href="${convertCategoryPageUrl(fullpath, 'hot')}"><i class="fas fa-fire" style="margin-right: 6px;"></i>Hot</a>
+      </li>
+    `;
+  }
+  
+  return menuItems;
+}
+
+function firstLabelCat() {
+  const fullURL = window.location.href;
+  const fullPath = window.location.pathname;
+  let questionClass = '', activeBulletins = '', userClass = '', activeArticles = '', activeDiscussion = '', activeEvent = '', hubsClass = '', activeJobs = '';
+  const pathSegments = fullPath.split("/").filter(Boolean);
+  const lastSegment = pathSegments[pathSegments.length - 1].toLowerCase();
+  
+  switch (lastSegment) {
+    case "questions": questionClass = 'active'; break;
+    case "use-cases": userClass = 'active'; break;
+    case "bulletins": activeBulletins = 'active'; break;
+    case "articles": activeArticles = 'active'; break;
+    case "discussion": activeDiscussion = 'active'; break;
+    case "events": activeEvent = 'active'; break;
+    case "jobs": activeJobs = 'active'; break;
+    default: hubsClass = 'active'; break;
+  }
+  
+  return `
+    <li title="Hubs" class="custom-class-extened-questions custom_questions ember-view nav-item_custom_questions ${hubsClass}">
+      <a href="${hubsNavigationUrl(fullURL)}"><i class="fas fa-network-wired" style="margin-right: 6px;"></i>Hubs</a>
+    </li>
+    <li title="Articles" class="${activeArticles} articles ember-view nav-item_unanswered">
+      <a href="${convertFirstLabelUrl(fullPath, 'articles')}"><i class="fas fa-file-lines" style="margin-right: 6px;"></i>Articles</a>
+    </li>
+    <li title="Events" class="${activeEvent} events ember-view nav-item_latest">
+      <a href="${convertFirstLabelUrl(fullPath, 'events')}"><i class="fas fa-calendar-days" style="margin-right: 6px;"></i>Events</a>
+    </li>
+    <li title="Jobs" class="${activeJobs} jobs ember-view nav-item_hot">
+      <a href="${convertFirstLabelUrl(fullPath, 'jobs')}"><i class="fas fa-briefcase-clock" style="margin-right: 6px;"></i>Jobs</a>
+    </li>
+  `;
+}
+
+function secondLabelCat() {
+  const fullpath = window.location.href;
+  const pathSegments = fullpath.split("/").filter(Boolean);
+  const lastSegment = pathSegments[pathSegments.length - 1].toLowerCase();
+  
+  const isGenericCategory = pathSegments.some(segment =>
+    segment.startsWith("generic-") && segment.endsWith("-topics") && segment !== "generic-topics"
+  );
+  
+  let questionClass = '', articlesClass = '', bulletinsClass = '', eventsClass = '', discussionClass = '', jobClass = '', hubsClass = '', useCasesClass = '', overviewClass = '';
+  
+  if (lastSegment === "questions") questionClass = 'active';
+  else if (lastSegment === "articles") articlesClass = 'active';
+  else if (lastSegment === "events") eventsClass = 'active';
+  else if (lastSegment === "jobs") jobClass = 'active';
+  else if (lastSegment === "discussion") discussionClass = 'active';
+  else if (lastSegment === "use-cases") useCasesClass = 'active';
+  else if (lastSegment === "bulletins") bulletinsClass = 'active';
+  else if (lastSegment === "overview") overviewClass = 'active';
+  else hubsClass = 'active';
+  
+  let menuItems = '';
+  
+  if (isGenericCategory) {
+    menuItems = `
+      <li title="Overview" class="${overviewClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertSecondLabelUrl(fullpath, 'overview')}"><i class="fas fa-table-columns" style="margin-right: 6px;"></i>Overview</a>
+      </li>
+      <li title="Questions" class="${questionClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertSecondLabelUrl(fullpath, 'questions')}"><i class="fas fa-circle-question" style="margin-right: 6px;"></i>Ask Questions</a>
+      </li>
+      <li title="Discussion" class="${discussionClass} custom-class-extened-discussion custom_discussion ember-view nav-item_custom_discussion">
+        <a href="${convertSecondLabelUrl(fullpath, 'discussion')}"><i class="fas fa-comments" style="margin-right: 6px;"></i>Discussion</a>
+      </li>
+      <li title="Use Cases" class="${useCasesClass} custom-class-extened-discussion custom_discussion ember-view nav-item_custom_discussion">
+        <a href="${convertSecondLabelUrl(fullpath, 'use-cases')}"><i class="fas fa-briefcase" style="margin-right: 6px;"></i>Use Cases</a>
+      </li>
+    `;
+  } else {
+    menuItems = `
+      <li title="Hubs" class="${hubsClass} ember-view nav-item_custom_questions">
+        <a href="${hubsNavigationUrl(fullpath)}"><i class="fas fa-network-wired" style="margin-right: 6px;"></i>Hubs</a>
+      </li>
+      <li title="Questions" class="${questionClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertSecondLabelUrl(fullpath, 'questions')}"><i class="fas fa-layer-group" style="margin-right: 6px;"></i>Browse All Questions</a>
+      </li>
+      <li title="Articles" class="${articlesClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertSecondLabelUrl(fullpath, 'articles')}"><i class="fas fa-file-lines" style="margin-right: 6px;"></i>Articles</a>
+      </li>
+      <li title="Bulletins" class="${bulletinsClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertSecondLabelUrl(fullpath, 'bulletins')}"><i class="fas fa-bullhorn" style="margin-right: 6px;"></i>Bulletins</a>
+      </li>
+      <li title="Events" class="${eventsClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertSecondLabelUrl(fullpath, 'events')}"><i class="fas fa-calendar-days" style="margin-right: 6px;"></i>Events</a>
+      </li>
+      <li title="Jobs" class="${jobClass} custom-class-extened-questions custom_questions ember-view nav-item_custom_questions">
+        <a href="${convertSecondLabelUrl(fullpath, 'jobs')}"><i class="fas fa-briefcase-clock" style="margin-right: 6px;"></i>Jobs</a>
+      </li>
+    `;
+  }
+  
+  return menuItems;
+}
+function categoryOriginalUrl(url) {
+  try {
+    const urlObj = new URL(url);
+    const pathParts = urlObj.pathname.split('/');
+    
+    if (pathParts[1] === 'c' && pathParts[2] === 'overview') {
+      return `${urlObj.origin}/c/overview/181`;
+    }
+    
+    if (pathParts[1] === 'tags' && pathParts[2] === 'c' && pathParts[4] && pathParts[5]) {
+      return `${urlObj.origin}/c/${pathParts[3]}/${pathParts[4]}`;
+    }
+    
+    if (pathParts[1] === 'c' && pathParts.length > 3) {
+      const categoryPath = pathParts.slice(2, -1).join('/');
+      const id = pathParts[pathParts.length - 1];
+      return `${urlObj.origin}/c/${categoryPath}/${id}`;
+    }
+    
+    if (pathParts[1] === 'hubs' && pathParts.length > 2) {
+      const hubPath = pathParts.slice(2).join('/');
+      return `${urlObj.origin}/hubs/${hubPath}`;
+    }
+    
+    return `${urlObj.origin}/categories`;
+  } catch (error) {
+    return '/categories';
+  }
+}
+
+function convertFirstLabelUrl(originalPath, section) {
+  const baseUrl = window.location.origin;
+  const knownSections = ["questions", "use-cases", "bulletins", "articles", "discussion", "events", "jobs", "overview"];
+  let pathSegments = originalPath.split("/").filter(Boolean);
+  
+  if (knownSections.includes(pathSegments[pathSegments.length - 1])) {
+    pathSegments.pop();
+  }
+  
+  if (pathSegments[0] === "c") {
+    pathSegments = ["tags", ...pathSegments, section];
+  } else if (pathSegments[0] === "tags" && pathSegments[1] === "c") {
+    pathSegments = [...pathSegments, section];
+  } else {
+    return `${baseUrl}/${section}`;
+  }
+  
+  return `${baseUrl}/${pathSegments.join("/")}`;
+}
+
+function convertSecondLabelUrl(originalUrl, section) {
+  const url = new URL(originalUrl);
+  const baseUrl = url.origin;
+  const knownSections = ["questions", "use-cases", "bulletins", "articles", "discussion", "events", "jobs", "overview"];
+  
+  let pathSegments = url.pathname.split("/").filter(Boolean);
+  
+  if (knownSections.includes(pathSegments[pathSegments.length - 1])) {
+    pathSegments.pop();
+  }
+  
+  if (pathSegments[0] === 'c') {
+    pathSegments = ['tags', 'c', ...pathSegments.slice(1), section];
+  } else if (pathSegments[0] === 'tags' && pathSegments[1] === 'c') {
+    pathSegments = [...pathSegments, section];
+  } else {
+    return originalUrl;
+  }
+  
+  const newPath = pathSegments.join('/');
+  return `${baseUrl}/${newPath}`;
+}
+
+function hubsNavigationUrl(originalUrl) {
+  const url = new URL(originalUrl);
+  const baseUrl = `${url.origin}`;
+  let pathSegments = url.pathname.split("/").filter(Boolean);
+  
+  if (pathSegments[0] === 'c') {
+    pathSegments = ['c', ...pathSegments.slice(1, -1)];
+  } else if (pathSegments[0] === 'tags' && pathSegments[1] === 'c') {
+    pathSegments = ['c', ...pathSegments.slice(2, -1)];
+  } else if (pathSegments.length === 3 || pathSegments.length === 4) {
+    pathSegments = ['c', ...pathSegments];
+  } else {
+    return originalUrl;
+  }
+  
+  return `${baseUrl}/${pathSegments.join("/")}`;
+}
+
+function convertCategoryPageUrl(originalUrl, section) {
+  const url = new URL(originalUrl);
+  const baseUrl = `${url.origin}`;
+  let pathSegments = url.pathname.split("/").filter(Boolean);
+  
+  if (pathSegments[0] === 'c') {
+    pathSegments = ['tags', 'c', ...pathSegments.slice(1, -1), section];
+  } else if (pathSegments[0] === 'tags' && pathSegments[1] === 'c') {
+    pathSegments = ['tags', 'c', ...pathSegments.slice(2, -1), section];
+  } else {
+    return originalUrl;
+  }
+  
+  const newPath = [...pathSegments].join('/');
+  return `${baseUrl}/${newPath}`;
+}
+
+// Event handlers and document ready functions
+$(document).ready(function() {
+  $(".category-comparison #list-area").html(" ");
+  $(".category-comparison #list-area").append('<div class="comparison-table"> <div class="container"> <div class="row"> <div class="col-xs-12"> <table summary="This table shows how to create responsive tables using stacktable.js" class="table table-bordered table-hover" border="0" style="border: 0;border-collapse: collapse;"> <thead> <tr style="background-color: #0888F0;border: 0;border-collapse: collapse;color: #fff;" > <th style="background-color: #0888F0;border: 0;border-collapse: collapse;color: #fff;"><strong>Features</strong></th> <th style="background-color: #0888F0;border: 0;border-collapse: collapse;color: #fff;"><strong>Product 1</strong></th> <th style="background-color: #0888F0;border: 0;border-collapse: collapse;color: #fff;"><strong>Product 2</strong></th> </tr> </thead> <tbody> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Language</strong></center></td> <td>java</td> <td>C++</td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Database</strong></center></td> <td>SQL</td> <td>Mongo DB</td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 3</strong></center></td> <td class="yes"></td> <td class="no"></td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 4</strong></center></td> <td class="yes"></td> <td class="no"></td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 5</strong></center></td> <td class="no"></td> <td class="yes"></td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 6</strong></center></td> <td class="yes"></td> <td class="no"></td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 7</strong></center></td> <td class="no"></td> <td class="yes"></td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 8</strong></center></td> <td class="yes"></td> <td class="no"></td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 9</strong></center></td> <td class="no"></td> <td class="yes"></td> </tr> <tr> <td style="background-color: #E6E6F2;border: 0;border-collapse: collapse;color: #0888F0;"><center><strong>Feature 10</strong></center></td> <td class="yes"></td> <td class="no"></td> </tr> </tbody> </table> </div> </div> </div> </div>');
+});
+
+$(document).ready(function() {
+  $(".sidebar-section-link-wrapper a").each(function() {
+    var href = $(this).attr('href');
+    var slashCount = (href.match(/\//g) || []).length;
+    
+    if (slashCount === 3) {
+      $(this).closest('.sidebar-section-link-wrapper').addClass('main');
+    } else if (slashCount === 4) {
+      $(this).closest('.sidebar-section-link-wrapper').addClass('sub');
+    }
+  });
+});
+function DomainPageChanges() {
+  try {
+    const currentURL = window.location.href;
+    const fullPath = window.location.pathname;
+
+    
+    // const pattern = /^https:\/\/easihub\.com\/c\/[a-z0-9-]+\/\d+$/i;
+    const pattern = /^https:\/\/easihub\.com\/c\/[a-z0-9-]+(\/[a-z0-9-]+)?\/\d+$/i;
+
+    // if (!pattern.test(currentURL)) {
+    //   console.log('DomainPageChanges: URL pattern does not match, exiting');
+    //   return;
+    // }
+    
+    const cleanURL = currentURL.split("?")[0];
+    if (!pattern.test(cleanURL)) return;
+
+    const pathSeg = fullPath.split("/");
+    const isSubcategoryPage = pathSeg.length === 5;
+    const mainCategorySlug = pathSeg[2];
+    const subCategorySlug = isSubcategoryPage ? pathSeg[3] : null;
+
+
+  const list = [
+    { slug: 'plm-product-lifecycle-management', text: 'PLM' },
+    { slug: 'erp-enterprise-resource-planning', text: 'ERP' },
+    { slug: 'crm-customer-relationship-management', text: 'CRM' },
+    { slug: 'scm-supply-chain-management', text: 'SCM' },
+    { slug: 'hcm-human-capital-management', text: 'HCM' },
+    { slug: 'cloud-platforms', text: 'Cloud Platforms' },
+    { slug: 'ba-bi-business-analysis-business-intelligence', text: 'BA/BI' },
+    { slug: 'mes-manufacturing-execution-system', text: 'MES' },
+    { slug: 'qms-quality-management-system', text: 'QMS' }
+  ];
+
+  const container = document.querySelector('[class^="category category-box category-box-generic-"]');
+
+  if (!container) {
+    return;
+  }
+
+  const innerBox = container.querySelector('.category-box-inner');
+
+  if (!innerBox || innerBox.querySelector('.btn-container')) {
+    return;
+  }
+
+  const categoryLink = container.querySelector('a.parent-box-link')?.getAttribute("href");
+
+  const flexDiv = document.createElement('div');
+  flexDiv.className = "btn-container";
+
+  const links = [
+    { label: 'Overview', href: convertFirstLabelUrl(categoryLink, 'overview') },
+    { label: 'Ask Questions', href: convertFirstLabelUrl(categoryLink, 'questions') },
+    { label: 'Discussion', href: convertFirstLabelUrl(categoryLink, 'discussion') },
+    { label: 'Use Cases', href: convertFirstLabelUrl(categoryLink, 'use-cases') },
+    { label: 'Articles', href: convertFirstLabelUrl(fullPath, 'articles') },
+    { label: 'Events', href: convertFirstLabelUrl(fullPath, 'events') },
+    { label: 'Jobs', href: convertFirstLabelUrl(fullPath, 'jobs') },
+  ];
+
+  if (isSubcategoryPage){
+    links.splice(5, 0, { label: 'Bulletins', href: convertFirstLabelUrl(fullPath, 'bulletins') });
+  }
+
+  links.forEach(link => {
+    const button = document.createElement("button");
+    button.className = "software-page-btn";
+    button.textContent = link.label;
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.location.href = link.href;
+    });
+    flexDiv.appendChild(button);
+  });
+
+  innerBox.appendChild(flexDiv);
+
+  // Add badges and headers
+  const cards = document.querySelectorAll('.category.category-box');
+  cards.forEach(card => {
+    const parent = card.closest(".category.category-box");
+    if (!parent) return;
+
+    const heading = card.querySelector('.category-box-heading');
+    if (!heading) return;
+
+    const match = list.find(item => item.slug === mainCategorySlug);
+
+    const isGeneric = Array.from(card.classList).some(className =>
+      className.startsWith('category-box-generic') || className.startsWith('category-box-general'));
+
+    if (match) {
+      const cat = document.createElement("span");
+      cat.className = "cat_badge";
+      cat.textContent = match.text;
+      Object.assign(cat.style, {
+        background: "#e1f0ff",
+        padding: "2px 6px",
+        fontSize: "11px",
+        borderRadius: "4px",
+        color: "#1e3a8a",
+        marginRight: '6px',
+        display: 'inline-block'
+      });
+      heading.before(cat);
+    }
+
+    if (isSubcategoryPage && subCategorySlug) {
+      const subBadge = document.createElement('span');
+      subBadge.textContent = subCategorySlug.replace(/-/g, ' ');
+      Object.assign(subBadge.style, {
+        background: "#fdf6e3",
+        padding: "2px 6px",
+        fontSize: "11px",
+        borderRadius: "4px",
+        color: "#92400e",
+        marginRight: '6px',
+        textTransform: 'capitalize',
+        display: 'inline-block'
+      });
+      heading.before(subBadge);
+    }
+
+    const typeBadge = document.createElement('span');
+    let badgeLabel = '';
+    if (isGeneric) {
+      badgeLabel = 'General Topics';
+    } else if (isSubcategoryPage) {
+      badgeLabel = 'Technical Area';
+    } else {
+      badgeLabel = 'Software Hub';
+    }
+
+    typeBadge.textContent = badgeLabel;
+    Object.assign(typeBadge.style, {
+      background: isGeneric ? '#d6f5e3' : '#eef2f5',
+      color: isGeneric ? '#065f46' : '#333',
+      padding: '2px 6px',
+      borderRadius: '4px',
+      fontSize: '11px',
+      marginRight: '4px',
+      display: 'inline-block'
+    });
+
+    heading.before(typeBadge);
+  });
+
+  // Add headers
+  const container_header = document.querySelector(".category-boxes");
+  const match = list.find(item => item.slug === mainCategorySlug);
+
+  document.querySelectorAll(".header-badge, .software-badge").forEach(el => el.remove());
+
+  let formattedSubcategory = "";
+  if (isSubcategoryPage && subCategorySlug) {
+    formattedSubcategory = subCategorySlug
+      .split("-")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+
+  if (container_header && match) {
+    const Headerbadge = document.createElement("div");
+    Headerbadge.className = "header-badge";
+
+    const GenericHeader = document.createElement("h2");
+    GenericHeader.className = "generic-header";
+
+    GenericHeader.textContent = isSubcategoryPage
+      ? `🟦 Generic ${formattedSubcategory} Topics`
+      : `🟢 Generic ${match.text} Topics`;
+
+    Headerbadge.appendChild(GenericHeader);
+    container_header.before(Headerbadge);
+  }
+
+  const FirstCard = document.querySelector('.category.category-box');
+  if (FirstCard && match) {
+    const SoftwareBadge = document.createElement("div");
+    SoftwareBadge.className = "software-badge";
+
+    const SoftwareHeader = document.createElement("h2");
+    SoftwareHeader.className = "software-header";
+
+    SoftwareHeader.textContent = isSubcategoryPage && formattedSubcategory
+      ? `🛠 ${formattedSubcategory} – Technical Areas`
+      : `🛠 ${match.text} Software Hubs`;
+
+    SoftwareBadge.appendChild(SoftwareHeader);
+    FirstCard.before(SoftwareBadge);
+  }
+
+  // Add 3 action buttons for subcategory page
+  if (isSubcategoryPage) {
+    const buttonContainers = document.querySelectorAll(".category-details");
+
+    buttonContainers.forEach(buttonContainer => {
+      const parentBox = buttonContainer.closest(".category-box");
+      const isGeneric = [...parentBox.classList].some(cls => cls.startsWith("category-box-generic-"));
+      if (isGeneric) return;
+
+      if (buttonContainer.nextElementSibling?.classList.contains("btn-wrapper")) return;
+
+      const softwareCatLink = parentBox.querySelector("a.parent-box-link")?.getAttribute("href");
+
+      const btnWrapper = document.createElement("div");
+      btnWrapper.className = "btn-wrapper";
+
+      const btnLinks = [
+        { label: "Ask Questions", href: convertFirstLabelUrl(softwareCatLink, "questions") },
+        { label: "Discussion", href: convertFirstLabelUrl(softwareCatLink, "discussion") },
+        { label: "Use Cases", href: convertFirstLabelUrl(softwareCatLink, "use-cases") },
+      ];
+
+      btnLinks.forEach(link => {
+        const button = document.createElement("button");
+        button.className = "three-btn";
+        button.textContent = link.label;
+
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          window.location.href = link.href;
+        });
+
+        btnWrapper.appendChild(button);
+      });
+
+      buttonContainer.after(btnWrapper);
+    });
+  }
+  
+  } catch (error) {
+    console.error('DomainPageChanges: Error occurred:', error);
+  }
+}
+
+function updateCategoryBanner() {
+  const path = window.location.pathname;
+  const pathSegments = path.split('/').filter(Boolean);
+
+  if (pathSegments[0] === 'c') {
+    const lastSegment = pathSegments[pathSegments.length - 1];
+    const isLastSegmentInteger = !isNaN(parseInt(lastSegment));
+
+    if (isLastSegmentInteger) {
+      const interval = setInterval(() => {
+        const container = document.querySelector('.list-controls .container');
+        const bannerContainer = document.querySelector('.banner_background img');
+
+        if (container && bannerContainer) {
+          clearInterval(interval);
+
+          const existingBannerText = container.querySelector('.dynamic-banner-text');
+          if (existingBannerText) existingBannerText.remove();
+
+          const maxFontSize = 18;
+          const minFontSize = 14;
+          const maxLength = 18;
+
+          const adjustFontSize = (text, baseFontSize) => {
+            const length = text.length;
+            if (length <= maxLength) return baseFontSize;
+            const adjustment = Math.floor((length - maxLength) / 2);
+            return Math.max(baseFontSize - adjustment, minFontSize);
+          };
+
+          let bannerHTML = '';
+
+          if (pathSegments.length === 3) {
+            const parentCategory = pathSegments[1].replace(/-/g, ' ');
+            const parentFontSize = adjustFontSize(parentCategory, maxFontSize);
+            bannerHTML = `
+              <div class="dynamic-banner-text">
+                <span style="font-size: ${parentFontSize}px; font-weight: bold;">${parentCategory}</span>
+              </div>`;
+          } else if (pathSegments.length === 4) {
+            const parentCategory = pathSegments[1].replace(/-/g, ' ');
+            const subCategory = pathSegments[2].replace(/-/g, ' ');
+            const subCategoryFontSize = adjustFontSize(subCategory, maxFontSize);
+            const parentFontSize = adjustFontSize(parentCategory, maxFontSize - 3);
+            bannerHTML = `
+              <div class="dynamic-banner-text">
+                <span style="font-size: ${subCategoryFontSize}px; font-weight: bold;">${subCategory}</span><br>
+                <span style="font-size: ${parentFontSize}px; color: lightgray;">${parentCategory}</span>
+              </div>`;
+          } else if (pathSegments.length === 5) {
+            const parentCategory = pathSegments[2].replace(/-/g, ' ');
+            const grandchildCategory = pathSegments[3].replace(/-/g, ' ');
+            const parentFontSize = adjustFontSize(parentCategory, maxFontSize);
+            const grandchildFontSize = adjustFontSize(grandchildCategory, maxFontSize - 3);
+            bannerHTML = `
+              <div class="dynamic-banner-text">
+                <span style="font-size: ${parentFontSize}px; font-weight: bold;">${parentCategory}</span><br>
+                <span style="font-size: ${grandchildFontSize}px; color: lightgray;">${grandchildCategory}</span>
+              </div>`;
+          }
+
+          if (bannerHTML) {
+            container.insertAdjacentHTML('afterbegin', bannerHTML);
+          }
+        }
+      }, 50);
+    }
+  } else if (path.includes('tags/c/')) {
+    const lastSegment = pathSegments[pathSegments.length - 1];
+    const isTabsPage = ["questions", "discussion", "articles", "use-cases", "jobs", "bulletins", "events", 'unanswered', 'hot', 'unread', 'overview'].includes(lastSegment);
+
+    if (isTabsPage) {
+      const interval = setInterval(() => {
+        const container = document.querySelector('.list-controls .container');
+        const bannerContainer = document.querySelector('.banner_background img');
+
+        if (container && bannerContainer) {
+          clearInterval(interval);
+
+          const existingBannerText = container.querySelector('.dynamic-banner-text');
+          if (existingBannerText) existingBannerText.remove();
+
+          const maxFontSize = 18;
+          const minFontSize = 14;
+          const maxLength = 18;
+
+          const adjustFontSize = (text, baseFontSize) => {
+            const length = text.length;
+            if (length <= maxLength) return baseFontSize;
+            const adjustment = Math.floor((length - maxLength) / 2);
+            return Math.max(baseFontSize - adjustment, minFontSize);
+          };
+
+          const tabsSegment = pathSegments[pathSegments.length - 1].replace(/-/g, ' ');
+          const childCategory = pathSegments[pathSegments.length - 4].replace(/-/g, ' ');
+          const grandchildCategory = pathSegments[pathSegments.length - 3].replace(/-/g, ' ');
+          const tabsFontSize = adjustFontSize(tabsSegment, maxFontSize - 4);
+          const childFontSize = adjustFontSize(childCategory, maxFontSize - 1);
+          const grandchildFontSize = adjustFontSize(grandchildCategory, maxFontSize - 3);
+          
+          const bannerHTML = `
+            <div class="dynamic-banner-text">
+              <span style="font-size: ${childFontSize}px; font-weight: 900;">${childCategory.length > 5 ? childCategory : " "}</span><br>
+              <span style="font-size: ${grandchildFontSize}px; font-weight: 600;">${grandchildCategory}</span><br>
+              <span style="font-size: ${tabsFontSize}px; font-weight: semi-bold;">${tabsSegment}</span>
+            </div>`;
+
+          if (bannerHTML) {
+            container.insertAdjacentHTML('afterbegin', bannerHTML);
+          }
+        }
+      }, 100);
+    }
+  }
+}
+
+// Add this to your head-tag-all-2.html file
+
+// Question Composer Detection and Setup
+$(document).ready(function() {
+    let questionIntervalId = setInterval(function() {
+        const button = document.querySelector('.fk-d-button-tooltip button');
+        if (!button || !document.querySelector('.composer-open-plugin-outlet-container')) return;
+        
+        const buttonText = button.textContent || '';
+        
+        // Check for "Ask Question" text in button
+        if (/Ask\s+Question/i.test(buttonText)) {
+            setupQuestionComposer();
+            clearInterval(questionIntervalId);
+        }
+    }, 500);
+    
+    // Clear interval on submit
+    $('.topic-footer-main-buttons button.btn.btn-icon-text.btn-primary.create, .widget-button.btn-flat.reply.create.fade-out.btn-icon-text').on('click', function() {
+        clearInterval(questionIntervalId);
+    });
+});
+
+function setupQuestionComposer() {
+    // Create second textarea if not exists
+    createNewTextEditor();
+    
+    // Add labels and instructions
+    addInputTitle();
+    
+    // Setup edit functionality
+    editTextfunction();
+    
+    // Add tip box
+    addQuestionTipBox();
+    
+    // Setup title and placeholders
+    setupQuestionTitle();
+}
+
+function addQuestionTipBox() {
+    const tipContainer = document.querySelector('.title-and-category');
+    if (!tipContainer || document.querySelector('.tip-box')) return;
+    
+    const tipBox = document.createElement('div');
+    tipBox.className = 'tip-box';
+    tipBox.style.cssText = 'background: #f0f4ff; border-left: 4px solid #4949fc; border-radius: 8px; padding: 10px 14px; margin-bottom: 10px;';
+    tipBox.innerHTML = `
+        <span style="font-weight: bold;">💡 Need help asking a great question?</span>
+        <a class="show-more" style="color: #4949fc; cursor: pointer; margin-left: 5px;">Show More ▼</a>
+        <div class="tip-details" style="display: none; margin-top: 8px;">
+            A great question includes software and technical context (e.g., SAP S/4HANA, Salesforce API), the exact error or scenario, and what you've already tried.
+            <div style="margin-top: 8px;"><strong>Example:</strong> "How can I enable OAuth between Salesforce and Azure AD? I configured the connected app but keep getting 'invalid grant'. I tried updating callback URL and resetting secrets."</div>
+            <p style="margin-top: 8px; padding: 0;">Ask clearly, and others can help you faster.</p>
+        </div>
+    `;
+    
+    const showMoreLink = tipBox.querySelector('.show-more');
+    const tipDetails = tipBox.querySelector('.tip-details');
+    
+    showMoreLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isVisible = tipDetails.style.display === 'block';
+        tipDetails.style.display = isVisible ? 'none' : 'block';
+        showMoreLink.textContent = isVisible ? 'Show More ▼' : 'Show Less ▲';
+    });
+    
+    tipContainer.before(tipBox);
+}
+
+function setupQuestionTitle() {
+    const composerTitle = document.querySelector('.action-title');
+    if (composerTitle) {
+        Object.assign(composerTitle.style, {
+            fontSize: '17px',
+            color: '#4949fc',
+            fontWeight: 'bold'
+        });
+        
+        if (!document.querySelector('.ask-icon')) {
+            const askIcon = document.createElement('span');
+            askIcon.className = 'ask-icon';
+            askIcon.textContent = '🧠';
+            askIcon.style.cssText = 'font-size: 17px; margin-right: 4px;';
+            composerTitle.before(askIcon);
+        }
+    }
+    
+    const inputBox = document.querySelector('.title-input input');
+    if (inputBox) {
+        inputBox.placeholder = 'E.g. Why does my SAP BAPI return "NO AUTHORIZATION" during batch update?';
+    }
+    
+    const textareas = document.querySelectorAll('.d-editor-textarea-wrapper textarea');
+    if (textareas[0]) {
+        textareas[0].placeholder = 'Describe your domain/software/tech area, version, specific error, API or module you\'re working with...';
+    }
+    if (textareas[1]) {
+        textareas[1].placeholder = 'What configurations, code, logic or solution have you already attempted and what were the results?';
+    }
+}
+
+function addInputTitle() {
+    var bannerTitle = $('.banner-title').text().trim();
+    if (bannerTitle === 'Job' || bannerTitle === 'Jobs') {
+        return;
+    }
+    
+    const titleInput = document.querySelector('.title-input');
+    const textareaWrappers = document.querySelectorAll('.d-editor-textarea-wrapper');
+    
+    if (titleInput && textareaWrappers.length >= 2) {
+        // Check if the title instruction already exists
+        if (!document.querySelector('.title-instruction')) {
+            const titleInstruction = document.createElement('span');
+            titleInstruction.classList.add('title-instruction');
+            titleInstruction.innerHTML = '<div style="margin-bottom: 6px; font-size: 14px;"><b>Step 1: Question Title :</b> <span style="color: gray;">Clearly state your question as if you are asking another user for help</span></div>';
+            titleInput.insertAdjacentElement('beforebegin', titleInstruction);
+        }
+        
+        // Check if the problem details instruction already exists
+        if (!document.querySelector('.problem-details-instruction')) {
+            const problemDetailsInstruction = document.createElement('span');
+            problemDetailsInstruction.classList.add('problem-details-instruction');
+            problemDetailsInstruction.innerHTML = '<p style="font-size:14px; padding: 0; margin-top: 10px;"><b>Step 2: Problem Details </b> <span style="color: gray;">Briefly describe your issue, including any error messages. Include essential code snippets (minimum 20 characters required)</span></p>';
+            textareaWrappers[0].insertAdjacentElement('beforebegin', problemDetailsInstruction);
+        }
+        
+        // Check if the attempted solutions instruction already exists
+        if (!document.querySelector('.attempted-solutions-instruction')) {
+            const attemptedSolutionsInstruction = document.createElement('span');
+            attemptedSolutionsInstruction.classList.add('attempted-solutions-instruction');
+            attemptedSolutionsInstruction.innerHTML = '<p style="font-size:14px; padding: 0; margin-top: 14px;"><b>Step 3: Attempted Solutions :</b><span style="color: gray;"> Explain what you have tried and what you expected to occur. Mention any discrepancies between expected and actual results (minimum 20 characters required)</span></p>';
+            textareaWrappers[1].insertAdjacentElement('beforebegin', attemptedSolutionsInstruction);
+        }
+    }
+}
+
+//code for custom composer artciles
+
+$(document).ready(function () {
+    let intervalId;
+    let isInitialized = false;
+
+    // Debounced function to avoid excessive DOM queries
+    const debounce = (func, wait) => {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
+    // Cache DOM elements
+    const domCache = {
+        buttonLabel: null,
+        composerContainer: null,
+        titleContainer: null
+    };
+
+    function updateCache() {
+        domCache.buttonLabel = document.querySelector('.fk-d-button-tooltip button .d-button-label');
+        domCache.composerContainer = document.querySelector('.composer-open-plugin-outlet-container');
+        domCache.titleContainer = document.querySelector('.title-and-category');
+    }
+
+    function checkConditions() {
+        updateCache();
+        const siblingParagraph = domCache.buttonLabel?.nextElementSibling;
+        
+        return domCache.composerContainer && 
+               siblingParagraph && 
+               /Propose\s+Article/.test(siblingParagraph.textContent);
+    }
+
+    function addTipBox() {
+        if (!domCache.titleContainer || document.querySelector('.tip-box')) return;
+
+        const tipBox = document.createElement('div');
+        tipBox.className = 'tip-box';
+        tipBox.innerHTML = `
+            <span class="tip-title">💡 Need help writing an effective article? </span>
+            <a class="show-more" href="#">Show More ▼</a>
+            <div class="tip-details" style="display: none; margin-top: 8px;">
+                Articles should educate others with practical value. Focus on architecture, configuration walkthroughs, comparisons, or integration guides. Use clear headings, code snippets, diagrams, and summarize key takeaways.
+                <div style="margin-top: 8px;"><strong>Example:</strong> "Top 5 Customization Patterns in SAP S/4HANA Fiori Apps"</div>
+            </div>
+        `;
+
+        // Add responsive styles
+        tipBox.style.cssText = `
+            padding: 10px 14px;
+            background-color: #f0f4ff;
+            border-radius: 8px;
+            border-left: 4px solid #4949fc;
+            margin-bottom: 10px;
+            font-size: 14px;
+        `;
+
+        // Event delegation for show/hide
+        tipBox.addEventListener('click', function(e) {
+            if (e.target.classList.contains('show-more')) {
+                e.preventDefault();
+                const details = tipBox.querySelector('.tip-details');
+                const isVisible = details.style.display === 'block';
+                details.style.display = isVisible ? 'none' : 'block';
+                e.target.textContent = isVisible ? 'Show More ▼' : 'Show Less ▲';
+            }
+        });
+
+        domCache.titleContainer.before(tipBox);
+    }
+
+    function setupComposerTitle() {
+        const composerTitle = document.querySelector('.action-title');
+        if (!composerTitle) return;
+
+        composerTitle.style.cssText = 'font-size: 17px; color: #4949fc; font-weight: bold;';
+        
+        if (!document.querySelector('.ask-icon')) {
+            const askIcon = document.createElement('span');
+            askIcon.className = 'ask-icon';
+            askIcon.textContent = '📄';
+            askIcon.style.cssText = 'font-size: 17px; margin-right: 4px;';
+            composerTitle.before(askIcon);
+        }
+    }
+
+    function setupInputFields() {
+        // Title input
+        const inputArticle = document.querySelector('.title-input input');
+        const inputLabel = document.querySelector('.title-input');
+        
+        if (inputArticle) {
+            inputArticle.placeholder = 'Enter a clear, descriptive article title';
+        }
+
+        if (inputLabel && !document.querySelector('.input-label')) {
+            const labelArticle = document.createElement('label');
+            labelArticle.innerHTML = 'Article Title';
+            labelArticle.className = 'input-label';
+            labelArticle.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            inputLabel.before(labelArticle);
+        }
+
+        // Content textarea
+        const textareaArticle = document.querySelector('.d-editor-textarea-wrapper textarea');
+        if (textareaArticle) {
+            textareaArticle.placeholder = 'Write your content here (Markdown/HTML) or paste an article URL (e.g., https://yourdomain.com/article123)';
+        }
+
+        // Description label
+        if (domCache.titleContainer && !document.querySelector('.desc-label-article')) {
+            const descLabelArticle = document.createElement('label');
+            descLabelArticle.innerHTML = 'Article Content or External URL';
+            descLabelArticle.className = 'desc-label-article';
+            descLabelArticle.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            domCache.titleContainer.after(descLabelArticle);
+        }
+    }
+
+    function createCustomFields() {
+        const composerContainer = document.querySelector('.d-editor-textarea-wrapper');
+        if (!composerContainer || document.querySelector('.custom-article-fields')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-article-fields';
+        wrapper.innerHTML = `
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Article Thumbnail (Upload)</label>
+                    <input class="custom-field-input thumbnail" type="file" style="padding: 2px; border: 1px solid lightgray; border-radius: 2px;">
+                </div>
+                <div class="field-group">
+                    <label>Source</label>
+                    <input class="custom-field-input source" type="text" placeholder="Source(e.g. siemens.com)">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Author</label>
+                    <input class="custom-field-input author" type="text" placeholder="Author Name">
+                </div>
+                <div class="field-group">
+                    <label>Publication Date</label>
+                    <input class="custom-field-input date" type="date">
+                </div>
+            </div>
+        `;
+
+        // Add responsive styles
+        wrapper.style.cssText = 'margin: 10px 0;';
+        
+        // Add CSS for responsive layout
+        const style = document.createElement('style');
+        style.textContent = `
+            .custom-article-fields .field-row {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            .custom-article-fields .field-group {
+                flex: 1;
+                min-width: 0;
+            }
+            .custom-article-fields label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 4px;
+                font-size: 14px;
+            }
+            .custom-article-fields input {
+                width: 100%;
+                padding: 6px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+            @media (max-width: 768px) {
+                .custom-article-fields .field-row {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+                .tip-box {
+                    font-size: 13px !important;
+                    padding: 8px 10px !important;
+                }
+                .custom-article-fields label {
+                    font-size: 13px;
+                }
+                .custom-article-fields input {
+                    font-size: 13px;
+                    padding: 8px;
+                }
+            }
+            @media (max-width: 480px) {
+                .tip-box {
+                    font-size: 12px !important;
+                    padding: 6px 8px !important;
+                }
+                .custom-article-fields input {
+                    font-size: 12px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        composerContainer.after(wrapper);
+    }
+
+    function initializeArticleComposer() {
+        if (isInitialized) return;
+        
+        addTipBox();
+        setupComposerTitle();
+        setupInputFields();
+        createCustomFields();
+        
+        isInitialized = true;
+        clearInterval(intervalId);
+    }
+
+    // Optimized interval with longer delay and condition checking
+    intervalId = setInterval(() => {
+        if (checkConditions()) {
+            // Use requestAnimationFrame for better performance
+            requestAnimationFrame(initializeArticleComposer);
+        }
+    }, 1000); // Increased interval for better performance
+
+    // Optimized click handler with event delegation
+    $(document).on('click', '.topic-footer-main-buttons button.btn.btn-icon-text.btn-primary.create, .widget-button.btn-flat.reply.create.fade-out.btn-icon-text', function() {
+        $('.save-or-cancel a.new-button').hide();
+        $('.save-or-cancel button').show();
+
+        const wrapper = document.querySelector('.custom-article-fields');
+        const textarea = document.querySelector('.d-editor-input');
+        
+        if (wrapper && textarea && !textarea.value.includes("**Thumbnail**")) {
+            const fields = {
+                thumbnail: document.querySelector('.custom-field-input.thumbnail')?.files?.[0]?.name || '',
+                source: document.querySelector('.custom-field-input.source')?.value || '',
+                author: document.querySelector('.custom-field-input.author')?.value || '',
+                date: document.querySelector('.custom-field-input.date')?.value || ''
+            };
+
+            const markdown = `**Thumbnail**: ${fields.thumbnail}\n**Source**: ${fields.source}\n**Author**: ${fields.author}\n**Date**: ${fields.date}\n\n`;
+            textarea.value = markdown + textarea.value;
+        }
+
+        clearInterval(intervalId);
+    });
+
+    // Cleanup on page unload
+    $(window).on('beforeunload', () => {
+        clearInterval(intervalId);
+    });
+});
+
+//code for custom composer events
+
+$(document).ready(function () {
+    let intervalId;
+    let isInitialized = false;
+
+    const domCache = {
+        button: null,
+        composerContainer: null,
+        titleContainer: null
+    };
+
+    function updateCache() {
+        domCache.button = document.querySelector('.fk-d-button-tooltip button');
+        domCache.composerContainer = document.querySelector('.composer-open-plugin-outlet-container');
+        domCache.titleContainer = document.querySelector('.title-and-category');
+    }
+
+    function checkConditions() {
+        updateCache();
+        if (!domCache.button || !domCache.composerContainer) return false;
+        
+        const paragraphs = domCache.button.querySelectorAll('p');
+        const lastPText = paragraphs.length > 0 ? paragraphs[paragraphs.length - 1].textContent : null;
+        
+        return lastPText && /Add\s+Event/.test(lastPText);
+    }
+
+    function addTipBox() {
+        if (!domCache.titleContainer || document.querySelector('.tip-box')) return;
+
+        const tipBox = document.createElement('div');
+        tipBox.className = 'tip-box';
+        tipBox.innerHTML = `
+            <span class="tip-title">💡 Need help listing your event? </span>
+            <a class="show-more" href="#">Show More ▼</a>
+            <div class="tip-details" style="display: none; margin-top: 8px;">
+                Use this form to promote webinars, product launches, conferences, or community events. Be sure to include the title, software or domain it relates to, the event type, and a URL or agenda.
+                <div style="margin-top: 8px;"><strong>Example:</strong> "Join our SAP S/4HANA API Workshop – June 2025"</div>
+            </div>
+        `;
+
+        tipBox.style.cssText = `
+            padding: 10px 14px;
+            background-color: #f0f4ff;
+            border-radius: 8px;
+            border-left: 4px solid #4949fc;
+            margin-bottom: 10px;
+            font-size: 14px;
+        `;
+
+        tipBox.addEventListener('click', function(e) {
+            if (e.target.classList.contains('show-more')) {
+                e.preventDefault();
+                const details = tipBox.querySelector('.tip-details');
+                const isVisible = details.style.display === 'block';
+                details.style.display = isVisible ? 'none' : 'block';
+                e.target.textContent = isVisible ? 'Show More ▼' : 'Show Less ▲';
+            }
+        });
+
+        domCache.titleContainer.before(tipBox);
+    }
+
+    function setupComposerTitle() {
+        const composerTitle = document.querySelector('.action-title');
+        if (!composerTitle) return;
+
+        composerTitle.style.cssText = 'font-size: 17px; color: #4949fc; font-weight: bold;';
+        
+        if (!document.querySelector('.ask-icon')) {
+            const askIcon = document.createElement('span');
+            askIcon.className = 'ask-icon';
+            askIcon.textContent = '📅';
+            askIcon.style.cssText = 'font-size: 17px; margin-right: 4px;';
+            composerTitle.before(askIcon);
+        }
+    }
+
+    function setupInputFields() {
+        const inputEvent = document.querySelector('.title-input input');
+        const inputLabel = document.querySelector('.title-input');
+        
+        if (inputEvent) {
+            inputEvent.placeholder = 'E.g. Microsoft Dynamics Integration Summit 2025';
+        }
+
+        if (inputLabel && !document.querySelector('.input-label-event')) {
+            const labelEvent = document.createElement('label');
+            labelEvent.innerHTML = 'Event Title';
+            labelEvent.className = 'input-label-event';
+            labelEvent.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            inputLabel.before(labelEvent);
+        }
+
+        const textareaEvent = document.querySelector('.d-editor-textarea-wrapper textarea');
+        if (textareaEvent) {
+            textareaEvent.placeholder = 'Provide event details or paste registration link...';
+        }
+    }
+
+    function createCustomFields() {
+        const composerContainer = document.querySelector('.d-editor-textarea-wrapper');
+        if (!composerContainer || document.querySelector('.custom-event-fields')) return;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-event-fields';
+        wrapper.innerHTML = `
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Type of Event</label>
+                    <select class="custom-field-input event-type">
+                        <option value="">Select type of event</option>
+                        <option value="Trade Show">Trade Show</option>
+                        <option value="Conference">Conference</option>
+                        <option value="Webinar">Webinar</option>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Meetup">Meetup</option>
+                        <option value="Virtual Summit">Virtual Summit</option>
+                        <option value="Product Launch">Product Launch</option>
+                        <option value="Training Session">Training Session</option>
+                        <option value="Roundtable">Roundtable</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Event Thumbnail</label>
+                    <input class="custom-field-input thumbnail" type="file" style="padding: 2px; border: 1px solid lightgray; border-radius: 2px;">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Organizer</label>
+                    <input class="custom-field-input organizer" type="text" placeholder="Organizer (e.g. SAP, Dassault)">
+                </div>
+                <div class="field-group">
+                    <label>Website</label>
+                    <input class="custom-field-input website" type="text" placeholder="Official Event URL">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Start Date</label>
+                    <input class="custom-field-input start-date" type="date">
+                </div>
+                <div class="field-group">
+                    <label>End Date</label>
+                    <input class="custom-field-input end-date" type="date">
+                </div>
+            </div>
+        `;
+
+        // Add description label
+        const descLabelCont = document.createElement('div');
+        descLabelCont.className = 'label-cont';
+        descLabelCont.innerHTML = '<label class="desc-label-event" style="display: block; font-weight: bold; margin-bottom: 4px;">Description or Event URL</label>';
+        
+        wrapper.style.cssText = 'margin: 10px 0;';
+        
+        // Add responsive styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .custom-event-fields .field-row {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            .custom-event-fields .field-group {
+                flex: 1;
+                min-width: 0;
+            }
+            .custom-event-fields label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 4px;
+                font-size: 14px;
+            }
+            .custom-event-fields input,
+            .custom-event-fields select {
+                width: 100%;
+                padding: 6px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+            @media (max-width: 768px) {
+                .custom-event-fields .field-row {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+                .tip-box {
+                    font-size: 13px !important;
+                    padding: 8px 10px !important;
+                }
+                .custom-event-fields label {
+                    font-size: 13px;
+                }
+                .custom-event-fields input,
+                .custom-event-fields select {
+                    font-size: 13px;
+                    padding: 8px;
+                }
+            }
+            @media (max-width: 480px) {
+                .tip-box {
+                    font-size: 12px !important;
+                    padding: 6px 8px !important;
+                }
+                .custom-event-fields input,
+                .custom-event-fields select {
+                    font-size: 12px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        composerContainer.before(descLabelCont);
+        composerContainer.after(wrapper);
+    }
+
+    function initializeEventComposer() {
+        if (isInitialized) return;
+        
+        addTipBox();
+        setupComposerTitle();
+        setupInputFields();
+        createCustomFields();
+        
+        isInitialized = true;
+        clearInterval(intervalId);
+    }
+
+    intervalId = setInterval(() => {
+        if (checkConditions()) {
+            requestAnimationFrame(initializeEventComposer);
+        }
+    }, 1000);
+
+    $(document).on('click', '.topic-footer-main-buttons button.btn.btn-icon-text.btn-primary.create, .widget-button.btn-flat.reply.create.fade-out.btn-icon-text', function() {
+        $('.save-or-cancel a.new-button').hide();
+        $('.save-or-cancel button').show();
+        clearInterval(intervalId);
+    });
+
+    $(window).on('beforeunload', () => {
+        clearInterval(intervalId);
+    });
+});
+
+//code for custom composer discussion, bulletin
+$(document).ready(function () {
+    let intervalId;
+    let isInitialized = false;
+
+    const domCache = {
+        button: null,
+        composerContainer: null,
+        titleContainer: null
+    };
+
+    function updateCache() {
+        domCache.button = document.querySelector('.fk-d-button-tooltip button');
+        domCache.composerContainer = document.querySelector('.composer-open-plugin-outlet-container');
+        domCache.titleContainer = document.querySelector('.title-and-category');
+    }
+
+    function getLastParagraphText() {
+        if (!domCache.button) return null;
+        const paragraphs = domCache.button.querySelectorAll('p');
+        return paragraphs.length > 0 ? paragraphs[paragraphs.length - 1].textContent : null;
+    }
+
+    function addTipBox(title, content) {
+        if (!domCache.titleContainer || document.querySelector('.tip-box')) return;
+
+        const tipBox = document.createElement('div');
+        tipBox.className = 'tip-box';
+        tipBox.innerHTML = `
+            <span class="tip-title">${title} </span>
+            <a class="show-more" href="#">Show More ▼</a>
+            <div class="tip-details" style="display: none; margin-top: 8px;">${content}</div>
+        `;
+
+        tipBox.style.cssText = `
+            padding: 10px 14px;
+            background-color: #f0f4ff;
+            border-radius: 8px;
+            border-left: 4px solid #4949fc;
+            margin-bottom: 10px;
+            font-size: 14px;
+        `;
+
+        tipBox.addEventListener('click', function(e) {
+            if (e.target.classList.contains('show-more')) {
+                e.preventDefault();
+                const details = tipBox.querySelector('.tip-details');
+                const isVisible = details.style.display === 'block';
+                details.style.display = isVisible ? 'none' : 'block';
+                e.target.textContent = isVisible ? 'Show More ▼' : 'Show Less ▲';
+            }
+        });
+
+        domCache.titleContainer.before(tipBox);
+    }
+
+    function setupComposerTitle(icon) {
+        const composerTitle = document.querySelector('.action-title');
+        if (!composerTitle) return;
+
+        composerTitle.style.cssText = 'font-size: 17px; color: #4949fc; font-weight: bold;';
+        
+        if (!document.querySelector('.ask-icon')) {
+            const askIcon = document.createElement('span');
+            askIcon.className = 'ask-icon';
+            askIcon.textContent = icon;
+            askIcon.style.cssText = 'font-size: 17px; margin-right: 4px;';
+            composerTitle.before(askIcon);
+        }
+    }
+
+    function createField(id, labelText, type, placeholder = '', required = false) {
+        const fieldWrapper = document.createElement('div');
+        fieldWrapper.className = 'field-group';
+        fieldWrapper.innerHTML = `
+            <label>${labelText}${required ? '<span style="color: red;"> *</span>' : ''}</label>
+            <${type === 'select' ? 'select' : 'input'} class="custom-field-input ${id}" ${type !== 'select' ? `type="${type}"` : ''} placeholder="${placeholder}" ${required ? 'required' : ''}>
+            ${type === 'select' ? placeholder : ''}
+            </${type === 'select' ? 'select' : 'input'}>
+        `;
+        return fieldWrapper;
+    }
+
+    function addResponsiveStyles() {
+        if (document.querySelector('#composer-styles')) return;
+        
+        const style = document.createElement('style');
+        style.id = 'composer-styles';
+        style.textContent = `
+            .field-row { display: flex; gap: 10px; margin-bottom: 10px; }
+            .field-group { flex: 1; min-width: 0; }
+            .field-group label { display: block; font-weight: bold; margin-bottom: 4px; font-size: 14px; }
+            .field-group input, .field-group select, .field-group textarea { 
+                width: 100%; padding: 6px; box-sizing: border-box; font-size: 14px; 
+            }
+            .field-group input[type="file"] { padding: 2px; border: 1px solid lightgray; border-radius: 2px; }
+            .section-header { 
+                font-size: 15px; font-weight: bold; color: #4949fc; 
+                padding: 4px 0; border-bottom: 1px solid gray; margin: 10px 0; 
+            }
+            @media (max-width: 768px) {
+                .field-row { flex-direction: column; gap: 8px; }
+                .tip-box { font-size: 13px !important; padding: 8px 10px !important; }
+                .field-group label { font-size: 13px; }
+                .field-group input, .field-group select { font-size: 13px; padding: 8px; }
+            }
+            @media (max-width: 480px) {
+                .tip-box { font-size: 12px !important; padding: 6px 8px !important; }
+                .field-group input, .field-group select { font-size: 12px; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Use Case Composer
+    function initializeUseCaseComposer() {
+        addTipBox('💡 Need help structuring your use case?', 
+            'Use cases share real implementations across domains, software, or technical areas. This form helps you document how you solved a business or technical problem.<div style="margin-top: 8px;"><strong>Example 1:</strong> "Automated Teamcenter-to-SAP BOM transfer using REST API"</div><span><strong>Example 2:</strong> "Used Salesforce Flow Builder to auto-update opportunity stages"</span><div style="margin-top: 8px;">Clearly describe the challenge, what was built, how it was implemented, and any measurable benefit.</div>');
+        
+        setupComposerTitle('📌');
+        
+        const inputUsecase = document.querySelector('.title-input input');
+        if (inputUsecase) {
+            inputUsecase.placeholder = 'E.g. Automated BOM sync between Teamcenter and SAP using REST API';
+        }
+
+        const inputLabel = document.querySelector('.title-input');
+        if (inputLabel && !document.querySelector('.usecase-title-label')) {
+            const label = document.createElement('label');
+            label.innerHTML = 'Step 1: Use Case Title <span style="color: gray; font-size: 12px; margin-left: 4px">(Summarize the outcome in one line)</span>';
+            label.className = 'usecase-title-label';
+            label.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            inputLabel.before(label);
+        }
+
+        if (domCache.titleContainer && !document.querySelector('.desc-label-usecase')) {
+            const descLabel = document.createElement('label');
+            descLabel.innerHTML = 'Step 2: Problem & Objective <span style="color: gray; font-size: 12px; margin-left: 4px;">(Describe the initial challenge and business/technical objective)</span>';
+            descLabel.className = 'desc-label-usecase';
+            descLabel.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            domCache.titleContainer.after(descLabel);
+        }
+
+        const textarea = document.querySelector('.d-editor-textarea-wrapper textarea');
+        if (textarea) {
+            textarea.placeholder = 'Explain the business or technical challenge, and your goal or what needed to be solved...';
+        }
+
+        const textareaWrapper = document.querySelector('.d-editor-textarea-wrapper');
+        if (textareaWrapper && !document.querySelector('.use-second-textarea-wrapper')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'use-second-textarea-wrapper';
+            wrapper.innerHTML = `
+                <label class="use-second-textarea-label" style="display: block; font-weight: bold; margin: 10px 0 4px 0;">
+                    Step 3: Solution & Implementation <span style="color: gray; font-size: 12px; margin-left: 4px;">(Describe what was built, integrated, or configured)</span>
+                </label>
+                <textarea placeholder="Describe APIs, scripts, tools, configuration, or integrations used to implement the solution..." rows="5" style="padding: 10px; width: 100%; border-radius: 2px; box-sizing: border-box;"></textarea>
+            `;
+            textareaWrapper.after(wrapper);
+        }
+    }
+
+    // Discussion Composer
+    function initializeDiscussionComposer() {
+        addTipBox('💡 Need help structuring your discussion?', 
+            'Discussions explore open-ended ideas, trade-offs, or product strategies. You can frame your discussion around a domain, a product, or a technical topic.<div style="margin-top: 8px;"><strong>Example 1:</strong> "What are pros/cons of integrating Salesforce with Azure AD vs Okta?"</div><span><strong>Example 2:</strong> "Which data model is better for variant BOMs in Teamcenter: structure or classification?"</span><div style="margin-top: 8px;">Use this form when you\'re looking to spark thoughtful conversation and input from others.</div>');
+        
+        setupComposerTitle('💬');
+        
+        const inputDiscussion = document.querySelector('.title-input input');
+        if (inputDiscussion) {
+            inputDiscussion.placeholder = 'E.g., When should I use parallel vs serial approval in SAP workflows?';
+        }
+
+        const inputLabel = document.querySelector('.title-input');
+        if (inputLabel && !document.querySelector('.discussion-title-label')) {
+            const label = document.createElement('label');
+            label.innerHTML = 'Step 1: Discussion Title <span style="color: gray; font-size: 12px; margin-left: 4px">(Summarize your core question or theme)</span>';
+            label.className = 'discussion-title-label';
+            label.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            inputLabel.before(label);
+        }
+
+        if (domCache.titleContainer && !document.querySelector('.desc-label-discussion')) {
+            const descLabel = document.createElement('label');
+            descLabel.innerHTML = 'Step 2: Background & Context <span style="color: gray; font-size: 12px; margin-left: 4px;">(Why are you asking? What\'s the system, case, or need?)</span>';
+            descLabel.className = 'desc-label-discussion';
+            descLabel.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            domCache.titleContainer.after(descLabel);
+        }
+
+        const textarea = document.querySelector('.d-editor-textarea-wrapper textarea');
+        if (textarea) {
+            textarea.placeholder = 'Briefly explain the system, problem, or scenario you\'re thinking through...';
+        }
+
+        const textareaWrapper = document.querySelector('.d-editor-textarea-wrapper');
+        if (textareaWrapper && !document.querySelector('.dis-second-textarea-wrapper')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'dis-second-textarea-wrapper';
+            wrapper.innerHTML = `
+                <label class="dis-second-textarea-label" style="display: block; font-weight: bold; margin: 10px 0 4px 0;">
+                    Step 3: Insight You're Seeking <span style="color: gray; font-size: 12px; margin-left: 4px;">(What type of input or perspective do you need?)</span>
+                </label>
+                <textarea placeholder="Are you seeking opinions, strategies, architecture trade-offs, or experience-based input?" rows="5" style="padding: 10px; width: 100%; border-radius: 2px; box-sizing: border-box;"></textarea>
+            `;
+            textareaWrapper.after(wrapper);
+        }
+    }
+
+    // Bulletin Composer
+    function initializeBulletinComposer() {
+        addTipBox('💡 Need help writing a bulletin?', 
+            'Bulletins are ideal for quick product updates, release announcements, security advisories, or breaking system news. Keep it short and focused. You may link to an external bulletin or summarize it.<div style="margin-top: 8px;"><strong>Example:</strong> "Salesforce Spring \'25 release adds native GraphQL support"</div>');
+        
+        setupComposerTitle('📢');
+
+        const composerContainer = document.querySelector('.d-editor-textarea-wrapper');
+        if (!composerContainer || document.querySelector('.custom-bulletin-fields')) return;
+
+        const inputLabel = document.querySelector('.title-input');
+        if (inputLabel && !document.querySelector('.input-label-bulletin')) {
+            const label = document.createElement('label');
+            label.textContent = 'Bulletin Title';
+            label.className = 'input-label-bulletin';
+            label.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            inputLabel.before(label);
+        }
+
+        if (!document.querySelector('.desc-label-bulletin')) {
+            const descLabel = document.createElement('label');
+            descLabel.textContent = 'Bulletin Description';
+            descLabel.className = 'desc-label-bulletin';
+            descLabel.style.cssText = 'display: block; font-weight: bold; margin-bottom: 4px;';
+            composerContainer.before(descLabel);
+        }
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-bulletin-fields';
+        wrapper.innerHTML = `
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Release Name</label>
+                    <input class="custom-field-input releaseName" type="text" placeholder="e.g. Teamcenter 15.1">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Release Date</label>
+                    <input class="custom-field-input releaseDate" type="date">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Bulletin Thumbnail</label>
+                    <input class="custom-field-input thumbnail" type="file">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Source</label>
+                    <input class="custom-field-input sourceBulletin" type="text" placeholder="Source (e.g. siemens.com)">
+                </div>
+                <div class="field-group">
+                    <label>Author</label>
+                    <input class="custom-field-input authorBulletin" type="text" placeholder="Publisher or Author">
+                </div>
+            </div>
+        `;
+        wrapper.style.margin = '10px 0';
+        composerContainer.after(wrapper);
+    }
+
+    // Feedback Composer
+    function initializeFeedbackComposer() {
+        const composerModel = api.container.lookup("controller:composer").model;
+        if (composerModel && composerModel.tags && composerModel.tags.length === 0) {
+            composerModel.set("tags", ["feedback"]);
+        }
+
+        setupComposerTitle('💬');
+
+        const inputFeedback = document.querySelector('.title-input input');
+        if (inputFeedback) {
+            inputFeedback.placeholder = 'Give your feedback a title or paste a link...';
+        }
+
+        const textareaFeedback = document.querySelector('.d-editor-textarea-wrapper textarea');
+        if (textareaFeedback) {
+            textareaFeedback.placeholder = 'Drop your feedback here — big or small, we care about it all!';
+        }
+
+        const textareaWrapper = document.querySelector('.d-editor-textarea-wrapper');
+        if (textareaWrapper && !document.querySelector('.emoji-wrap')) {
+            const emojiWrap = document.createElement('div');
+            emojiWrap.className = 'emoji-wrap';
+            emojiWrap.style.cssText = 'padding: 4px; width: 100%; display: flex; justify-content: space-evenly; align-items: center;';
+            
+            const emojis = {"😍": "Love It!", "😐": "It's Okay", "😠": "Needs Improvement"};
+            for (const [emoji, title] of Object.entries(emojis)) {
+                const emojiBtn = document.createElement('button');
+                emojiBtn.className = 'emoji-btn';
+                emojiBtn.textContent = emoji;
+                emojiBtn.title = title;
+                emojiBtn.style.cssText = 'margin: 2px; font-size: 24px; background: none; border: none; cursor: pointer;';
+                emojiWrap.appendChild(emojiBtn);
+            }
+            textareaWrapper.before(emojiWrap);
+        }
+    }
+
+    // Job Composer
+    function initializeJobComposer() {
+        addTipBox('💡 Need help writing a quality job post?', 
+            'Use specific job titles, domain/software (e.g., SAP, Salesforce, Teamcenter), and include work mode, job type, and contact info. Add certifications, benefits, or URLs to make the job clear and attractive.<div style="margin-top: 8px;"><strong>Example:</strong> "Teamcenter Integration Consultant (Remote, Contract) with 5+ years experience"</div>');
+
+        // Hide category and tags inputs
+        const catInput = document.querySelector('.category-input');
+        const tagInput = document.querySelector('.tags-input');
+        if (catInput) catInput.style.display = 'none';
+        if (tagInput) tagInput.style.display = 'none';
+
+        const inputTag = document.getElementById('reply-title');
+        if (inputTag) {
+            inputTag.placeholder = 'e.g., SAP Basis Consultant (Mid-Level), PLM Solution Architect – Teamcenter (Lead)';
+        }
+
+        const composerContainer = document.querySelector('.d-editor-textarea-wrapper');
+        if (!composerContainer || document.querySelector('.custom-job-fields')) return;
+
+        const inputLabelContainer = document.querySelector('.title-input');
+        if (inputLabelContainer && !document.querySelector('.section-inputwrap')) {
+            const sectionWrap = document.createElement('div');
+            sectionWrap.className = 'section-inputwrap';
+            sectionWrap.innerHTML = `
+                <div class="section-header">Basic Job Details</div>
+                <label style="display: block; margin-top: 10px; font-weight: bold;">Job Title <span style="color: red;"> *</span></label>
+            `;
+            inputLabelContainer.before(sectionWrap);
+        }
+
+        // Create comprehensive job form
+        const wrapper = document.createElement('div');
+        wrapper.className = 'custom-job-fields';
+        wrapper.innerHTML = `
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Company Name <span style="color: red;"> *</span></label>
+                    <input class="custom-field-input company" type="text" placeholder="e.g., Accenture, Deloitte" required>
+                </div>
+            </div>
+            
+            <div class="section-header">Classification</div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Domain <span style="color: red;"> *</span></label>
+                    <select class="custom-field-input domain" required>
+                        <option value="">Select domain</option>
+                        <option value="ERP">ERP</option>
+                        <option value="CRM">CRM</option>
+                        <option value="PLM">PLM</option>
+                        <option value="SCM">SCM</option>
+                        <option value="MES">MES</option>
+                        <option value="BA/BI">BA/BI</option>
+                        <option value="Cloud Platforms">Cloud Platforms</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>Software</label>
+                    <input class="custom-field-input software" type="text" placeholder="e.g., SAP S/4HANA, Teamcenter">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Work Mode <span style="color: red;"> *</span></label>
+                    <select class="custom-field-input work-mode" required>
+                        <option value="">Select work mode</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="On-Site">On-Site</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>Job Type <span style="color: red;"> *</span></label>
+                    <select class="custom-field-input job-type" required>
+                        <option value="">Select job type</option>
+                        <option value="Full-Time">Full-Time</option>
+                        <option value="Part-Time">Part-Time</option>
+                        <option value="Contractor">Contractor</option>
+                        <option value="Internship">Internship</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="section-header">Compensation</div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Compensation Type <span style="color: red;"> *</span></label>
+                    <select class="custom-field-input compensation-type" required>
+                        <option value="">Select type</option>
+                        <option value="Yearly">Yearly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Hourly">Hourly</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>Compensation Range</label>
+                    <input class="custom-field-input compensation-range" type="text" placeholder="e.g., $80,000 - $100,000/year">
+                </div>
+            </div>
+            
+            <div class="section-header">Experience & Skills</div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Seniority Level <span style="color: red;"> *</span></label>
+                    <select class="custom-field-input exp" required>
+                        <option value="">Select level</option>
+                        <option value="Intern/Trainee (0–1 year experience)">Intern/Trainee (0–1 year)</option>
+                        <option value="Entry-Level (1–2 years experience)">Entry-Level (1–2 years)</option>
+                        <option value="Mid-Level Consultant (2–4 years experience)">Mid-Level (2–4 years)</option>
+                        <option value="Experienced Consultant (4–7 years experience)">Experienced (4–7 years)</option>
+                        <option value="Senior Consultant (7–10 years experience)">Senior (7–10 years)</option>
+                        <option value="Lead/Principal Consultant (10-15 years experience)">Lead/Principal (10-15 years)</option>
+                        <option value="Distinguished Principal Consultant(15+ years experience)">Distinguished (15+ years)</option>
+                    </select>
+                </div>
+                <div class="field-group">
+                    <label>Skills</label>
+                    <input class="custom-field-input skills" type="text" placeholder="e.g., SAP, SQL, REST API">
+                </div>
+            </div>
+            
+            <div class="section-header">Job Details</div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Location</label>
+                    <input class="custom-field-input location" type="text" placeholder="e.g. Remote or New York">
+                </div>
+                <div class="field-group">
+                    <label>Duration</label>
+                    <input class="custom-field-input duration" type="text" placeholder="e.g. 6 months">
+                </div>
+            </div>
+            
+            <div class="section-header">Description</div>
+            <label style="display: block; font-weight: bold; margin: 10px 0 4px 0;">Job Description</label>
+        `;
+
+        const descPlace = document.querySelector('.d-editor-textarea-wrapper textarea');
+        if (descPlace) {
+            descPlace.placeholder = 'Describe responsibilities, expectations, and duties...';
+        }
+
+        composerContainer.before(wrapper);
+
+        // Add additional fields after description
+        const additionalFields = document.createElement('div');
+        additionalFields.innerHTML = `
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Qualifications</label>
+                    <input class="custom-field-input qualification" type="text" placeholder="e.g., PMP, ERP Certification">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Benefits</label>
+                    <input class="custom-field-input benefits" type="text" placeholder="e.g., Health, PTO, Remote option">
+                </div>
+            </div>
+            
+            <div class="section-header">Application Info</div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>External Apply URL</label>
+                    <input class="custom-field-input external-url" type="text" placeholder="https://...">
+                </div>
+                <div class="field-group">
+                    <label>Contact Email <span style="color: red;"> *</span></label>
+                    <input class="custom-field-input contact-email" type="email" placeholder="e.g. job@company.com" required>
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Upload Company Logo</label>
+                    <input class="custom-field-input upload-logo" type="file">
+                </div>
+                <div class="field-group">
+                    <label>Posting Date</label>
+                    <input class="custom-field-input posting-date" type="date">
+                </div>
+            </div>
+            <div class="field-row">
+                <div class="field-group">
+                    <label>Expiry Date</label>
+                    <input class="custom-field-input expiry-date" type="date">
+                </div>
+            </div>
+        `;
+        composerContainer.after(additionalFields);
+    }
+
+    function initializeComposer() {
+        if (isInitialized) return;
+        
+        updateCache();
+        if (!domCache.composerContainer) return;
+
+        const lastPText = getLastParagraphText();
+        if (!lastPText) return;
+
+        addResponsiveStyles();
+
+        if (/Share\s+Use\s+Case/.test(lastPText)) {
+            initializeUseCaseComposer();
+        } else if (/Start\s+Discussion/.test(lastPText)) {
+            initializeDiscussionComposer();
+        } else if (/Post\s+Bulletin/.test(lastPText)) {
+            initializeBulletinComposer();
+        } else if (/Create\s+Feedback/.test(lastPText)) {
+            initializeFeedbackComposer();
+        } else if (/Post\s+Job/.test(lastPText)) {
+            initializeJobComposer();
+        } else {
+            return; // No matching composer type
+        }
+
+        isInitialized = true;
+        clearInterval(intervalId);
+    }
+
+    intervalId = setInterval(initializeComposer, 1000);
+
+    $(document).on('click', '.topic-footer-main-buttons button.btn.btn-icon-text.btn-primary.create, .widget-button.btn-flat.reply.create.fade-out.btn-icon-text', function() {
+        $('.save-or-cancel a.new-button').hide();
+        $('.save-or-cancel button').show();
+        clearInterval(intervalId);
+    });
+
+    $(window).on('beforeunload', () => {
+        clearInterval(intervalId);
+    });
+});
+// Close the script tag
+</script>
+
+
