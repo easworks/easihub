@@ -1,0 +1,1082 @@
+<!--Meta tags and external resources -->
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+<!--External Scripts -->
+<script src="https://files.extrastatic.dev/community/on-discourse.js"></script>
+<script src="https://files.extrastatic.dev/community/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" integrity="sha512-hUhvpC5f8cgc04OZb55j0KNGh4eh7dLxd/dPSJ5VyzqDWxsayYbojWyl5Tkcgrmb/RVKCRJI1jNlRbVP4WWC4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!--External Stylesheets - Single Font Awesome import -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="https://files.extrastatic.dev/community/index.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!--Utility Functions -->
+<script>
+  // Consolidated utility functions
+  const EasihubUtils = {
+    // Tab functionality for Why section
+    showContent: function (id) {
+      document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+      document.querySelectorAll('.tab-buttons button').forEach(button => button.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.currentTarget.classList.add('active');
+    },
+
+    // FAQ Toggle functionality
+    toggleTip: function (event) {
+      event.preventDefault();
+      const box = document.getElementById('tipDetails');
+      const toggleText = document.getElementById('toggleText');
+      const arrow = document.getElementById('arrow');
+      if (box.style.display === 'none') {
+        box.style.display = 'block';
+        toggleText.innerText = 'Show less';
+        arrow.innerText = '▲';
+      } else {
+        box.style.display = 'none';
+        toggleText.innerText = 'Show more';
+        arrow.innerText = '▼';
+      }
+    },
+
+    toggleFAQ: function (item) {
+      item.classList.toggle("expanded");
+    },
+
+    toggleHelp: function (item) {
+      item.classList.toggle("expanded");
+    },
+
+    // Date formatting utility
+    getMomentDate: function (date) {
+      if (date.includes('<a')) return date;
+      const converted = moment(date).format("LL");
+      if (converted === "Invalid date") {
+        return date;
+      } else {
+        return converted;
+      }
+    },
+
+    // Sidebar toggle functionality
+    toggleSidebar: function () {
+      const sidebar = document.querySelector('.sidebar-wrapper');
+      const customBanner = document.querySelector('.custom-banner1');
+      const body = document.body;
+      const mobileDefault = document.querySelector('.revamped.menu-panel.slide-in')
+
+      // Only show sidebar on mobile when toggle is clicked
+      if (this.isMobile()) {
+        if (sidebar) {
+          sidebar.style.display = 'none';
+        }
+        if (customBanner) {
+          customBanner.classList.toggle('sidebar-visible');
+        }
+        if (mobileDefault) {
+          mobileDefault.style.display = 'none';
+        }
+        if (body) {
+          body.classList.toggle('sidebar-visible');
+        }
+      } else {
+        // Desktop behavior
+        if (sidebar) {
+          sidebar.classList.toggle('sidebar-visible');
+        }
+        if (customBanner) {
+          customBanner.classList.toggle('sidebar-visible');
+        }
+        if (body) {
+          body.classList.toggle('sidebar-visible');
+        }
+      }
+    },
+
+    // Breakpoint detection - consolidated
+    isDesktop: function () {
+      return window.innerWidth >= 1024;
+    },
+
+    isMobile: function () {
+      return window.innerWidth < 768;
+    },
+
+    isTablet: function () {
+      return window.innerWidth >= 768 && window.innerWidth < 1024;
+    },
+
+    // Color code generation for events
+    getEventLabelColor: function (eventType) {
+      let colorCodes = [
+        { key: "conference", value: "#007bff" },
+        { key: "webinar", value: "#28a745" },
+        { key: "seminar", value: "#17a2b8" },
+        { key: "workshop", value: "#ffc107" },
+        { key: "summit", value: "#6610f2" },
+        { key: "meetup", value: "#fd7e14" },
+        { key: "roundtable", value: "#6f42c1" },
+        { key: "launch event", value: "#e83e8c" },
+        { key: "lecture series", value: "#20c997" },
+        { key: "bootcamp", value: "#343a40" },
+        { key: "technical training", value: "#17a2b8" },
+        { key: "panel discussion", value: "#dc3545" }
+      ];
+
+      const findColor = colorCodes.find(x => x.key === eventType.toLowerCase());
+      if (findColor) {
+        return findColor.value;
+      } else {
+        const rgb = this.hexToRgb(colorCodes[colorCodes.length - 1].value);
+        rgb.r = (rgb.r + 40) % 255;
+        rgb.g = (rgb.g + 120) % 255;
+        rgb.b = (rgb.b + 200) % 255;
+        const hexValue = this.rgbToHex(rgb.r, rgb.g, rgb.b);
+        colorCodes.push({ key: eventType.toLowerCase(), value: hexValue });
+        return hexValue;
+      }
+    },
+
+    hexToRgb: function (hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    },
+
+    rgbToHex: function (r, g, b) {
+      return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
+    },
+
+    componentToHex: function (c) {
+      var hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
+    },
+
+    // Social share dialog handling
+    openShareDialog: function (url, title) {
+      const dialog = document.querySelector('dialog');
+      if (dialog) {
+        dialog.querySelector('span').textContent = title || '';
+
+        // Set share URLs
+        const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(title || '')}`;
+        const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+        const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title || '')}`;
+        const instagramUrl = `https://www.instagram.com/`;
+
+        dialog.querySelector('#google').href = googleUrl;
+        dialog.querySelector('#linkedin').href = linkedinUrl;
+        dialog.querySelector('#facebook').href = facebookUrl;
+        dialog.querySelector('#twitter').href = twitterUrl;
+        dialog.querySelector('#instagram').href = instagramUrl;
+
+        dialog.showModal();
+      }
+    },
+
+    closeShareDialog: function () {
+      const dialog = document.querySelector('dialog');
+      if (dialog && dialog.open) {
+        dialog.close();
+      }
+    },
+
+    // Performance monitoring
+    startPerformanceMonitoring: function () {
+      if (window.performance && window.performance.mark) {
+        window.performance.mark('easihub-start');
+        window.addEventListener('load', () => {
+          window.performance.mark('easihub-end');
+          window.performance.measure('easihub-load-time', 'easihub-start', 'easihub-end');
+          const measure = window.performance.getEntriesByName('easihub-load-time')[0];
+          console.log(`Page load time: ${measure.duration.toFixed(2)}ms`);
+        });
+      }
+    }
+  };
+
+  // Initialize performance monitoring
+  EasihubUtils.startPerformanceMonitoring();
+
+  // Expose functions to global scope for backward compatibility
+  function showContent(id) { EasihubUtils.showContent(id); }
+  function toggleTip(event) { EasihubUtils.toggleTip(event); }
+  function toggleFAQ(item) { EasihubUtils.toggleFAQ(item); }
+  function toggleHelp(item) { EasihubUtils.toggleHelp(item); }
+  function getMomentDate(date) { return EasihubUtils.getMomentDate(date); }
+  function getEventLabelColor(eventType) { return EasihubUtils.getEventLabelColor(eventType); }
+</script>
+
+<!--Main Theme JavaScript -->
+<script type="text/discourse-plugin" version="0.8">
+   // Categories and API functionality
+   const categories = async () => {
+     const response = await fetch("/site.json");
+     if (!response.ok) {
+       throw new Error(`HTTP error! Status: ${response.status}`);
+     }
+     const result = await response.json();
+    //  console.log("Response from server:", result);
+     return result;
+   };
+
+   let categoriesList = [];
+   let showMore = false;
+   let totalRecords = 0;
+   let resultTds;
+
+   // API Functions
+   const responseJobsApi = async (data) => {
+     try {
+       const response = await fetch("https://easihub.com/erp_db/api/erp-collections/jobs", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(data)
+       });
+       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+       return await response.json();
+     } catch (error) {
+       console.error("Error making POST request:", error);
+     }
+   };
+
+   const responseJobDetailsApi = async (data) => {
+     try {
+       const response = await fetch("https://easihub.com/erp_db/api/erp-collections/jobs/details", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(data)
+       });
+       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+       const result = await response.json();
+       try {
+         const responseLogo = await fetch(result.c_logo);
+         if (!responseLogo.ok) result.c_logo = '';
+       } catch(e) {
+         result.c_logo = '';
+       }
+       return result;
+     } catch (error) {
+       console.error("Error making POST request:", error);
+     }
+   };
+
+   const responseApi = async (data) => {
+     try {
+       const response = await fetch("https://easihub.com/erp_db/api/erp-collections", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(data)
+       });
+       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+       return await response.json();
+     } catch (error) {
+       console.error("Error making POST request:", error);
+     }
+   };
+
+   const responseApiCount = async (data) => {
+     try {
+       const response = await fetch("https://easihub.com/erp_db/api/erp-collections/count", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(data)
+       });
+       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+       return +await response.json();
+     } catch (error) {
+       console.error("Error making POST request:", error);
+     }
+   };
+
+   const responseJobsApiCount = async (data) => {
+     try {
+       const response = await fetch("https://easihub.com/erp_db/api/erp-collections/jobs/count", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(data)
+       });
+       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+       return +await response.json();
+     } catch (error) {
+       console.error("Error making POST request:", error);
+     }
+   };
+
+   // Page change handlers
+   api.onPageChange(async () => {
+     // Main content loading logic
+     if (document.querySelector(".tip-box-collapsed")) {
+       const el = document.querySelector(".tip-box-collapsed");
+       el.remove();
+     }
+
+     // Setup sidebar toggle functionality
+     const sidebarToggle = document.querySelector('.header-sidebar-toggle button');
+     if (sidebarToggle && !sidebarToggle.hasAttribute('data-sidebar-listener')) {
+      sidebarToggle.addEventListener('click', function(e) {
+         e.preventDefault();
+         EasihubUtils.toggleSidebar();
+      });
+      sidebarToggle.setAttribute('data-sidebar-listener', 'true');
+     }
+     
+     // Intercept hamburger menu click on mobile
+     document.addEventListener('click', function(e) {
+           if (EasihubUtils.isMobile() && e.target.closest('.hamburger-dropdown')) {
+             setTimeout(() => {
+               const customBanner = document.querySelector('.custom-banner1');
+               if (customBanner && !customBanner.classList.contains('sidebar-visible')) {
+                 customBanner.classList.add('sidebar-visible');
+                 document.body.classList.add('sidebar-visible');
+               }
+             }, 10);
+           }
+         });
+     
+     // Create sidebar backdrop if it doesn't exist
+     if (!document.querySelector('.sidebar-backdrop')) {
+       const backdrop = document.createElement('div');
+       backdrop.className = 'sidebar-backdrop';
+       backdrop.addEventListener('click', function() {
+         if (document.body.classList.contains('sidebar-visible')) {
+           EasihubUtils.toggleSidebar();
+         }
+       });
+       document.body.appendChild(backdrop);
+     }
+
+     // Working MongoDB data loading logic from original theme
+     let colorCodes = [
+       { key: "conference", value: "#007bff" },
+       { key: "webinar", value: "#28a745" },
+       { key: "seminar", value: "#17a2b8" },
+       { key: "workshop", value: "#ffc107" },
+       { key: "summit", value: "#6610f2" },
+       { key: "meetup", value: "#fd7e14" },
+       { key: "roundtable", value: "#6f42c1" },
+       { key: "launch event", value: "#e83e8c" },
+       { key: "lecture series", value: "#20c997" },
+       { key: "bootcamp", value: "#343a40" },
+       { key: "technical training", value: "#17a2b8" },
+       { key: "panel discussion", value: "#dc3545" }
+     ];
+     let page_size = 9;
+     let page_num = 1;
+
+     function hexToRgb(hex) {
+       var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+       return result ? {
+         r: parseInt(result[1], 16),
+         g: parseInt(result[2], 16),
+         b: parseInt(result[3], 16)
+       } : null;
+     }
+
+     function componentToHex(c) {
+       var hex = c.toString(16);
+       return hex.length == 1 ? "0" + hex : hex;
+     }
+
+     function rgbToHex(r, g, b) {
+       return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+     }
+
+     function getEventLabelColor(eventType) {
+       const findColor = colorCodes.find((x) => x.key === eventType.toLowerCase());
+       if (findColor) {
+         return findColor.value;
+       } else {
+         const rgb = hexToRgb(colorCodes[colorCodes.length - 1].value);
+         rgb.r = (rgb.r + 40) % 255;
+         rgb.g = (rgb.g + 120) % 255;
+         rgb.b = (rgb.b + 200) % 255;
+         const hexValue = rgbToHex(rgb.r, rgb.g, rgb.b);
+         colorCodes.push({ key: eventType.toLowerCase(), value: hexValue });
+         return hexValue;
+       }
+     }
+
+     const templateEvent = ({ title, software_name, domain_name, source_name, description, author_name, start_date, end_date, event_type, url, thumbnail_url }) => {
+       author_name = author_name == null ? '' : author_name;
+       start_date = start_date == null ? `<a target="_blank" href="${url}">View Details</a>` : start_date;
+       end_date = end_date == null ? `<a target="_blank" href="${url}">View Details</a>` : end_date;
+       
+       return `
+         <tr data-category-id="69" data-notification-level="regular" class="has-description has-logo">
+         <td class="category" style="--category-badge-color: #231f20">
+           <div>
+             <h3 class="ember-view">
+               <a target="_blank" class="category-title-link" href="${url}">
+                 <div class="category-logo aspect-image">
+                   <div class="event-label" style="background:${getEventLabelColor(event_type || "Event")};">${event_type || "Event"}</div>
+                   <img src="${thumbnail_url}" width="256" height="256" alt="" />
+                 </div>
+                 <div class="category-text-title" style="margin:1em 0 0.5em 0;color:rgba(0,0,0,.6);display:flex; font-size:0.8em;">
+                   <span>${domain_name}   |   ${software_name}</span>
+                 </div>
+                 <div style="order:3;font-size:1.2em;">
+                   <span class="category-name">
+                     <span class="badge-category__wrapper" style="--category-badge-color: #231f20; --category-badge-text-color: #ffffff;">
+                       <span class="badge-category --style-square" title="${description}">
+                         <span class="badge-category__name">${title}</span>
+                       </span>
+                     </span>
+                   </span>
+                 </div>
+               </a>
+             </h3>
+             <div style="display:flex; font-weight:100;flex-shrink:0;">
+               <span style="color:rgb(73, 73, 252);">Start: ${getMomentDate(start_date)}</span>
+             </div>
+             <div style="display:flex; font-weight:100;flex-shrink:0;">
+               <span style="color:rgb(73, 73, 252);">End: ${getMomentDate(end_date)}</span>
+             </div>
+           </div>
+           <div class="category-description">
+             <span>${description}</span>
+           </div>
+           <div style="display: flex; justify-content: space-between;margin-right:1em;">
+             <div class="category-description" style="margin-bottom:0;font-weight:700">${source_name}</div>
+             <div class="category-description" style="margin-bottom:0">|</div>
+             <div class="category-description" style="margin-bottom:0">${author_name}</div>
+             <button id="social" style="color:rgb(73, 73, 252)" onclick="EasihubUtils.openShareDialog('${url}', '${title}')"><i class="fas fa-share-alt"></i></button>
+           </div>
+         </td></tr>
+       `;
+     };
+
+     const templateArticle = ({ title = "Article Title", software_name, domain_name, source_name, description = "Lorem ipsum dolor sit amet consectetur adipisicing elit.", author_name, topic_date, url, thumbnail_url }) => {
+       author_name = author_name == null || author_name?.trim() == "null" ? '' : author_name;
+       topic_date = topic_date == null ? `<a target="_blank" href="${url}" style="width: 100%;margin-top:10px;color: rgb(0,220,220);">View Details</a>` : topic_date;
+       
+       return `
+         <tr data-category-id="69" data-notification-level="regular" class="has-description has-logo">
+         <td class="category" style="--category-badge-color: #231f20">
+             <h3 class="ember-view">
+               <a target="_blank" class="category-title-link" href="${url}">
+                 <div class="category-logo aspect-image">
+                   <img src="${thumbnail_url}" width="256" height="256" alt="" />
+                 </div>
+                 <div class="category-text-title" style="margin:1em 0 0.5em 0;color:rgba(0,0,0,.6);display:flex; font-size:0.8em;">
+                   <span>${domain_name}   |   ${software_name}</span>
+                 </div>
+                 <div style="order:3;font-size:1.2em;">
+                   <span class="category-name">
+                     <span class="badge-category__wrapper" style="--category-badge-color: #231f20; --category-badge-text-color: #ffffff;">
+                       <span class="badge-category --style-square" title="${description}">
+                         <span class="badge-category__name">${title}</span>
+                       </span>
+                     </span>
+                   </span>
+                 </div>
+                 <div class="category-text-title" style="margin:0 0 0.5em 0;display:flex; font-size:0.8em; order:2;">
+                   <span style="color:rgb(0,220,220);">${getMomentDate(topic_date)}</span>
+                 </div>
+               </a>
+             </h3>
+             <div class="category-description">
+               <span>${description}</span>
+             </div>
+             <div style="display: flex; justify-content: space-between;margin-right:1em;">
+               <div class="category-description" style="margin-bottom:0;font-weight:700">${source_name}</div>
+               <div class="category-description" style="margin-bottom:0">|</div>
+               <div class="category-description" style="margin-bottom:0">${author_name}</div>
+               <button id="social" style="color:rgb(73, 73, 252)" onclick="EasihubUtils.openShareDialog('${url}', '${title}')"><i class="fas fa-share-alt"></i></button>
+             </div>
+           </td></tr>
+       `;
+     };
+
+     const templateBulletin = ({ title = "Article Title", software_name, version_name, domain_name, source_name, description = "Lorem ipsum dolor sit amet consectetur adipisicing elit.", author_name, release_date, topic_date, url, thumbnail_url }) => {
+       author_name = author_name == null ? '' : author_name;
+       version_name = version_name == null ? '' : version_name;
+      release_date = release_date == null ? `<a target="_blank" href="${url}">View Details</a>` : release_date;
+       topic_date = topic_date == null ? `<a target="_blank" href="${url}">View Details</a>` : topic_date;
+       
+       return `
+         <tr data-category-id="69" data-notification-level="regular" class="has-description has-logo">
+         <td class="category" style="--category-badge-color: #231f20">
+             <h3 class="ember-view">
+               <a target="_blank" class="category-title-link" href="${url}">
+                 <div class="category-logo aspect-image">
+                   <img src="${thumbnail_url}" width="256" height="256" alt="" />
+                 </div>
+                 <div class="category-text-title" style="margin:1em 0 0.5em 0;color:rgba(0,0,0,.6);display:flex; font-size:0.8em;">
+                   <span>${domain_name}   |   ${software_name}</span>
+                 </div>
+                 <div style="order:3;font-size:1.2em;">
+                   <span class="category-name">
+                     <span class="badge-category__wrapper" style="--category-badge-color: #231f20; --category-badge-text-color: #ffffff;">
+                       <span class="badge-category --style-square" title="${description}">
+                         <span class="badge-category__name">${title}</span>
+                       </span>
+                     </span>
+                   </span>
+                 </div>
+                 <div class="category-text-title" style="margin:0 0 0.5em 0;display:flex; font-size:0.8em; order:2;">
+                   <span style="color:rgb(0,220,220);">${getMomentDate(topic_date)}</span>
+                 </div>
+               </a>
+             </h3>
+             <div>
+               <div style="display:flex; font-weight:100;flex-shrink:0;">
+                 <span style="color:rgb(73, 73, 252);">${version_name}</span>
+               </div>
+               <div style="display:flex; font-weight:100;flex-shrink:0;">
+                 <span style="color:rgb(73, 73, 252);">Release Date: ${getMomentDate(release_date)}</span>
+               </div>
+             </div>
+             <div class="category-description">
+               <span>${description}</span>
+             </div>
+             <div style="display: flex; justify-content: space-between;margin-right:1em;">
+               <div class="category-description" style="margin-bottom:0;font-weight:700">${source_name}</div>
+               <div class="category-description" style="margin-bottom:0">|</div>
+               ${author_name?.length ? `<div class="category-description" style="margin-bottom:0;width: 100px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">${author_name}</div>` : ""}
+               <button id="social" style="color:rgb(73, 73, 252)" onclick="EasihubUtils.openShareDialog('${url}', '${title}')"><i class="fas fa-share-alt"></i></button>
+             </div>
+           </td></tr>
+       `;
+     };
+
+     const templateJob = ({ _id, job_title, company_name, job_location, employment_type, benefits, apply_url, work_location_type, seniority_level, required_skills, tech_skills, industry, c_logo, posted_date, apply_button_label }) => {
+       posted_date = posted_date == null ? `<a target="_blank" href="${apply_url}">View Details</a>` : posted_date;
+       if (document.querySelector(".sign-up-button")) {
+         apply_url = `/login?redirect_to=${apply_url}`;
+       }
+       const requiredSkills = required_skills.split(',').splice(0, 3).map((x) => `<div class="badge skill">${x}</div>`);
+       const techSkills = tech_skills.split(',').splice(0, 3).map((x) => `<div class="badge tech">${x}</div>`);
+       const industries = industry.split(',').splice(0, 3).map((x) => `<div class="badge industry">${x}</div>`);
+       
+       return `
+         <tr data-category-id="69" data-notification-level="regular" class="has-description has-logo">
+         <td class="category" style="--category-badge-color: #231f20">
+           <a id="jobAnchor" style="cursor:pointer">
+             <input type="hidden" id="jobId" value="${_id}">
+             <div class="job-card">
+               <div class="job-header">
+                 <div class="meta">
+                   <h3>${job_title}</h3>
+                   <span>${company_name}</span>
+                   <span>${job_location}</span>
+                 </div>
+                 <div class="logo">${job_title.substr(0, 1).toUpperCase()}</div>
+               </div>
+               <div class="badges">
+                 <span class="badge meta-temp">${employment_type}</span>
+                 <span class="badge meta-temp">${work_location_type}</span>
+                 <span class="badge meta-temp">${seniority_level}</span>
+                 ${requiredSkills.join('')}
+                 ${techSkills.join('')}
+                 ${industries.join('')}
+               </div>
+               <div class="footer">
+                 <span class="posted-date">${posted_date}</span>
+                 <div class="apply-share-group">
+                   <a class="apply-button" href="#">${apply_button_label}</a>
+                   <button class="share-button" title="Share this job">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a2.5 2.5 0 0 0 0-1.39l7.05-4.11a2.5 2.5 0 1 0-.91-1.65L8 9.66a2.5 2.5 0 1 0 0 4.68l7.14 4.08c.05.03.1.06.16.09a2.5 2.5 0 1 0 2.7-2.43z"/></svg>
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </a>
+         </td></tr>
+       `;
+     };
+
+     const templateJobDetails = ({ job_title, job_id, company_name, comp_desc, job_location, employment_type, contract_duration, salary_range, work_location_type, expected_hours_per_week, posted_date, c_logo, benefits, qualifications, tech_skills, required_skills, full_job_description, apply_button_label, apply_url, industry }) => {
+       if (document.querySelector(".sign-up-button")) {
+         apply_url = `/login?redirect_to=${apply_url}`;
+       }
+       
+       const benefitsList = benefits.split(',').map((x) => `<div class="badge benefit">${x}</div>`);
+       const techSkillsList = tech_skills.split(',').map((x) => `<div class="badge tech">${x}</div>`);
+       const reqSkills = required_skills.split(',').map((x) => `<div class="badge skill">${x}</div>`);
+       const industries = industry.split(',').map((x) => `<div class="badge industry">${x}</div>`);
+       const qualificationsList = qualifications.split(',').map((x) => `<div class="tag">${x}</div>`);
+       
+       return `       
+       <div class="job-detail">
+         <div class="scrollable-content">
+           <div class="meta-top">
+             <div class="meta-left">
+               <h2>${job_title}</h2>
+               <div class="company">${company_name}</div>
+               <div class="location">${job_location}</div>
+             </div>
+             ${c_logo ? `<div class="logo"><img src="${c_logo}" alt="Logo"></div>` : ''}
+           </div>
+           <div class="badges">
+             <span class="badge meta-temp">Job ID: ${job_id}</span>
+             <span class="badge meta-temp">${employment_type}</span>
+             <span class="badge meta-temp">${work_location_type}</span>
+             <span class="badge meta-temp">${salary_range}</span>        
+             <span class="badge meta-temp">${posted_date}</span>
+           </div>
+           <div class="anchor-links">
+             <a href="#description">Description</a>
+             <a href="#qualifications">Qualifications</a>
+             <a href="#skills">Skills</a>
+             <a href="#benefits">Benefits</a>
+           </div>
+           <div id="description">
+             <div class="section-title">Company Description</div>
+             <div class="section-content">${comp_desc}</div>
+             <div class="section-title">Full Job Description</div>
+             <div class="job_description"><pre>${full_job_description}</pre></div>
+           </div>
+           <div id="qualifications">
+             <div class="section-title">Qualifications</div>
+             <div class="section-content">${qualificationsList.join('')}</div>
+           </div>
+           <div id="skills">
+             <div class="section-title">Required Skills</div>
+             <div class="section-content">${reqSkills.join('')}</div>
+             <div class="section-title">Tech Stack / Tools</div>
+             <div class="section-content">${techSkillsList.join('')}</div>
+           </div>
+           <div id="benefits">
+             <div class="section-title">Benefits</div>
+             <div class="section-content">${benefitsList.join('')}</div>
+           </div>
+           <div class="section-title">Industry</div>
+           <div class="section-content">${industries.join('')}</div>
+         </div>
+         <div class="apply-footer">
+           <a class="apply-button" href="${apply_url}" target="_blank">${apply_button_label}</a>
+         </div>
+       </div>`;
+     };
+
+     const resultHtml = (tds) => `
+       <div id="list-area">
+         <div class="contents">
+           <div class="ember-view">
+             <table class="category-list">
+               <thead>
+                 <tr>
+                   <th class="category"><span role="heading" aria-level="2" id="categories-only-category">Hub</span></th>
+                   <th class="topics">Topics</th>
+                 </tr>
+               </thead>
+               <tbody id="custom-tbody" aria-labelledby="categories-only-category">
+                 ${tds ? tds : ""}
+               </tbody>
+             </table>
+             <div>${showMore === true ? `<div id="showMoreDiv"><button id="showMore">Show More...</button></div>` : ""}</div>
+           </div>
+         </div>
+       </div>
+     `;
+
+     const resultJobsHtml = (tds, details) => `
+       <div id="list-area" style="flex:.6">
+         <div class="contents">
+           <div class="ember-view">
+             <table class="category-list">
+               <thead>
+                 <tr>
+                   <th class="category"><span role="heading" aria-level="2" id="categories-only-category">Hub</span></th>
+                   <th class="topics">Topics</th>
+                 </tr>
+               </thead>
+               <tbody id="custom-tbody-jobs" aria-labelledby="categories-only-category">
+                 ${tds ? tds : ""}
+               </tbody>
+             </table>
+             <div>${showMore === true ? `<div id="showMoreDiv"><button id="showMore">Show More...</button></div>` : ""}</div>
+           </div>
+         </div>
+       </div>
+       <div class="job-card-details" style="flex:.4">${details}</div>
+     `;
+
+     const getSubCategory = () => {
+       const pathArr = window.location.pathname.split("/");
+       return {
+         subcategoryid: +pathArr[pathArr.length - 2],
+         topic_type: pathArr[pathArr.length - 1],
+         software_name: "",
+       };
+     };
+
+     const getCategoryName = async ({ subcategoryid, topic_type, software_name }) => {
+       let domain_name;
+       const subcat = categoriesList.find((x) => x.id == subcategoryid);
+       domain_name = subcat?.name;
+       if (subcat) {
+         if (subcat.parent_category_id) {
+           return await getCategoryName({
+             subcategoryid: +subcat.parent_category_id,
+             topic_type,
+             software_name: domain_name,
+           });
+         }
+         return { domain_name, software_name, topic_type };
+       } else {
+         return "";
+       }
+     };
+
+     const displayResults = async (results, page_size) => {
+       results.page_num = page_num;
+       results.page_size = page_size;
+       const filtered = await responseApi(results);
+       console.log("filtered", filtered);
+
+       if (page_num == 1) {
+         resultTds = ``;
+       }
+       if (filtered?.length) {
+         filtered.forEach((x) => {
+           switch (x.topic_type) {
+             case "events":
+               resultTds += templateEvent(x);
+               break;
+             case "articles":
+               resultTds += templateArticle(x);
+               break;
+             case "bulletins":
+               resultTds += templateBulletin(x);
+               break;
+           }
+         });
+
+         if (totalRecords > results.page_size * page_num) showMore = true;
+         else showMore = false;
+         const resultsToDisplay = resultHtml(resultTds);
+
+         if (document.querySelector("li[title='Articles']")) {
+           const html = resultsToDisplay;
+           const elements = document.querySelectorAll(".container.list-container div.row");
+           if (elements.length) {
+             elements[elements.length - 1].innerHTML = html;
+           }
+         }
+       }
+     };
+
+     const displayJobResults = async (results, page_size) => {
+       results.page_num = page_num;
+       results.page_size = page_size;
+       const filtered = await responseJobsApi(results);
+       console.log("filtered", filtered);
+
+       if (page_num == 1) {
+         resultTds = ``;
+       }
+       if (filtered?.length) {
+         filtered.forEach((x) => {
+           resultTds += templateJob(x);
+         });
+         
+         if (totalRecords > results.page_size * page_num) showMore = true;
+         else showMore = false;
+         
+         const resultsApi = await responseJobDetailsApi({ _id: filtered[0]?._id });
+         const templateString = templateJobDetails(resultsApi);
+         const resultsToDisplay = resultJobsHtml(resultTds, templateString);
+         console.log(resultsToDisplay);
+
+         if (document.querySelector("li[title='Jobs']")) {
+           const html = resultsToDisplay;
+           const elements = document.querySelectorAll(".container.list-container div.row");
+           if (elements.length) {
+             elements[elements.length - 1].innerHTML = html;
+           }
+         }
+       }
+     };
+
+     // Main execution logic wrapped in IIFE
+     (async (page_size) => {
+       try {
+         // Social share dialog
+         document.body.addEventListener("click", function (event) {    
+           if (event.target.id == "jobAnchor" || event.target.parentElement.id == "jobAnchor" || event.target.parentElement.parentElement.id == "jobAnchor") {
+             const jobCard = event.target.id == "jobAnchor" ? event.target : event.target.parentElement.id == "jobAnchor" ? event.target.parentElement : event.target.parentElement.parentElement;
+             const jobId = jobCard.closest(".category").querySelector(' #jobId')?.value;
+             
+             (async(jobId) => {
+               if (jobId) {
+                 const results = await responseJobDetailsApi({ _id: jobId });
+                 const templateString = templateJobDetails(results);
+                 const resultsToDisplay = resultJobsHtml(resultTds, templateString);
+                 if (document.querySelector("li[title='Jobs']")) {
+                   const html = resultsToDisplay;
+                   const elements = document.querySelectorAll(".container.list-container div.row");
+                   if (elements.length) {
+                     elements[elements.length - 1].innerHTML = html;
+                   }
+                 }
+               }
+             })(jobId);
+           }
+         
+           if (event.target.id == "showMore") {
+             (async () => {
+               const urlParams = getSubCategory();
+               const results = await getCategoryName(urlParams);
+               if (!results.software_name) {
+                 results.software_name = results.domain_name;
+               }
+               page_num = page_num + 1;
+               if (results.topic_type === "jobs") {
+                 await displayJobResults(results, page_size);
+               } else {
+                 await displayResults(results, page_size);
+               }
+             })();
+           }
+         });
+
+         if (categoriesList.length === 0) {
+           categoriesList = (await categories()).categories;
+         }
+         const urlParams = getSubCategory();
+         const results = await getCategoryName(urlParams);
+         if (!results.software_name) {
+           results.software_name = results.domain_name;
+         }
+         
+         const customTypes = ['jobs', 'events', 'articles', 'bulletins'];
+         if (!customTypes.includes(results.topic_type)) {
+           return;
+         }
+     
+         if (document.querySelector("li[title='Articles']")) {
+           const elements = document.querySelectorAll(".container.list-container div.row");
+           if (elements.length) {
+             elements[elements.length - 1].innerHTML = "";
+           }
+         }
+         
+         if (results.topic_type === "jobs") {
+           totalRecords = await responseJobsApiCount(results);
+           await displayJobResults(results, page_size);
+         } else {
+           totalRecords = await responseApiCount(results);
+           await displayResults(results, page_size);
+         }
+
+         if (!document.querySelector(".tip-box-collapsed") && document.querySelector("#custom-tbody")) {
+           const disclaimer = `<div class="tip-box-collapsed">
+             💡 <strong>Disclaimer:</strong> Most content on this page is aggregated from publicly available sources and is shared for informational purposes only.
+             <a onclick="toggleTip(event)">
+               <span id="toggleText">Show more</span> <span id="arrow">▼</span>
+             </a>
+             <div class="tip-details" id="tipDetails" style="display: none; margin-top: 10px;">
+               All trademarks, images, and articles belong to their respective owners, and each card links directly to the original publisher. 
+               Additionally, some content may be contributed by forum users. We do not claim ownership of third-party content and are not affiliated with or endorsed by the original publishers.
+             </div>
+           </div>`;
+           const el = document.createElement("div");
+           el.style.gridArea = "below-content";
+           el.style.justifySelf = "start";
+           el.innerHTML = disclaimer;
+           document.querySelector('#main-outlet-wrapper').appendChild(el);      
+         }
+       } catch (error) {
+         console.log("error", error);
+       }
+     })(page_size);
+   });
+
+   // Breadcrumb positioning
+   api.onPageChange(() => {
+     const breadcrumbs = document.querySelector('.breadcrumbs');
+     const navContainer = document.querySelector('.navigation-container');
+
+     if (breadcrumbs && navContainer && breadcrumbs.previousElementSibling !== navContainer) {
+       navContainer.parentNode.insertBefore(breadcrumbs, navContainer);
+     }
+   });
+
+   // User banner customization
+  api.onPageChange(() => {
+    const currentUser = api.getCurrentUser();
+
+    if (currentUser) {
+      const banner = document.querySelector('.search-banner.welcome-banner');
+      if (banner) {
+        banner.style.backgroundImage = 'url("https://cdn.easihub.com/uploads/default/original/1X/607e4e3f666b0cc15318f0dde80718a978368a86.jpeg")';
+        banner.style.backgroundSize = 'cover';
+        banner.style.backgroundPosition = 'top';
+      }
+    }
+  });
+
+   // Category description enhancement
+   api.onPageChange(() => {
+     $(".category-description").each(function () {
+       const text = $(this).text();
+       const matchIndex = text.toLowerCase().indexOf("hub");
+
+       if (matchIndex !== -1) {
+         const endIndex = matchIndex + 3;
+         const before = text.substring(0, endIndex);
+         const after = text.substring(endIndex);
+         $(this).html(`<strong>${before}</strong>${after}`);
+       }
+     });
+   });
+
+   // Help tip for new users
+   api.onPageChange(() => {
+     const currentUser = api.getCurrentUser();
+     const currentPath = window.location.pathname;
+
+     if (currentUser && (currentPath === '/' || currentPath === '/categories') && !document.querySelector('.start_wrap')) {
+       const container = document.querySelector('.list-controls');
+
+       if (container) {
+         const start_wrap = document.createElement("div");
+         start_wrap.className = "start_wrap";
+         start_wrap.style.cssText = "width: 100%; background-color: #FFF; display: flex; justify-content: center; margin-bottom: 10px; z-index: 999; padding: 10px;";
+
+         start_wrap.innerHTML = `
+           <span class="explore-wrap" style="font-size: 14px;">
+             Not sure where to begin? 
+             <span class="start-explore" style="color: #4949fc; cursor: pointer; pointer-event: auto; z-index: 999;">
+               <a href="https://easihub.com/start-exploring" style="color: #4949fc">Start Exploring</a>
+             </span> our community →
+           </span>
+         `;
+
+         container.before(start_wrap);
+       }
+     }
+   });
+
+   // Search placeholder and AI branding
+   api.onPageChange(() => {
+     const searchInput = document.querySelector('#custom-search-input');
+     if (searchInput) {
+       searchInput.placeholder = "Search topics, questions, discussions, articles, events, jobs...";
+     }
+
+     const searchContainer = document.querySelector('.search-menu');
+     if (!document.querySelector('.easi-powered') && searchContainer) {
+       const easiPowered = document.createElement('span');
+       easiPowered.className = 'easi-powered';
+       easiPowered.textContent = '🤖 Powered by EASIHUB AI';
+       searchContainer.after(easiPowered);
+     }
+   });
+   
+   (function () {
+    // Precompile regex: /c/{group}/{subcategory}/{id}
+    const categoryRegex = /^\/c\/[^/]+\/[^/]+\/\d+$/;
+    let elements = null;
+    let lastState = null; // To prevent reapplying classes unnecessarily
+
+    api.onPageChange(() => {
+      const path = window.location.pathname;
+      const isTargetCategoryPage = categoryRegex.test(path);
+
+      // Only update if state has changed
+      if (isTargetCategoryPage === lastState) return;
+      lastState = isTargetCategoryPage;
+
+      // Cache .parent-box-link elements once
+      if (!elements || !elements.length) {
+        elements = document.querySelectorAll(".parent-box-link");
+      }
+
+      // Apply class toggle
+      elements.forEach((el) => {
+        el.classList.toggle("sub-category", isTargetCategoryPage);
+      });
+    });
+  })();
+
+  //code to redirect technical area to correct tag
+  (function () {
+    const categoryRegex = /^\/c\/[^/]+\/[^/]+\/\d+$/;
+    let lastPath = null;
+
+    api.onPageChange(() => {
+      const currentPath = window.location.pathname;
+
+      // Avoid unnecessary work if path didn't change
+      if (currentPath === lastPath) return;
+      lastPath = currentPath;
+
+      // Only run if it's a target category page
+      if (!categoryRegex.test(currentPath)) return;
+
+      // Run after DOM is rendered (no setInterval needed)
+      requestAnimationFrame(() => {
+        const links = document.querySelectorAll('a.parent-box-link');
+        if (!links.length) return;
+
+        links.forEach(link => {
+          const href = link?.getAttribute?.('href');
+          if (!href) return;
+
+          const match = href.match(/^\/c\/(.+\/\d+)$/);
+          if (!match) return;
+
+          const path = match[1];
+          const pathSegments = path.split('/');
+          const categorySlug = pathSegments[pathSegments.length - 2];
+
+          const isGenericTopics =
+            categorySlug.startsWith("generic-") &&
+            categorySlug.endsWith("-topics");
+
+          const newTarget = isGenericTopics ? "overview" : "questions";
+
+          link.setAttribute('href', `/tags/c/${path}/${newTarget}`);
+        });
+      });
+    });
+  })();
+  
+// code to close menu dropdown in mobile version
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   const dropdownTriggers = document.querySelectorAll('.custom-header-link.has-dropdown');
+
+//   dropdownTriggers.forEach(function (li) {
+//     li.addEventListener('click', function (e) {
+//       if (!isMobile()) return; // Only run on mobile
+//       e.stopPropagation();
+
+//       // Hide all other dropdowns first
+//       document.querySelectorAll('.custom-header-dropdown').forEach(function (ul) {
+//         ul.classList.remove('show');
+//       });
+
+//       // Show only the clicked one
+//       const dropdown = li.querySelector('.custom-header-dropdown');
+//       if (dropdown) {
+//         dropdown.classList.add('show');
+//       }
+//     });
+//   });
+
+//   // Click outside to hide all
+//   document.addEventListener('click', function () {
+//     document.querySelectorAll('.custom-header-dropdown').forEach(function (ul) {
+//       ul.classList.remove('show');
+//     });
+//   });
+// });
+
+
+
+
+   </script>
