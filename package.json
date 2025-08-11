@@ -13,7 +13,8 @@
     "ember-template-lint": "7.8.1",
     "eslint": "9.28.0",
     "prettier": "3.5.3",
-    "stylelint": "16.20.0"
+    "stylelint": "16.20.0",
+    "@glimmer/component": "^2.0.0"
   },
   "engines": {
     "node": ">= 22",
