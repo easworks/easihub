@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "./tailwind.css";
 @import "./sidebar.css";
 
 /* Custom styles can go here */
