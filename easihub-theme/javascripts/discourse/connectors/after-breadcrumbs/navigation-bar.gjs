@@ -1,6 +1,8 @@
 import Component from "@glimmer/component";
+import { service } from '@ember/service';
 
 export default class NavigationBarComponent extends Component {
+    @service('url-differentiator') urld;
 
     allNavItems = {
         "Hubs": { text: "Hubs", href: "/hubs", icon: "M12 2L2 7v10c0 5.55 3.84 10 9 11 5.16-1 9-5.45 9-11V7l-10-5z" },
