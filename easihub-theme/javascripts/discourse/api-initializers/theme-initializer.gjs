@@ -1,7 +1,10 @@
 import { apiInitializer } from "discourse/lib/api";
+import { addLayersToStyleSheets } from '../../layered-css-links';
 
-export default apiInitializer((api) => {
-  //
+export default apiInitializer(async (api) => {
+  await runOnInit(api, async () => {
+    addLayersToStyleSheets();
+  });
 });
 
 function runOnInit(api, callback) {

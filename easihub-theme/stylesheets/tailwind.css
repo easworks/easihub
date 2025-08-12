@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* generated from https://uicolors.app/create */
@@ -40,4 +40,9 @@
   --color-warn-800: var(--color-red-800);
   --color-warn-900: var(--color-red-900);
   --color-warn-950: var(--color-red-950);
+}
+
+@theme {
+  --font-sans: "Inter", sans-serif, system-ui;
+  --font-emoji: "Noto Color Emoji"
 }

@@ -9,3 +9,7 @@
     color-scheme: light;
   }
 }
+
+.d-header>.wrap .contents {
+  @apply flex;
+}
