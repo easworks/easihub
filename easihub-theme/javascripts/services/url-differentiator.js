@@ -14,7 +14,7 @@ export class UrlDifferentiatorService extends Service {
   @tracked model;
 
   #callback = (transition) => {
-    this.routeName = transition.to.name;
+    this.routeName = this.#computeRouteName(transition.to);
 
     const controller = getOwner(this).lookup(`controller:${this.routeName}`);
     this.model = controller.model;
@@ -28,4 +28,26 @@ export class UrlDifferentiatorService extends Service {
   willDestroy() {
     this.router.destroy('routeDidChange', this.#callback);
   }
+
+  #computeRouteName = (route) => {
+    switch (route.name) {
+      case 'discovery.category':
+      case 'tags.showCategory': {
+        const segments = route.params.category_slug_path_with_id.split('/');
+
+        if (segments.length === '2' && numeric.test(segments[1]))
+          return `${route.name}.domain`;
+
+        if (segments.length === '3' && numeric.test(segments[2]))
+          return `${route.name}.software`;
+
+        if (segments.length === '4' && numeric.test(segments[3]))
+          return `${route.name}.technical-area`;
+      }
+    }
+
+    return route.name;
+  }
 }
+
+const numeric = /^\d+$/;
