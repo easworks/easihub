@@ -153,6 +153,9 @@
   .visible {
     visibility: visible;
   }
+  .static {
+    position: static;
+  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -254,6 +257,11 @@
     :where(& > :not(:last-child)) {
       border-color: var(--color-gray-200, oklch(92.8% 0.006 264.531));
     }
+  }
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .rounded-lg {
     border-radius: var(--radius-lg, 0.5rem);
