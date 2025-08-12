@@ -1,17 +1,20 @@
 export function addLayersToStyleSheets() {
-  wrapDiscourseAssets();
+  wrapDiscourseAssetsCss();
 }
 
-function wrapDiscourseAssets() {
+function wrapDiscourseAssetsCss() {
   const allowedTargets = [
     'common'
   ];
 
   const container = document.querySelector('discourse-assets-stylesheets');
 
-  allowedTargets
-    .map(t => container.querySelector(`link[data-target=${t}]`))
-    .forEach(link => processStylesheet(link));
+  const colorSchemes = container.querySelector('link[data-scheme-id]');
+  const pluginStyles = allowedTargets
+    .map(t => container.querySelector(`link[data-target=${t}]`));
+
+  [...colorSchemes, ...pluginStyles]
+    .forEach(link => processStyleLink(link));
 }
 
 // const ALLOWED_URLS = [
@@ -60,7 +63,7 @@ function wrapDiscourseAssets() {
 /**
  * @param {HTMLLinkElement} linkElement - The link element to process
  */
-async function processStylesheet(linkElement) {
+async function processStyleLink(linkElement) {
   try {
     const response = await fetch(linkElement.href);
     const cssContent = await response.text();
