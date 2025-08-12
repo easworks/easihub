@@ -1,6 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 
 export default apiInitializer((api) => {
+  //
 });
 
 function runOnInit(api, callback) {
@@ -10,6 +11,8 @@ function runOnInit(api, callback) {
       if (initialized) {
         return;
       }
+
+      initialized = true;
 
       callback()
         .then(resolve)
