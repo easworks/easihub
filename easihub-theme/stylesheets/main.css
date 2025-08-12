@@ -1,5 +1,6 @@
-@import "./tailwind.css";
-@import "./sidebar.css";
+@import './fonts.css';
+@import './tailwind.css';
+@import './sidebar.css';
 
 /* Custom styles can go here */
 
@@ -7,4 +8,8 @@
   :root {
     color-scheme: light;
   }
+}
+
+.d-header>.wrap .contents {
+  @apply flex;
 }
