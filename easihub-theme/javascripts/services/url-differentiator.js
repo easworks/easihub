@@ -16,7 +16,7 @@ export class UrlDifferentiatorService extends Service {
   #callback = (transition) => {
     this.routeName = this.#computeRouteName(transition.to);
 
-    const controller = getOwner(this).lookup(`controller:${this.routeName}`);
+    const controller = getOwner(this).lookup(`controller:${transition.to.name}`);
     this.model = controller.model;
   }
 
@@ -35,13 +35,13 @@ export class UrlDifferentiatorService extends Service {
       case 'tags.showCategory': {
         const segments = route.params.category_slug_path_with_id.split('/');
 
-        if (segments.length === '2' && numeric.test(segments[1]))
+        if (segments.length === 2 && numeric.test(segments[1]))
           return `${route.name}.domain`;
 
-        if (segments.length === '3' && numeric.test(segments[2]))
+        if (segments.length === 3 && numeric.test(segments[2]))
           return `${route.name}.software`;
 
-        if (segments.length === '4' && numeric.test(segments[3]))
+        if (segments.length === 4 && numeric.test(segments[3]))
           return `${route.name}.technical-area`;
       }
     }
