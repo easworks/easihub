@@ -1,0 +1,9 @@
+@reference "./tailwind.css";
+
+@layer components {
+    
+}
+
+#navigation-bar {
+    @apply hidden;
+}
