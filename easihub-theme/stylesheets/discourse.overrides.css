@@ -1,0 +1,13 @@
+@reference "./tailwind.css";
+
+@layer base {
+    :root {
+        --heading-font-family: var(--font-sans);
+        --font-family: var(--font-sans);
+    }
+}
+
+
+.d-header>.wrap .contents {
+  @apply flex;
+}

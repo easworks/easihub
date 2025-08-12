@@ -1,7 +1,10 @@
 import { apiInitializer } from "discourse/lib/api";
 import { addLayersToStyleSheets } from '../../layered-css-links';
+import { UrlDifferentiatorService } from '../../services/url-differentiator.js';
 
 export default apiInitializer(async (api) => {
+  UrlDifferentiatorService.init(api);
+
   await runOnInit(api, async () => {
     addLayersToStyleSheets();
   });

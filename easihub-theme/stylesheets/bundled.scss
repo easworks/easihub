@@ -1,6 +1,4 @@
 /*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900');
-@import 'https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap';
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme;
@@ -214,9 +212,6 @@
   .w-64 {
     width: calc(var(--spacing, 0.25rem) * 64);
   }
-  .flex-shrink {
-    flex-shrink: 1;
-  }
   .flex-grow {
     flex-grow: 1;
   }
@@ -225,9 +220,6 @@
   }
   .rotate-180 {
     rotate: 180deg;
-  }
-  .transform {
-    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .cursor-pointer {
     cursor: pointer;
@@ -333,6 +325,15 @@
       }
     }
   }
+}
+@layer base {
+  :root {
+    --heading-font-family: var(--font-sans);
+    --font-family: var(--font-sans);
+  }
+}
+.d-header>.wrap .contents {
+  display: flex;
 }
 @layer components {
   #d-sidebar {
@@ -505,33 +506,69 @@
     display: none;
   }
 }
+@layer components {
+  .navigation-bar {
+    width: 100%;
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+    border-color: var(--color-gray-200, oklch(92.8% 0.006 264.531));
+    background-color: var(--color-white, #fff);
+  }
+  .nav-list {
+    margin: calc(var(--spacing, 0.25rem) * 0);
+    display: flex;
+    list-style-type: none;
+    align-items: center;
+    :where(& > :not(:last-child)) {
+      --tw-space-x-reverse: 0;
+      margin-inline-start: calc(calc(var(--spacing, 0.25rem) * 6) * var(--tw-space-x-reverse));
+      margin-inline-end: calc(calc(var(--spacing, 0.25rem) * 6) * calc(1 - var(--tw-space-x-reverse)));
+    }
+    padding: calc(var(--spacing, 0.25rem) * 4);
+  }
+  .nav-button {
+    display: flex;
+    align-items: center;
+    :where(& > :not(:last-child)) {
+      --tw-space-x-reverse: 0;
+      margin-inline-start: calc(calc(var(--spacing, 0.25rem) * 2) * var(--tw-space-x-reverse));
+      margin-inline-end: calc(calc(var(--spacing, 0.25rem) * 2) * calc(1 - var(--tw-space-x-reverse)));
+    }
+    border-top-left-radius: var(--radius-xs, 0.125rem);
+    border-top-right-radius: var(--radius-xs, 0.125rem);
+    border-color: var(--color-primary-500, #4949fc);
+    padding-inline: calc(var(--spacing, 0.25rem) * 3);
+    padding-block: calc(var(--spacing, 0.25rem) * 2);
+    color: var(--color-black, #000);
+    text-decoration-line: none;
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+    transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+    --tw-duration: 200ms;
+    transition-duration: 200ms;
+    &:hover {
+      @media (hover: hover) {
+        border-bottom-style: var(--tw-border-style);
+        border-bottom-width: 2px;
+      }
+    }
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-primary-500, #4949fc);
+      }
+    }
+  }
+  .nav-icon {
+    fill: currentcolor;
+  }
+}
+#navigation-bar {
+  display: none;
+}
 @layer base {
   :root {
     color-scheme: light;
   }
-}
-.d-header>.wrap .contents {
-  display: flex;
-}
-@property --tw-rotate-x {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-rotate-y {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-rotate-z {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-skew-x {
-  syntax: "*";
-  inherits: false;
-}
-@property --tw-skew-y {
-  syntax: "*";
-  inherits: false;
 }
 @property --tw-space-y-reverse {
   syntax: "*";
@@ -625,14 +662,14 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-space-x-reverse {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
-      --tw-rotate-x: initial;
-      --tw-rotate-y: initial;
-      --tw-rotate-z: initial;
-      --tw-skew-x: initial;
-      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-divide-y-reverse: 0;
       --tw-border-style: solid;
@@ -653,6 +690,7 @@
       --tw-ring-offset-shadow: 0 0 #0000;
       --tw-duration: initial;
       --tw-ease: initial;
+      --tw-space-x-reverse: 0;
     }
   }
 }

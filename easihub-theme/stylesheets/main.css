@@ -1,6 +1,7 @@
-@import './fonts.css';
-@import './tailwind.css';
-@import './sidebar.css';
+@import "./tailwind.css";
+@import './discourse.overrides.css';
+@import "./sidebar.css";
+@import "./navigation-bar.css";
 
 /* Custom styles can go here */
 
@@ -8,8 +9,4 @@
   :root {
     color-scheme: light;
   }
-}
-
-.d-header>.wrap .contents {
-  @apply flex;
 }

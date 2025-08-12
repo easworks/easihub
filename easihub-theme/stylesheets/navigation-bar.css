@@ -1,0 +1,24 @@
+@reference "./tailwind.css";
+
+@layer components {
+
+    .navigation-bar {
+        @apply w-full bg-white border-b border-gray-200;
+    }
+    
+    .nav-list {
+        @apply flex items-center space-x-6 list-none m-0 p-4;
+    }
+    
+    .nav-button {
+        @apply flex items-center space-x-2 px-3 py-2 text-black hover:text-primary-500 hover:border-b-2 border-primary-500 rounded-tl-xs rounded-tr-xs transition-colors duration-200 no-underline;
+    }
+    
+    .nav-icon {
+        @apply fill-current;
+    }
+}
+
+#navigation-bar {
+    @apply hidden;
+}
