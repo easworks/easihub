@@ -9,7 +9,7 @@ function wrapDiscourseAssetsCss() {
 
   const container = document.querySelector('discourse-assets-stylesheets');
 
-  const colorSchemes = container.querySelector('link[data-scheme-id]');
+  const colorSchemes = container.querySelectorAll('link[data-scheme-id]');
   const pluginStyles = allowedTargets
     .map(t => container.querySelector(`link[data-target=${t}]`));
 
