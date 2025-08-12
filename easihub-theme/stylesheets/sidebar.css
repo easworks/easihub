@@ -1,0 +1,19 @@
+@layer components {
+  #d-sidebar {
+    .sidebar-sections {
+      @apply hidden;
+    }
+
+    #custom-sidebar {
+      @apply flex-1;
+
+      ul {
+        @apply list-none p-0 m-0;
+      }
+
+      a {
+        @apply text-sm flex items-center py-2 px-4 ml-0;
+      }
+    }
+  }
+}
