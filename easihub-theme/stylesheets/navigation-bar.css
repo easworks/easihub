@@ -9,10 +9,6 @@
     .nav-list {
         @apply flex items-center space-x-6 list-none m-0 p-4;
     }
-
-    .nav-list a {
-        @apply text-black;
-    }
     
     .nav-button {
         @apply flex items-center space-x-2 px-3 py-2 text-black hover:text-primary-500 hover:border-b-2 border-primary-500 rounded-tl-xs rounded-tr-xs transition-colors duration-200 no-underline;

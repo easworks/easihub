@@ -1,6 +1,4 @@
 /*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900');
-@import 'https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap';
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme;
@@ -325,6 +323,15 @@
     }
   }
 }
+@layer base {
+  :root {
+    --heading-font-family: var(--font-sans);
+    --font-family: var(--font-sans);
+  }
+}
+.d-header>.wrap .contents {
+  display: flex;
+}
 @layer components {
   #d-sidebar {
     .sidebar-sections {
@@ -515,9 +522,6 @@
       margin-inline-end: calc(calc(var(--spacing, 0.25rem) * 6) * calc(1 - var(--tw-space-x-reverse)));
     }
     padding: calc(var(--spacing, 0.25rem) * 4);
-  }
-  .nav-list a {
-    color: var(--color-black, #000);
   }
   .nav-button {
     display: flex;
