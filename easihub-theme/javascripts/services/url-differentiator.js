@@ -42,8 +42,11 @@ export class UrlDifferentiatorService extends Service {
         if (segments.length === 2 && numeric.test(segments[1]))
           return `${route.name}.domain`;
 
-        if (segments.length === 3 && numeric.test(segments[2]))
+        if (segments.length === 3 && numeric.test(segments[2])) {
+          if (genericTopicsPattern.test(segments[1]))
+            return `${route.name}.technical-area`;
           return `${route.name}.software`;
+        }
 
         if (segments.length === 4 && numeric.test(segments[3]))
           return `${route.name}.technical-area`;
@@ -55,3 +58,4 @@ export class UrlDifferentiatorService extends Service {
 }
 
 const numeric = /^\d+$/;
+const genericTopicsPattern = /^generic-.+-topics$/;
