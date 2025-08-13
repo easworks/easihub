@@ -43,6 +43,7 @@
 }
 
 @theme {
-  --font-sans: "Inter", sans-serif, system-ui;
+  /* --font-sans: "Inter", sans-serif, system-ui; */
+  --font-sans: "Lexend Deca", sans-serif, system-ui;
   --font-emoji: "Noto Color Emoji"
 }

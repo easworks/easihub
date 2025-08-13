@@ -2,21 +2,28 @@
 
 @layer components {
   #d-sidebar {
-    .sidebar-sections {
-      @apply hidden;
-    }
 
     #custom-sidebar {
-      @apply flex-1;
+      @apply flex-1 mt-2;
+
+      ul {
+        @apply m-0;
+      }
 
       .menu-item {
-        @apply relative border-b border-slate-100;
-
+        @apply relative;
+        
         .menu-link {
-          @apply flex items-center py-3.5 px-5 no-underline text-slate-500 text-[15px] font-normal transition-all duration-200 ease-in-out cursor-pointer select-none;
+          @apply flex gap-4 items-center p-2 pr-4 rounded-3
+            no-underline 
+            text-slate-500
+            cursor-pointer select-none
+            transition-all duration-200 ease-in-out;
+          
+          padding-left: --spacing(((4 * var(--level, 0)) + 2));
           
           &:hover {
-            @apply bg-slate-50 text-primary-500;
+            @apply bg-primary-50 text-primary-500;
           }
 
           &.active {
@@ -25,48 +32,42 @@
         }
 
         .menu-icon {
-          @apply w-5 h-5 mr-3.5 stroke-current stroke-2 fill-none flex-shrink-0;
+          @apply w-8 text-center flex-none;
         }
 
-        .menu-text {
-          @apply flex-1;
+        .menu-label {
+          @apply flex-grow;
         }
 
         .expand-icon {
-          @apply w-4 h-4 stroke-current stroke-2 fill-none transition-transform duration-200 ease-in-out ml-auto flex-shrink-0;
+          @apply flex-none text-base
+            transition-transform duration-200 ease-in-out ml-auto flex-shrink-0;
         }
 
-        &.expanded .expand-icon {
-          @apply rotate-180;
-        }
+        &.expanded {
+          .expand-icon {
+            @apply rotate-180;  
+          }
 
-        &.expanded .submenu {
-          @apply max-h-[600px];
+          > .submenu {
+            animation: expand-to-auto 1ms ease-in-out 300ms forwards;
+          }
         }
       }
 
       .submenu {
-        @apply bg-slate-50 max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out;
-      }
+        @apply max-h-0 overflow-hidden 
+          transition-all duration-300 ease-in-out;
 
-      .submenu-item {
-        @apply flex items-center py-3 px-5 pl-[54px] no-underline text-slate-500 text-sm font-normal transition-all duration-200 ease-in-out border-l-3 border-transparent;
-
-        &:hover {
-          @apply bg-white text-primary-500 border-l-primary-500;
+        .menu-label {
+          @apply text-sm;
         }
-
-        &.active {
-          @apply bg-white text-primary-500 border-l-primary-500 font-medium;
-        }
-      }
-
-      .submenu-icon {
-        @apply w-4 h-4 mr-3 stroke-current stroke-2 fill-none flex-shrink-0;
       }
 
       .badge {
-        @apply bg-primary-500 text-white text-xs py-1 px-2 rounded-xl ml-auto font-semibold min-w-[20px] text-center flex-shrink-0;
+        @apply flex-none py-1 px-2 min-w-5 rounded-xl 
+          bg-primary-500 text-white 
+          text-xs text-center font-semibold ;
 
         &.secondary {
           @apply bg-slate-500;
@@ -81,6 +82,12 @@
         @apply text-slate-400 font-semibold ml-auto flex-shrink-0;
       }
 
+    }
+  }
+
+  @keyframes expand-to-auto {
+    to {
+      max-height: auto;
     }
   }
 }

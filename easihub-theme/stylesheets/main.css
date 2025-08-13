@@ -4,9 +4,3 @@
 @import "./navigation-bar.css";
 
 /* Custom styles can go here */
-
-@layer base {
-  :root {
-    color-scheme: light;
-  }
-}

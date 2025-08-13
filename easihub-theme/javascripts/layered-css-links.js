@@ -1,5 +1,6 @@
 export function addLayersToStyleSheets() {
   wrapDiscourseAssetsCss();
+  wrapHeaderCss();
 }
 
 function wrapDiscourseAssetsCss() {
@@ -15,6 +16,19 @@ function wrapDiscourseAssetsCss() {
 
   [...colorSchemes, ...pluginStyles]
     .forEach(link => processStyleLink(link));
+}
+
+function wrapHeaderCss() {
+  const allowedLinks = [
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome'
+  ];
+
+  const links = document.head.querySelectorAll('link[rel=stylesheet]');
+  for (const link of links) {
+    if (allowedLinks.some(al => link.href.startsWith(al))) {
+      processStyleLink(link);
+    }
+  }
 }
 
 // const ALLOWED_URLS = [
@@ -68,8 +82,16 @@ async function processStyleLink(linkElement) {
     const response = await fetch(linkElement.href);
     const cssContent = await response.text();
 
+    const { css, fontFaces } = extractFontFaces(cssContent, linkElement.href);
+
     const styleElement = document.createElement('style');
-    styleElement.textContent = `@layer base { ${cssContent} }`;
+    styleElement.textContent = [
+      fontFaces,
+      '\n',
+      '@layer base {',
+      css,
+      '}'
+    ].join('\n');
 
     const target = linkElement.getAttribute('data-target');
     if (target)
@@ -79,4 +101,29 @@ async function processStyleLink(linkElement) {
   } catch (error) {
     console.error('Failed to process stylesheet:', error);
   }
+}
+
+const fontFaceRegex = /@font-face\s*\{[^}]*\}/g;
+
+function extractFontFaces(contents, baseUrl) {
+  const fontFaces = (contents.match(fontFaceRegex) || [])
+    .map(fontFace => resolveRelativeUrls(fontFace, baseUrl))
+    .join('\n\n');
+  const css = contents.replace(fontFaceRegex, '');
+
+  return {
+    css,
+    fontFaces
+  }
+}
+
+function resolveRelativeUrls(fontFace, baseUrl) {
+  const urlRegex = /url\(["']?([^"')]+)["']?\)/g;
+  return fontFace.replace(urlRegex, (match, url) => {
+    if (url.startsWith('http') || url.startsWith('//')) {
+      return match;
+    }
+    const resolvedUrl = new URL(url, baseUrl).href;
+    return match.replace(url, resolvedUrl);
+  });
 }
