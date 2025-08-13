@@ -1,87 +1,84 @@
 @reference './tailwind.css';
 
 @layer components {
-  #d-sidebar {
+  #custom-sidebar {
+    @apply flex-1 my-2;
 
-    #custom-sidebar {
-      @apply flex-1 my-2;
-
-      ul {
-        @apply m-0;
-      }
-
-      .menu-item {
-        @apply relative;
-        
-        .menu-link {
-          @apply flex gap-4 items-center p-2 pr-4
-            no-underline text-slate-500
-            cursor-pointer select-none
-            transition-all duration-200 ease-in-out;
-          
-          padding-left: --spacing(((4 * var(--level, 0)) + 2));
-          
-          &:hover {
-            @apply bg-primary-50 text-primary-500;
-          }
-
-          &.active {
-            @apply bg-primary-50 text-primary-500 border-r-3 border-primary-500;
-          }
-        }
-
-        .menu-icon {
-          @apply w-8 text-center flex-none;
-        }
-
-        .menu-label {
-          @apply flex-grow;
-        }
-
-        .expand-icon {
-          @apply flex-none text-sm
-            transition-transform duration-200 ease-in-out ml-auto flex-shrink-0;
-        }
-
-        &.expanded {
-          > .menu-link .expand-icon {
-            @apply rotate-180;  
-          }
-
-          > .submenu {
-            animation: expand-to-auto 1ms ease-in-out 300ms forwards;
-          }
-        }
-      }
-
-      .submenu {
-        @apply max-h-0 overflow-hidden 
-          transition-all duration-300 ease-in-out;
-
-        .menu-label {
-          @apply text-sm;
-        }
-      }
-
-      .badge {
-        @apply flex-none py-1 px-2 min-w-5 rounded-xl 
-          bg-primary-500 text-white 
-          text-xs text-center font-semibold ;
-
-        &.secondary {
-          @apply bg-slate-500;
-        }
-
-        &.success {
-          @apply bg-green-500;
-        }
-      }
-
-      .menu-dots {
-        @apply text-slate-400 font-semibold ml-auto flex-shrink-0;
-      }
-
+    ul {
+      @apply m-0;
     }
+
+    .menu-item {
+      @apply relative;
+      
+      .menu-link {
+        @apply flex gap-4 items-center p-2 pr-4
+          no-underline text-slate-500
+          cursor-pointer select-none
+          transition-all duration-200 ease-in-out;
+        
+        padding-left: --spacing(((4 * var(--level, 0)) + 2));
+        
+        &:hover {
+          @apply bg-primary-50 text-primary-500;
+        }
+
+        &.active {
+          @apply bg-primary-50 text-primary-500 border-r-3 border-primary-500;
+        }
+      }
+
+      .menu-icon {
+        @apply w-8 text-center flex-none;
+      }
+
+      .menu-label {
+        @apply flex-grow;
+      }
+
+      .expand-icon {
+        @apply flex-none text-sm
+          transition-transform duration-200 ease-in-out ml-auto flex-shrink-0;
+      }
+
+      &.expanded {
+        > .menu-link .expand-icon {
+          @apply rotate-180;  
+        }
+
+        > .submenu {
+          animation: expand-to-auto 1ms ease-in-out 300ms forwards;
+        }
+      }
+    }
+
+    .submenu {
+      @apply max-h-0 overflow-hidden 
+        transition-all duration-300 ease-in-out;
+
+      .menu-label {
+        @apply text-sm;
+      }
+    }
+
+    .badge {
+      @apply flex-none py-1 px-2 min-w-5 rounded-xl 
+        bg-primary-500 text-white 
+        text-xs text-center font-semibold ;
+
+      &.secondary {
+        @apply bg-slate-500;
+      }
+
+      &.success {
+        @apply bg-green-500;
+      }
+    }
+
+    .menu-dots {
+      @apply text-slate-400 font-semibold ml-auto flex-shrink-0;
+    }
+
   }
 
   @keyframes expand-to-auto {
@@ -91,8 +88,12 @@
   }
 }
 
-#d-sidebar {
-  .sidebar-sections {
-    @apply hidden;
+.sidebar-sections {
+  @apply hidden;
+}
+
+.d-header {
+  .sidebar-hamburger-dropdown {
+    @apply flex-grow flex flex-col;
   }
 }
