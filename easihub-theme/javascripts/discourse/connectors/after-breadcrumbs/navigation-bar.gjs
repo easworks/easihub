@@ -31,6 +31,11 @@ export default class NavigationBarComponent extends Component {
   }
 
   #updateNavItems(route) {
+    if (this.#isFeedbackCategory(route)) {
+      this.navItems = [];
+      return;
+    }
+
     let buttonsToShow = [];
 
     let type;
@@ -69,6 +74,11 @@ export default class NavigationBarComponent extends Component {
     return route?.params?.category_slug_path_with_id || '';
   }
 
+  #isFeedbackCategory(route) {
+    const categoryPath = this.categoryPath(route);
+    return categoryPath === 'feedback/179';
+  }
+
   getRouteInfo(type, categoryPath) {
     switch (type) {
       case 'Hubs': return { route: 'discovery.category', models: [categoryPath] };
@@ -89,6 +99,13 @@ export default class NavigationBarComponent extends Component {
   }
 
   #updateCreateTopicButtonText(route) {
+    // Show create topic button with "Create Feedback" for feedback category
+    if (this.#isFeedbackCategory(route)) {
+      this.createTopicButton.show();
+      this.createTopicButton.setText('Create Feedback');
+      return;
+    }
+
     if (route.name !== 'tags.showCategory') {
       this.createTopicButton.hide();
       return;
