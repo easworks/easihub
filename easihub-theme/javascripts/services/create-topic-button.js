@@ -43,4 +43,14 @@ export class CreateTopicButtonService extends Service {
     const label = button.querySelector('.d-button-label');
     label.textContent = labelText || 'New Topic';
   }
+
+  async show() {
+    const button = await this.getButton();
+    button.style.display = 'block';
+  }
+
+  async hide() {
+    const button = await this.getButton();
+    button.style.display = 'none';
+  }
 }
