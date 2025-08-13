@@ -1,4 +1,5 @@
-@import "./tailwind.css";
+@import 'tailwindcss';
+@import "./theme.css";
 @import './discourse.overrides.css';
 @import "./sidebar.css";
 @import "./navigation-bar.css";
@@ -16,5 +17,9 @@
 
   ::-webkit-scrollbar-thumb {
     @apply bg-slate-200 rounded;
+  }
+
+  strong {
+    @apply font-bold;
   }
 }

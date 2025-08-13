@@ -1,10 +1,10 @@
-@reference "./tailwind.css";
+@reference "./theme.css";
 
 @layer base {
-    :root {
-        --heading-font-family: var(--font-sans);
-        --font-family: var(--font-sans);
-    }
+  :root {
+    --heading-font-family: var(--font-sans);
+    --font-family: var(--font-sans);
+  }
 }
 
 

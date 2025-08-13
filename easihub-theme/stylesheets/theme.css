@@ -1,5 +1,3 @@
-@import 'tailwindcss';
-
 @theme {
   /* generated from https://uicolors.app/create */
   
@@ -21,13 +19,14 @@
   --color-secondary-100: #e7e7e7;
   --color-secondary-200: #d1d1d1;
   --color-secondary-300: #b0b0b0;
-  --color-secondary-400: #888888;
+  --color-secondary-400: #888;
   --color-secondary-500: #6d6d6d;
   --color-secondary-600: #5d5d5d;
   --color-secondary-700: #4f4f4f;
   --color-secondary-800: #454545;
   --color-secondary-900: #3d3d3d;
   --color-secondary-950: #0f0f0f;
+
 
   --color-warn-50: var(--color-red-50);
   --color-warn-100: var(--color-red-100);
@@ -40,10 +39,13 @@
   --color-warn-800: var(--color-red-800);
   --color-warn-900: var(--color-red-900);
   --color-warn-950: var(--color-red-950);
+
+  --color-outline: var(--color-slate-600);
+  --color-outline-variant: var(--color-slate-100);
 }
 
 @theme {
-  /* --font-sans: "Inter", sans-serif, system-ui; */
-  --font-sans: "Lexend Deca", sans-serif, system-ui;
+  --font-sans: "Inter", sans-serif, system-ui;
+  /* --font-sans: "Lexend Deca", sans-serif, system-ui; */
   --font-emoji: "Noto Color Emoji"
 }
