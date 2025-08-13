@@ -395,8 +395,8 @@
           margin-left: auto;
           flex: none;
           flex-shrink: 0;
-          font-size: var(--text-base, 1rem);
-          line-height: var(--tw-leading, var(--text-base--line-height, calc(1.5 / 1)));
+          font-size: var(--text-sm, 0.875rem);
+          line-height: var(--tw-leading, var(--text-sm--line-height, calc(1.25 / 0.875)));
           transition-property: transform, translate, scale, rotate;
           transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
           transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));

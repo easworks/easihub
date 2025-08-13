@@ -4,7 +4,7 @@ import { concat } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { initialMenuItems, MenuItem } from './menu-item';
+import { hubCategories, initialMenuItems, MenuItem } from './menu-item';
 
 export default class CustomSidebarComponent extends Component {
   @service site;
@@ -12,12 +12,12 @@ export default class CustomSidebarComponent extends Component {
   @tracked expandedPath = [];
   @tracked activeItem = null;
 
-  get categories() {
-    return this.site.categories || [];
-  }
-
   get formattedCategories() {
-    return this.categories.map(category => ({
+    const categories = hubCategories
+      .map(id => this.site.categoriesById.get(id))
+      .filter(Boolean);
+
+    return categories.map(category => ({
       id: `category-${category.id}`,
       label: category.name,
       href: `/c/${category.slug}/${category.id}`,

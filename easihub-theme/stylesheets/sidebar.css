@@ -39,7 +39,7 @@
         }
 
         .expand-icon {
-          @apply flex-none text-base
+          @apply flex-none text-sm
             transition-transform duration-200 ease-in-out ml-auto flex-shrink-0;
         }
 
