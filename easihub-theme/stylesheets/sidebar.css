@@ -14,7 +14,7 @@
         @apply relative;
         
         .menu-link {
-          @apply flex gap-4 items-center p-2 pr-4 rounded
+          @apply flex gap-4 items-center p-2 pr-4
             no-underline text-slate-500
             cursor-pointer select-none
             transition-all duration-200 ease-in-out;
@@ -44,7 +44,7 @@
         }
 
         &.expanded {
-          .expand-icon {
+          > .menu-link .expand-icon {
             @apply rotate-180;  
           }
 

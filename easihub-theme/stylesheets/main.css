@@ -4,3 +4,17 @@
 @import "./navigation-bar.css";
 
 /* Custom styles can go here */
+
+@layer base {
+  ::-webkit-scrollbar {
+    @apply w-1;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-200 rounded;
+  }
+}

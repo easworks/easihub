@@ -65,7 +65,32 @@ export const hubCategories = [
   2156, // QMS
 ];
 
-export const initialMenuItems = [
+export function createMenuItemFromCategory(category, parent) {
+  if (!category) {
+    return null;
+  }
+
+  const href = [
+    '/c',
+    ...category.ancestors.map(c => c.slug),
+    category.id
+  ].join('/');
+
+   const data =  {
+    id: `category-${category.id}`,
+    label: category.name,
+    href,
+    icon: 'fa-folder',
+    badge: category.topic_count > 0 ? {
+      count: category.topic_count,
+      class: 'category-badge'
+    } : null
+  };
+
+  return new MenuItem(data, parent);
+}
+
+export const initialMenuItems = MenuItem.fromArray([
   {
     id: 'home',
     label: 'Home',
@@ -249,4 +274,4 @@ export const initialMenuItems = [
     href: 'https://easihub.com/tag/bulletins',
     icon: 'fa-bell'
   }
-];
+]);

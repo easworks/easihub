@@ -4,7 +4,7 @@ import { concat } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { hubCategories, initialMenuItems, MenuItem } from './menu-item';
+import { createMenuItemFromCategory, hubCategories, initialMenuItems } from './menu-item';
 
 export default class CustomSidebarComponent extends Component {
   @service site;
@@ -12,21 +12,21 @@ export default class CustomSidebarComponent extends Component {
   @tracked expandedPath = [];
   @tracked activeItem = null;
 
-  get formattedCategories() {
+  hydrateHubChildren(hubItem) {
     const categories = hubCategories
       .map(id => this.site.categoriesById.get(id))
       .filter(Boolean);
 
-    return categories.map(category => ({
-      id: `category-${category.id}`,
-      label: category.name,
-      href: `/c/${category.slug}/${category.id}`,
-      icon: 'fa-folder',
-      badge: category.topic_count > 0 ? {
-        count: category.topic_count,
-        class: 'category-badge'
-      } : null
-    }));
+    return categories.map(category => {
+      const item  = createMenuItemFromCategory(category, hubItem);
+
+      if (category.subcategories.length) {
+        item.children = category.subcategories
+          .map(c => createMenuItemFromCategory(c, item));
+      }
+
+      return item;
+    } );
   }
 
   @action
@@ -35,18 +35,15 @@ export default class CustomSidebarComponent extends Component {
   }
 
   get menuItems() {
-    const dynamicMenuItems = [...initialMenuItems];
+    const menuItems = initialMenuItems;
 
     // Find the "Hubs" item and add dynamic categories to it
-    const hubsItemIndex = dynamicMenuItems.findIndex(item => item.id === 'hubs');
-    if (hubsItemIndex !== -1) {
-      dynamicMenuItems[hubsItemIndex] = {
-        ...dynamicMenuItems[hubsItemIndex],
-        children: this.formattedCategories
-      };
+    const hubs = menuItems.find(item => item.id === 'hubs');
+    if (hubs) {
+      hubs.children = this.hydrateHubChildren(hubs);
     }
 
-    return MenuItem.fromArray(dynamicMenuItems);
+    return menuItems;
   }
 
   <template>

@@ -356,7 +356,6 @@
           cursor: pointer;
           align-items: center;
           gap: calc(var(--spacing, 0.25rem) * 4);
-          border-radius: 0.25rem;
           padding: calc(var(--spacing, 0.25rem) * 2);
           padding-right: calc(var(--spacing, 0.25rem) * 4);
           color: var(--color-slate-500, oklch(55.4% 0.046 257.417));
@@ -406,7 +405,7 @@
           transition-timing-function: var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
         }
         &.expanded {
-          .expand-icon {
+          > .menu-link .expand-icon {
             rotate: 180deg;
           }
           > .submenu {
@@ -531,6 +530,18 @@
 }
 #navigation-bar {
   display: none;
+}
+@layer base {
+  ::-webkit-scrollbar {
+    width: calc(var(--spacing, 0.25rem) * 1);
+  }
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.25rem;
+    background-color: var(--color-slate-200, oklch(92.9% 0.013 255.508));
+  }
 }
 @property --tw-rotate-x {
   syntax: "*";
