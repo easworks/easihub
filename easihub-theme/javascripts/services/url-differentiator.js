@@ -14,10 +14,14 @@ export class UrlDifferentiatorService extends Service {
   @tracked model;
 
   #callback = (transition) => {
-    this.routeName = this.#computeRouteName(transition.to);
+    const route = transition.to;
 
-    const controller = getOwner(this).lookup(`controller:${transition.to.name}`);
+    const controller = getOwner(this).lookup(`controller:${route.name}`);
     this.model = controller.model;
+
+    // this must be done last as it is being observed by
+    // other components/services
+    this.routeName = this.#computeRouteName(route);
   }
 
   constructor() {
