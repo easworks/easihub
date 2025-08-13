@@ -4,7 +4,7 @@
   #d-sidebar {
 
     #custom-sidebar {
-      @apply flex-1 mt-2;
+      @apply flex-1 my-2;
 
       ul {
         @apply m-0;
@@ -14,9 +14,8 @@
         @apply relative;
         
         .menu-link {
-          @apply flex gap-4 items-center p-2 pr-4 rounded-3
-            no-underline 
-            text-slate-500
+          @apply flex gap-4 items-center p-2 pr-4 rounded
+            no-underline text-slate-500
             cursor-pointer select-none
             transition-all duration-200 ease-in-out;
           

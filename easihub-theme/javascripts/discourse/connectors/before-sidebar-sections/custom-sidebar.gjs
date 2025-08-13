@@ -56,191 +56,6 @@ class MenuItem {
   }
 }
 
-const menuItems = MenuItem.fromArray([
-  {
-    id: 'home',
-    label: 'Home',
-    href: 'https://easihub.com/home',
-    icon: 'fa-home',
-  },
-  {
-    id: 'my-posts',
-    label: 'My Posts',
-    href: 'https://easihub.com/my-posts',
-    icon: 'fa-clipboard',
-    badge: { count: 12, classes: '' }
-  },
-  {
-    id: 'more',
-    label: 'More',
-    icon: 'fa-cog',
-    children: [
-      {
-        id: 'about',
-        label: 'About',
-        href: 'https://easihub.com/about',
-        icon: 'fa-user'
-      },
-      {
-        id: 'faqs',
-        label: 'FAQs',
-        href: 'https://easihub.com/faqs',
-        icon: 'fa-question-circle'
-      },
-      {
-        id: 'groups',
-        label: 'Groups',
-        href: 'https://easihub.com/groups',
-        icon: 'fa-users'
-      },
-      {
-        id: 'badges',
-        label: 'Badges',
-        href: 'https://easihub.com/badges',
-        icon: 'fa-star'
-      }
-    ]
-  },
-  {
-    id: 'hubs',
-    label: 'Hubs',
-    icon: 'fa-play-circle',
-    children: [
-      {
-        id: 'hub1',
-        label: 'Hub1',
-        href: 'https://easihub.com/hub1',
-        icon: 'fa-play-circle'
-      },
-      {
-        id: 'hub2',
-        label: 'Hub2',
-        href: 'https://easihub.com/hub2',
-        icon: 'fa-play-circle'
-      }
-    ]
-  },
-  {
-    id: 'all-hubs',
-    label: 'All Hubs',
-    href: 'https://easihub.com/all-hubs',
-    icon: 'fa-book',
-    showDots: true
-  },
-  {
-    id: 'questions',
-    label: 'Questions',
-    href: 'https://easihub.com/questions',
-    icon: 'fa-question-circle'
-  },
-  {
-    id: 'tags',
-    label: 'Tags',
-    href: 'https://easihub.com/tags',
-    icon: 'fa-tag'
-  },
-  {
-    id: 'all-tags',
-    label: 'All Tags',
-    href: 'https://easihub.com/all-tags',
-    icon: 'fa-tag',
-    showDots: true
-  },
-  {
-    id: 'drafts',
-    label: 'Drafts',
-    href: 'https://easihub.com/drafts',
-    icon: 'fa-file-alt'
-  },
-  {
-    id: 'users',
-    label: 'Users',
-    href: 'https://easihub.com/users',
-    icon: 'fa-users'
-  },
-  {
-    id: 'companies',
-    label: 'Companies',
-    icon: 'fa-building',
-    children: [
-      {
-        id: 'jobs',
-        label: 'Jobs',
-        href: 'https://easihub.com/jobs',
-        icon: 'fa-briefcase'
-      }
-    ]
-  },
-  {
-    id: 'messages',
-    label: 'Messages',
-    icon: 'fa-envelope',
-    badge: { count: 7, classes: '' },
-    children: [
-      {
-        id: 'inbox',
-        label: 'Inbox',
-        href: 'https://easihub.com/inbox',
-        icon: 'fa-inbox'
-      },
-      {
-        id: 'new-message',
-        label: 'New',
-        href: 'https://easihub.com/new-message',
-        icon: 'fa-plus'
-      },
-      {
-        id: 'unread',
-        label: 'Unread',
-        href: 'https://easihub.com/unread',
-        icon: 'fa-envelope'
-      },
-      {
-        id: 'sent',
-        label: 'Sent',
-        href: 'https://easihub.com/sent',
-        icon: 'fa-paper-plane'
-      },
-      {
-        id: 'archive',
-        label: 'Archive',
-        href: 'https://easihub.com/archive',
-        icon: 'fa-archive'
-      }
-    ]
-  },
-  {
-    id: 'discussions',
-    label: 'Discussions',
-    href: 'https://easihub.com/discussions',
-    icon: 'fa-comments',
-    badge: { count: 23, classes: 'secondary' }
-  },
-  {
-    id: 'articles',
-    label: 'Articles',
-    href: 'https://easihub.com/articles',
-    icon: 'fa-file-alt'
-  },
-  {
-    id: 'use-cases',
-    label: 'Use Cases',
-    href: 'https://easihub.com/use-cases',
-    icon: 'fa-briefcase'
-  },
-  {
-    id: 'events',
-    label: 'Events',
-    href: 'https://easihub.com/events',
-    icon: 'fa-calendar-alt'
-  },
-  {
-    id: 'bulletins',
-    label: 'Bulletins',
-    href: 'https://easihub.com/bulletins',
-    icon: 'fa-bell'
-  }
-]);
 
 export default class CustomSidebarComponent extends Component {
   @tracked expandedPath = [];
@@ -325,3 +140,190 @@ const BranchTemplate =
       <TreeComponent @items={{@item.children}} @child=true @expanded={{@item.expanded}}/>
     </li>
   </template>;
+
+const rawMenuItems = [
+  {
+    id: 'home',
+    label: 'Home',
+    href: '/',
+    icon: 'fa-home',
+  },
+  {
+    id: 'my-posts',
+    label: 'My Posts',
+    href: '#',
+    icon: 'fa-clipboard',
+  },
+  {
+    id: 'more',
+    label: 'More',
+    icon: 'fa-ellipsis-h',
+    children: [
+      {
+        id: 'about',
+        label: 'About',
+        href: '/about-us',
+        icon: 'fa-info-circle'
+      },
+      {
+        id: 'faqs',
+        label: 'FAQs',
+        href: '/faq',
+        icon: 'fa-question'
+      },
+      {
+        id: 'groups',
+        label: 'Groups',
+        href: '/g',
+        icon: 'fa-users'
+      },
+      {
+        id: 'badges',
+        label: 'Badges',
+        href: '/badges',
+        icon: 'fa-award'
+      }
+    ]
+  },
+  {
+    id: 'review',
+    label: 'Review',
+    href: 'https://easihub.com/review',
+    icon: 'fa-star'
+  },
+  {
+    id: 'admin',
+    label: 'Admin',
+    href: 'https://easihub.com/admin',
+    icon: 'fa-cog'
+  },
+  {
+    id: 'hubs',
+    label: 'Hubs',
+    icon: 'fa-network-wired',
+    children: [
+      // Dynamic categories will be loaded here
+      // ERP, CRM, PLM, SCM, HCM, Cloud Platforms, BA/BI, MES, QMS
+    ]
+  },
+  {
+    id: 'all-hubs',
+    label: 'All Hubs',
+    href: '/categories',
+    icon: 'fa-list',
+    showDots: true
+  },
+  {
+    id: 'questions',
+    label: 'Questions',
+    href: 'https://easihub.com/tag/questions',
+    icon: 'fa-question-circle'
+  },
+  {
+    id: 'tags',
+    label: 'Tags',
+    icon: 'fa-tags',
+    children: [
+      // Dynamic tags will be loaded here
+    ]
+  },
+  {
+    id: 'all-tags',
+    label: 'All Tags',
+    href: '/tags',
+    icon: 'fa-tag'
+  },
+  {
+    id: 'drafts',
+    label: 'Drafts',
+    href: '#',
+    icon: 'fa-file-alt'
+  },
+  {
+    id: 'users',
+    label: 'Users',
+    href: '/u',
+    icon: 'fa-users'
+  },
+  {
+    id: 'companies',
+    label: 'Companies',
+    icon: 'fa-building',
+    children: [
+      {
+        id: 'jobs',
+        label: 'Jobs',
+        href: '/tag/job',
+        icon: 'fa-briefcase'
+      }
+    ]
+  },
+  {
+    id: 'messages',
+    label: 'Messages',
+    icon: 'fa-envelope',
+    children: [
+      {
+        id: 'inbox',
+        label: 'Inbox',
+        href: 'https://easihub.com/u/easdevub_admin/messages',
+        icon: 'fa-inbox'
+      },
+      {
+        id: 'new-message',
+        label: 'New',
+        href: 'https://easihub.com/u/easdevub_admin/messages/new',
+        icon: 'fa-edit'
+      },
+      {
+        id: 'unread',
+        label: 'Unread',
+        href: 'https://easihub.com/u/easdevub_admin/messages/unread',
+        icon: 'fa-envelope-open'
+      },
+      {
+        id: 'sent',
+        label: 'Sent',
+        href: 'https://easihub.com/u/easdevub_admin/messages/sent',
+        icon: 'fa-paper-plane'
+      },
+      {
+        id: 'archive',
+        label: 'Archive',
+        href: 'https://easihub.com/u/easdevub_admin/messages/archive',
+        icon: 'fa-archive'
+      }
+    ]
+  },
+  {
+    id: 'discussions',
+    label: 'Discussions',
+    href: 'https://easihub.com/tag/discussion',
+    icon: 'fa-comments'
+  },
+  {
+    id: 'articles',
+    label: 'Articles',
+    href: 'https://easihub.com/tag/articles',
+    icon: 'fa-file-alt'
+  },
+  {
+    id: 'use-cases',
+    label: 'Use Cases',
+    href: 'https://easihub.com/tag/use-cases',
+    icon: 'fa-briefcase'
+  },
+  {
+    id: 'events',
+    label: 'Events',
+    href: 'https://easihub.com/tag/events',
+    icon: 'fa-calendar-alt'
+  },
+  {
+    id: 'bulletins',
+    label: 'Bulletins',
+    href: 'https://easihub.com/tag/bulletins',
+    icon: 'fa-bell'
+  }
+];
+const menuItems = MenuItem.fromArray(rawMenuItems);

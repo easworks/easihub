@@ -344,7 +344,7 @@
 @layer components {
   #d-sidebar {
     #custom-sidebar {
-      margin-top: calc(var(--spacing, 0.25rem) * 2);
+      margin-block: calc(var(--spacing, 0.25rem) * 2);
       flex: 1;
       ul {
         margin: calc(var(--spacing, 0.25rem) * 0);
@@ -356,10 +356,9 @@
           cursor: pointer;
           align-items: center;
           gap: calc(var(--spacing, 0.25rem) * 4);
+          border-radius: 0.25rem;
           padding: calc(var(--spacing, 0.25rem) * 2);
           padding-right: calc(var(--spacing, 0.25rem) * 4);
-          font-size: var(--text-lg, 1.125rem);
-          line-height: var(--tw-leading, var(--text-lg--line-height, calc(1.75 / 1.125)));
           color: var(--color-slate-500, oklch(55.4% 0.046 257.417));
           text-decoration-line: none;
           transition-property: all;
@@ -391,9 +390,6 @@
         }
         .menu-label {
           flex-grow: 1;
-          transition-property: all;
-          transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
-          transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
         }
         .expand-icon {
           margin-left: auto;
@@ -429,8 +425,8 @@
         --tw-ease: var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
         transition-timing-function: var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
         .menu-label {
-          font-size: var(--text-base, 1rem);
-          line-height: var(--tw-leading, var(--text-base--line-height, calc(1.5 / 1)));
+          font-size: var(--text-sm, 0.875rem);
+          line-height: var(--tw-leading, var(--text-sm--line-height, calc(1.25 / 0.875)));
         }
       }
       .badge {
@@ -535,10 +531,6 @@
 }
 #navigation-bar {
   display: none;
-}
-html {
-  font-size: var(--text-base, 1rem);
-  line-height: var(--tw-leading, var(--text-base--line-height, calc(1.5 / 1)));
 }
 @property --tw-rotate-x {
   syntax: "*";
