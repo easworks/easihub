@@ -4,7 +4,7 @@ import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 
 export default class NavigationBarComponent extends Component {
-  @service('url-differentiator') urld;
+  @service urld;
   @service createTopicButton;
 
   @tracked navItems = [];

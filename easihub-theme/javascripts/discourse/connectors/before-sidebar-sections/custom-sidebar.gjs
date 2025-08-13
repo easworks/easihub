@@ -4,7 +4,8 @@ import { concat } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { createMenuItemFromCategory, hubCategories, initialMenuItems } from './menu-item';
+import { featuredHubs } from '../../../utils/featured-hubs';
+import { createMenuItemFromCategory, initialMenuItems } from './menu-item';
 
 export default class CustomSidebarComponent extends Component {
   @service site;
@@ -13,7 +14,7 @@ export default class CustomSidebarComponent extends Component {
   @tracked activeItem = null;
 
   hydrateHubChildren(hubItem) {
-    const categories = hubCategories
+    const categories = featuredHubs
       .map(id => this.site.categoriesById.get(id))
       .filter(Boolean);
 

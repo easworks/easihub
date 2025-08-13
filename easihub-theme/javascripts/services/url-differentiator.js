@@ -4,8 +4,8 @@ import { tracked } from '@glimmer/tracking';
 
 export class UrlDifferentiatorService extends Service {
   static init(api) {
-    api.container.registry.register('service:url-differentiator', UrlDifferentiatorService);
-    api.container.lookup('service:url-differentiator');
+    api.container.registry.register('service:urld', UrlDifferentiatorService);
+    api.container.lookup('service:urld');
   }
 
   @service router;
