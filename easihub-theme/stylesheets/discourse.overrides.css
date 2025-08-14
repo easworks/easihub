@@ -11,3 +11,32 @@
 .d-header>.wrap .contents {
   @apply flex;
 }
+
+.custom-header-links {
+  @apply ml-14;
+}
+
+.top-level-links {
+  @apply gap-6;
+}
+
+.custom-header-link.with-url {
+  @apply relative no-underline;
+}
+
+.custom-header-link.with-url::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-current transition-all duration-300 ease-in-out;
+}
+
+.custom-header-link.with-url:hover::after {
+  @apply w-full;
+}
+
+.custom-header-links .custom-header-dropdown-link {
+  @apply font-medium text-sm
+}
+
+.category-title-header {
+  @apply h-64
+}

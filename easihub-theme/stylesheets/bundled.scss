@@ -335,6 +335,44 @@
 .d-header>.wrap .contents {
   display: flex;
 }
+.custom-header-links {
+  margin-left: calc(var(--spacing, 0.25rem) * 14);
+}
+.top-level-links {
+  gap: calc(var(--spacing, 0.25rem) * 6);
+}
+.custom-header-link.with-url {
+  position: relative;
+  text-decoration-line: none;
+}
+.custom-header-link.with-url::after {
+  content: '';
+  position: absolute;
+  bottom: calc(var(--spacing, 0.25rem) * 0);
+  left: calc(var(--spacing, 0.25rem) * 0);
+  height: calc(var(--spacing, 0.25rem) * 0.5);
+  width: calc(var(--spacing, 0.25rem) * 0);
+  background-color: currentcolor;
+  transition-property: all;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function, cubic-bezier(0.4, 0, 0.2, 1)));
+  transition-duration: var(--tw-duration, var(--default-transition-duration, 150ms));
+  --tw-duration: 300ms;
+  transition-duration: 300ms;
+  --tw-ease: var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
+  transition-timing-function: var(--ease-in-out, cubic-bezier(0.4, 0, 0.2, 1));
+}
+.custom-header-link.with-url:hover::after {
+  width: 100%;
+}
+.custom-header-links .custom-header-dropdown-link {
+  font-size: var(--text-sm, 0.875rem);
+  line-height: var(--tw-leading, var(--text-sm--line-height, calc(1.25 / 0.875)));
+  --tw-font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-medium, 500);
+}
+.category-title-header {
+  height: calc(var(--spacing, 0.25rem) * 64);
+}
 @layer components {
   #d-sidebar {
     .sidebar-sections {
