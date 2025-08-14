@@ -1,5 +1,3 @@
-@reference './theme.css';
-
 @layer components {
   #custom-sidebar {
     @apply flex-1 my-2;

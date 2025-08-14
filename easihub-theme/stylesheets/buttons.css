@@ -1,0 +1,43 @@
+@layer components {
+  .raised-button {
+    --source-color: var(--color-primary-500);
+
+    @apply relative block p-1 px-4 rounded-md font-medium text-center text-sm
+      transition-all w-max;
+
+    background-color: var(--source-color);
+    @apply text-on-primary shadow-sm;
+
+
+    @apply before:absolute after:absolute ring-0 ring-black/10;
+
+    &::before {
+      @apply pointer-events-none transition-all inset-0 rounded-md
+        bg-gradient-to-b
+        from-white/15 
+        opacity-50;
+    }
+
+    &::after {
+      @apply pointer-events-none inset-0 rounded-md
+        bg-gradient-to-b from-white/10
+        from-[46%] to-[54%]
+        mix-blend-overlay;
+    }
+
+
+    &:hover, &:focus {
+      &::before {
+        @apply opacity-100;
+      }
+    }
+
+    &:disabled, &.disabled {
+      @apply text-gray-400 bg-gray-200;
+
+      &::before, &::after {
+        @apply hidden;
+      }
+    }
+  }
+}

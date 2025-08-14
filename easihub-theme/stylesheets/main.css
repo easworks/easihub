@@ -1,12 +1,12 @@
-@import 'tailwindcss';
-@import "./theme.css";
+@import './theme.css';
 @import './discourse.overrides.css';
-@import "./sidebar.css";
-@import "./navigation-bar.css";
+@import './buttons.css';
+@import './sidebar.css';
+@import './navigation-bar.css'; 
 
 /* Custom styles can go here */
 
-@layer base {
+/* @layer base {
   ::-webkit-scrollbar {
     @apply w-1;
   }
@@ -23,3 +23,10 @@
     @apply font-bold;
   }
 }
+
+@layer components {
+  .divider {
+    @apply border-b border-outline-variant;
+  }
+  
+} */
