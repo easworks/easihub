@@ -53,9 +53,27 @@ export class UrlDifferentiatorService extends Service {
       }
     }
 
+    if (isAdminRoute(route)) {
+      if (!route.name.startsWith('admin.'))
+        return `admin.${route.name}`;
+    }
+
     return route.name;
   }
 }
 
 const numeric = /^\d+$/;
 const genericTopicsPattern = /^generic-.+-topics$/;
+
+function isAdminRoute(route) {
+  let currentRoute = route;
+
+  while (currentRoute) {
+    if (currentRoute.name === 'admin') {
+      return true;
+    }
+    currentRoute = currentRoute.parent;
+  }
+
+  return false;
+}

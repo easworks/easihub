@@ -5,10 +5,12 @@ import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { featuredHubs } from '../../../utils/featured-hubs';
-import { createMenuItemFromCategory, initialMenuItems } from './menu-item';
+import { constructMenu, createMenuItemFromCategory } from './menu-item';
 
 export default class CustomSidebarComponent extends Component {
   @service site;
+  @service currentUser;
+  @service urld;
 
   @tracked expandedPath = [];
   @tracked activeItem = null;
@@ -36,7 +38,7 @@ export default class CustomSidebarComponent extends Component {
   }
 
   get menuItems() {
-    const menuItems = initialMenuItems;
+    const menuItems = constructMenu(this.currentUser);
 
     // Find the "Hubs" item and add dynamic categories to it
     const hubs = menuItems.find(item => item.id === 'hubs');
@@ -47,10 +49,22 @@ export default class CustomSidebarComponent extends Component {
     return menuItems;
   }
 
+  get isAdminPanel() {
+    return this.urld.routeName.startsWith('admin.');
+  }
+
+  get showCustomMenu() {
+    return !this.isAdminPanel;
+  }
+
   <template>
-    <div id="custom-sidebar">
-      <TreeComponent @items={{this.menuItems}} />
-    </div>
+    {{@log this.urld.router.currentRoute}}
+    {{@log this.urld.router.currentRoute.name}}
+    {{#if this.showCustomMenu}}
+      <div id="custom-sidebar">
+        <TreeComponent @items={{this.menuItems}} />
+      </div>
+    {{/if}}
   </template>
 }
 

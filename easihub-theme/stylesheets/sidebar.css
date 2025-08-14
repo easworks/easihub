@@ -88,6 +88,10 @@
 
 .sidebar-sections {
   @apply hidden;
+
+  &.admin-panel {
+    @apply block;
+  }
 }
 
 .d-header {

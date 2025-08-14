@@ -78,18 +78,25 @@ export function createMenuItemFromCategory(category, parent) {
   return new MenuItem(data, parent);
 }
 
-export const initialMenuItems = MenuItem.fromArray([
+export function constructMenu(user) {
+  const menu = MenuItem.fromArray(publicMenu);
+
+  if (user) {
+    transformForUser(menu, user);
+    if (user.admin) {
+      transformForAdmin(menu, user);
+    }
+  }
+  return menu;
+};
+
+
+const publicMenu = [
   {
     id: 'home',
     label: 'Home',
     href: '/',
     icon: 'fa-home',
-  },
-  {
-    id: 'my-posts',
-    label: 'My Posts',
-    href: '#',
-    icon: 'fa-clipboard',
   },
   {
     id: 'more',
@@ -129,12 +136,6 @@ export const initialMenuItems = MenuItem.fromArray([
     icon: 'fa-star'
   },
   {
-    id: 'admin',
-    label: 'Admin',
-    href: 'https://easihub.com/admin',
-    icon: 'fa-cog'
-  },
-  {
     id: 'hubs',
     label: 'Hubs',
     icon: 'fa-network-wired',
@@ -171,12 +172,6 @@ export const initialMenuItems = MenuItem.fromArray([
     icon: 'fa-tag'
   },
   {
-    id: 'drafts',
-    label: 'Drafts',
-    href: '#',
-    icon: 'fa-file-alt'
-  },
-  {
     id: 'users',
     label: 'Users',
     href: '/u',
@@ -196,6 +191,54 @@ export const initialMenuItems = MenuItem.fromArray([
     ]
   },
   {
+    id: 'discussions',
+    label: 'Discussions',
+    href: 'https://easihub.com/tag/discussion',
+    icon: 'fa-comments'
+  },
+  {
+    id: 'articles',
+    label: 'Articles',
+    href: 'https://easihub.com/tag/articles',
+    icon: 'fa-file-alt'
+  },
+  {
+    id: 'use-cases',
+    label: 'Use Cases',
+    href: 'https://easihub.com/tag/use-cases',
+    icon: 'fa-briefcase'
+  },
+  {
+    id: 'events',
+    label: 'Events',
+    href: 'https://easihub.com/tag/events',
+    icon: 'fa-calendar-alt'
+  },
+  {
+    id: 'bulletins',
+    label: 'Bulletins',
+    href: 'https://easihub.com/tag/bulletins',
+    icon: 'fa-bell'
+  }
+];
+
+
+function transformForUser(menu, user) {
+  menu.splice(1, 0, new MenuItem({
+    id: 'my-posts',
+    label: 'My Posts',
+    href: '#',
+    icon: 'fa-clipboard',
+  }));
+
+  menu.splice(9, 0, new MenuItem({
+    id: 'drafts',
+    label: 'Drafts',
+    href: '#',
+    icon: 'fa-file-alt'
+  }));
+
+  menu.splice(12, 0, new MenuItem({
     id: 'messages',
     label: 'Messages',
     icon: 'fa-envelope',
@@ -231,35 +274,14 @@ export const initialMenuItems = MenuItem.fromArray([
         icon: 'fa-archive'
       }
     ]
-  },
-  {
-    id: 'discussions',
-    label: 'Discussions',
-    href: 'https://easihub.com/tag/discussion',
-    icon: 'fa-comments'
-  },
-  {
-    id: 'articles',
-    label: 'Articles',
-    href: 'https://easihub.com/tag/articles',
-    icon: 'fa-file-alt'
-  },
-  {
-    id: 'use-cases',
-    label: 'Use Cases',
-    href: 'https://easihub.com/tag/use-cases',
-    icon: 'fa-briefcase'
-  },
-  {
-    id: 'events',
-    label: 'Events',
-    href: 'https://easihub.com/tag/events',
-    icon: 'fa-calendar-alt'
-  },
-  {
-    id: 'bulletins',
-    label: 'Bulletins',
-    href: 'https://easihub.com/tag/bulletins',
-    icon: 'fa-bell'
-  }
-]);
+  }));
+}
+
+function transformForAdmin(menu, user) {
+  menu.splice(4, 0, new MenuItem({
+    id: 'admin',
+    label: 'Admin',
+    href: 'https://easihub.com/admin',
+    icon: 'fa-cog'
+  }));
+}
