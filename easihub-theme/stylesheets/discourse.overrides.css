@@ -37,6 +37,72 @@
   @apply font-medium text-sm
 }
 
+
+/* styling for banner on category page */
+.navigation-container {
+  margin-top: 70px;
+}
+
 .category-title-header {
-  @apply h-64
+  position: relative;
+  padding: 1em 0;
+  min-height: 250px;
+  overflow: visible;
+  margin-bottom: 30px;
+}
+
+.category-title-name {
+  position: absolute;
+  top: 40%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+  width: 190px;
+  word-wrap: break-word;
+  /* overflow-wrap: break-word; */
+}
+
+.category-title-name h1 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+}
+
+
+.category-title-description {
+  position: absolute;
+  left: 50%;
+  bottom: -30px;
+  transform: translateX(-50%);
+  background: #fff;
+  border-radius: 14px;
+  max-height: 140px;
+  padding: 1em;
+  width: 90%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  z-index: 10;
+  overflow: hidden; /* ensure content is clipped */
+}
+
+.category-title-description .cooked {
+  color: #333;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-title-description .category-logo.aspect-image {
+  position: static;
+  transform: none;
+  flex-shrink: 0;
+}
+
+.category-title-description .category-logo.aspect-image img {
+  width: 60px;
+  height: auto;
 }
