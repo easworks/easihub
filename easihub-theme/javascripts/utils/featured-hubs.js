@@ -1,3 +1,9 @@
+// Featured Hubs (list category ids)
+// this is used for 
+// - the Hubs Menu side menu items
+// - list of categories on the home page
+
+
 export const featuredHubs = [
   69,   // ERP
   14,   // CRM

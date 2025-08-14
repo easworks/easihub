@@ -6,7 +6,7 @@
 
 /* Custom styles can go here */
 
-/* @layer base {
+@layer base {
   ::-webkit-scrollbar {
     @apply w-1;
   }
@@ -22,6 +22,10 @@
   strong {
     @apply font-bold;
   }
+
+  h3 {
+    @apply m-0;
+  }
 }
 
 @layer components {
@@ -29,4 +33,4 @@
     @apply border-b border-outline-variant;
   }
   
-} */
+}
