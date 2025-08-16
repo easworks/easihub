@@ -10,7 +10,7 @@ import { constructMenu, createMenuItemFromCategory } from './menu-item';
 export default class CustomSidebarComponent extends Component {
   @service site;
   @service currentUser;
-  @service urld;
+  @service('url-differentiator') urld;
 
   @tracked expandedPath = [];
   @tracked activeItem = null;

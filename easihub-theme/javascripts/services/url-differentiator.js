@@ -2,12 +2,7 @@ import Service, { service } from '@ember/service';
 import { getOwner } from '@ember/application';
 import { tracked } from '@glimmer/tracking';
 
-export class UrlDifferentiatorService extends Service {
-  static init(api) {
-    api.container.registry.register('service:urld', UrlDifferentiatorService);
-    api.container.lookup('service:urld');
-  }
-
+export default class UrlDifferentiatorService extends Service {
   @service router;
 
   @tracked routeName;
@@ -16,21 +11,26 @@ export class UrlDifferentiatorService extends Service {
   #callback = (transition) => {
     const route = transition.to;
 
+    this.#processRoute(route);
+  }
+
+  constructor() {
+    super(...arguments);
+    this.router.on('routeDidChange', this.#callback);
+    this.#processRoute(this.router.currentRoute);
+  }
+
+  willDestroy() {
+    this.router.destroy('routeDidChange', this.#callback);
+  }
+
+  #processRoute(route) {
     const controller = getOwner(this).lookup(`controller:${route.name}`);
     this.model = controller.model;
 
     // this must be done last as it is being observed by
     // other components/services
     this.routeName = this.#computeRouteName(route);
-  }
-
-  constructor() {
-    super(...arguments);
-    this.router.on('routeDidChange', this.#callback);
-  }
-
-  willDestroy() {
-    this.router.destroy('routeDidChange', this.#callback);
   }
 
   #computeRouteName = (route) => {
