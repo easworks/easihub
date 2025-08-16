@@ -1,10 +1,7 @@
 import { apiInitializer } from "discourse/lib/api";
 import { addLayersToStyleSheets } from '../../layered-css-links';
-import { CreateTopicButtonService } from '../../services/create-topic-button';
 
 export default apiInitializer(async (api) => {
-  CreateTopicButtonService.init(api);
-
   await runOnInit(api, async () => {
     addLayersToStyleSheets();
   });

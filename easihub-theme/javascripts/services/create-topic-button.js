@@ -1,11 +1,7 @@
 import Service from '@ember/service';
 import { sleep } from '../utils/sleep';
 
-export class CreateTopicButtonService extends Service {
-  static init(api) {
-    api.container.registry.register('service:create-topic-button', CreateTopicButtonService);
-  }
-
+export default class CreateTopicButtonService extends Service {
   /** @type {HTMLButtonElement | null} */
   #button;
 
