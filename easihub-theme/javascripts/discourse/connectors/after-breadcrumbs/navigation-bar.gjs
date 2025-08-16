@@ -5,14 +5,12 @@ import { service } from '@ember/service';
 
 export default class NavigationBarComponent extends Component {
   @service('url-differentiator') urld;
-  @service createTopicButton;
 
   @tracked navItems = [];
 
   onRouteChange = () => {
     const route = this.urld.router.currentRoute;
     this.#updateNavItems(route);
-    this.#updateCreateTopicButtonText(route);
   };
 
 
@@ -98,25 +96,6 @@ export default class NavigationBarComponent extends Component {
     }
   }
 
-  #updateCreateTopicButtonText(route) {
-    // Show create topic button with "Create Feedback" for feedback category
-    if (this.#isFeedbackCategory(route)) {
-      this.createTopicButton.show();
-      this.createTopicButton.setText('Create Feedback');
-      return;
-    }
-
-    if (route.name !== 'tags.showCategory') {
-      this.createTopicButton.hide();
-      return;
-    }
-
-    const tag = this.urld.model.tag;
-    const label = createTopicButtonLabels[tag.id];
-    this.createTopicButton.show();
-    this.createTopicButton.setText(label);
-  }
-
   <template>
     {{#if this.navItems.length}}
       <nav class="navigation-bar">
@@ -149,14 +128,4 @@ const itemMap = {
   "Unanswered": { text: "Unanswered", icon: "fas fa-question-circle" },
   "Latest": { text: "Latest", icon: "fas fa-clock" },
   "Hot": { text: "Hot", icon: "fas fa-fire" }
-};
-
-const createTopicButtonLabels = {
-  'questions': 'Ask Question',
-  'discussion': 'Start Discussion',
-  'use-cases': 'Share Use Case',
-  'articles': 'Propose Article',
-  'bulletins': 'Post Bulletin',
-  'events': 'Add Event',
-  'jobs': 'Post Job'
 };

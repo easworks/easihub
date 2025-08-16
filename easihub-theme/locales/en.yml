@@ -3,3 +3,16 @@ en:
     description: ''
     settings:
       example_setting: A description of a setting.
+
+  topic:
+    create-by-tag: 
+      questions: Ask Questions
+      discussion: Start Discussion
+      use-cases: Share Use Case
+      articles: Propose Article
+      bulletins: Post Bulletin
+      events: Add Event
+      jobs: Post Jobs
+
+  discovery-list-area:
+    explore-and-post: Explore & Post

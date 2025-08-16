@@ -17,7 +17,8 @@ export default class UrlDifferentiatorService extends Service {
   constructor() {
     super(...arguments);
     this.router.on('routeDidChange', this.#callback);
-    this.#processRoute(this.router.currentRoute);
+    if (this.router.currentRoute)
+      this.#processRoute(this.router.currentRoute);
   }
 
   willDestroy() {
@@ -33,10 +34,14 @@ export default class UrlDifferentiatorService extends Service {
     this.routeName = this.#computeRouteName(route);
   }
 
-  #computeRouteName = (route) => {
+  #computeRouteName(route) {
     switch (route.name) {
       case 'discovery.category':
       case 'tags.showCategory': {
+        if (route.params.category_slug_path_with_id === 'feedback/179') {
+          return `${route.name}.feedback`
+        }
+
         const segments = route.params.category_slug_path_with_id.split('/');
 
         if (segments.length === 2 && numeric.test(segments[1]))

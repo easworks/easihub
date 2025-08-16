@@ -902,9 +902,6 @@
 #navigation-bar {
   display: none;
 }
-#create-topic {
-  display: none;
-}
 @layer base {
   ::-webkit-scrollbar {
     width: calc(var(--spacing) * 1);

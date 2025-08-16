@@ -1,6 +1,8 @@
 import Component from "@glimmer/component";
 import { tracked } from '@glimmer/tracking';
+import { LinkTo } from "@ember/routing";
 import { service } from '@ember/service';
+import { i18n } from "discourse-i18n";
 import { featuredHubs } from '../../../utils/featured-hubs';
 
 export default class HomePage extends Component {
@@ -21,7 +23,10 @@ export default class HomePage extends Component {
     this.cards = categories.map(c => ({
       name: c.name,
       content: c.description,
-      logo: c.uploaded_logo.url
+      logo: c.uploaded_logo.url,
+      link: [
+        `${c.slug}/${c.id}`
+      ]
     }));
   }
 
@@ -47,7 +52,10 @@ export default class HomePage extends Component {
               {{{card.content}}}
             </p>
             <div class="divider my-4"></div>
-            <button class="raised-button w-full text-base py-2">Explore & Post</button>
+            <LinkTo @route="discovery.category" @models={{card.link}}
+              class="raised-button w-full text-base py-2">
+              {{i18n (themePrefix 'discovery-list-area.explore-and-post')}}
+            </LinkTo>
           </div>
         {{/each}}
       </div>

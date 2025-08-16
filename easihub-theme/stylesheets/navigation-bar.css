@@ -26,7 +26,3 @@
 #navigation-bar {
     @apply hidden;
 }
-
-#create-topic {
-    @apply hidden;
-}
