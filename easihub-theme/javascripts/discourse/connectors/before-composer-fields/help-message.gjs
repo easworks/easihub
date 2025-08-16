@@ -25,7 +25,7 @@ export class MessageTemplate extends Component {
 
   get i18ns() {
     if (this.help) {
-      return `${this.help}.${this.i18nsBase}`;
+      return `${this.i18nsBase}.${this.help}`;
     }
     return this.i18nsBase;
   }

@@ -33,7 +33,7 @@ export default apiInitializer(api => {
 
         if (this.router.currentRoute.name === 'tags.showCategory') {
           const tag = this.urld.model.tag;
-          const label = themePrefix(`topic.create-by-tag.${tag.id}`);
+          const label = themePrefix(`topic.create.by-tag.${tag.id}`);
           return label;
         }
 

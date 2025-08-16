@@ -5,14 +5,15 @@ en:
       example_setting: A description of a setting.
 
   topic:
-    create-by-tag: 
-      questions: Ask Questions
-      discussion: Start Discussion
-      use-cases: Share Use Case
-      articles: Propose Article
-      bulletins: Post Bulletin
-      events: Add Event
-      jobs: Post Jobs
+    create: 
+      by-tag:
+        questions: Ask Questions
+        discussion: Start Discussion
+        use-cases: Share Use Case
+        articles: Propose Article
+        bulletins: Post Bulletin
+        events: Add Event
+        jobs: Post Jobs
 
   discovery-list-area:
     explore-and-post: Explore & Post
@@ -21,12 +22,9 @@ en:
     help-message:
       show-more: Show More ▼
       show-less: Show Less ▲
-          
 
-  by-tag:
-    articles:
-      composer:
-        help-message:
+      by-tag: 
+        articles:
           header: 💡 Need help asking a great question?
           content: |
             A great question includes software and technical context 
@@ -38,5 +36,3 @@ en:
             I tried updating callback URL and resetting secrets."
 
             Ask clearly, and others can help you faster.
-
-
