@@ -1,5 +1,6 @@
 import { apiInitializer } from "discourse/lib/api";
 import { service } from '@ember/service';
+import { SPECIAL_TAGS } from '../../special-tags';
 
 export default apiInitializer(api => {
 
@@ -15,7 +16,7 @@ export default apiInitializer(api => {
 
         if (this.router.currentRoute.name === 'tags.showCategory') {
           const tag = this.urld.model.tag;
-          allowedByRoute = tagLabels.has(tag.id);
+          allowedByRoute = SPECIAL_TAGS.has(tag.id);
         }
 
         return allowedByRoute && base;
@@ -41,15 +42,3 @@ export default apiInitializer(api => {
     });
 
 });
-
-
-
-const tagLabels = new Set(
-  'questions',
-  'discussion',
-  'use-cases',
-  'articles',
-  'bulletins',
-  'events',
-  'jobs'
-);

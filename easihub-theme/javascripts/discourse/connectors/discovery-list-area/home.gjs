@@ -1,6 +1,6 @@
-import Component from "@glimmer/component";
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { LinkTo } from "@ember/routing";
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 import { i18n } from "discourse-i18n";
 import { featuredHubs } from '../../../utils/featured-hubs';
