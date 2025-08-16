@@ -1,5 +1,6 @@
 import { apiInitializer } from "discourse/lib/api";
 import { SPECIAL_TAGS } from '../../special-tags';
+import { i18n } from "discourse-i18n";
 
 export default apiInitializer(api => {
 
@@ -13,7 +14,11 @@ export default apiInitializer(api => {
     if (router.currentRoute.name === 'tags.showCategory') {
       const tag = urld.model.tag;
       if (SPECIAL_TAGS.has(tag.id)) {
-        help = `by-tag.${tag.id}`
+        const i18nBase = `composer.help-message.by-tag.${tag.id}`;
+        help = {
+          header: i18n(themePrefix(`${i18nBase}.header`)),
+          content: i18n(themePrefix(`${i18nBase}.content`))
+        };
       }
     }
 
