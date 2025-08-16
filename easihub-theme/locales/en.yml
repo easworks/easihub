@@ -63,3 +63,35 @@ en:
             You may link to an external bulletin or summarize it.
 
             **Example:** "Salesforce Spring '25 release adds native GraphQL support"
+
+        discussion:
+          header: 💡 Need help structuring your discussion? 
+          content: |
+            Discussions explore open-ended ideas, trade-offs, or product strategies. 
+            You can frame your discussion around a domain, a product, or a technical topic.
+
+            **Example 1:** "What are pros/cons of integrating Salesforce with Azure AD vs Okta?"
+            **Example 2:** "Which data model is better for variant BOMs in Teamcenter: structure or classification?"
+
+            Use this form when you're looking to spark thoughtful conversation and input from others.
+        
+        use-cases:
+          header: 💡 Need help structuring your use case?
+          content: |
+            Use cases share real implementations across domains, software, or technical areas. 
+            This form helps you document how you solved a business or technical problem.
+
+            **Example 1:** "Automated Teamcenter-to-SAP BOM transfer using REST API"
+            **Example 2:** "Used Salesforce Flow Builder to auto-update opportunity stages"
+
+            Clearly describe the challenge, what was built, how it was implemented, and any measurable benefit.
+
+        questions:
+          header: 💡 Need help asking a great question? 
+          content: |
+            A great question includes software and technical context 
+            (e.g., SAP S/4HANA, Salesforce API), the exact error or scenario, and what you've already tried.
+
+            **Example:** "How can I enable OAuth between Salesforce and Azure AD? I configured the connected app but keep getting 'invalid grant'. I tried updating callback URL and resetting secrets."
+            
+            Ask clearly, and others can help you faster.
