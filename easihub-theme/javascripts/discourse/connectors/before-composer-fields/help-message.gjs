@@ -2,11 +2,9 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import { service } from '@ember/service';
 import { i18n } from 'discourse-i18n';
 
 export class MessageTemplate extends Component {
-  @service composer;
 
   @tracked expanded;
 
@@ -16,15 +14,11 @@ export class MessageTemplate extends Component {
   }
 
   get help() {
-    return this.composer.model.customization?.help;
-  }
-
-  get show() {
-    return this.help && this.help.content.isFullfilled;
+    return this.args.model.customization?.help;
   }
 
   <template>
-    {{#if this.show}}
+    {{#if this.help}}
     <div class="p-2 mb-4 bg-primary-50 rounded-lg border-l-4 border-l-primary-500">
       <h4 class="flex gap-4 items-center justify-between">
         <span class="font-bold">
