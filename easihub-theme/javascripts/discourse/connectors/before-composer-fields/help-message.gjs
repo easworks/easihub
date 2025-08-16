@@ -16,11 +16,15 @@ export class MessageTemplate extends Component {
   }
 
   get help() {
-    return this.composer.model.help;
+    return this.composer.model.customization?.help;
+  }
+
+  get show() {
+    return this.help && this.help.content.isFullfilled;
   }
 
   <template>
-    {{#if this.help}}
+    {{#if this.show}}
     <div class="p-2 mb-4 bg-primary-50 rounded-lg border-l-4 border-l-primary-500">
       <h4 class="flex gap-4 items-center justify-between">
         <span class="font-bold">
@@ -38,7 +42,7 @@ export class MessageTemplate extends Component {
 
       <div class="overflow-hidden transition-all duration-300 ease-in-out {{if this.expanded 'max-h-96 opacity-100' 'max-h-0 opacity-0'}}">
         <div class="pt-4 prose text-sm text-justify">
-          {{{this.help.content}}}
+          {{{this.help.content.content}}}
         </div>
       </div>
     </div>

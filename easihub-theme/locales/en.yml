@@ -23,6 +23,18 @@ en:
     explore-and-post: Explore & Post
 
   composer:
+    action-title:
+      by-tag: 
+        articles: Write an Article
+        bulletins: Share a Bulletin
+        discussion: Start a Discussion
+        events: Create an Event
+        jobs: Post a Job Opening
+        questions: Ask a Question
+        use-cases: Document a Use Case
+      by-category:
+        179: Provide Feedback
+
     help-message:
       show-more: Show More ▼
       show-less: Show Less ▲
@@ -113,3 +125,14 @@ en:
 
             Constructive feedback drives better outcomes for everyone.
 
+    create_topic:
+      by-tag:
+        articles: Publish Article
+        bulletins: Share Bulletin
+        discussion: Create Discussion
+        events: Publish Event
+        jobs: Post Job
+        questions: Submit Question
+        use-cases: Share Use Case
+      by-category:
+        179: Submit Feedback
