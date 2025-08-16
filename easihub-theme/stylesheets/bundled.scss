@@ -254,6 +254,9 @@
   .\@container {
     container-type: inline-size;
   }
+  .collapse {
+    visibility: collapse;
+  }
   .visible {
     visibility: visible;
   }

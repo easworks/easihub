@@ -18,7 +18,7 @@ export default apiInitializer(api => {
     }
   })
 
-  api.onAppEvent('composer:open', async ({ model }) => {
+  api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
 
     let customization = null;
