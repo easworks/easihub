@@ -27,7 +27,12 @@ export default class UrlDifferentiatorService extends Service {
 
   #processRoute(route) {
     const controller = getOwner(this).lookup(`controller:${route.name}`);
-    this.model = controller.model;
+    if (controller) {
+      this.model = controller.model;
+    }
+    else
+      this.model = null;
+
 
     // this must be done last as it is being observed by
     // other components/services

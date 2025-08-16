@@ -36,3 +36,30 @@ en:
             I tried updating callback URL and resetting secrets."
 
             Ask clearly, and others can help you faster.
+
+        events:
+          header: 💡 Need help listing your event?
+          content: |
+            Use this form to promote webinars, product launches, conferences, 
+            or community events. Be sure to include the title, software or domain 
+            it relates to, the event type, and a URL or agenda.
+
+            **Example:** "Join our SAP S/4HANA API Workshop - June 2025"
+
+        jobs:
+          header: 💡 Need help writing a quality job post?
+          content: |
+            Use specific job titles, domain/software (e.g., SAP, Salesforce, Teamcenter),
+            and include work mode, job type, and contact info. Add certifications, 
+            benefits, or URLs to make the job clear and attractive.
+
+            **Example:** "Teamcenter Integration Consultant (Remote, Contract) with 5+ years experience"
+
+        bulletins:
+          header: 💡 Need help writing a bulletin?
+          content: |
+            Bulletins are ideal for quick product updates, release announcements, 
+            security advisories, or breaking system news. Keep it short and focused. 
+            You may link to an external bulletin or summarize it.
+
+            **Example:** "Salesforce Spring '25 release adds native GraphQL support"

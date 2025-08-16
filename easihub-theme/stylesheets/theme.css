@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@plugin "@tailwindcss/typography";
+
 @theme static {
   --breakpoint-xs: 20rem;
   --breakpoint-sm: 24rem;
