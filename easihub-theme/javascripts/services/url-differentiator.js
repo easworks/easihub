@@ -1,6 +1,7 @@
-import Service, { service } from '@ember/service';
 import { getOwner } from '@ember/application';
+import Service, { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { SPECIAL_CATEGORIES } from '../consts';
 
 export default class UrlDifferentiatorService extends Service {
   @service router;
@@ -42,31 +43,37 @@ export default class UrlDifferentiatorService extends Service {
   #computeRouteName(route) {
     switch (route.name) {
       case 'discovery.category':
-      case 'tags.showCategory': {
-        if (route.params.category_slug_path_with_id === 'feedback/179') {
-          return `${route.name}.feedback`
+        if (this.model?.category.id === SPECIAL_CATEGORIES.feedback) {
+          return `${route.name}.feedback`;
         }
-
-        const segments = route.params.category_slug_path_with_id.split('/');
-
-        if (segments.length === 2 && numeric.test(segments[1]))
-          return `${route.name}.domain`;
-
-        if (segments.length === 3 && numeric.test(segments[2])) {
-          if (genericTopicsPattern.test(segments[1]))
-            return `${route.name}.technical-area`;
-          return `${route.name}.software`;
-        }
-
-        if (segments.length === 4 && numeric.test(segments[3]))
-          return `${route.name}.technical-area`;
-      }
+        return this.#parseSegmentBasedRoute(route);
+      
+      case 'tags.showCategory':
+        return this.#parseSegmentBasedRoute(route);
     }
 
     if (isAdminRoute(route)) {
       if (!route.name.startsWith('admin.'))
         return `admin.${route.name}`;
     }
+
+    return route.name;
+  }
+
+  #parseSegmentBasedRoute(route) {
+    const segments = route.params.category_slug_path_with_id.split('/');
+
+    if (segments.length === 2 && numeric.test(segments[1]))
+      return `${route.name}.domain`;
+
+    if (segments.length === 3 && numeric.test(segments[2])) {
+      if (genericTopicsPattern.test(segments[1]))
+        return `${route.name}.technical-area`;
+      return `${route.name}.software`;
+    }
+
+    if (segments.length === 4 && numeric.test(segments[3]))
+      return `${route.name}.technical-area`;
 
     return route.name;
   }

@@ -14,6 +14,10 @@ en:
         jobs: Post Jobs
         questions: Ask Questions
         use-cases: Share Use Case
+      
+      by-category:
+        179: Post Feedback
+
 
   discovery-list-area:
     explore-and-post: Explore & Post
@@ -96,4 +100,16 @@ en:
 
             Clearly describe the challenge, what was built, how it was implemented, and any measurable benefit.
 
+      by-category:
+        179:
+          header: 💡 Need help writing effective feedback?
+          content: |
+            Feedback helps improve products, processes, or community experiences. 
+            Be specific about what you're commenting on, what works well, 
+            and what could be improved. Include context and actionable suggestions.
+
+            **Example:** "The new Salesforce integration wizard is intuitive, 
+            but the OAuth setup step needs clearer error messages when credentials fail."
+
+            Constructive feedback drives better outcomes for everyone.
 

@@ -8,3 +8,7 @@ export const SPECIAL_TAGS = new Set([
   'questions',
   'use-cases'
 ]);
+
+export const SPECIAL_CATEGORIES = {
+  feedback: 179
+};

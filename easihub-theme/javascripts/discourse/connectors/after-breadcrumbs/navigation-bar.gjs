@@ -72,9 +72,8 @@ export default class NavigationBarComponent extends Component {
     return route?.params?.category_slug_path_with_id || '';
   }
 
-  #isFeedbackCategory(route) {
-    const categoryPath = this.categoryPath(route);
-    return categoryPath === 'feedback/179';
+  #isFeedbackCategory() {
+    return this.urld.routeName === 'discovery.category.feedback';
   }
 
   getRouteInfo(type, categoryPath) {
