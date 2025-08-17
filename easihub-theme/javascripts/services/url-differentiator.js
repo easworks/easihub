@@ -47,7 +47,6 @@ export default class UrlDifferentiatorService extends Service {
           return `${route.name}.feedback`;
         }
         return this.#parseSegmentBasedRoute(route);
-      
       case 'tags.showCategory':
         return this.#parseSegmentBasedRoute(route);
     }
