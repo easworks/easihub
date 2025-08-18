@@ -1,7 +1,16 @@
+@theme inline {
+  --color-d-primary: var(--primary);
+  --color-d-secondary: var(--secondary);
+  --color-d-tertiary: var(--tertiary);
+
+  --color-d-category: var(--category-color);
+}
+
 @layer base {
   :root {
     --heading-font-family: var(--font-sans);
     --font-family: var(--font-sans);
+    --primary: var(--color-primary-500);
   }
 }
 

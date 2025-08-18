@@ -4,15 +4,36 @@ export function addLayersToStyleSheets() {
 }
 
 function wrapDiscourseAssetsCss() {
-  const allowedTargets = [
+  const allowedTargets = new Set([
     'common'
-  ];
+  ]);
 
   const container = document.querySelector('discourse-assets-stylesheets');
 
-  const colorSchemes = container.querySelectorAll('link[data-scheme-id]');
-  const pluginStyles = allowedTargets
-    .map(t => container.querySelector(`link[data-target=${t}]`));
+  const links = container.querySelectorAll('link');
+
+  const colorSchemes = [];
+  const pluginStyles = [];
+
+  for (const link of links) {
+    const target = link.getAttribute('data-target');
+    if (target) {
+      if (allowedTargets.has(target)) {
+        pluginStyles.push(link);
+      }
+    }
+    else {
+      try {
+        const url = new URL(link.href);
+        if (isColorDefinition(url)) {
+          colorSchemes.push(link);
+        }
+      }
+      catch (e) {
+        console.error('could not parse url')
+      }
+    }
+  }
 
   [...colorSchemes, ...pluginStyles]
     .forEach(link => processStyleLink(link));
@@ -126,4 +147,12 @@ function resolveRelativeUrls(fontFace, baseUrl) {
     const resolvedUrl = new URL(url, baseUrl).href;
     return match.replace(url, resolvedUrl);
   });
+}
+
+/**
+ * @param {URL} url
+ */
+function isColorDefinition(url) {
+  const last = url.pathname.split('/').at(-1);
+  return last.startsWith('color_definitions_');
 }

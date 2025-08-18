@@ -1,6 +1,6 @@
 @layer components {
-  .raised-button {
-    --source-color: var(--color-primary-500);
+  .btn-raised {
+    --source-color: var(--color-d-tertiary);
 
     @apply relative block p-1 px-4 rounded-md font-medium text-center text-sm
       transition-all w-max;

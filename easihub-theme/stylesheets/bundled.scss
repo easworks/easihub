@@ -103,6 +103,7 @@
     --color-outline: var(--color-slate-600);
     --color-outline-variant: var(--color-slate-300);
     --color-on-primary: var(--color-white);
+    --color-d-tertiary: var(--tertiary);
   }
 }
 @layer base {
@@ -914,6 +915,9 @@
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
   }
+  .text-d-primary {
+    color: var(--primary);
+  }
   .text-gray-500 {
     color: var(--color-gray-500);
   }
@@ -922,9 +926,6 @@
   }
   .text-primary-400 {
     color: var(--color-primary-400);
-  }
-  .text-primary-500 {
-    color: var(--color-primary-500);
   }
   .text-slate-600 {
     color: var(--color-slate-600);
@@ -974,6 +975,9 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
+  .source-color-d-primary {
+    --source-color: var(--primary);
+  }
   .hover\:border {
     &:hover {
       @media (hover: hover) {
@@ -982,12 +986,12 @@
       }
     }
   }
-  .hover\:border-primary-500\/75 {
+  .hover\:border-d-primary\/75 {
     &:hover {
       @media (hover: hover) {
-        border-color: color-mix(in srgb, #4949fc 75%, transparent);
+        border-color: var(--primary);
         @supports (color: color-mix(in lab, red, red)) {
-          border-color: color-mix(in oklab, var(--color-primary-500) 75%, transparent);
+          border-color: color-mix(in oklab, var(--primary) 75%, transparent);
         }
       }
     }
@@ -1014,12 +1018,12 @@
       }
     }
   }
-  .hover\:shadow-primary-500\/60 {
+  .hover\:shadow-d-primary\/60 {
     &:hover {
       @media (hover: hover) {
-        --tw-shadow-color: color-mix(in srgb, #4949fc 60%, transparent);
+        --tw-shadow-color: var(--primary);
         @supports (color: color-mix(in lab, red, red)) {
-          --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-primary-500) 60%, transparent) var(--tw-shadow-alpha), transparent);
+          --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--primary) 60%, transparent) var(--tw-shadow-alpha), transparent);
         }
       }
     }
@@ -1039,14 +1043,15 @@
   :root {
     --heading-font-family: var(--font-sans);
     --font-family: var(--font-sans);
+    --primary: var(--color-primary-500);
   }
 }
 .d-header>.wrap .contents {
   display: flex;
 }
 @layer components {
-  .raised-button {
-    --source-color: var(--color-primary-500);
+  .btn-raised {
+    --source-color: var(--color-d-tertiary);
     position: relative;
     display: block;
     width: max-content;

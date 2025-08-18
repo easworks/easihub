@@ -26,7 +26,8 @@ export default class HomePage extends Component {
       logo: c.uploaded_logo.url,
       link: [
         `${c.slug}/${c.id}`
-      ]
+      ],
+      category: c
     }));
   }
 
@@ -35,15 +36,16 @@ export default class HomePage extends Component {
       <div class="grid gap-8 transition-all
         grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3">
         {{#each this.cards as |card|}}
+          {{log card.category}}
           <div class="p-4 border border-outline-variant
             rounded-lg shadow-sm shadow-black/30
-            hover:shadow-lg hover:shadow-primary-500/60
-            hover:border hover:border-primary-500/75
-            transition-all">
+            hover:shadow-lg hover:shadow-d-primary/60
+            hover:border hover:border-d-primary/75
+            transition-all"
+            style="--category-color: #{{card.category.color}};">
             <div class="flex gap-4 items-center">
               <img src={{card.logo}} class="h-10"/>
-              <h3 class="text-xl font-bold
-                  text-primary-500">
+              <h3 class="text-xl font-bold text-d-primary">
                   {{card.name}}
               </h3>
             </div>
@@ -53,7 +55,7 @@ export default class HomePage extends Component {
             </p>
             <div class="divider my-4"></div>
             <LinkTo @route="discovery.category" @models={{card.link}}
-              class="raised-button w-full text-base py-2">
+              class="btn-raised w-full text-base py-2 source-color-d-primary">
               {{i18n (themePrefix 'discovery-list-area.explore-and-post')}}
             </LinkTo>
           </div>

@@ -89,3 +89,7 @@
   /* --font-sans: "Lexend Deca", sans-serif, system-ui; */
   --font-emoji: "Noto Color Emoji"
 }
+
+@utility source-color-* {
+  --source-color: --value(--color-*);
+}
