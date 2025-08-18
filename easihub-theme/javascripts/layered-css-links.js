@@ -3,12 +3,27 @@ export function addLayersToStyleSheets() {
   wrapHeaderCss();
 }
 
+/**
+ * @returns {HTMLElement}
+ */
+function getContainer() {
+  return document.querySelector('discourse-assets-stylesheets')
+}
+
+/**
+ * @returns {HTMLLinkElement | null}
+ */
+function getLayeredCssLinks() {
+  return document.querySelector('#layered-css-links');
+}
+
 function wrapDiscourseAssetsCss() {
   const allowedTargets = new Set([
-    'common'
+    'common',
+    'desktop'
   ]);
 
-  const container = document.querySelector('discourse-assets-stylesheets');
+  const container = getContainer();
 
   const links = container.querySelectorAll('link');
 
@@ -35,8 +50,21 @@ function wrapDiscourseAssetsCss() {
     }
   }
 
-  [...colorSchemes, ...pluginStyles]
-    .forEach(link => processStyleLink(link));
+  const toProcess = [...colorSchemes, ...pluginStyles];
+
+  const stylesheet = constructStyleElementForLinks(toProcess);
+  stylesheet.id = 'layered-css-links';
+
+  const existing = getLayeredCssLinks();
+  if (existing) {
+    existing.replaceWith(stylesheet);
+  }
+  else {
+    container.insertAdjacentElement('afterbegin', stylesheet);
+
+  }
+
+  toProcess.forEach(link => link.remove());
 }
 
 function wrapHeaderCss() {
@@ -122,6 +150,21 @@ async function processStyleLink(linkElement) {
   } catch (error) {
     console.error('Failed to process stylesheet:', error);
   }
+}
+
+
+/**
+ * @param {HTMLLinkElement[]} linkElements
+ * @returns {HTMLStyleElement}
+ */
+function constructStyleElementForLinks(linkElements) {
+  const styleElement = document.createElement('style');
+
+  styleElement.textContent = linkElements.map(link =>
+    `@import url('${link.href}') layer(base);`
+  ).join('\n');
+
+  return styleElement;
 }
 
 const fontFaceRegex = /@font-face\s*\{[^}]*\}/g;
