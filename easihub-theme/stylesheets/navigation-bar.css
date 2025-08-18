@@ -1,7 +1,7 @@
 @layer components {
 
     .navigation-bar {
-        @apply bg-white border-b border-gray-200;
+        @apply bg-white;
     }
     
     .nav-list {
@@ -9,11 +9,17 @@
     }
     
     .nav-button {
-        @apply flex items-center space-x-2 px-2 py-1 text-black hover:text-primary-500 hover:bg-primary-100 rounded-tl-lg rounded-tr-lg transition-colors duration-200 no-underline;
+        @apply flex items-center space-x-2 px-2 py-1 
+            text-black no-underline
+            rounded-tl-lg rounded-tr-lg 
+            border-b-3 border-outline-variant
+            transition-colors duration-200 
+            hover:text-d-primary hover:border-primary-300
+            hover:bg-primary-100;
     }
 
     .nav-button.active {
-        @apply text-primary-500 border-b-2 border-primary-500 bg-primary-100;
+        @apply text-d-primary font-bold border-b-3 border-d-primary bg-primary-100          ;
     }
     
     .nav-icon {

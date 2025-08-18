@@ -24,7 +24,6 @@
     --color-slate-500: oklch(55.4% 0.046 257.417);
     --color-slate-600: oklch(44.6% 0.043 257.281);
     --color-gray-200: oklch(92.8% 0.006 264.531);
-    --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-black: #000;
@@ -1045,6 +1044,14 @@
     --font-family: var(--font-sans);
     --primary: var(--color-primary-500);
   }
+  :root {
+    --d-button-default-text-color: var(--color-on-primary);
+    --d-button-default-text-color--hover: var(--secondary);
+    --d-button-default-bg-color: var(--primary);
+    --d-button-default-bg-color--hover: var(--d-button-default-bg-color);
+    --d-button-default-icon-color: var(--color-on-primary);
+    --d-button-default-icon-color--hover: var(--color-on-primary);
+  }
 }
 @layer components {
   .d-header>.wrap .contents {
@@ -1067,6 +1074,40 @@
   }
 }
 @layer components {
+  .btn-default {
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    &::before {
+      content: var(--tw-content);
+      position: absolute;
+    }
+    &::before {
+      pointer-events: none;
+      inset: calc(var(--spacing) * 0);
+      border-radius: var(--radius-md);
+      background-color: color-mix(in srgb, #fff 30%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-white) 30%, transparent);
+      }
+      opacity: 0%;
+      transition-property: all;
+      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+      transition-duration: var(--tw-duration, var(--default-transition-duration));
+    }
+    &:hover, &:focus {
+      &::before {
+        opacity: 30%;
+      }
+    }
+    &:disabled, &.disabled {
+      background-color: var(--color-slate-200);
+      color: var(--color-slate-400);
+      &::before, &::after {
+        display: none;
+      }
+    }
+  }
   .btn-raised {
     --source-color: var(--color-d-tertiary);
     position: relative;
@@ -1138,8 +1179,8 @@
       }
     }
     &:disabled, &.disabled {
-      background-color: var(--color-gray-200);
-      color: var(--color-gray-400);
+      background-color: var(--color-slate-200);
+      color: var(--color-slate-400);
       &::before, &::after {
         display: none;
       }
@@ -1281,9 +1322,6 @@
 }
 @layer components {
   .navigation-bar {
-    border-bottom-style: var(--tw-border-style);
-    border-bottom-width: 1px;
-    border-color: var(--color-gray-200);
     background-color: var(--color-white);
   }
   .nav-list {
@@ -1308,6 +1346,9 @@
     }
     border-top-left-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 3px;
+    border-color: var(--color-outline-variant);
     padding-inline: calc(var(--spacing) * 2);
     padding-block: calc(var(--spacing) * 1);
     color: var(--color-black);
@@ -1319,21 +1360,28 @@
     transition-duration: 200ms;
     &:hover {
       @media (hover: hover) {
+        border-color: var(--color-primary-300);
+      }
+    }
+    &:hover {
+      @media (hover: hover) {
         background-color: var(--color-primary-100);
       }
     }
     &:hover {
       @media (hover: hover) {
-        color: var(--color-primary-500);
+        color: var(--primary);
       }
     }
   }
   .nav-button.active {
     border-bottom-style: var(--tw-border-style);
-    border-bottom-width: 2px;
-    border-color: var(--color-primary-500);
+    border-bottom-width: 3px;
+    border-color: var(--primary);
     background-color: var(--color-primary-100);
-    color: var(--color-primary-500);
+    --tw-font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary);
   }
   .nav-icon {
     fill: currentcolor;

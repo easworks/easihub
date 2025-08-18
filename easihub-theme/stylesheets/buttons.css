@@ -1,4 +1,30 @@
 @layer components {
+  .btn-default {
+    @apply transition-all;
+
+    @apply before:absolute;
+
+    &::before {
+      @apply pointer-events-none transition-all inset-0 rounded-md
+        bg-white/30 
+        opacity-0;
+    }
+
+    &:hover, &:focus {
+      &::before {
+        @apply opacity-30;
+      }
+    }
+
+    &:disabled, &.disabled {
+      @apply text-slate-400 bg-slate-200;
+
+      &::before, &::after {
+        @apply hidden;
+      }
+    }
+  }
+
   .btn-raised {
     --source-color: var(--color-d-tertiary);
 
@@ -33,7 +59,7 @@
     }
 
     &:disabled, &.disabled {
-      @apply text-gray-400 bg-gray-200;
+      @apply text-slate-400 bg-slate-200;
 
       &::before, &::after {
         @apply hidden;
