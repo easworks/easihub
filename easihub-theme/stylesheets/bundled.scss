@@ -1046,8 +1046,25 @@
     --primary: var(--color-primary-500);
   }
 }
-.d-header>.wrap .contents {
-  display: flex;
+@layer components {
+  .d-header>.wrap .contents {
+    display: flex !important;
+  }
+  .user-menu.revamped {
+    .tabs-list {
+      .d-icon {
+        height: calc(var(--spacing) * 8);
+        width: calc(var(--spacing) * 8);
+        padding: calc(var(--spacing) * 2);
+        transition-property: all;
+        transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+        transition-duration: var(--tw-duration, var(--default-transition-duration));
+        &:hover, &:focus {
+          color: var(--primary);
+        }
+      }
+    }
+  }
 }
 @layer components {
   .btn-raised {

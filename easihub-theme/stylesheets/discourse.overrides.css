@@ -14,7 +14,22 @@
   }
 }
 
+@layer components {
+  .d-header>.wrap .contents {
+    @apply !flex;
+  }
 
-.d-header>.wrap .contents {
-  @apply flex;
+  .user-menu.revamped {
+    .tabs-list {
+      .d-icon {
+        @apply h-8 w-8 p-2 transition-all;
+
+        &:hover, &:focus {
+          @apply text-d-primary;
+        }
+      }
+    }
+    
+    
+  }
 }
