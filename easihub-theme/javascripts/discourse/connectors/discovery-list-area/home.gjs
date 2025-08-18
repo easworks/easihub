@@ -36,7 +36,6 @@ export default class HomePage extends Component {
       <div class="grid gap-8 transition-all
         grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3">
         {{#each this.cards as |card|}}
-          {{log card.category}}
           <div class="p-4 border border-outline-variant
             rounded-lg shadow-sm shadow-black/30
             hover:shadow-lg hover:shadow-d-primary/60

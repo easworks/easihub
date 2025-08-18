@@ -27,6 +27,7 @@ export class MenuItem {
   @tracked showDots;
   @tracked children;
   @tracked level;
+  @tracked route;
   parent;
 
   constructor(data, parent = null) {
@@ -41,6 +42,11 @@ export class MenuItem {
     this.parent = parent;
     this.level = parent ? parent.level + 1 : 0;
     this.children = data.children ? data.children.map(child => new MenuItem(child, this)) : null;
+
+    this.route = data.route;
+    if (this.route){
+      this.route.models ||= [];
+    };
   }
 
   @action
@@ -58,21 +64,22 @@ export function createMenuItemFromCategory(category, parent) {
     return null;
   }
 
-  const href = [
-    '/c',
-    ...category.ancestors.map(c => c.slug),
-    category.id
-  ].join('/');
+  const models = [
+    category.path.substring(3)
+  ];
 
    const data =  {
     id: `category-${category.id}`,
     label: category.name,
-    href,
     icon: 'fa-folder',
     badge: category.topic_count > 0 ? {
       count: category.topic_count,
       class: 'category-badge'
-    } : null
+    } : null,
+    route: {
+      name: 'discovery.category',
+      models
+    }
   };
 
   return new MenuItem(data, parent);
@@ -95,8 +102,10 @@ const publicMenu = [
   {
     id: 'home',
     label: 'Home',
-    href: '/',
     icon: 'fa-home',
+    route: {
+      name: 'discovery.categories'
+    }
   },
   {
     id: 'more',
@@ -118,22 +127,27 @@ const publicMenu = [
       {
         id: 'groups',
         label: 'Groups',
-        href: '/g',
-        icon: 'fa-users'
+        icon: 'fa-users',
+        route: {
+          name: 'groups.index'
+        }
       },
       {
         id: 'badges',
         label: 'Badges',
-        href: '/badges',
-        icon: 'fa-award'
+        route: {
+          name: 'badges.index'
+        }
       }
     ]
   },
   {
     id: 'review',
     label: 'Review',
-    href: 'https://easihub.com/review',
-    icon: 'fa-star'
+    icon: 'fa-star',
+    route: {
+      name: 'review.index'
+    }
   },
   {
     id: 'hubs',
@@ -147,14 +161,19 @@ const publicMenu = [
   {
     id: 'all-hubs',
     label: 'All Hubs',
-    href: '/categories',
     icon: 'fa-list',
+    route: {
+      name: 'discovery.categories'
+    },
     showDots: true
   },
   {
     id: 'questions',
     label: 'Questions',
-    href: 'https://easihub.com/tag/questions',
+    route: {
+      name: 'tag.show',
+      models: ['question']
+    },
     icon: 'fa-question-circle'
   },
   {
@@ -168,14 +187,18 @@ const publicMenu = [
   {
     id: 'all-tags',
     label: 'All Tags',
-    href: '/tags',
+    route: {
+      name: 'tags.index'
+    },
     icon: 'fa-tag'
   },
   {
     id: 'users',
     label: 'Users',
-    href: '/u',
-    icon: 'fa-users'
+    icon: 'fa-users',
+    route: {
+      name: 'users'
+    }
   },
   {
     id: 'companies',
@@ -185,40 +208,58 @@ const publicMenu = [
       {
         id: 'jobs',
         label: 'Jobs',
-        href: '/tag/job',
-        icon: 'fa-briefcase'
+        icon: 'fa-briefcase',
+        route: {
+          name: 'tag.show',
+          models: ['job']
+        },
       }
     ]
   },
   {
     id: 'discussions',
     label: 'Discussions',
-    href: 'https://easihub.com/tag/discussion',
-    icon: 'fa-comments'
+    icon: 'fa-comments',
+    route: {
+      name: 'tag.show',
+      models: ['discussion']
+    },
   },
   {
     id: 'articles',
     label: 'Articles',
-    href: 'https://easihub.com/tag/articles',
-    icon: 'fa-file-alt'
+    icon: 'fa-file-alt',
+    route: {
+      name: 'tag.show',
+      models: ['articles']
+    },
   },
   {
     id: 'use-cases',
     label: 'Use Cases',
-    href: 'https://easihub.com/tag/use-cases',
-    icon: 'fa-briefcase'
+    icon: 'fa-briefcase',
+    route: {
+      name: 'tag.show',
+      models: ['use-cases']
+    },
   },
   {
     id: 'events',
     label: 'Events',
-    href: 'https://easihub.com/tag/events',
-    icon: 'fa-calendar-alt'
+    icon: 'fa-calendar-alt',
+    route: {
+      name: 'tag.show',
+      models: ['events']
+    },
   },
   {
     id: 'bulletins',
     label: 'Bulletins',
-    href: 'https://easihub.com/tag/bulletins',
-    icon: 'fa-bell'
+    icon: 'fa-bell',
+    route: {
+      name: 'tag.show',
+      models: ['bulletins']
+    },
   }
 ];
 
@@ -227,15 +268,21 @@ function transformForUser(menu, user) {
   menu.splice(1, 0, new MenuItem({
     id: 'my-posts',
     label: 'My Posts',
-    href: '#',
     icon: 'fa-clipboard',
+    route: {
+      name: 'userActivity.index',
+      models: [user.username]
+    }
   }));
 
   menu.splice(9, 0, new MenuItem({
     id: 'drafts',
     label: 'Drafts',
-    href: '#',
-    icon: 'fa-file-alt'
+    icon: 'fa-file-alt',
+    route:{
+      name: 'userActivity.drafts',
+      models: [user.username]
+    },
   }));
 
   menu.splice(12, 0, new MenuItem({
@@ -246,32 +293,47 @@ function transformForUser(menu, user) {
       {
         id: 'inbox',
         label: 'Inbox',
-        href: 'https://easihub.com/u/easdevub_admin/messages',
-        icon: 'fa-inbox'
+        icon: 'fa-inbox',
+        route: {
+          name: 'userPrivateMessages.user.index',
+          models:[user.username]
+        }
       },
       {
         id: 'new-message',
         label: 'New',
-        href: 'https://easihub.com/u/easdevub_admin/messages/new',
-        icon: 'fa-edit'
+        icon: 'fa-edit',
+        route: {
+          name: 'userPrivateMessages.user.new',
+          models:[user.username]
+        }
       },
       {
         id: 'unread',
         label: 'Unread',
-        href: 'https://easihub.com/u/easdevub_admin/messages/unread',
-        icon: 'fa-envelope-open'
+        icon: 'fa-envelope-open',
+        route: {
+          name: 'userPrivateMessages.user.unread',
+          models:[user.username]
+        }
       },
       {
         id: 'sent',
         label: 'Sent',
-        href: 'https://easihub.com/u/easdevub_admin/messages/sent',
-        icon: 'fa-paper-plane'
+        icon: 'fa-paper-plane',
+        route: {
+          name: 'userPrivateMessages.user.sent',
+          models:[user.username]
+        }
       },
       {
         id: 'archive',
         label: 'Archive',
-        href: 'https://easihub.com/u/easdevub_admin/messages/archive',
-        icon: 'fa-archive'
+        icon: 'fa-archive',
+        route: {
+          name: 'userPrivateMessages.user.archive',
+          models:[user.username]
+        }
       }
     ]
   }));
@@ -281,7 +343,9 @@ function transformForAdmin(menu, user) {
   menu.splice(4, 0, new MenuItem({
     id: 'admin',
     label: 'Admin',
-    href: 'https://easihub.com/admin',
-    icon: 'fa-cog'
+    icon: 'fa-cog',
+    route: {
+      name: 'admin.dashboard.general'
+    }
   }));
 }

@@ -55,7 +55,7 @@ export default apiInitializer(api => {
   });
 
   api.registerValueTransformer('composer-save-button-label', () => {
-    return composer.model.customization.saveButtonLabel;
+    return composer.model?.customization?.saveButtonLabel;
   })
 
 });
