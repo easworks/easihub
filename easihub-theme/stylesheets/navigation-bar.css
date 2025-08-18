@@ -1,34 +1,9 @@
 @layer components {
-
-    .navigation-bar {
-        @apply bg-white;
-    }
-    
-    .nav-list {
-        @apply flex items-center space-x-4 list-none m-0 p-2;
-    }
-    
-    .nav-button {
-        @apply flex items-center space-x-2 px-2 py-1 
-            text-black no-underline
-            rounded-tl-lg rounded-tr-lg 
-            border-b-3 border-outline-variant
-            transition-colors duration-200 
-            hover:text-d-primary hover:border-primary-300
-            hover:bg-primary-100;
-    }
-
-    .nav-button.active {
-        @apply text-d-primary font-bold border-b-3 border-d-primary bg-primary-100          ;
-    }
-    
-    .nav-icon {
-        @apply fill-current;
-    }
-
-
 }
 
-#navigation-bar {
+@layer base {
+  #navigation-bar {
     @apply hidden;
+  }
 }
+

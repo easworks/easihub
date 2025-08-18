@@ -97,17 +97,13 @@ export default class NavigationBarComponent extends Component {
 
   <template>
     {{#if this.navItems.length}}
-      <nav class="navigation-bar">
-        <ul class="nav-list">
-          {{#each this.navItems as |item|}}
-            <li>
-              <LinkTo @route={{item.route}} @models={{item.models}} class="nav-button" @activeClass="active">
-                <i class="{{item.icon}}"></i>
-                <span>{{item.text}}</span>
-              </LinkTo>
-            </li>
-          {{/each}}
-        </ul>
+      <nav class="eas-tabs d-link-color-black mx-4">
+        {{#each this.navItems as |item|}}
+          <LinkTo @route={{item.route}} @models={{item.models}} class="tab" @activeClass="active">
+            <i class="{{item.icon}}"></i>
+            <span class="ml-1">{{item.text}}</span>
+          </LinkTo>
+        {{/each}}
       </nav>
     {{/if}}
   </template>

@@ -1,5 +1,7 @@
 @theme inline {
   --color-d-primary: var(--primary);
+  --color-d-primary-high: var(--primary-high);
+
   --color-d-secondary: var(--secondary);
   --color-d-tertiary: var(--tertiary);
 
@@ -10,20 +12,38 @@
   :root {
     --heading-font-family: var(--font-sans);
     --font-family: var(--font-sans);
+
     --primary: var(--color-primary-500);
+    --primary-high: var(--color-primary-500);
+    /* 
+    --primary
+    --primary-very-low
+    --primary-low
+    --primary-medium
+    --primary-high
+    --primary-very-high
+     */
   }
 
   :root {
+    --d-button-default-bg-color: var(--color-primary-50);
+    --d-button-default-text-color: var(--color-primary-500);
+    --d-button-default-icon-color: var(--d-button-default-text-color);
+
+    --d-button-default-bg-color--hover: var(--color-primary-500);
+    --d-button-default-text-color--hover: var(--color-primary-100);
+    --d-button-default-icon-color--hover: var(--d-button-default-text-color--hover);
+
     /* --d-button-border-radius: var(--d-border-radius);
     --d-button-transition: none;
-    --d-button-border: 1px solid transparent; */
-    --d-button-default-text-color: var(--color-on-primary);
+    --d-button-border: 1px solid transparent;
+    --d-button-default-text-color: var(--primary);
     --d-button-default-text-color--hover: var(--secondary);
-    --d-button-default-bg-color: var(--primary);
-    --d-button-default-bg-color--hover: var(--d-button-default-bg-color);
-    --d-button-default-icon-color: var(--color-on-primary);
-    --d-button-default-icon-color--hover: var(--color-on-primary);
-    /* --d-button-primary-text-color: var(--secondary);
+    --d-button-default-bg-color: var(--primary-low);
+    --d-button-default-bg-color--hover: var(--primary-medium);
+    --d-button-default-icon-color: var(--primary-high);
+    --d-button-default-icon-color--hover: var(--primary-low);
+    --d-button-primary-text-color: var(--secondary);
     --d-button-primary-text-color--hover: var(--secondary);
     --d-button-primary-bg-color: var(--tertiary);
     --d-button-primary-bg-color--hover: var(--tertiary-hover);
@@ -75,7 +95,15 @@
         }
       }
     }
-    
-    
   }
+
+  .d-icon {
+    &.d-regular {
+      @apply text-inherit;
+    }
+  }
+}
+
+@utility d-link-color-* {
+  --d-link-color:--value(--color-*)
 }

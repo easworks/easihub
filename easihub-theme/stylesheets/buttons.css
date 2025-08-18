@@ -1,4 +1,8 @@
 @layer components {
+  .btn {
+    @apply relative transition-all;
+  }
+
   .btn-default {
     @apply transition-all;
 
@@ -28,7 +32,7 @@
   .btn-raised {
     --source-color: var(--color-d-tertiary);
 
-    @apply relative block p-1 px-4 rounded-md font-medium text-center text-sm
+    @apply block p-1 px-4 rounded-md font-medium text-center text-sm
       transition-all w-max;
 
     background-color: var(--source-color);

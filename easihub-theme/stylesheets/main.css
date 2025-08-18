@@ -1,12 +1,19 @@
 @import './theme.css';
 @import './discourse.overrides.css';
 @import './buttons.css';
+@import './tabs.css';
+
 @import './sidebar.css';
 @import './navigation-bar.css'; 
+
 
 /* Custom styles can go here */
 
 @layer base {
+  :root {
+    color: inherit;
+  }
+
   ::-webkit-scrollbar {
     @apply w-1;
   }

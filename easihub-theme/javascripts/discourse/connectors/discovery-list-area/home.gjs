@@ -46,7 +46,9 @@ export default class HomePage extends Component {
             <div class="flex gap-4 items-center">
               <img src={{card.logo}} class="h-10"/>
               <h3 class="text-xl font-bold text-d-primary">
+                <LinkTo @route="discovery.category" @models={{card.link}} class="d-link-color-d-primary">
                   {{card.name}}
+                </LinkTo>
               </h3>
             </div>
             <div class="divider my-4"></div>
@@ -55,7 +57,7 @@ export default class HomePage extends Component {
             </p>
             <div class="divider my-4"></div>
             <LinkTo @route="discovery.category" @models={{card.link}}
-              class="btn-raised w-full text-base py-2 source-color-d-primary">
+              class="btn btn-raised w-full text-lg py-2 source-color-d-primary">
               {{i18n (themePrefix 'discovery-list-area.explore-and-post')}}
             </LinkTo>
           </div>
