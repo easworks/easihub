@@ -5,9 +5,6 @@ export default apiInitializer(api => {
     klass => class extends klass {
       async model() {
         const s = await super.model(...arguments);
-        console.debug(s);
-        console.debug(this);
-
         return s;
       }
     }
