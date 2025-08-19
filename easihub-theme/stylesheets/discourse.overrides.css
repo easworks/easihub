@@ -133,72 +133,44 @@
 
   /* styling for banner on category page */
   .navigation-container {
-    margin-top: 70px;
+    @apply mt-16;
   }
 
   .category-title-header {
-    position: relative;
-    padding: 1em 0;
-    min-height: 250px;
-    overflow: visible;
-    margin-bottom: 30px;
+    @apply relative py-4 h-72 overflow-visible mb-7;
   }
 
   .category-title-name {
-    position: absolute;
-    top: 40%;
-    left: 56%;
+    @apply absolute top-[43%] left-[51%] w-48 break-words text-center;
     transform: translate(-50%, -50%);
-    width: 190px;
-    word-wrap: break-word;
-    /* overflow-wrap: break-word; */
   }
 
   .category-title-name h1 {
-    margin: 0;
-    font-size: 1rem;
-    color: #fff;
+    @apply m-0 text-base text-white;
   }
 
-
   .category-title-description {
-    position: absolute;
-    left: 50%;
-    bottom: -30px;
-    transform: translateX(-50%);
-    background: #fff;
-    border-radius: 14px;
-    max-height: 140px;
-    padding: 1em;
-    width: 90%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: flex-start;
-    gap: 1em;
-    z-index: 10;
-    overflow: hidden; /* ensure content is clipped */
+    @apply absolute left-1/2 -bottom-[30px] -translate-x-1/2 bg-white rounded-2xl max-h-36 p-4 w-11/12 shadow-lg flex items-start gap-4 z-10 overflow-hidden;
   }
 
   .category-title-description .cooked {
-    color: #333;
-    text-align: left;
+    @apply text-gray-800 text-left;
     display: -webkit-box;
-    -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .category-title-description .category-logo.aspect-image {
-    position: static;
+    @apply static shrink-0;
     transform: none;
-    flex-shrink: 0;
   }
 
   .category-title-description .category-logo.aspect-image img {
-    width: 60px;
-    height: auto;
+    @apply w-16 h-auto;
   }
+
 
 }
 
