@@ -1,3 +1,5 @@
+import { currentThemeId } from 'discourse/lib/theme-selector';
+
 export function addLayersToStyleSheets() {
   wrapDiscourseAssetsCss();
   wrapHeaderCss();
@@ -20,8 +22,11 @@ function getLayeredCssLinks() {
 function wrapDiscourseAssetsCss() {
   const allowedTargets = new Set([
     'common',
-    'desktop'
+    'desktop',
+    'common_theme',
+    'desktop_theme'
   ]);
+  const current = currentThemeId();
 
   const container = getContainer();
 
@@ -31,6 +36,9 @@ function wrapDiscourseAssetsCss() {
   const pluginStyles = [];
 
   for (const link of links) {
+    if (link.getAttribute('data-theme-id') === current.toString())
+      continue;
+
     const target = link.getAttribute('data-target');
     if (target) {
       if (allowedTargets.has(target)) {
