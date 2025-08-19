@@ -15,11 +15,35 @@ export default apiInitializer(api => {
   api.modifyClass('model:composer', Composer => {
     return class extends Composer {
       @tracked customization;
+      @tracked customFields = {};
+      
+      serialize() {
+        const data = super.serialize();
+        
+        if (this.customFields && this.customization?.fields?.customFields) {
+          let customContent = '';
+          
+          this.customization.fields.customFields.forEach(field => {
+            const value = this.customFields[field.key];
+            if (value && value.trim()) {
+              customContent += `\n\n**${field.label}**\n${value}`;
+            }
+          });
+          
+          if (customContent) {
+            data.raw = (data.raw || '') + customContent;
+          }
+        }
+        
+        return data;
+      }
     }
   })
 
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
+
+    console.debug(model, route);
 
     let customization = null;
     switch (route.name) {
@@ -51,12 +75,24 @@ export default apiInitializer(api => {
   api.customizeComposerText({
     'actionTitle': (model) => {
       return model?.customization?.actionTitle;
+    },
+    'titlePlaceholder': (model) => {
+      return model?.customization?.fields?.titlePlaceholder;
+    },
+    'reply.placeholder': (model) => {
+      const fields = model?.customization?.fields;
+      if (fields?.customFields?.length > 0) {
+        return '';
+      }
+      return undefined;
     }
   });
 
   api.registerValueTransformer('composer-save-button-label', () => {
     return composer.model?.customization?.saveButtonLabel;
   })
+
+
 
 });
 
@@ -98,7 +134,67 @@ function hydrateComposerCustomization(customization) {
         const i18nId = `composer.create_topic.by-tag.${tag.id}`;
         customization.saveButtonLabel = themePrefix(i18nId);
       }
+
+      customization.fields = getFieldsForTag(tag.id);
     } break;
+  }
+}
+
+function getFieldsForTag(tagId) {
+  switch (tagId) {
+    case 'questions':
+      return {
+        titleLabel: i18n(themePrefix('composer.fields.questions.title_label')),
+        titlePlaceholder: i18n(themePrefix('composer.fields.questions.title_placeholder')),
+        customFields: [
+          {
+            key: 'problem_details',
+            label: i18n(themePrefix('composer.fields.questions.problem_details_label')),
+            placeholder: i18n(themePrefix('composer.fields.questions.problem_details_placeholder'))
+          },
+          {
+            key: 'attempted_solutions',
+            label: i18n(themePrefix('composer.fields.questions.attempted_solutions_label')),
+            placeholder: i18n(themePrefix('composer.fields.questions.attempted_solutions_placeholder'))
+          }
+        ]
+      };
+    case 'discussion':
+      return {
+        titleLabel: i18n(themePrefix('composer.fields.discussion.title_label')),
+        titlePlaceholder: i18n(themePrefix('composer.fields.discussion.title_placeholder')),
+        customFields: [
+          {
+            key: 'discussion_context',
+            label: i18n(themePrefix('composer.fields.discussion.context_label')),
+            placeholder: i18n(themePrefix('composer.fields.discussion.context_placeholder'))
+          }
+        ]
+      };
+    case 'use-cases':
+      return {
+        titleLabel: i18n(themePrefix('composer.fields.use_cases.title_label')),
+        titlePlaceholder: i18n(themePrefix('composer.fields.use_cases.title_placeholder')),
+        customFields: [
+          {
+            key: 'problem',
+            label: i18n(themePrefix('composer.fields.use_cases.problem_label')),
+            placeholder: i18n(themePrefix('composer.fields.use_cases.problem_placeholder'))
+          },
+          {
+            key: 'solution',
+            label: i18n(themePrefix('composer.fields.use_cases.solution_label')),
+            placeholder: i18n(themePrefix('composer.fields.use_cases.solution_placeholder'))
+          },
+          {
+            key: 'outcome',
+            label: i18n(themePrefix('composer.fields.use_cases.outcome_label')),
+            placeholder: i18n(themePrefix('composer.fields.use_cases.outcome_placeholder'))
+          }
+        ]
+      };
+    default:
+      return null;
   }
 }
 
@@ -116,5 +212,5 @@ function getComposerHelpTranslation(i18nBase) {
     header: rawHeader,
     content: processedContent
   }
-
 }
+

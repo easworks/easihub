@@ -35,6 +35,31 @@ en:
       by-category:
         179: Provide Feedback
 
+    fields:
+      questions:
+        title_label: "Step 1: Title (Describe your question briefly)"
+        title_placeholder: "Clearly state your question related to a domain, software, or technical area (e.g., 'SAP API error in OAuth setup')"
+        problem_details_label: "Step 2: Problem Details (Include error, setup info, or code snippet)"
+        problem_details_placeholder: "Include system or technical area, version info, exact error message, and setup context..."
+        attempted_solutions_label: "Step 3: Attempted Solutions (Explain what you've already attempted)"
+        attempted_solutions_placeholder: "Explain what methods you tried (config steps, API calls, scripts) and what happened..."
+      
+      discussion:
+        title_label: "Step 1: Discussion Title (Frame your topic)"
+        title_placeholder: "What are pros/cons of customizing Oracle Fusion workflows?"
+        context_label: "Step 2: Discussion Context (Describe your thoughts or objective)"
+        context_placeholder: "Share context: what prompted this discussion, which systems or challenges are involved..."
+      
+      use_cases:
+        title_label: "Step 1: Use Case Title (Summarize your solution)"
+        title_placeholder: "Automated BOM sync between Teamcenter and SAP using REST API"
+        problem_label: "Step 2: Problem (Describe the initial situation)"
+        problem_placeholder: "Describe original bottleneck or process issue, e.g., manual data duplication in ERP & PLM..."
+        solution_label: "Step 3: Solution (Explain what you built or configured)"
+        solution_placeholder: "Mention technical setup (scripts, APIs, middleware), sequence, validations, etc."
+        outcome_label: "Step 4: Outcome (Summarize the impact)"
+        outcome_placeholder: "E.g., Reduced manual entry by 60%, improved data accuracy across ERP-PLM"
+
     help-message:
       show-more: Show More ▼
       show-less: Show Less ▲

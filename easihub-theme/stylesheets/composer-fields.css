@@ -1,0 +1,26 @@
+@layer components{
+  .custom-composer-fields {
+  @apply mb-4;
+}
+
+.custom-composer-fields .field-group {
+  @apply mb-4;
+}
+
+.custom-composer-fields label {
+  @apply block font-medium text-primary-high mb-2 text-sm;
+}
+
+.custom-composer-fields textarea {
+  @apply w-full min-h-[100px] p-3 border border-primary-low-mid rounded-md text-sm leading-6 resize-y;
+}
+
+.custom-composer-fields textarea:focus {
+  @apply outline-none border-tertiary ring-2 ring-tertiary-low;
+}
+
+.custom-composer-fields textarea::placeholder {
+  @apply text-primary-medium italic;
+}
+
+}

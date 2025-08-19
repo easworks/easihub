@@ -17,6 +17,10 @@ export class MessageTemplate extends Component {
     return this.args.model.customization?.help;
   }
 
+  get fields() {
+    return this.args.model.customization?.fields;
+  }
+
   <template>
     {{#if this.help}}
     <div class="p-2 mb-4 bg-primary-50 rounded-lg border-l-4 border-l-primary-500">
@@ -39,6 +43,16 @@ export class MessageTemplate extends Component {
           {{{this.help.content.content}}}
         </div>
       </div>
+    </div>
+    {{/if}}
+
+    {{#if this.fields}}
+    <div class="mb-4">
+      {{#if this.fields.titleLabel}}
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        {{this.fields.titleLabel}}
+      </label>
+      {{/if}}
     </div>
     {{/if}}
   </template>
