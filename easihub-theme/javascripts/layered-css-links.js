@@ -20,7 +20,8 @@ function getLayeredCssLinks() {
 function wrapDiscourseAssetsCss() {
   const allowedTargets = new Set([
     'common',
-    'desktop'
+    'desktop',
+    'common_theme'
   ]);
 
   const container = getContainer();
