@@ -1,0 +1,18 @@
+@layer components {
+  .eas-tabs {
+    @apply flex items-center flex-wrap;
+
+    > .tab {
+      @apply p-1 px-4 rounded-tl-lg rounded-tr-lg
+            border-b-3 border-outline-variant
+            whitespace-nowrap
+            transition-all
+            hover:text-primary-500 hover:border-primary-200 hover:bg-primary-50;
+
+      &.active {
+        @apply text-primary-500 font-bold 
+          border-primary-500 bg-primary-100;
+      }
+    }
+  }
+}

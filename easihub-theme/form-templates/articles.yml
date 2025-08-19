@@ -1,0 +1,10 @@
+- type: input
+  id: author
+  attributes:
+    label: "Full name"
+    placeholder: "eg. John Smith"
+    description: "What is your full name?"
+  validations:
+    required: true
+    minimum: 2
+    maximum: 100

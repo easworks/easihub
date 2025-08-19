@@ -1,12 +1,45 @@
-@import "./tailwind.css";
+@import './theme.css';
 @import './discourse.overrides.css';
-@import "./sidebar.css";
-@import "./navigation-bar.css";
+@import './buttons.css';
+@import './tabs.css';
+
+@import './sidebar.css';
+@import './navigation-bar.css'; 
+
+@import './hero.css';
+@import './app-footer.css';
 
 /* Custom styles can go here */
 
 @layer base {
   :root {
-    color-scheme: light;
+    color: inherit;
   }
+
+  ::-webkit-scrollbar {
+    @apply w-1;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-200 rounded;
+  }
+
+  strong {
+    @apply font-bold;
+  }
+
+  h3, h4 {
+    @apply m-0;
+  }
+}
+
+@layer components {
+  .divider {
+    @apply border-b border-outline-variant;
+  }
+  
 }

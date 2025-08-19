@@ -1,0 +1,269 @@
+@layer components {
+  /* Footer Container Structure */
+  .app-footer {
+    @apply relative overflow-hidden text-white 
+           bg-gradient-to-br from-slate-900 to-slate-800;
+
+    /* Primary gradient border at top */
+    &::before {
+      @apply absolute top-0 left-0 right-0 h-1 z-10 
+             bg-gradient-to-r from-primary-500 to-purple-600;
+      content: '';
+    }
+
+    .footer-container {
+      @apply max-w-7xl mx-auto px-5 md:px-6 relative z-20;
+    }
+
+    .main-footer {
+      @apply py-10 md:py-16 pb-8 md:pb-10;
+    }
+
+    /* Main Footer Grid (4 columns) */
+    .footer-grid {
+      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 
+             gap-8 md:gap-10 lg:gap-12 mb-8 lg:mb-10;
+    }
+
+    /* Base section styling */
+    .footer-section {
+      @apply transition-all duration-300 p-6 rounded-xl -m-6;
+
+      &:hover {
+        @apply bg-white/5 backdrop-blur-sm -translate-y-1;
+      }
+    }
+
+    /* About EASIHUB Section */
+    .footer-about {
+      @apply md:col-span-2 lg:col-span-2;
+
+      h3 {
+        @apply text-xl md:text-2xl font-bold mb-4 text-primary-500 
+               flex items-center gap-3;
+
+        i {
+          @apply text-3xl bg-gradient-to-r from-primary-500 
+                 to-purple-600 bg-clip-text text-transparent;
+        }
+      }
+
+      p {
+        @apply text-slate-300 leading-relaxed text-sm font-normal;
+      }
+    }
+
+    /* Navigation Links */
+    .footer-navi {
+      h4 {
+        @apply text-lg font-semibold mb-5 text-white 
+               flex items-center gap-2;
+
+        i {
+          @apply text-primary-500 text-base w-5;
+        }
+      }
+
+      ul {
+        @apply list-none p-0 m-0;
+
+        li {
+          @apply mb-3;
+
+          a {
+            @apply text-slate-300 no-underline transition-all 
+                   duration-300 text-sm flex items-center gap-2 
+                   py-1 rounded-md font-normal;
+
+            i {
+              @apply text-primary-500 text-xs w-4 
+                     transition-all duration-300 opacity-80;
+            }
+
+            &:hover {
+              @apply text-white pl-2 translate-x-1;
+
+              i {
+                @apply text-purple-400 translate-x-1 opacity-100;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    /* Platform Communities */
+    .footer-communities {
+      h4 {
+        @apply text-lg font-semibold mb-5 text-white 
+               flex items-center gap-2;
+
+        i {
+          @apply text-primary-500 text-base w-5;
+        }
+      }
+
+      .communities-grid {
+        @apply grid grid-cols-1 md:grid-cols-2 gap-5;
+
+        ul {
+          @apply list-none p-0 m-0;
+
+          li {
+            @apply mb-2;
+
+            a {
+              @apply text-slate-300 no-underline transition-all 
+                     duration-300 text-xs flex items-center gap-2 
+                     py-1 rounded font-normal;
+
+              i {
+                @apply text-primary-500 text-xs w-3 
+                       transition-all duration-300 opacity-80;
+              }
+
+              &:hover {
+                @apply text-white pl-1 translate-x-1;
+
+                i {
+                  @apply text-purple-400 translate-x-1 opacity-100;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    /* Connect & Support Section */
+    .footer-connect {
+      h4 {
+        @apply text-lg font-semibold mb-5 text-white 
+               flex items-center gap-2;
+
+        i {
+          @apply text-primary-500 text-base w-5;
+        }
+      }
+
+      .social-platforms {
+        @apply flex gap-2 md:gap-3 mb-5 flex-wrap 
+               justify-start md:justify-start;
+
+        a {
+          @apply w-10 h-10 bg-white/10 flex items-center 
+                 justify-center rounded-lg text-slate-300 
+                 transition-all duration-300 backdrop-blur-sm 
+                 border border-white/10;
+
+          &:hover {
+            @apply bg-gradient-to-r from-primary-500 to-purple-600 
+                   text-white -translate-y-1 shadow-lg;
+            box-shadow: 0 8px 25px rgba(73, 73, 252, 0.4);
+          }
+
+          i {
+            @apply text-base;
+          }
+        }
+      }
+
+      .support-info {
+        @apply bg-white/5 p-4 rounded-xl border border-white/10 
+               backdrop-blur-sm;
+
+        h5 {
+          @apply text-xs font-semibold text-primary-500 mb-1 
+                 uppercase tracking-wide;
+        }
+
+        p {
+          @apply text-slate-300 text-xs leading-relaxed m-0;
+
+          a {
+            @apply text-white no-underline font-medium 
+                   transition-colors duration-300;
+
+            &:hover {
+              @apply text-primary-500;
+            }
+          }
+        }
+      }
+    }
+
+    /* Code of Conduct Section */
+    .code-conduct {
+      @apply bg-white/5 p-5 md:p-6 rounded-2xl border border-white/10 
+             backdrop-blur-sm mb-8 md:mb-10;
+
+      h4 {
+        @apply font-semibold mb-3 text-white flex items-start 
+               gap-2 text-sm;
+
+        i {
+          @apply text-primary-500 text-base mt-0.5;
+        }
+      }
+
+      p {
+        @apply text-slate-300 leading-relaxed m-0 text-xs 
+               flex gap-2;
+
+        a {
+          @apply text-primary-500 no-underline font-medium 
+                 transition-all duration-300;
+
+          &:hover {
+            @apply text-purple-400 underline;
+          }
+        }
+      }
+    }
+
+    /* Footer Bottom */
+    .footer-bottom {
+      @apply py-5 md:py-6 text-center bg-black/30 -mx-5 md:-mx-6 
+             border-t border-white/10;
+
+      .footer-bottom-content {
+        @apply flex flex-col items-center gap-3 md:gap-4 px-5 md:px-6;
+      }
+
+      p {
+        @apply text-slate-400 text-xs m-0 font-medium;
+      }
+
+      .policy-links {
+        @apply flex gap-3 md:gap-5 flex-wrap justify-center;
+
+        a {
+          @apply text-slate-400 no-underline text-xs 
+                 transition-all duration-300 py-1 px-3 
+                 rounded-md border border-transparent font-normal;
+
+          &:hover {
+            @apply text-primary-500 border-primary-500/30 
+                   bg-primary-500/10;
+          }
+        }
+      }
+    }
+  }
+
+  /* Loading Animation */
+  .app-footer {
+    animation: slideUp 0.8s ease-out;
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

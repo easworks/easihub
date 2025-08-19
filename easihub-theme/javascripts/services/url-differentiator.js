@@ -1,13 +1,9 @@
-import Service, { service } from '@ember/service';
 import { getOwner } from '@ember/application';
+import Service, { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { SPECIAL_CATEGORIES } from '../consts';
 
-export class UrlDifferentiatorService extends Service {
-  static init(api) {
-    api.container.registry.register('service:url-differentiator', UrlDifferentiatorService);
-    api.container.lookup('service:url-differentiator');
-  }
-
+export default class UrlDifferentiatorService extends Service {
   @service router;
 
   @tracked routeName;
@@ -16,42 +12,67 @@ export class UrlDifferentiatorService extends Service {
   #callback = (transition) => {
     const route = transition.to;
 
-    const controller = getOwner(this).lookup(`controller:${route.name}`);
-    this.model = controller.model;
-
-    // this must be done last as it is being observed by
-    // other components/services
-    this.routeName = this.#computeRouteName(route);
+    this.#processRoute(route);
   }
 
   constructor() {
     super(...arguments);
     this.router.on('routeDidChange', this.#callback);
+    if (this.router.currentRoute)
+      this.#processRoute(this.router.currentRoute);
   }
 
   willDestroy() {
     this.router.destroy('routeDidChange', this.#callback);
   }
 
-  #computeRouteName = (route) => {
+  #processRoute(route) {
+    const controller = getOwner(this).lookup(`controller:${route.name}`);
+    if (controller) {
+      this.model = controller.model;
+    }
+    else
+      this.model = null;
+
+
+    // this must be done last as it is being observed by
+    // other components/services
+    this.routeName = this.#computeRouteName(route);
+  }
+
+  #computeRouteName(route) {
     switch (route.name) {
       case 'discovery.category':
-      case 'tags.showCategory': {
-        const segments = route.params.category_slug_path_with_id.split('/');
-
-        if (segments.length === 2 && numeric.test(segments[1]))
-          return `${route.name}.domain`;
-
-        if (segments.length === 3 && numeric.test(segments[2])) {
-          if (genericTopicsPattern.test(segments[1]))
-            return `${route.name}.technical-area`;
-          return `${route.name}.software`;
+        if (this.model?.category.id === SPECIAL_CATEGORIES.feedback) {
+          return `${route.name}.feedback`;
         }
-
-        if (segments.length === 4 && numeric.test(segments[3]))
-          return `${route.name}.technical-area`;
-      }
+        return this.#parseSegmentBasedRoute(route);
+      case 'tags.showCategory':
+        return this.#parseSegmentBasedRoute(route);
     }
+
+    if (isAdminRoute(route)) {
+      if (!route.name.startsWith('admin.'))
+        return `admin.${route.name}`;
+    }
+
+    return route.name;
+  }
+
+  #parseSegmentBasedRoute(route) {
+    const segments = route.params.category_slug_path_with_id.split('/');
+
+    if (segments.length === 2 && numeric.test(segments[1]))
+      return `${route.name}.domain`;
+
+    if (segments.length === 3 && numeric.test(segments[2])) {
+      if (genericTopicsPattern.test(segments[1]))
+        return `${route.name}.technical-area`;
+      return `${route.name}.software`;
+    }
+
+    if (segments.length === 4 && numeric.test(segments[3]))
+      return `${route.name}.technical-area`;
 
     return route.name;
   }
@@ -59,3 +80,16 @@ export class UrlDifferentiatorService extends Service {
 
 const numeric = /^\d+$/;
 const genericTopicsPattern = /^generic-.+-topics$/;
+
+function isAdminRoute(route) {
+  let currentRoute = route;
+
+  while (currentRoute) {
+    if (currentRoute.name === 'admin') {
+      return true;
+    }
+    currentRoute = currentRoute.parent;
+  }
+
+  return false;
+}
