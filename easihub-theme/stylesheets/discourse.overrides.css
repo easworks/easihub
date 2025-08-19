@@ -137,7 +137,7 @@
   }
 
   .category-title-header {
-    @apply relative py-4 h-72 overflow-visible mb-7;
+    @apply relative py-4 h-72 overflow-visible mb-7 rounded-2xl;
   }
 
   .category-title-name {
@@ -170,6 +170,10 @@
 
   .category-title-contents .category-logo.aspect-image img {
     @apply w-16 h-auto;
+  }
+
+  .category-title-description.no-logo {
+    @apply pl-4;
   }
 
 
