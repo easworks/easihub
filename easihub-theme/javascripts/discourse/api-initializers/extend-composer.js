@@ -1,4 +1,4 @@
-import { apiInitializer } from "discourse/lib/api";
+import { apiInitializer } from 'discourse/lib/api';
 import { SPECIAL_TAGS } from '../../consts';
 import { i18n } from "discourse-i18n";
 import { cook } from "discourse/lib/text";

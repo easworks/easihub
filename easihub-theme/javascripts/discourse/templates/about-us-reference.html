@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - EASIHUB & EASWORKS | Enterprise Application Development Community</title>
+    <meta name="description" content="Learn about EASIHUB & EASWORKS - the premier platforms for enterprise application professionals. Discover our journey from vision to revolution in ERP, CRM, PLM, BI development.">
+    <meta name="keywords" content="enterprise applications, ERP development, CRM development, PLM systems, business intelligence, enterprise software community, SAP developers, Salesforce developers">
+    <meta property="og:title" content="About EASIHUB & EASWORKS - Enterprise Application Development Platforms">
+    <meta property="og:description" content="Discover how EASIHUB and EASWORKS are revolutionizing enterprise application development through community collaboration and professional growth.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About EASIHUB & EASWORKS - Enterprise Application Platforms">
+    <meta name="twitter:description" content="The complete ecosystem for enterprise application professionals - from learning to career advancement.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4949fc;
+            --primary-gradient: linear-gradient(135deg, #4949fc 0%, #6b46ff 100%);
+            --secondary-gradient: linear-gradient(135deg, #4949fc 0%, #8b5cf6 100%);
+            --accent-gradient: linear-gradient(135deg, #4949fc 0%, #06b6d4 100%);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-light: #94a3b8;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --surface-2: #f1f5f9;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Updated Hero Section - from v05 */
+        .hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(165deg, #ffffff 0%, #f8fafc 25%, #f1f5f9 50%, #e2e8f0 75%, #f8fafc 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, rgba(73, 73, 252, 0.1), rgba(139, 92, 246, 0.05));
+            border-radius: 50%;
+            animation: heroFloat1 15s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            right: -150px;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(225deg, rgba(6, 182, 212, 0.08), rgba(139, 92, 246, 0.06));
+            border-radius: 50%;
+            animation: heroFloat2 20s ease-in-out infinite reverse;
+            z-index: 1;
+        }
+
+        .hero-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(90deg, rgba(73, 73, 252, 0.02) 1px, transparent 1px),
+                linear-gradient(rgba(73, 73, 252, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 25s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes heroFloat1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(50px, -30px) scale(1.1);
+            }
+        }
+
+        @keyframes heroFloat2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(-40px, 25px) scale(1.15);
+            }
+        }
+
+        @keyframes gridMove {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 60px 60px;
+            }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+            backdrop-filter: blur(10px);
+            padding: 16px 32px;
+            border-radius: 50px;
+            border: 1px solid rgba(73, 73, 252, 0.2);
+            margin-bottom: 40px;
+            font-size: 14px;
+            color: var(--primary-color);
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(73, 73, 252, 0.1);
+            animation: badgeGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes badgeGlow {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+                box-shadow: 0 10px 40px rgba(73, 73, 252, 0.1);
+            }
+
+            50% {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 50px rgba(73, 73, 252, 0.2);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-color) 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titlePulse 4s ease-in-out infinite;
+        }
+
+        @keyframes titlePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+        }
+
+        /* Story Section */
+        .story {
+            padding: 60px 0;
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .story-content h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .story-content p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .story-highlight {
+            background: var(--surface);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .story-highlight::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 60px;
+            color: var(--primary-color);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .story-visual {
+            position: relative;
+        }
+
+        .story-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+        }
+
+        .story-card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .story-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .story-card p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Platforms Section */
+        .platforms {
+            padding: 60px 0;
+            background: var(--surface);
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .platform-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .platform-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .platform-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .platform-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .platform-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+        }
+
+        .platform-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .platform-tagline {
+            font-size: 14px;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .platform-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .platform-features {
+            list-style: none;
+        }
+
+        .platform-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .platform-features i {
+            color: var(--primary-color);
+            font-size: 16px;
+            width: 20px;
+        }
+
+        /* Mission Section */
+        .mission {
+            padding: 60px 0;
+            background: var(--background);
+        }
+
+        .mission-content {
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 40px;
+        }
+
+        .mission-item {
+            text-align: center;
+            padding: 24px 20px;
+            border-radius: 12px;
+            background: var(--surface);
+            transition: all 0.3s ease;
+        }
+
+        .mission-item:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mission-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--secondary-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .mission-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .mission-item p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 50px 0;
+            background: var(--primary-gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .stat-item p {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 60px 0;
+            background: var(--surface);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .cta-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-primary) !important;
+            color: white;
+            padding: 48px 0 24px;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .footer-brand h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+
+        .footer-brand p {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .footer-section h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .story-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .platforms-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .story,
+            .platforms,
+            .mission,
+            .cta {
+                padding: 40px 0;
+            }
+
+            .hero-title {
+                font-size: 26px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .platform-card {
+                padding: 24px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .story-grid {
+                gap: 32px;
+            }
+
+            .mission-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .stats {
+                padding: 40px 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo-gradient {
+            background: linear-gradient(135deg, #4949fc 0%, #6b6bff 50%, #ec4899 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        /* uses your existing keyframes; if missing, add: */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                EASIHUB
+            </div>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/categories">Forum Hubs</a>
+                <a href="/guidelines">Guidelines</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-sparkles"></i>
+                <span>Transforming Enterprise Application Excellence</span>
+            </div>
+            <h1 class="hero-title">Empowering <span class="logo-gradient">Enterprise Application Professionals</span> Through Community &amp; Innovation</h1>
+            <p class="hero-subtitle">We've built EASIHUB as the premier AI-powered community platform for EA professionals to connect, learn, and grow together, with EASWORKS creating career pathways for our thriving community.</p>
+        </div>
+    </section>
+
+
+
+    <!-- Story Section -->
+    <section class="story">
+        <div class="container">
+            <div class="story-grid scroll-reveal">
+                <div class="story-content">
+                    <h2>Our Journey: From Vision to Enterprise Application Community</h2>
+                    <p>In 2023, we recognized a critical gap in the enterprise application ecosystem. While countless forums existed for general programming, enterprise application professionals — architects, developers, consultants, and system integrators — lacked a unified platform designed for their unique challenges in ERP, CRM, PLM, SCM, HCM, BI/Analytics, and cloud platform implementation.</p>
+
+                    <div class="story-highlight">
+                        <p><strong>What if we could create a platform where EA professionals could truly connect, learn, and grow together?</strong></p>
+                    </div>
+
+                    <p>This question sparked the creation of EASIHUB for community-driven learning and collaboration. As our community grew, we also launched <strong>EASWORKS</strong> to help our members find career opportunities.</p>
+
+                    <p>Today, EASIHUB serves as the primary hub for enterprise application professionals to connect, learn, and grow together, while EASWORKS helps bridge the gap between our talented community members and companies seeking EA expertise.</p>
+                </div>
+                <div class="story-visual">
+                    <div class="story-card">
+                        <div class="story-card-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>The Enterprise Application Gap</h3>
+                        <p>Enterprise application professionals were scattered across fragmented forums and isolated networks. We started EASIHUB to create a unified space for EA professionals to collaborate and learn from each other's experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platforms Section -->
+    <section class="platforms">
+        <div class="container">
+            <div class="section-header scroll-reveal" style="text-align: center; margin-bottom: 64px;">
+                <h2 class="section-title">Our Platform Ecosystem</h2>
+                <p class="section-subtitle">EASIHUB serves as our primary community platform, with EASWORKS providing career opportunities for our members when they're ready to advance professionally.</p>
+            </div>
+
+            <div class="platforms-grid">
+                <div class="platform-card scroll-reveal">
+                    <div class="platform-header">
+                        <div class="platform-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h3 class="platform-title">EASIHUB</h3>
+                            <p class="platform-tagline">Enterprise Application Community Hub</p>
+                        </div>
+                    </div>
+                    <p class="platform-description">Our AI-powered community platform built for enterprise application professionals. A place where EA developers, consultants, and architects connect to share knowledge, solve challenges, and learn from real-world experiences across ERP, CRM, PLM, and other EA domains.</p>
+                    <ul class="platform-features">
+                        <li><i class="fas fa-robot"></i> AI Copilot for intelligent assistance and instant answers</li>
+                        <li><i class="fas fa-search"></i> Enhanced search with AI-powered relevance ranking</li>
+                        <li><i class="fas fa-book-open"></i> Ask with Docs for instant documentation queries</li>
+                        <li><i class="fas fa-comments"></i> Expert-verified answers and community best practices</li>
+                        <li><i class="fas fa-graduation-cap"></i> Continuous learning through webinars and workshops</li>
+                        <li><i class="fas fa-network-wired"></i> Specialized hubs for all EA domains and technologies</li>
+                    </ul>
+                </div>
+
+                <div class="platform-card scroll-reveal">
+                    <div class="platform-header">
+                        <div class="platform-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div>
+                            <h3 class="platform-title">EASWORKS</h3>
+                            <p class="platform-tagline">Enterprise Application Talent Platform</p>
+                        </div>
+                    </div>
+                    <p class="platform-description">A talent platform that connects our community members with companies seeking EA expertise. EASWORKS helps our professionals find contract work, full-time positions, and project opportunities while helping businesses access our vetted network.</p>
+                    <ul class="platform-features">
+                        <li><i class="fas fa-user-tie"></i> Contract and full-time placement opportunities</li>
+                        <li><i class="fas fa-handshake"></i> Direct connections with hiring companies</li>
+                        <li><i class="fas fa-users-cog"></i> Project-based work opportunities</li>
+                        <li><i class="fas fa-clock"></i> Quick matching for urgent business needs</li>
+                        <li><i class="fas fa-shield-alt"></i> Community-vetted professionals only</li>
+                        <li><i class="fas fa-chart-line"></i> Career advancement support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="story-highlight scroll-reveal" style="margin-top: 40px;">
+                <p><strong>Community-First Approach:</strong> EASIHUB remains our primary focus as the go-to community for EA professionals. EASWORKS simply provides our members with career opportunities when they're ready, creating a natural pathway from learning to professional growth.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission">
+        <div class="container">
+            <div class="mission-content scroll-reveal">
+                <h2 class="section-title">Our Mission & Vision</h2>
+                <p class="section-subtitle">We exist to connect enterprise application professionals and create a thriving community where knowledge sharing drives collective success and career growth.</p>
+
+                <div class="mission-grid">
+                    <div class="mission-item">
+                        <div class="mission-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Innovation Catalyst</h3>
+                        <p>Foster innovation by connecting enterprise application professionals with AI-powered tools, collaborative opportunities, and cutting-edge insights that drive breakthrough solutions in their daily work.</p>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Community First</h3>
+                        <p>Build an inclusive, supportive community where enterprise application professionals of all levels feel empowered to learn, share knowledge, and grow together in their professional journey.</p>
+                    </div>
+                    <div class="mission-item">
+                        <div class="mission-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3>Professional Growth</h3>
+                        <p>Support career advancement by creating platforms that influence enterprise application best practices, technical decisions, and provide meaningful opportunities for our community members worldwide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid scroll-reveal">
+                <div class="stat-item">
+                    <h3>150+</h3>
+                    <p>EASIHUB Community Members</p>
+                </div>
+                <div class="stat-item">
+                    <h3>25+</h3>
+                    <p>EASWORKS Professionals</p>
+                </div>
+                <div class="stat-item">
+                    <h3>20+</h3>
+                    <p>Enterprise Applications</p>
+                </div>
+                <div class="stat-item">
+                    <h3>5+</h3>
+                    <p>Industries Served</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content scroll-reveal">
+                <h2 class="cta-title">Join the EASIHUB Community</h2>
+                <p class="cta-description">Ready to connect with fellow EA professionals? Join our growing community to share knowledge, learn from experts, and discover career opportunities when you're ready to take the next step.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-users"></i>
+                        Join EASIHUB Community
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i>
+                        Learn About EASWORKS
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>EASIHUB</h3>
+                    <p>Transforming enterprise application development through community-driven innovation and professional excellence. Join our thriving community and discover career opportunities through our EASWORKS talent platform.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>EASIHUB</h4>
+                    <ul>
+                        <li><a href="#">Community Forums</a></li>
+                        <li><a href="#">AI Copilot</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Learning Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>EASWORKS</h4>
+                    <ul>
+                        <li><a href="#">EA Contractors & Specialists</a></li>
+                        <li><a href="#">Full-Time Talent Placement</a></li>
+                        <li><a href="#">Managed EA Teams</a></li>
+                        <li><a href="#">Complete Project Solutions</a></li>
+                        <li><a href="#">Join Talent Network</a></li>
+                        <li><a href="#">Business Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Contact Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EASIHUB & EASWORKS — Empowering Enterprise Application Professionals Through Community Learning and Career Advancement | All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced card interactions
+        document.querySelectorAll('.platform-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-12px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-item h3');
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+                const suffix = counter.textContent.replace(/[\d]/g, '');
+                let current = 0;
+                const increment = target / 100;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + suffix;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + suffix;
+                    }
+                }, 20);
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Enhanced button interactions
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px) scale(1.02)';
+            });
+
+            btn.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroGrid = document.querySelector('.hero-grid');
+            const heroContent = document.querySelector('.hero-content');
+
+            if (window.innerWidth > 768 && scrolled < window.innerHeight) {
+                if (heroGrid) {
+                    heroGrid.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+                if (heroContent) {
+                    heroContent.style.transform = `translateY(${scrolled * -0.1}px)`;
+                }
+            }
+        });
+
+        // Dynamic gradient animation
+        function createGradientAnimation() {
+            const cards = document.querySelectorAll('.story-card, .platform-card');
+
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const deltaX = (x - centerX) / centerX;
+                    const deltaY = (y - centerY) / centerY;
+
+                    card.style.transform = `perspective(1000px) rotateX(${deltaY * 5}deg) rotateY(${deltaX * 5}deg) translateY(-8px)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+                });
+            });
+        }
+
+        // Initialize enhanced interactions
+        if (window.innerWidth > 768) {
+            createGradientAnimation();
+        }
+
+        // Loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Responsive navigation toggle (for mobile)
+        const createMobileNav = () => {
+            if (window.innerWidth <= 768) {
+                const header = document.querySelector('.header-content');
+                const navLinks = document.querySelector('.nav-links');
+
+                if (!document.querySelector('.mobile-toggle')) {
+                    const mobileToggle = document.createElement('button');
+                    mobileToggle.className = 'mobile-toggle';
+                    mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                    mobileToggle.style.cssText = `
+                        background: none;
+                        border: none;
+                        color: var(--primary-color);
+                        font-size: 18px;
+                        cursor: pointer;
+                        padding: 8px;
+                    `;
+
+                    header.appendChild(mobileToggle);
+
+                    mobileToggle.addEventListener('click', () => {
+                        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                        navLinks.style.position = 'absolute';
+                        navLinks.style.top = '100%';
+                        navLinks.style.left = '0';
+                        navLinks.style.right = '0';
+                        navLinks.style.background = 'white';
+                        navLinks.style.flexDirection = 'column';
+                        navLinks.style.padding = '20px';
+                        navLinks.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                        navLinks.style.zIndex = '1000';
+                    });
+                }
+            }
+        };
+
+        window.addEventListener('resize', createMobileNav);
+        createMobileNav();
+    </script>
+</body>
+
+</html>

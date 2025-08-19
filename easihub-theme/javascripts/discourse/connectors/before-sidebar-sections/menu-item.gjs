@@ -116,7 +116,10 @@ const publicMenu = [
         id: 'about',
         label: 'About',
         href: '/about-us',
-        icon: 'fa-info-circle'
+        icon: 'fa-info-circle',
+        route: {
+          name: 'about-us'
+        }
       },
       {
         id: 'faqs',
