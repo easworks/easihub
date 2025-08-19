@@ -21,7 +21,7 @@ export class CategoryCardComponent extends Component  {
           hover:border hover:border-d-primary/50
           transition-all gap-4"
           style="--category-color: #{{@category.color}};">
-        <div class="flex gap-4 items-center mb-4">
+        <div class="flex gap-4 items-center">
           <img src={{@category.uploaded_logo.url}} class="h-10"/>
           <h3 class="text-xl font-bold text-d-primary">
             <LinkTo @route="discovery.category" @models={{this.linkModels}} class="d-link-color-d-primary">
