@@ -150,7 +150,9 @@
   }
 
   .category-title-description {
-    @apply absolute left-1/2 -bottom-[30px] -translate-x-1/2 bg-white rounded-2xl max-h-36 p-4 w-11/12 shadow-lg flex items-start gap-4 z-10 overflow-hidden;
+    @apply absolute flex items-center h-36 p-4 pl-24
+    bg-white rounded-2xl  shadow-lg gap-4 overflow-hidden
+    left-8 right-8 -bottom-8;
   }
 
   .category-title-description .cooked {
@@ -162,12 +164,11 @@
     text-overflow: ellipsis;
   }
 
-  .category-title-description .category-logo.aspect-image {
-    @apply static shrink-0;
-    transform: none;
+  .category-title-contents .category-logo.aspect-image {
+    @apply absolute shrink-0 m-0 bottom-10 z-10 left-12 translate-y-1/2;
   }
 
-  .category-title-description .category-logo.aspect-image img {
+  .category-title-contents .category-logo.aspect-image img {
     @apply w-16 h-auto;
   }
 
