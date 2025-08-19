@@ -1,12 +1,20 @@
 @import './theme.css';
 @import './discourse.overrides.css';
 @import './buttons.css';
+@import './tabs.css';
+
 @import './sidebar.css';
 @import './navigation-bar.css'; 
+
+@import './hero.css';
 
 /* Custom styles can go here */
 
 @layer base {
+  :root {
+    color: inherit;
+  }
+
   ::-webkit-scrollbar {
     @apply w-1;
   }
@@ -23,7 +31,7 @@
     @apply font-bold;
   }
 
-  h3 {
+  h3, h4 {
     @apply m-0;
   }
 }

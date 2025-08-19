@@ -3,19 +3,68 @@ export function addLayersToStyleSheets() {
   wrapHeaderCss();
 }
 
+/**
+ * @returns {HTMLElement}
+ */
+function getContainer() {
+  return document.querySelector('discourse-assets-stylesheets')
+}
+
+/**
+ * @returns {HTMLLinkElement | null}
+ */
+function getLayeredCssLinks() {
+  return document.querySelector('#layered-css-links');
+}
+
 function wrapDiscourseAssetsCss() {
-  const allowedTargets = [
-    'common'
-  ];
+  const allowedTargets = new Set([
+    'common',
+    'desktop'
+  ]);
 
-  const container = document.querySelector('discourse-assets-stylesheets');
+  const container = getContainer();
 
-  const colorSchemes = container.querySelectorAll('link[data-scheme-id]');
-  const pluginStyles = allowedTargets
-    .map(t => container.querySelector(`link[data-target=${t}]`));
+  const links = container.querySelectorAll('link');
 
-  [...colorSchemes, ...pluginStyles]
-    .forEach(link => processStyleLink(link));
+  const colorSchemes = [];
+  const pluginStyles = [];
+
+  for (const link of links) {
+    const target = link.getAttribute('data-target');
+    if (target) {
+      if (allowedTargets.has(target)) {
+        pluginStyles.push(link);
+      }
+    }
+    else {
+      try {
+        const url = new URL(link.href);
+        if (isColorDefinition(url)) {
+          colorSchemes.push(link);
+        }
+      }
+      catch (e) {
+        console.error('could not parse url')
+      }
+    }
+  }
+
+  const toProcess = [...colorSchemes, ...pluginStyles];
+
+  const stylesheet = constructStyleElementForLinks(toProcess);
+  stylesheet.id = 'layered-css-links';
+
+  const existing = getLayeredCssLinks();
+  if (existing) {
+    existing.replaceWith(stylesheet);
+  }
+  else {
+    container.insertAdjacentElement('afterbegin', stylesheet);
+
+  }
+
+  toProcess.forEach(link => link.remove());
 }
 
 function wrapHeaderCss() {
@@ -103,6 +152,21 @@ async function processStyleLink(linkElement) {
   }
 }
 
+
+/**
+ * @param {HTMLLinkElement[]} linkElements
+ * @returns {HTMLStyleElement}
+ */
+function constructStyleElementForLinks(linkElements) {
+  const styleElement = document.createElement('style');
+
+  styleElement.textContent = linkElements.map(link =>
+    `@import url('${link.href}') layer(base);`
+  ).join('\n');
+
+  return styleElement;
+}
+
 const fontFaceRegex = /@font-face\s*\{[^}]*\}/g;
 
 function extractFontFaces(contents, baseUrl) {
@@ -126,4 +190,12 @@ function resolveRelativeUrls(fontFace, baseUrl) {
     const resolvedUrl = new URL(url, baseUrl).href;
     return match.replace(url, resolvedUrl);
   });
+}
+
+/**
+ * @param {URL} url
+ */
+function isColorDefinition(url) {
+  const last = url.pathname.split('/').at(-1);
+  return last.startsWith('color_definitions_');
 }

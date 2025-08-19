@@ -3,3 +3,136 @@ en:
     description: ''
     settings:
       example_setting: A description of a setting.
+
+  topic:
+    create: 
+      by-tag:
+        articles: Propose Article
+        bulletins: Post Bulletin
+        discussion: Start Discussion
+        events: Add Event
+        jobs: Post Jobs
+        questions: Ask Questions
+        use-cases: Share Use Case
+      
+      by-category:
+        179: Post Feedback
+
+
+  discovery-list-area:
+    explore-and-post: Explore & Post
+
+  composer:
+    action-title:
+      by-tag: 
+        articles: Write an Article
+        bulletins: Share a Bulletin
+        discussion: Start a Discussion
+        events: Create an Event
+        jobs: Post a Job Opening
+        questions: Ask a Question
+        use-cases: Document a Use Case
+      by-category:
+        179: Provide Feedback
+
+    help-message:
+      show-more: Show More ▼
+      show-less: Show Less ▲
+
+      by-tag: 
+        articles:
+          header: 💡 Need help asking a great question?
+          content: |
+            A great question includes software and technical context 
+            (e.g., SAP S/4HANA, Salesforce API), the exact error or 
+            scenario, and what you've already tried.
+
+            **Example:** "How can I enable OAuth between Salesforce and Azure AD? 
+            I configured the connected app but keep getting 'invalid grant'. 
+            I tried updating callback URL and resetting secrets."
+
+            Ask clearly, and others can help you faster.
+
+        bulletins:
+          header: 💡 Need help writing a bulletin?
+          content: |
+            Bulletins are ideal for quick product updates, release announcements, 
+            security advisories, or breaking system news. Keep it short and focused. 
+            You may link to an external bulletin or summarize it.
+
+            **Example:** "Salesforce Spring '25 release adds native GraphQL support"
+
+        discussion:
+          header: 💡 Need help structuring your discussion? 
+          content: |
+            Discussions explore open-ended ideas, trade-offs, or product strategies. 
+            You can frame your discussion around a domain, a product, or a technical topic.
+
+            **Example 1:** "What are pros/cons of integrating Salesforce with Azure AD vs Okta?"
+            **Example 2:** "Which data model is better for variant BOMs in Teamcenter: structure or classification?"
+
+            Use this form when you're looking to spark thoughtful conversation and input from others.
+        
+        events:
+          header: 💡 Need help listing your event?
+          content: |
+            Use this form to promote webinars, product launches, conferences, 
+            or community events. Be sure to include the title, software or domain 
+            it relates to, the event type, and a URL or agenda.
+
+            **Example:** "Join our SAP S/4HANA API Workshop - June 2025"
+
+        jobs:
+          header: 💡 Need help writing a quality job post?
+          content: |
+            Use specific job titles, domain/software (e.g., SAP, Salesforce, Teamcenter),
+            and include work mode, job type, and contact info. Add certifications, 
+            benefits, or URLs to make the job clear and attractive.
+
+            **Example:** "Teamcenter Integration Consultant (Remote, Contract) with 5+ years experience"
+
+        questions:
+          header: 💡 Need help asking a great question? 
+          content: |
+            A great question includes software and technical context 
+            (e.g., SAP S/4HANA, Salesforce API), the exact error or scenario, and what you've already tried.
+
+            **Example:** "How can I enable OAuth between Salesforce and Azure AD? I configured the connected app but keep getting 'invalid grant'. I tried updating callback URL and resetting secrets."
+            
+            Ask clearly, and others can help you faster.        
+        
+        use-cases:
+          header: 💡 Need help structuring your use case?
+          content: |
+            Use cases share real implementations across domains, software, or technical areas. 
+            This form helps you document how you solved a business or technical problem.
+
+            **Example 1:** "Automated Teamcenter-to-SAP BOM transfer using REST API"
+            **Example 2:** "Used Salesforce Flow Builder to auto-update opportunity stages"
+
+            Clearly describe the challenge, what was built, how it was implemented, and any measurable benefit.
+
+      by-category:
+        179:
+          header: 💡 Need help writing effective feedback?
+          content: |
+            Feedback helps improve products, processes, or community experiences. 
+            Be specific about what you're commenting on, what works well, 
+            and what could be improved. Include context and actionable suggestions.
+
+            **Example:** "The new Salesforce integration wizard is intuitive, 
+            but the OAuth setup step needs clearer error messages when credentials fail."
+
+            Constructive feedback drives better outcomes for everyone.
+
+    create_topic:
+      by-tag:
+        articles: Publish Article
+        bulletins: Share Bulletin
+        discussion: Create Discussion
+        events: Publish Event
+        jobs: Post Job
+        questions: Submit Question
+        use-cases: Share Use Case
+      by-category:
+        179: Submit Feedback

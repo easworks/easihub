@@ -1,6 +1,8 @@
-import Component from "@glimmer/component";
+import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
+import { i18n } from "discourse-i18n";
 import { featuredHubs } from '../../../utils/featured-hubs';
 
 export default class HomePage extends Component {
@@ -21,7 +23,11 @@ export default class HomePage extends Component {
     this.cards = categories.map(c => ({
       name: c.name,
       content: c.description,
-      logo: c.uploaded_logo.url
+      logo: c.uploaded_logo.url,
+      link: [
+        `${c.slug}/${c.id}`
+      ],
+      category: c
     }));
   }
 
@@ -32,14 +38,16 @@ export default class HomePage extends Component {
         {{#each this.cards as |card|}}
           <div class="p-4 border border-outline-variant
             rounded-lg shadow-sm shadow-black/30
-            hover:shadow-lg hover:shadow-primary-500/60
-            hover:border hover:border-primary-500/75
-            transition-all">
+            hover:shadow-lg hover:shadow-d-primary/60
+            hover:border hover:border-d-primary/75
+            transition-all"
+            style="--category-color: #{{card.category.color}};">
             <div class="flex gap-4 items-center">
               <img src={{card.logo}} class="h-10"/>
-              <h3 class="text-xl font-bold
-                  text-primary-500">
+              <h3 class="text-xl font-bold text-d-primary">
+                <LinkTo @route="discovery.category" @models={{card.link}} class="d-link-color-d-primary">
                   {{card.name}}
+                </LinkTo>
               </h3>
             </div>
             <div class="divider my-4"></div>
@@ -47,7 +55,10 @@ export default class HomePage extends Component {
               {{{card.content}}}
             </p>
             <div class="divider my-4"></div>
-            <button class="raised-button w-full text-base py-2">Explore & Post</button>
+            <LinkTo @route="discovery.category" @models={{card.link}}
+              class="btn btn-raised w-full text-lg py-2 source-color-d-primary">
+              {{i18n (themePrefix 'discovery-list-area.explore-and-post')}}
+            </LinkTo>
           </div>
         {{/each}}
       </div>

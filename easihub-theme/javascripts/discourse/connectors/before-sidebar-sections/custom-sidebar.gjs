@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { concat } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 import { featuredHubs } from '../../../utils/featured-hubs';
 import { constructMenu, createMenuItemFromCategory } from './menu-item';
@@ -10,7 +11,7 @@ import { constructMenu, createMenuItemFromCategory } from './menu-item';
 export default class CustomSidebarComponent extends Component {
   @service site;
   @service currentUser;
-  @service urld;
+  @service('url-differentiator') urld;
 
   @tracked expandedPath = [];
   @tracked activeItem = null;
@@ -107,6 +108,19 @@ const LeafTemplate =
   <template>
     <li class="menu-item"
         style="{{concat '--level:' @item.level ';'}}">
+      {{#if @item.route}}
+      <LinkTo @route={{@item.route.name}} @models={{@item.route.models}}
+        class="menu-link">
+        <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
+        <span class="menu-label">{{@item.label}}</span>
+        {{#if @item.badge}}
+          <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
+        {{/if}}
+        {{#if @item.showDots}}
+          <i class="menu-dots fa-solid fa-ellipsis"></i>
+        {{/if}}
+      </LinkTo>
+      {{else}}
       <a class="menu-link" href={{@item.href}}>
         <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
@@ -117,21 +131,22 @@ const LeafTemplate =
           <i class="menu-dots fa-solid fa-ellipsis"></i>
         {{/if}}
       </a>
+      {{/if}}
     </li>
   </template>;
 
 const BranchTemplate =
   <template>
-    <li class="menu-item {{if @item.expanded 'expanded'}}"
+    <li class="menu-item has-children {{if @item.expanded 'expanded'}}"
         style="{{concat '--level:' @item.level ';'}}">
-      <div class="menu-link" {{on 'click' @item.toggleExpansion}}>
+      <button class="menu-link" {{on 'click' @item.toggleExpansion}}>
         <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
         {{#if @item.badge}}
           <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
         {{/if}}
         <i class="fa-icon fas fa-chevron-down expand-icon"></i>
-      </div>
+      </button>
       <TreeComponent @items={{@item.children}} @child=true @expanded={{@item.expanded}}/>
     </li>
   </template>;

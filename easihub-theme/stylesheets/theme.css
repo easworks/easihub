@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@plugin "@tailwindcss/typography";
+
 @theme static {
   --breakpoint-xs: 20rem;
   --breakpoint-sm: 24rem;
@@ -86,4 +88,8 @@
   --font-sans: "Inter", sans-serif, system-ui;
   /* --font-sans: "Lexend Deca", sans-serif, system-ui; */
   --font-emoji: "Noto Color Emoji"
+}
+
+@utility source-color-* {
+  --source-color: --value(--color-*);
 }

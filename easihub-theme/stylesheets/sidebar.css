@@ -10,10 +10,11 @@
       @apply relative;
       
       .menu-link {
-        @apply flex gap-4 items-center p-2 pr-4
-          no-underline text-slate-500
+        @apply flex gap-4 items-center p-2 pr-4 w-full
+          no-underline text-slate-500 text-left
           cursor-pointer select-none
-          transition-all duration-200 ease-in-out;
+          transition-all duration-200 ease-in-out
+          border-2 border-r-4 border-transparent;
         
         padding-left: --spacing(((4 * var(--level, 0)) + 2));
         
@@ -22,7 +23,7 @@
         }
 
         &.active {
-          @apply bg-primary-50 text-primary-500 border-r-3 border-primary-500;
+          @apply bg-primary-50 text-primary-500 border-r-primary-500;
         }
       }
 
@@ -46,6 +47,12 @@
 
         > .submenu {
           animation: expand-to-auto 1ms ease-in-out 300ms forwards;
+        }
+      }
+
+      &.has-children {
+        > .menu-link:focus {
+          @apply border-2 border-primary-500;
         }
       }
     }

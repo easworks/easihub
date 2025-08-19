@@ -4,15 +4,13 @@ import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 
 export default class NavigationBarComponent extends Component {
-  @service urld;
-  @service createTopicButton;
+  @service('url-differentiator') urld;
 
   @tracked navItems = [];
 
   onRouteChange = () => {
     const route = this.urld.router.currentRoute;
     this.#updateNavItems(route);
-    this.#updateCreateTopicButtonText(route);
   };
 
 
@@ -74,9 +72,8 @@ export default class NavigationBarComponent extends Component {
     return route?.params?.category_slug_path_with_id || '';
   }
 
-  #isFeedbackCategory(route) {
-    const categoryPath = this.categoryPath(route);
-    return categoryPath === 'feedback/179';
+  #isFeedbackCategory() {
+    return this.urld.routeName === 'discovery.category.feedback';
   }
 
   getRouteInfo(type, categoryPath) {
@@ -98,38 +95,15 @@ export default class NavigationBarComponent extends Component {
     }
   }
 
-  #updateCreateTopicButtonText(route) {
-    // Show create topic button with "Create Feedback" for feedback category
-    if (this.#isFeedbackCategory(route)) {
-      this.createTopicButton.show();
-      this.createTopicButton.setText('Create Feedback');
-      return;
-    }
-
-    if (route.name !== 'tags.showCategory') {
-      this.createTopicButton.hide();
-      return;
-    }
-
-    const tag = this.urld.model.tag;
-    const label = createTopicButtonLabels[tag.id];
-    this.createTopicButton.show();
-    this.createTopicButton.setText(label);
-  }
-
   <template>
     {{#if this.navItems.length}}
-      <nav class="navigation-bar">
-        <ul class="nav-list">
-          {{#each this.navItems as |item|}}
-            <li>
-              <LinkTo @route={{item.route}} @models={{item.models}} class="nav-button" @activeClass="active">
-                <i class="{{item.icon}}"></i>
-                <span>{{item.text}}</span>
-              </LinkTo>
-            </li>
-          {{/each}}
-        </ul>
+      <nav class="eas-tabs d-link-color-black mx-4">
+        {{#each this.navItems as |item|}}
+          <LinkTo @route={{item.route}} @models={{item.models}} class="tab" @activeClass="active">
+            <i class="{{item.icon}}"></i>
+            <span class="ml-1">{{item.text}}</span>
+          </LinkTo>
+        {{/each}}
       </nav>
     {{/if}}
   </template>
@@ -149,14 +123,4 @@ const itemMap = {
   "Unanswered": { text: "Unanswered", icon: "fas fa-question-circle" },
   "Latest": { text: "Latest", icon: "fas fa-clock" },
   "Hot": { text: "Hot", icon: "fas fa-fire" }
-};
-
-const createTopicButtonLabels = {
-  'questions': 'Ask Question',
-  'discussion': 'Start Discussion',
-  'use-cases': 'Share Use Case',
-  'articles': 'Propose Article',
-  'bulletins': 'Post Bulletin',
-  'events': 'Add Event',
-  'jobs': 'Post Job'
 };
