@@ -176,6 +176,17 @@
     @apply pl-4;
   }
 
+  /* hiding composer default textarea */
+
+  .d-editor-textarea-wrapper {
+    @apply hidden;
+  }
+
+  /* styling for composer */
+
+  .reply-area .toolbar-visible {
+    @apply overflow-scroll;
+  }
 
 }
 

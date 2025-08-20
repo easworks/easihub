@@ -5,6 +5,7 @@ import { cook } from "discourse/lib/text";
 import { htmlSafe } from "@ember/template";
 import { tracked } from '@glimmer/tracking';
 import { createPromiseProxy } from '../../utils/promise-proxy';
+import { TAG_OPTIONS, TAG_CATEGORIES } from '../config/tag-options';
 
 export default apiInitializer(api => {
 
@@ -16,29 +17,10 @@ export default apiInitializer(api => {
     return class extends Composer {
       @tracked customization;
       @tracked customFields = {};
-      
-      serialize() {
-        const data = super.serialize();
-        
-        if (this.customFields && this.customization?.fields?.customFields) {
-          let customContent = '';
-          
-          this.customization.fields.customFields.forEach(field => {
-            const value = this.customFields[field.key];
-            if (value && value.trim()) {
-              customContent += `\n\n**${field.label}**\n${value}`;
-            }
-          });
-          
-          if (customContent) {
-            data.raw = (data.raw || '') + customContent;
-          }
-        }
-        
-        return data;
-      }
     }
   })
+
+  const LOCKED_TAGS = ["questions", "discussion", "use-cases", "articles", "bulletins", "events", "jobs", "feedback"];
 
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
@@ -70,6 +52,8 @@ export default apiInitializer(api => {
     hydrateComposerCustomization(customization);
 
     model.set('customization', customization);
+
+
   });
 
   api.customizeComposerText({
@@ -79,18 +63,25 @@ export default apiInitializer(api => {
     'titlePlaceholder': (model) => {
       return model?.customization?.fields?.titlePlaceholder;
     },
-    'reply.placeholder': (model) => {
-      const fields = model?.customization?.fields;
-      if (fields?.customFields?.length > 0) {
-        return '';
-      }
-      return undefined;
-    }
   });
 
   api.registerValueTransformer('composer-save-button-label', () => {
     return composer.model?.customization?.saveButtonLabel;
   })
+
+  api.modifyClass("component:tag-chooser", {
+    pluginId: "lock-composer-tags",
+
+    actions: {
+      removeTag(tag) {
+        const tagName = typeof tag === 'string' ? tag : tag?.id || tag?.name;
+        if (LOCKED_TAGS.includes(tagName)) {
+          return;
+        }
+        return this._super(...arguments);
+      }
+    }
+  });
 
 
 
@@ -136,6 +127,7 @@ function hydrateComposerCustomization(customization) {
       }
 
       customization.fields = getFieldsForTag(tag.id);
+      customization.tags = getCustomTags();
     } break;
   }
 }
@@ -196,6 +188,19 @@ function getFieldsForTag(tagId) {
     default:
       return null;
   }
+}
+
+function getCustomTags() {
+  return {
+    area: {
+      label: i18n(themePrefix('composer.custom-tags.area.label')),
+      options: TAG_OPTIONS.area
+    },
+    module: {
+      label: i18n(themePrefix('composer.custom-tags.module.label')),
+      options: TAG_OPTIONS.module
+    }
+  };
 }
 
 function getComposerHelpTranslation(i18nBase) {
