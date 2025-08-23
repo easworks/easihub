@@ -1,33 +1,88 @@
 import Component from '@glimmer/component';
-import { fn } from '@ember/helper';
+import { tracked } from '@glimmer/tracking';
+import { fn, get } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import { getFieldConfig } from '../../../utils/shared-helpers';
 import { TAG_CATEGORIES } from '../../config/tag-options';
 
 export class CustomFields extends Component {
+  @tracked selectedAreaTag = null;
 
   get fields() {
     return this.args.model.customization?.fields;
   }
 
   get customFields() {
-    return this.fields?.customFields || [];
+    const selectedType = this.args.model.selectedContentType;
+
+    if (!selectedType) {
+      return [];
+    }
+
+    const fields = getFieldConfig(selectedType);
+
+    return fields.filter(field => field.key !== 'title').map(field => ({
+      key: field.key,
+      label: field.label,
+      placeholder: field.placeholder,
+      type: field.type,
+      options: field.options,
+      isInput: field.type === 'input',
+      isTextarea: field.type === 'textarea',
+      isDate: field.type === 'date',
+      isSelect: field.type === 'select',
+      isFile: field.type === 'file'
+    }));
   }
 
   get customTags() {
     return this.args.model.customization?.tags;
   }
 
+  get technicalTags() {
+    const customization = this.args.model.customization;
+    return customization?.technicalTags?.tag_group?.tag_names || [];
+  }
+
+  get genericTags() {
+    const customization = this.args.model.customization;
+    return customization?.genericTags?.tag_group?.tag_names || [];
+  }
+
+  get showRelatedTags() {
+    return this.selectedAreaTag === 'technical-area' || this.selectedAreaTag === 'generic-topic';
+  }
+
+  get relatedTagsToShow() {
+    if (this.selectedAreaTag === 'technical-area') {
+      return this.technicalTags;
+    } else if (this.selectedAreaTag === 'generic-topic') {
+      return this.genericTags;
+    }
+    return [];
+  }
+
+  get relatedTagsLabel() {
+    if (this.selectedAreaTag === 'technical-area') {
+      return 'Step 3: Select Technical Tag';
+    } else if (this.selectedAreaTag === 'generic-topic') {
+      return 'Step 3: Select Generic Tag';
+    }
+    return this.customTags?.related_tags?.label || 'Related Tags';
+  }
+
   @action
   updateCustomField(key, event) {
     const value = event.target.value;
 
-    if (!this.fieldValues) {
-      this.fieldValues = {};
+    if (!this.args.model.customFieldValues) {
+      this.args.model.set('customFieldValues', {});
     }
-    this.fieldValues[key] = value;
 
-    const combinedValues = Object.values(this.fieldValues)
+    this.args.model.customFieldValues[key] = value;
+
+    const combinedValues = Object.values(this.args.model.customFieldValues)
       .filter(val => val && val.trim())
       .join('\n');
 
@@ -47,6 +102,10 @@ export class CustomFields extends Component {
 
     if (event.target.value) {
       currentTags.push(event.target.value);
+    }
+
+    if (key === 'area') {
+      this.selectedAreaTag = event.target.value;
     }
 
     this.args.model.set("tags", [...currentTags]);
@@ -71,6 +130,23 @@ export class CustomFields extends Component {
           {{/each-in}}
         </select>
       </div>
+      {{/if}}
+
+      {{#if this.showRelatedTags}}
+        <div class="field-group mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {{this.relatedTagsLabel}}
+          </label>
+          <select
+            class="form-control p-2"
+            {{on "change" (fn this.updateCustomTag "related_tags")}}
+          >
+            <option value="">Select topic type...</option>
+            {{#each this.relatedTagsToShow as |tagName|}}
+            <option value={{tagName}}>{{tagName}}</option>
+            {{/each}}
+          </select>
+        </div>
       {{/if}}
 
       {{#if this.customTags.module}}
@@ -99,12 +175,46 @@ export class CustomFields extends Component {
         <label class="block text-sm font-medium text-gray-700 mb-2">
           {{field.label}}
         </label>
+        {{#if field.isInput}}
+        <input
+          type="text"
+          class="form-control w-full"
+          placeholder={{field.placeholder}}
+          value={{get this.args.model.customFieldValues field.key}}
+          {{on "input" (fn this.updateCustomField field.key)}}
+        />
+        {{else if field.isDate}}
+        <input
+          type="date"
+          class="form-control w-full"
+          value={{get this.args.model.customFieldValues field.key}}
+          {{on "input" (fn this.updateCustomField field.key)}}
+        />
+        {{else if field.isSelect}}
+        <select
+          class="form-control w-full"
+          {{on "change" (fn this.updateCustomField field.key)}}
+        >
+          <option value="">Select...</option>
+          {{#each-in field.options as |optionKey optionLabel|}}
+          <option value={{optionKey}}>{{optionLabel}}</option>
+          {{/each-in}}
+        </select>
+        {{else if field.isFile}}
+        <input
+          type="file"
+          class="form-control w-full"
+          {{on "change" (fn this.updateCustomField field.key)}}
+        />
+        {{else}}
         <textarea
           class="form-control w-full"
           placeholder={{field.placeholder}}
           rows="4"
+          value={{get this.args.model.customFieldValues field.key}}
           {{on "input" (fn this.updateCustomField field.key)}}
         ></textarea>
+        {{/if}}
       </div>
       {{/each}}
     </div>

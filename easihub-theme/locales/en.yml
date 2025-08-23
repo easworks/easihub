@@ -37,28 +37,67 @@ en:
 
     fields:
       questions:
-        title_label: "Step 1: Title (Describe your question briefly)"
+        title_label: "Step 2: Title (Describe your question briefly)"
         title_placeholder: "Clearly state your question related to a domain, software, or technical area (e.g., 'SAP API error in OAuth setup')"
-        problem_details_label: "Step 4: Problem Details (Include error, setup info, or code snippet)"
+        problem_details_label: "Step 5: Problem Details (Include error, setup info, or code snippet)"
         problem_details_placeholder: "Include system or technical area, version info, exact error message, and setup context..."
-        attempted_solutions_label: "Step 5: Attempted Solutions (Explain what you've already attempted)"
+        attempted_solutions_label: "Step 6: Attempted Solutions (Explain what you've already attempted)"
         attempted_solutions_placeholder: "Explain what methods you tried (config steps, API calls, scripts) and what happened..."
       
       discussion:
-        title_label: "Step 1: Discussion Title (Frame your topic)"
+        title_label: "Step 2: Discussion Title (Frame your topic)"
         title_placeholder: "What are pros/cons of customizing Oracle Fusion workflows?"
         context_label: "Step 4: Discussion Context (Describe your thoughts or objective)"
         context_placeholder: "Share context: what prompted this discussion, which systems or challenges are involved..."
       
       use_cases:
-        title_label: "Step 1: Use Case Title (Summarize your solution)"
+        title_label: "Step 2: Use Case Title (Summarize your solution)"
         title_placeholder: "Automated BOM sync between Teamcenter and SAP using REST API"
-        problem_label: "Step 4: Problem (Describe the initial situation)"
+        problem_label: "Step 5: Problem (Describe the initial situation)"
         problem_placeholder: "Describe original bottleneck or process issue, e.g., manual data duplication in ERP & PLM..."
-        solution_label: "Step 5: Solution (Explain what you built or configured)"
+        solution_label: "Step 6: Solution (Explain what you built or configured)"
         solution_placeholder: "Mention technical setup (scripts, APIs, middleware), sequence, validations, etc."
-        outcome_label: "Step 6: Outcome (Summarize the impact)"
+        outcome_label: "Step 7: Outcome (Summarize the impact)"
         outcome_placeholder: "E.g., Reduced manual entry by 60%, improved data accuracy across ERP-PLM"
+
+      articles:
+        title_label: "Step 2: Article Title (Summarize your article)"
+        title_placeholder: "Enter a clear, descriptive article title"
+        content_label: "Step 5: Article Content or External URL"
+        content_placeholder: "Write your content here (Markdown/HTML) or paste an article URL (e.g., https://yourdomain.com/article123)"
+        image_label: "Step 6: Thumbnail Image"
+        source_label: "Step 7: Source"
+        source_placeholder: "Source URL or reference (e.g., oracle.com)"
+        author_label: "Step 8: Author"
+        author_placeholder: "Author name or reference (e.g., John Doe)"
+        publication_date_label: "Step 9: Publication Date"
+
+      bulletins:
+        title_label: "Step 2: Bulletin Title (Summarize your bulletin)"
+        title_placeholder: "E.g., Oracle Fusion Q2 Update Released"
+        desc_label: "Step 5: Description or URL"
+        desc_placeholder: "Summarize the bulletin or paste a URL (e.g., https://updates.oracle.com/fusion2024q2)..."
+        release_label: "Step 6: Release Name"
+        release_placeholder: "e.g., Teamcenter 15.4, Fusion HCM Q2 2024"
+        release_date_label: "Step 7: Release Date"
+        image_label: "Step 8: Thumbnail Image"
+        source_label: "Step 9: Source"
+        source_placeholder: "Source URL or reference (e.g., oracle.com)"
+        author_label: "Step 10: Author / Publisher"
+        author_placeholder: "Author name or reference (e.g., John Doe)"
+
+      events:
+        title_label: "Step 2: Event Title (Summarize your event)"
+        title_placeholder: "E.g., Join our SAP S/4HANA API Workshop - June 2025"
+        type_label: "Step 5: Type of Event"
+        desc_label: "Step 6: Event Details or Registration Link"
+        desc_placeholder: "Provide event details or paste registration link..."
+        image_label: "Step 7: Thumbnail Image"
+        organizer_label: "Step 8: Organizer and Website"
+        organizer_placeholder: "Organizer (e.g., SAP, Dassault)"
+        Website_placeholder: "Official Event Website URL"
+        start_date_label: "Step 9: Start Date"
+        end_date_label: "Step 10: End Date"
 
     help-message:
       show-more: Show More ▼
