@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { htmlSafe } from "@ember/template";
@@ -21,17 +22,31 @@ export class MessageTemplate extends Component {
   }
 
   @action
-  onContentTypeChange(event) {
-    this.selectedContentType = event.target.value;
+  onContentTypeChange(contentType) {
+    this.selectedContentType = contentType;
     this.args.model.set('selectedContentType', this.selectedContentType);
+
+    let currentTags = this.args.model.tags || [];
+    if (!Array.isArray(currentTags)) {
+      currentTags = [currentTags];
+    }
+
+    const contentTypeValues = this.contentTypes.map(type => type.value);
+    currentTags = currentTags.filter(tag => !contentTypeValues.includes(tag));
+
+    currentTags.push(contentType);
+    this.args.model.set('tags', [...currentTags]);
+
+    document.querySelectorAll('.content-type-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    event.target.closest('.content-type-tab').classList.add('active');
 
     const titleInput = document.getElementById('reply-title');
     if (this.titleField && titleInput) {
       titleInput.placeholder = this.titleField.placeholder;
     }
   }
-
-
 
   get help() {
     if (this.selectedContentType) {
@@ -67,6 +82,8 @@ export class MessageTemplate extends Component {
     return fields.find(field => field.key === 'title');
   }
 
+
+
   <template>
 
     {{#if this.help}}
@@ -97,24 +114,18 @@ export class MessageTemplate extends Component {
       <label class="block text-sm font-medium text-gray-700 mb-2">
         Content Type
       </label>
-      <select
-        class="form-control p-2"
-        {{on "change" this.onContentTypeChange}}
-      >
-        <option value="">Select content type...</option>
+      <div class="content-type-wrap">
         {{#each this.contentTypes as |type|}}
-        <option value={{type.value}}>{{type.label}}</option>
+          <button type="button"
+            class="content-type-tab"
+            {{on "click" (fn this.onContentTypeChange type.value)}}
+          >
+            <span class="tab-icon">{{type.icon}}</span>
+            {{type.label}}
+          </button>
         {{/each}}
-      </select>
+      </div>
     </div>
-
-    {{#if this.titleField}}
-    <div class="mb-4">
-      <label class="block text-sm font-medium text-gray-700 mb-2">
-        {{this.titleField.label}}
-      </label>
-    </div>
-    {{/if}}
   </template>
 }
 

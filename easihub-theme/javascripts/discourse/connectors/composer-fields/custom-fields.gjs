@@ -22,7 +22,7 @@ export class CustomFields extends Component {
 
     const fields = getFieldConfig(selectedType);
 
-    return fields.filter(field => field.key !== 'title').map(field => ({
+    return fields.map(field => ({
       key: field.key,
       label: field.label,
       placeholder: field.placeholder,
@@ -82,11 +82,18 @@ export class CustomFields extends Component {
 
     this.args.model.customFieldValues[key] = value;
 
-    const combinedValues = Object.values(this.args.model.customFieldValues)
-      .filter(val => val && val.trim())
-      .join('\n');
+    if (key === 'title') {
+      this.args.model.set('title', value);
+    } else {
+      const combinedValues = Object.values(this.args.model.customFieldValues)
+        .filter((val, idx) => {
+          const keys = Object.keys(this.args.model.customFieldValues);
+          return keys[idx] !== 'title' && val && val.trim();
+        })
+        .join('\n');
 
-    this.args.model.set('reply', combinedValues);
+      this.args.model.set('reply', combinedValues);
+    }
   }
 
   @action
@@ -141,7 +148,7 @@ export class CustomFields extends Component {
             class="form-control p-2"
             {{on "change" (fn this.updateCustomTag "related_tags")}}
           >
-            <option value="">Select topic type...</option>
+            <option value="">Select related tags...</option>
             {{#each this.relatedTagsToShow as |tagName|}}
             <option value={{tagName}}>{{tagName}}</option>
             {{/each}}

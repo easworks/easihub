@@ -176,10 +176,26 @@
     @apply pl-4;
   }
 
-  /* hiding composer default textarea */
+  /* hiding composer default textarea and input and styling tags section*/
 
   .d-editor-textarea-wrapper {
     @apply hidden;
+  }
+
+  .title-and-category .title-input {
+    @apply hidden
+  }
+
+  .title-and-category {
+    @apply flex-col items-baseline;
+  }
+
+  .title-and-category .tags-input {
+    @apply max-w-full w-full;
+  }
+
+  .formatted-selection {
+    @apply px-4 py-1.5 rounded-4xl text-white bg-amber-400;
   }
 
   /* styling for composer */
@@ -187,6 +203,8 @@
   .reply-area .toolbar-visible {
     @apply overflow-scroll;
   }
+
+
 
 }
 

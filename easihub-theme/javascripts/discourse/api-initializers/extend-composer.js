@@ -51,6 +51,8 @@ export default apiInitializer(api => {
 
     hydrateComposerCustomization(customization, model);
 
+    model.set('tags', []);
+
     model.set('customization', customization);
 
 
