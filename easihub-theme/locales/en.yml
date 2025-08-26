@@ -4,6 +4,11 @@ en:
     settings:
       example_setting: A description of a setting.
 
+  common: 
+    domains: Domains
+    all-software: All Software
+    latest: Latest
+
   topic:
     create: 
       by-tag:
