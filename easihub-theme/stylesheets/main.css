@@ -5,8 +5,11 @@
 
 @import './sidebar.css';
 @import './navigation-bar.css'; 
+@import './composer-fields.css';
 
 @import './hero.css';
+@import './app-footer.css';
+@import './discovery.css';
 
 /* Custom styles can go here */
 

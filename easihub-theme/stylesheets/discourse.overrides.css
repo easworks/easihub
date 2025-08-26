@@ -15,6 +15,8 @@
 
     --primary: var(--color-primary-500);
     --primary-high: var(--color-primary-500);
+
+    --excerpt-color: inherit;
     /* 
     --primary
     --primary-very-low
@@ -102,8 +104,111 @@
       @apply text-inherit;
     }
   }
+
+  .custom-header-links {
+    @apply ml-14;
+  }
+
+  .top-level-links {
+    @apply gap-6;
+  }
+
+  .custom-header-link.with-url {
+    @apply relative no-underline;
+  }
+
+  .custom-header-link.with-url::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-current transition-all duration-300 ease-in-out;
+  }
+
+  .custom-header-link.with-url:hover::after {
+    @apply w-full;
+  }
+
+  .custom-header-links .custom-header-dropdown-link {
+    @apply font-medium text-sm
+  }
+
+
+  /* styling for banner on category page */
+  .navigation-container {
+    @apply mt-16;
+  }
+
+  .category-title-header {
+    @apply relative py-4 h-72 overflow-visible mb-7 rounded-2xl;
+  }
+
+  .category-title-name {
+    @apply absolute top-[43%] left-[51%] w-48 break-words text-center;
+    transform: translate(-50%, -50%);
+  }
+
+  .category-title-name h1 {
+    @apply m-0 text-base text-white;
+  }
+
+  .category-title-description {
+    @apply absolute flex items-center h-36 p-4 pl-24
+    bg-white rounded-2xl  shadow-lg gap-4 overflow-hidden
+    left-8 right-8 -bottom-8;
+  }
+
+  .category-title-description .cooked {
+    @apply text-gray-800 text-left;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .category-title-contents .category-logo.aspect-image {
+    @apply absolute shrink-0 m-0 bottom-10 z-10 left-12 translate-y-1/2;
+  }
+
+  .category-title-contents .category-logo.aspect-image img {
+    @apply w-16 h-auto;
+  }
+
+  .category-title-description.no-logo {
+    @apply pl-4;
+  }
+
+  /* hiding composer default textarea and input and styling tags section*/
+
+  .d-editor-textarea-wrapper {
+    @apply hidden;
+  }
+
+  .title-and-category .title-input {
+    @apply hidden
+  }
+
+  .title-and-category {
+    @apply flex-col items-baseline;
+  }
+
+  .title-and-category .tags-input {
+    @apply max-w-full w-full;
+  }
+
+  .formatted-selection {
+    @apply px-4 py-1.5 rounded-4xl text-white bg-amber-400;
+  }
+
+  /* styling for composer */
+
+  .reply-area .toolbar-visible {
+    @apply overflow-scroll;
+  }
+
+
+
 }
 
 @utility d-link-color-* {
   --d-link-color:--value(--color-*)
 }
+

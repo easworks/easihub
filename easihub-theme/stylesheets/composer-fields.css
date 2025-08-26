@@ -1,0 +1,31 @@
+@layer components {
+
+  .custom-composer-tags .form-control {
+    @apply border border-gray-300 rounded-sm;
+  }
+
+  /* content type styling */
+
+  .content-type-wrap {
+    @apply flex justify-between gap-2 mb-2;
+  }
+  
+  .content-type-tab {
+    @apply flex-1 flex-col items-center gap-2 py-1 px-2 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm font-medium cursor-pointer transition-all duration-200 ease-in-out;
+  }
+  
+  .content-type-tab:hover {
+    @apply border-gray-400 bg-gray-50 text-gray-900;
+  }
+  
+  .content-type-tab.active {
+    @apply font-medium;
+    border-color: var(--primary);
+    background-color: var(--color-primary-500);
+    color: #fff;
+  }
+  
+  .tab-icon {
+    @apply text-base;
+  }
+}
