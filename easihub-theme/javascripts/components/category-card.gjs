@@ -43,8 +43,8 @@ export class CategoryCardComponent extends Component  {
         {{/if}}
         <div class="divider mt-auto"></div>
         <LinkTo @route="discovery.category" @models={{this.linkModels}}
-          class="btn btn-raised w-full text-lg py-2 source-color-d-primary">
-          {{i18n (themePrefix 'discovery-list-area.explore-and-post')}}
+          class="btn btn-raised w-full text-base py-2 source-color-d-primary">
+          {{i18n (themePrefix 'discovery-list-area.explore')}}
         </LinkTo>
     </div>
   </template>

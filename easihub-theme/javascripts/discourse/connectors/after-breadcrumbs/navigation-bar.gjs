@@ -2,15 +2,19 @@ import Component from "@glimmer/component";
 import { tracked } from '@glimmer/tracking';
 import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
+import { DomainSoftwareNavTabsComponent } from '../../../components/nav-tabs';
+
 
 export default class NavigationBarComponent extends Component {
   @service('url-differentiator') urld;
 
   @tracked navItems = [];
+  @tracked shouldShowModelNav = false;
 
   onRouteChange = () => {
     const route = this.urld.router.currentRoute;
     this.#updateNavItems(route);
+    this.shouldShowModelNav = route.name === 'discovery.categories';
   };
 
 
@@ -96,8 +100,12 @@ export default class NavigationBarComponent extends Component {
   }
 
   <template>
+    {{#if this.shouldShowModelNav}}
+    <DomainSoftwareNavTabsComponent />
+    {{/if}}
+
     {{#if this.navItems.length}}
-      <nav class="eas-tabs d-link-color-black mr-4">
+      <nav class="eas-tabs d-link-color-black">
         {{#each this.navItems as |item|}}
           <LinkTo @route={{item.route}} @models={{item.models}} class="tab" @activeClass="active">
             <i class="{{item.icon}}"></i>

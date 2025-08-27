@@ -133,7 +133,15 @@
 
   /* styling for banner on category page */
   .navigation-container {
-    @apply mt-16;
+    @apply mt-16 gap-2;
+  }
+
+  .navigation-controls {
+    @apply mb-0;
+  }
+
+  .category-breadcrumb {
+    @apply mb-0;
   }
 
   .category-title-header {
