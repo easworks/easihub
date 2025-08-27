@@ -46,10 +46,10 @@ export default class NavigationBarComponent extends Component {
 
     switch (type) {
       case 'domain': {
-        buttonsToShow = ['Hubs', 'Articles', 'Events', 'Jobs'];
+        buttonsToShow = ['Hubs', 'Ask Questions', 'Discussion', 'Articles', 'Jobs'];
       } break;
       case 'software': {
-        buttonsToShow = ['Hubs', 'Browse All Questions', 'Articles', 'Bulletins', 'Events', 'Jobs'];
+        buttonsToShow = ['Ask Questions', 'Discussion', 'Use Cases', 'Articles', 'Jobs'];
       } break;
       case 'technical-area': {
         buttonsToShow = ['Overview', 'Ask Questions', 'Discussion', 'Use Cases'];
@@ -97,7 +97,7 @@ export default class NavigationBarComponent extends Component {
 
   <template>
     {{#if this.navItems.length}}
-      <nav class="eas-tabs d-link-color-black mx-4">
+      <nav class="eas-tabs d-link-color-black mr-4">
         {{#each this.navItems as |item|}}
           <LinkTo @route={{item.route}} @models={{item.models}} class="tab" @activeClass="active">
             <i class="{{item.icon}}"></i>

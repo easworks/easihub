@@ -193,9 +193,21 @@
   .title-and-category .tags-input {
     @apply max-w-full w-full;
   }
+  
+  .title-and-category .category-input {
+    @apply flex w-full gap-4 max-w-full justify-between mt-2; 
+  }
 
-  .formatted-selection {
-    @apply px-4 py-1.5 rounded-4xl text-white bg-amber-400;
+  .category-input .select-kit.single-select {
+    @apply flex-1 h-[2.4rem];
+  }
+
+  .category-input .topic-type-selector {
+    @apply flex-1 w-full;
+  }
+
+  .topic-type-selector .form-control {
+    @apply w-full;
   }
 
   /* styling for composer */
@@ -204,8 +216,20 @@
     @apply overflow-scroll;
   }
 
+  /* styling for create-topic button */
 
-
+  .fk-d-button-tooltip .btn {
+    @apply bg-primary-500 text-primary-200;
+  }
+  .fk-d-button-tooltip .btn:hover {
+      @apply bg-primary-200 text-primary-500;
+  }
+  .fk-d-button-tooltip .btn:hover .fa.d-icon {
+      @apply text-primary-500;
+  }
+  .fk-d-button-tooltip .btn .fa.d-icon {
+      @apply text-primary-200;
+  }
 }
 
 @utility d-link-color-* {

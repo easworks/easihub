@@ -25,13 +25,19 @@ export default apiInitializer(api => {
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
 
-    console.log(model);
+    console.log(model, route, urld);
 
     let customization = null;
     switch (route.name) {
       case 'discovery.category': {
         if (urld.routeName === 'discovery.category.feedback') {
           customization = { type: 'by-category' }
+        }
+        else if (urld.routeName === 'discovery.category.software') {
+          customization = { type: 'by-software' }
+        }
+        else if (urld.routeName === 'discovery.category.domain') {
+          customization = { type: 'by-domain' }
         }
       } break;
       case 'tags.showCategory': {
@@ -94,8 +100,6 @@ function hydrateComposerCustomization(customization, model) {
     case 'by-category': {
       const category = customization.model.category;
 
-
-
       {
         const i18nId = `composer.action-title.by-category.${category.id}`;
         customization.actionTitle = i18n(themePrefix(i18nId));
@@ -103,7 +107,8 @@ function hydrateComposerCustomization(customization, model) {
 
       {
         const i18nId = `composer.create_topic.by-category.${category.id}`;
-        customization.saveButtonLabel = i18nId
+        const fallbackId = 'composer.create_topic.by-category.default';
+        customization.saveButtonLabel = i18nId || fallbackId;
       }
 
       technicalTags(customization.model).then(tagGroups => {
@@ -122,8 +127,6 @@ function hydrateComposerCustomization(customization, model) {
     case 'by-tag': {
       const tag = customization.model.tag;
 
-
-
       {
         const i18nId = `composer.action-title.by-tag.${tag.id}`;
         customization.actionTitle = i18n(themePrefix(i18nId));
@@ -131,11 +134,60 @@ function hydrateComposerCustomization(customization, model) {
 
       {
         const i18nId = `composer.create_topic.by-tag.${tag.id}`;
-        customization.saveButtonLabel = themePrefix(i18nId);
+        const fallbackId = 'composer.create_topic.by-tag.default';
+        customization.saveButtonLabel = themePrefix(i18nId) || themePrefix(fallbackId);
       }
 
       customization.tags = getCustomTags();
       
+      technicalTags(customization.model).then(tagGroups => {
+        if (tagGroups) {
+          if (tagGroups.technicalTags) {
+            customization.technicalTags = tagGroups.technicalTags;
+          }
+          if (tagGroups.genericTags) {
+            customization.genericTags = tagGroups.genericTags;
+          }
+          model.set('customization', { ...customization });
+        }
+      });
+    } break;
+    case 'by-software': {
+      {
+        const i18nId = `composer.action-title.by-software.default`;
+        customization.actionTitle = i18n(themePrefix(i18nId));
+      }
+      {
+        const i18nId = `composer.create_topic.by-software.default`;
+        customization.saveButtonLabel = themePrefix(i18nId);
+      }
+
+      customization.tags = getCustomTags();
+
+      technicalTags(customization.model).then(tagGroups => {
+        if (tagGroups) {
+          if (tagGroups.technicalTags) {
+            customization.technicalTags = tagGroups.technicalTags;
+          }
+          if (tagGroups.genericTags) {
+            customization.genericTags = tagGroups.genericTags;
+          }
+          model.set('customization', { ...customization });
+        }
+      });
+    } break;
+    case 'by-domain': {
+      {
+        const i18nId = `composer.action-title.by-domain.default`;
+        customization.actionTitle = i18n(themePrefix(i18nId));
+      }
+      {
+        const i18nId = `composer.create_topic.by-domain.default`;
+        customization.saveButtonLabel = themePrefix(i18nId);
+      }
+
+      customization.tags = getCustomTags();
+
       technicalTags(customization.model).then(tagGroups => {
         if (tagGroups) {
           if (tagGroups.technicalTags) {

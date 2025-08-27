@@ -110,9 +110,10 @@ export class MessageTemplate extends Component {
     </div>
     {{/if}}
 
-    <div class="content-type-selector mb-4">
+    <div class="content-type-selector">
       <label class="block text-sm font-medium text-gray-700 mb-2">
-        Content Type
+        <span class="w-6 h-6 p-1 rounded-full bg-gradient-to-br from-primary-300 from-0% to-primary-700 to-100% text-white font-semibold inline-flex items-center justify-center mr-1">1</span>
+        What type of content are you creating?
       </label>
       <div class="content-type-wrap">
         {{#each this.contentTypes as |type|}}

@@ -22,9 +22,7 @@ export default apiInitializer(api => {
             allowedByRoute = SPECIAL_TAGS.has(tag.id);
           } break;
           case 'discovery.category': {
-            // if it is feedback category
-            if (this.urld.routeName === 'discovery.category.feedback')
-              allowedByRoute = true;
+            allowedByRoute = true;
           } break;
         }
 
@@ -50,7 +48,8 @@ export default apiInitializer(api => {
           }
           case 'discovery.category': {
             const category = this.urld.model.category;
-            const label = themePrefix(`topic.create.by-category.${category.id}`);
+            const labelKey = category.id === 179 ? category.id : 'default';
+            const label = themePrefix(`topic.create.by-category.${labelKey}`);
             return label;
           }
         }
@@ -58,5 +57,4 @@ export default apiInitializer(api => {
         return base;
       }
     });
-
 });

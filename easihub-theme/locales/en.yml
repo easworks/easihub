@@ -12,11 +12,17 @@ en:
         discussion: Start Discussion
         events: Add Event
         jobs: Post Jobs
-        questions: Ask Questions
+        questions: Ask Question
         use-cases: Share Use Case
-      
+        default: Ask Question
       by-category:
+        default: Ask Question
         179: Post Feedback
+      by-software: 
+        default: Ask Question
+      by-domain: 
+        default: Ask Question
+      
 
 
   discovery-list-area:
@@ -32,8 +38,32 @@ en:
         jobs: Post a Job Opening
         questions: Ask a Question
         use-cases: Document a Use Case
+        default: Ask a Question
       by-category:
+        default: Ask a Question
         179: Provide Feedback
+      by-software: 
+        default: Ask a Question
+      by-domain: 
+        default: Ask a Question
+
+    create_topic:
+      by-tag:
+        articles: Publish Article
+        bulletins: Share Bulletin
+        discussion: Create Discussion
+        events: Publish Event
+        jobs: Post Job
+        questions: Submit Question
+        use-cases: Share Use Case
+        default: Submit Question
+      by-category:
+        default: Submit Question
+        179: Submit Feedback
+      by-software: 
+        default: Submit Question
+      by-domain: 
+        default: Submit Question
 
     fields:
       questions:
@@ -98,6 +128,47 @@ en:
         Website_placeholder: "Official Event Website URL"
         start_date_label: "Step 9: Start Date"
         end_date_label: "Step 10: End Date"
+      jobs:
+        section1_label: "Basic Job Details"
+        title_label: "Job Title"
+        title_placeholder: "e.g., SAP Basis Consultant (Mid-Level), PLM Solution Architect – Teamcenter (Lead)"
+        company_label: "Company Name"
+        company_placeholder: "e.g., Accenture, Deloitte"
+        section2_label: "Classification"
+        domain_label: "Domain"
+        software_label: "Software"
+        work_label: "Work Mode"
+        job_type_label: "Job Type"
+        section3_label: "Compensation"
+        compensation_label: "Compensation Type"
+        compensation_range_label: "Compensation Range"
+        compensation_range_placeholder: "e.g. $80,000 - $100,000/year"
+        section4_label: "Exprience & Skills"
+        seniority_label: "Seniority Level"
+        skills_label: "Skills"
+        skills_placeholder: "e.g. SAP, SQL, REST API"
+        section5_label: "Job Details"
+        location_label: "Location"
+        location_placeholder: "e.g. Remote or New York"
+        duration_label: "Duration"
+        duration_placeholder: "e.g. 6 months"
+        section6_label: "Description"
+        desc_label: "Job Description"
+        desc_placeholder: "Describe responsibilities, expectations, duites, etc."
+        qualification_label: "Qualifications"
+        qualification_placeholder: "e.g. PMP, ERP Certification"
+        benefit_label: "Benefits"
+        benefit_placeholder: "e.g. Health, PTO, Remote Option"
+        section7_label: "Application Info"
+        external_label: "External Apply URL"
+        external_placeholder: "https://..."
+        email_label: "Contact Email"
+        email_placeholder: "e.g. jobs@company.com"
+        company_logo_label: "Company Logo"
+        posting_date_label: "Posting Date"
+        expiry_date_label: "Expiry Date"
+
+        
 
     help-message:
       show-more: Show More ▼
@@ -195,14 +266,3 @@ en:
       module:
         label: "Step 3: Select Module"
 
-    create_topic:
-      by-tag:
-        articles: Publish Article
-        bulletins: Share Bulletin
-        discussion: Create Discussion
-        events: Publish Event
-        jobs: Post Job
-        questions: Submit Question
-        use-cases: Share Use Case
-      by-category:
-        179: Submit Feedback

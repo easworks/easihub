@@ -4,7 +4,7 @@ import { fn, get } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { getFieldConfig } from '../../../utils/shared-helpers';
-import { TAG_CATEGORIES } from '../../config/tag-options';
+import { getAreaCategories,TAG_CATEGORIES } from '../../config/tag-options';
 
 export class CustomFields extends Component {
   @tracked selectedAreaTag = null;
@@ -32,7 +32,8 @@ export class CustomFields extends Component {
       isTextarea: field.type === 'textarea',
       isDate: field.type === 'date',
       isSelect: field.type === 'select',
-      isFile: field.type === 'file'
+      isFile: field.type === 'file',
+      isSection: field.key && field.key.endsWith('_label') && !field.type
     }));
   }
 
@@ -96,6 +97,8 @@ export class CustomFields extends Component {
     }
   }
 
+
+
   @action
   updateCustomTag(key, event) {
     let currentTags = this.args.model.tags || [];
@@ -104,7 +107,7 @@ export class CustomFields extends Component {
       currentTags = [currentTags];
     }
 
-    const categoryTags = TAG_CATEGORIES[key] || [];
+    const categoryTags = key === 'area' ? getAreaCategories(this.args.model) : (TAG_CATEGORIES[key] || []);
     currentTags = currentTags.filter(t => !categoryTags.includes(t));
 
     if (event.target.value) {
@@ -122,22 +125,7 @@ export class CustomFields extends Component {
   <template>
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
-      {{#if this.customTags.area}}
-      <div class="field-group mb-4">
-        <label class="block text-sm font-medium text-gray-700 mb-2">
-          {{this.customTags.area.label}}
-        </label>
-        <select
-          class="form-control p-2"
-          {{on "change" (fn this.updateCustomTag "area")}}
-        >
-          <option value="">Select topic type...</option>
-          {{#each-in this.customTags.area.options as |optionKey optionLabel|}}
-          <option value={{optionKey}}>{{optionLabel}}</option>
-          {{/each-in}}
-        </select>
-      </div>
-      {{/if}}
+
 
       {{#if this.showRelatedTags}}
         <div class="field-group mb-4">
@@ -178,51 +166,58 @@ export class CustomFields extends Component {
     {{#if this.customFields}}
     <div class="custom-composer-fields">
       {{#each this.customFields as |field|}}
-      <div class="field-group mb-4">
-        <label class="block text-sm font-medium text-gray-700 mb-2">
-          {{field.label}}
-        </label>
-        {{#if field.isInput}}
-        <input
-          type="text"
-          class="form-control w-full"
-          placeholder={{field.placeholder}}
-          value={{get this.args.model.customFieldValues field.key}}
-          {{on "input" (fn this.updateCustomField field.key)}}
-        />
-        {{else if field.isDate}}
-        <input
-          type="date"
-          class="form-control w-full"
-          value={{get this.args.model.customFieldValues field.key}}
-          {{on "input" (fn this.updateCustomField field.key)}}
-        />
-        {{else if field.isSelect}}
-        <select
-          class="form-control w-full"
-          {{on "change" (fn this.updateCustomField field.key)}}
-        >
-          <option value="">Select...</option>
-          {{#each-in field.options as |optionKey optionLabel|}}
-          <option value={{optionKey}}>{{optionLabel}}</option>
-          {{/each-in}}
-        </select>
-        {{else if field.isFile}}
-        <input
-          type="file"
-          class="form-control w-full"
-          {{on "change" (fn this.updateCustomField field.key)}}
-        />
+        {{#if field.isSection}}
+        <div class="section-divider mt-6 mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">{{field.label}}</h3>
+          <hr class="border-gray-300 mb-2">
+        </div>
         {{else}}
-        <textarea
-          class="form-control w-full"
-          placeholder={{field.placeholder}}
-          rows="4"
-          value={{get this.args.model.customFieldValues field.key}}
-          {{on "input" (fn this.updateCustomField field.key)}}
-        ></textarea>
+        <div class="field-group mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {{field.label}}
+          </label>
+          {{#if field.isInput}}
+          <input
+            type="text"
+            class="form-control w-full"
+            placeholder={{field.placeholder}}
+            value={{get this.args.model.customFieldValues field.key}}
+            {{on "input" (fn this.updateCustomField field.key)}}
+          />
+          {{else if field.isDate}}
+          <input
+            type="date"
+            class="form-control w-full"
+            value={{get this.args.model.customFieldValues field.key}}
+            {{on "input" (fn this.updateCustomField field.key)}}
+          />
+          {{else if field.isSelect}}
+          <select
+            class="form-control w-full"
+            {{on "change" (fn this.updateCustomField field.key)}}
+          >
+            <option value="">Select...</option>
+            {{#each-in field.options as |optionKey optionLabel|}}
+            <option value={{optionKey}}>{{optionLabel}}</option>
+            {{/each-in}}
+          </select>
+          {{else if field.isFile}}
+          <input
+            type="file"
+            class="form-control w-full"
+            {{on "change" (fn this.updateCustomField field.key)}}
+          />
+          {{else}}
+          <textarea
+            class="form-control w-full"
+            placeholder={{field.placeholder}}
+            rows="4"
+            value={{get this.args.model.customFieldValues field.key}}
+            {{on "input" (fn this.updateCustomField field.key)}}
+          ></textarea>
+          {{/if}}
+        </div>
         {{/if}}
-      </div>
       {{/each}}
     </div>
     {{/if}}

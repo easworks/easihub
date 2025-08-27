@@ -1,56 +1,56 @@
-- type: input
-  id: name
-  attributes:
-    label: "Full name"
-    placeholder: "eg. John Smith"
-    description: "What is your full name?"
-  validations:
-    required: true
-    minimum: 2
-    maximum: 100
-- type: textarea
-  id: introduction
-  attributes:
-    label: "Introduction"
-    placeholder: "A short introduction"
-    description: "Write a short introdution about yourself"
-  validations:
-    required: true
-    minimum: 10
-    maximum: 500
-- type: dropdown
-  id: fav-animal
-  attributes:
-    label: "Favorite animal"
-    description: "Select your favorite animal"
-    none_label: "Select an option"
-  choices:
-    - "Dog"
-    - "Cat"
-    - "Other"
-  validations:
-    required: true
-- type: multi-select
-  id: comm-channel
-  attributes:
-    label: "Communication channels:"
-    description: "Select your preferred communication channels:"
-    none_label: "Select an option"
-  choices:
-    - "Email"
-    - "Phone"
-    - "Messenger"
-- type: upload
-  id: cat-photo
-  attributes:
-    label: "Cat photo"
-    description: "Send a photo of your cat (or any cat)"
-    file_types: ".jpg, .png"
-    allow_multiple: false
-- type: checkbox
-  id: accept-terms
-  attributes:
-    label: "I have read and I agree to the terms"
-    description: "You need to accept terms to continue"
-  validations:
-    required: true
+# - type: input
+#   id: name
+#   attributes:
+#     label: "Full name"
+#     placeholder: "eg. John Smith"
+#     description: "What is your full name?"
+#   validations:
+#     required: true
+#     minimum: 2
+#     maximum: 100
+# - type: textarea
+#   id: introduction
+#   attributes:
+#     label: "Introduction"
+#     placeholder: "A short introduction"
+#     description: "Write a short introdution about yourself"
+#   validations:
+#     required: true
+#     minimum: 10
+#     maximum: 500
+# - type: dropdown
+#   id: fav-animal
+#   attributes:
+#     label: "Favorite animal"
+#     description: "Select your favorite animal"
+#     none_label: "Select an option"
+#   choices:
+#     - "Dog"
+#     - "Cat"
+#     - "Other"
+#   validations:
+#     required: true
+# - type: multi-select
+#   id: comm-channel
+#   attributes:
+#     label: "Communication channels:"
+#     description: "Select your preferred communication channels:"
+#     none_label: "Select an option"
+#   choices:
+#     - "Email"
+#     - "Phone"
+#     - "Messenger"
+# - type: upload
+#   id: cat-photo
+#   attributes:
+#     label: "Cat photo"
+#     description: "Send a photo of your cat (or any cat)"
+#     file_types: ".jpg, .png"
+#     allow_multiple: false
+# - type: checkbox
+#   id: accept-terms
+#   attributes:
+#     label: "I have read and I agree to the terms"
+#     description: "You need to accept terms to continue"
+#   validations:
+#     required: true
