@@ -12,3 +12,7 @@ export const SPECIAL_TAGS = new Set([
 export const SPECIAL_CATEGORIES = {
   feedback: 179
 };
+
+export const GENERIC_TOPIC_MAPPING = {
+  69: [1999, 2474]  // erp
+};
