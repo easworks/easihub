@@ -9,10 +9,10 @@ export const DomainSoftwareNavTabsComponent  =
         class="tab">
         {{i18n (themePrefix 'common.domains')}}
       </LinkTo>
-      <LinkTo @route="admin.dashboard.general"
+      {{!-- <LinkTo @route="admin.dashboard.general"
         class="tab">
         {{i18n (themePrefix 'common.all-software')}}
-      </LinkTo>
+      </LinkTo> --}}
       <LinkTo @route="discovery.latest"
         class="tab">
         {{i18n (themePrefix 'common.latest')}}
