@@ -43,5 +43,10 @@
   .divider {
     @apply border-b border-outline-variant;
   }
+
+  .icon-bg {
+    @apply grid place-content-center p-2 aspect-square
+      rounded-md bg-slate-100 max-w-max;
+  }
   
 }

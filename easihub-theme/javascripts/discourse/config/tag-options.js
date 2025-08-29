@@ -3,10 +3,9 @@ export const TAG_OPTIONS = {
     'technical-area': 'Technical Area',
     'generic-topic': 'Generic Topic'
   },
-  
   module: {
     'module-erp': 'ERP Module',
-    'module-plm': 'PLM Module', 
+    'module-plm': 'PLM Module',
     'module-crm': 'CRM Module',
     'module-scm': 'SCM Module',
     'module-hrm': 'HRM Module',

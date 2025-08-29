@@ -8,6 +8,6 @@ const relationCatIdAndTechId = {
     1034: 667,
     2153: 668,
     2156: 669
-}
+};
 
 export default relationCatIdAndTechId;
