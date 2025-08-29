@@ -9,7 +9,7 @@ export default apiInitializer(api => {
       setTimeout(() => {
         const el = getHeaderDescription();
         const category = route.attributes?.category;
-        
+
         if (el && category) {
           if (!category.uploaded_logo?.url) {
             el.classList.add('no-logo');

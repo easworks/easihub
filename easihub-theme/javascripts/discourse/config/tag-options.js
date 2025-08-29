@@ -4,10 +4,9 @@ export const TAG_OPTIONS = {
     'generic-topic': 'Generic Topic',
     'strategy': 'Strategy Tags'
   },
-  
   module: {
     'module-erp': 'ERP Module',
-    'module-plm': 'PLM Module', 
+    'module-plm': 'PLM Module',
     'module-crm': 'CRM Module',
     'module-scm': 'SCM Module',
     'module-hrm': 'HRM Module',
