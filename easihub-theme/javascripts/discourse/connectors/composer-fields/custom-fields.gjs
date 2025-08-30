@@ -3,11 +3,23 @@ import { tracked } from '@glimmer/tracking';
 import { fn, get } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { observes } from "@ember-decorators/object";
+import PluginOutlet from 'discourse/components/plugin-outlet';
+import lazyHash from "discourse/helpers/lazy-hash";
+import discourseComputed from "discourse/lib/decorators";
+import Composer from "discourse/models/composer";
 import { getFieldConfig } from '../../../utils/shared-helpers';
-import { getAreaCategories,TAG_CATEGORIES } from '../../config/tag-options';
+import { getAreaCategories,TAG_CATEGORIES } from '../../../consts';
 
 export class CustomFields extends Component {
+  @service composer;
+
   @tracked selectedAreaTag = null;
+
+  constructor() {
+    super(...arguments);
+  }
 
   get fields() {
     return this.args.model.customization?.fields;
@@ -15,7 +27,7 @@ export class CustomFields extends Component {
 
   get customFields() {
     const selectedType = this.args.model.selectedContentType;
-
+    
     if (!selectedType) {
       return [];
     }
@@ -125,8 +137,6 @@ export class CustomFields extends Component {
   <template>
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
-
-
       {{#if this.showRelatedTags}}
         <div class="field-group mb-4">
           <label class="block text-sm font-medium text-gray-700 mb-2">

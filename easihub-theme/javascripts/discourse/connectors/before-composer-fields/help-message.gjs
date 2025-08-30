@@ -25,6 +25,7 @@ export class MessageTemplate extends Component {
   onContentTypeChange(contentType) {
     this.selectedContentType = contentType;
     this.args.model.set('selectedContentType', this.selectedContentType);
+    this.args.model.notifyPropertyChange('selectedContentType');
 
     let currentTags = this.args.model.tags || [];
     if (!Array.isArray(currentTags)) {
@@ -101,7 +102,7 @@ export class MessageTemplate extends Component {
 
       <div class="overflow-hidden transition-all duration-300 ease-in-out {{if this.expanded 'max-h-96 opacity-100' 'max-h-0 opacity-0'}}">
         <div class="pt-4 prose text-sm text-justify">
-          <AsyncContent @promise={{this.help.contentPromise}}>
+          <AsyncContent @asyncData={{this.help.contentPromise}}>
             <:default as |content|>
               {{{content}}}
             </:default>

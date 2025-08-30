@@ -1,7 +1,7 @@
 @layer components {
 
   .field-group .form-control {
-    @apply border border-gray-300 rounded-sm px-2 py-2;
+    @apply border border-gray-300 rounded-sm px-2 py-2 bg-white;
   }
 
   .composer-fields .content-type-selector {

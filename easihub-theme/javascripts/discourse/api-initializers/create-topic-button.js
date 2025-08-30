@@ -1,5 +1,5 @@
-import { apiInitializer } from "discourse/lib/api";
 import { service } from '@ember/service';
+import { apiInitializer } from "discourse/lib/api";
 import { SPECIAL_TAGS } from '../../consts';
 
 export default apiInitializer(api => {

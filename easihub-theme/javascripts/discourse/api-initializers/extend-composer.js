@@ -1,9 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import { apiInitializer } from 'discourse/lib/api';
 import { i18n } from "discourse-i18n";
-import { SPECIAL_TAGS } from '../../consts';
-import { TAG_OPTIONS } from '../config/tag-options';
-import relationCatIdAndTechId from '../config/technical-tags.js';
+import { relationCatIdAndTechId, SPECIAL_TAGS, TAG_OPTIONS } from '../../consts';
 
 export default apiInitializer(api => {
 
@@ -24,8 +22,6 @@ export default apiInitializer(api => {
 
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
-
-    console.log(model, route, urld);
 
     let customization = null;
     switch (route.name) {

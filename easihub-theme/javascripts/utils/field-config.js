@@ -202,7 +202,7 @@ const fieldConfig = {
     },
     {
       key: "title",
-      type: "input", 
+      type: "input",
       label: "Job Title",
       placeholder: "e.g., SAP Basis Consultant (Mid-Level), PLM Solution Architect – Teamcenter (Lead)"
     },
@@ -234,7 +234,7 @@ const fieldConfig = {
     },
     {
       key: "software",
-      type: "input", 
+      type: "input",
       label: "Software",
       placeholder: "e.g., SAP, Oracle, SAP HANA"
     },
@@ -290,13 +290,13 @@ const fieldConfig = {
       label: "Seniority Level",
       options:{
         "intern": "Intern/Trainee (0–1 year experience)",
-        "entry": "Entry-Level (1–2 years experience)", 
+        "entry": "Entry-Level (1–2 years experience)",
         "mid": "Mid-Level Consultant (2–4 years experience)",
         "experienced": "Experienced Consultant (4–7 years experience)",
         "senior": "Senior Consultant (7–10 years experience)",
         "lead": "Lead/Principal Consultant (10-15 years experience)",
         "distinguished": "Distinguished Principal Consultant(15+ years experience)"
-      }    
+      }
     },
     {
       key: "skills",

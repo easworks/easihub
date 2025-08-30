@@ -207,7 +207,7 @@
   }
 
   .category-input .select-kit.single-select {
-    @apply flex-1 h-[2.4rem];
+    @apply flex-1 h-[2.3rem];
   }
 
   .category-input .topic-type-selector {
@@ -227,18 +227,22 @@
   /* styling for create-topic button */
 
   .fk-d-button-tooltip .btn {
-    @apply bg-primary-500 text-primary-200;
+      @apply bg-primary-500 text-primary-50 relative overflow-hidden;
+      background: linear-gradient(to right, var(--color-primary-500) 50%, var(--color-primary-700) 50%);
+      background-size: 200% 100%;
+      background-position: right bottom;
+      transition: all .3s ease-out;
   }
   .fk-d-button-tooltip .btn:hover {
-      @apply bg-primary-200 text-primary-500;
+      background-position: left bottom;
+      @apply text-white;
   }
   .fk-d-button-tooltip .btn:hover .fa.d-icon {
-      @apply text-primary-500;
+      @apply text-white;
   }
   .fk-d-button-tooltip .btn .fa.d-icon {
-      @apply text-primary-200;
-  }
-}
+      @apply text-white;
+  }}
 
 @utility d-link-color-* {
   --d-link-color:--value(--color-*)

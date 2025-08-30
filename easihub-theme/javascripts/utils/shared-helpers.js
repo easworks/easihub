@@ -10,7 +10,9 @@ export const CONTENT_TYPES = [
 ];
 
 export function getFieldConfig(selectedType) {
-  if (!selectedType) return [];
+  if (!selectedType) {
+    return [];
+  }
   const configKey = selectedType === 'use-cases' ? 'use_cases' : selectedType;
   return fieldConfig[configKey] || [];
 }

@@ -2,13 +2,13 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
-import { getAreaCategories } from '../../config/tag-options';
+import { getAreaCategories } from '../../../consts';
 
 export class TopicTypeSelector extends Component {
   @tracked selectedAreaTag = null;
 
   get areaOptions() {
-    const hasParentCategory = this.args.model?.category?.hasOwnProperty('parent_category_id');
+    const hasParentCategory = !!this.args.composer?.category?.parentCategory;
 
     if (hasParentCategory) {
       return {
@@ -43,6 +43,7 @@ export class TopicTypeSelector extends Component {
   }
 
   <template>
+    {{log @composer}}
     <div class="topic-type-selector field-group">
       <select
         class="form-control p-2"
