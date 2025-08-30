@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import ContentCard from '../../../components/articles-card';
+import JobCard from '../../../components/job-card';
 
 // Add error handling for dynamic imports
 export class CustomTagDataRender extends Component {
@@ -9,6 +10,11 @@ export class CustomTagDataRender extends Component {
   get isContentTag() {
     const tagId = this.router.currentRoute?.attributes?.tag?.id;
     return ['articles', 'events', 'bulletins'].includes(tagId);
+  }
+
+  get isJobTag() {
+    const tagId = this.router.currentRoute?.attributes?.tag?.id;
+    return tagId === 'jobs';
   }
 
   get currentCategory() {
@@ -27,6 +33,8 @@ export class CustomTagDataRender extends Component {
     {{#if this.shouldRender}}
       {{#if this.isContentTag}}
         <ContentCard @category={{this.currentCategory}} @tag={{this.currentTag}} />
+      {{else if this.isJobTag}}
+        <JobCard @category={{this.currentCategory}} />
       {{/if}}
     {{/if}}
   </template>
