@@ -7,20 +7,13 @@ export default apiInitializer(async api => {
   const site = api.container.lookup('service:site');
   const store = api.container.lookup('service:store');
 
-  // console.debug(Category);
-
   const ids = Object.keys(CUSTOM_DATA);
-
-  // for (const id of ids) {
-  //   const record = store.findRecord('category', id);
-  //   console.debug(record);
-  // }
 
   const categories = await Category.asyncFindByIds([...ids]);
 
   await Promise.all(categories.map(async category => {
     category = await Category.reloadCategoryWithPermissions(
-      { slug: category.slug },
+      { slug: category.fullSlugPath },
       store,
       site
     );
@@ -28,27 +21,53 @@ export default apiInitializer(async api => {
     const customData = CUSTOM_DATA[category.id];
 
     const shouldChange =
-      await fastStableStringify(category.custom_fields[EAS_CUSTOM_KEY])
+      await fastStableStringify(category.custom_fields.eas)
       !== await fastStableStringify(customData);
 
     if (!shouldChange) {
       return;
     }
 
-    category.custom_fields ||= {};
-
-    category.custom_fields[EAS_CUSTOM_KEY] = customData;
+    category.custom_fields.eas = customData;
 
     await category.save();
   }));
 
 });
 
-const EAS_CUSTOM_KEY = 'eas';
-
+/** @type { Record<number, any> } */
 const CUSTOM_DATA = {
   69: {
-    a: 1,
-    b: 2
+    avatarText: 'ERP',
+    types: ['hub', 'domain'],
+    genericSubcategories: [1999, 2474],
+  },
+  1999: {
+    avatarText: 'ERP',
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+    areas: {
+      label: 'Generic Areas',
+      list: [
+        'Technical Architecture',
+        'API & Integration',
+        'Data Migration',
+        'Platform Comparison',
+        'Solution Design',
+        'Cloud Integration',
+        'Security Framework',
+        'Performance Tuning',
+        'Requirements Analysis',
+        'Cross-Platform Development',
+        'Vendor Integration',
+        'Performance Optimization',
+        'Security Implementation',
+        'Database Design'
+      ]
+    }
+  },
+  2474: {
+    avatarText: 'ERP',
+    badges: ['Strategy']
   }
 };
