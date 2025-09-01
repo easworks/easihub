@@ -12,21 +12,21 @@ export default apiInitializer(async api => {
   const categories = await Category.asyncFindByIds([...ids]);
 
   await Promise.all(categories.map(async category => {
+    const customData = CUSTOM_DATA[category.id];
+
+    const isSynced =
+      await fastStableStringify(category.custom_fields.eas)
+      === await fastStableStringify(customData);
+
+    if (isSynced) {
+      return;
+    }
+
     category = await Category.reloadCategoryWithPermissions(
-      { slug: category.fullSlugPath },
+      { slug: Category.slugFor(category) },
       store,
       site
     );
-
-    const customData = CUSTOM_DATA[category.id];
-
-    const shouldChange =
-      await fastStableStringify(category.custom_fields.eas)
-      !== await fastStableStringify(customData);
-
-    if (!shouldChange) {
-      return;
-    }
 
     category.custom_fields.eas = customData;
 

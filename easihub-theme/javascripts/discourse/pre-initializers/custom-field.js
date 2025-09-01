@@ -21,11 +21,6 @@ export default {
       });
 
       api.modifyClass('model:category', Category => class extends Category {
-        @cached
-        get fullSlugPath() {
-          return this.ancestors.map(a => a.slug).join('/');
-        }
-
         @computed('custom_fields.eas')
         get eas() {
           return this.custom_fields.eas;

@@ -4,7 +4,6 @@ import { DomainGenericCard } from '../../../components/category-cards/domain-gen
 
 export class DiscoveryAboveDomainHub extends Component  {
   <template>
-    {{log @category}}
     <div class="mt-8">
       <div class="flex justify-between items-center text-sm">
         <h3 class="flex items-center gap-4">
