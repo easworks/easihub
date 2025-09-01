@@ -49,20 +49,36 @@ const CUSTOM_DATA = {
     areas: {
       label: 'Generic Areas',
       list: [
-        'Technical Architecture',
-        'API & Integration',
-        'Data Migration',
-        'Platform Comparison',
-        'Solution Design',
-        'Cloud Integration',
-        'Security Framework',
-        'Performance Tuning',
-        'Requirements Analysis',
-        'Cross-Platform Development',
-        'Vendor Integration',
-        'Performance Optimization',
-        'Security Implementation',
-        'Database Design'
+        { text: 'Technical Architecture', color: 'blue' },
+        { text: 'API & Integration', color: 'blue' },
+        { text: 'Data Migration', color: 'blue' },
+        { text: 'Platform Comparison', color: 'blue' },
+        { text: 'Solution Design', color: 'blue' },
+        { text: 'Cloud Integration', color: 'blue' },
+        { text: 'Security Framework', color: 'blue' },
+        { text: 'Performance Tuning', color: 'blue' },
+        { text: 'Requirements Analysis', color: 'blue' },
+        { text: 'Cross-Platform Development', color: 'blue' },
+        { text: 'Vendor Integration', color: 'blue' },
+        { text: 'Performance Optimization', color: 'blue' },
+        { text: 'Security Implementation', color: 'blue' },
+        { text: 'Database Design', color: 'blue' }
+      ]
+    },
+    topicTags: {
+      label: 'Topic Tags',
+      list: [
+        { text: 'Development Tools', color: 'green' },
+        { text: 'System Integration', color: 'green' },
+        { text: 'Best Practices', color: 'green' },
+        { text: 'API Development', color: 'green' },
+        { text: 'DevOps', color: 'green' },
+        { text: 'Database Optimization', color: 'blue' },
+        { text: 'Cloud Migration', color: 'blue' },
+        { text: 'Microservices', color: 'blue' },
+        { text: 'DevOps Practices', color: 'blue' },
+        { text: 'Code Review', color: 'blue' },
+        { text: 'Documentation', color: 'blue' }
       ]
     }
   },

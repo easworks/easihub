@@ -1,4 +1,6 @@
 import Component from '@glimmer/component';
+import { ChipsSection } from './chips-section';
+import { computed } from "@ember/object";
 
 export class DomainGenericCard extends Component {
 
@@ -20,7 +22,6 @@ export class DomainGenericCard extends Component {
             text-sm font-semibold
             grid place-content-center aspect-square
             w-10">
-            {{log @category.eas}}
             {{@category.eas.avatarText}}
           </div>
           <span class="font-bold text-lg">{{@category.name}}</span>
@@ -35,9 +36,21 @@ export class DomainGenericCard extends Component {
       </div>
       <div class="divider"></div>
       {{!-- content --}}
-      <div class="p-2 px-4">
-        
-      </div>
+
+      {{#if @category.eas.areas.list.length}}
+        <ChipsSection 
+          @title={{@category.eas.areas.label}}
+          @items={{@category.eas.areas.list}}/>
+      {{/if}}
+
+      {{log @category.eas}}
+
+       {{#if @category.eas.topicTags.list.length}}
+        <ChipsSection 
+          @title={{@category.eas.topicTags.label}}
+          @items={{@category.eas.topicTags.list}} />
+      {{/if}}
+      
     </div>
 
   </template>

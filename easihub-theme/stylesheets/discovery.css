@@ -7,4 +7,25 @@
     @apply grid gap-8 transition-all
         grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3;
   }
+
+  .card-chip {
+    @apply text-xs p-1 px-2 rounded-lg whitespace-nowrap
+      transition-all;
+
+    &.chip-green {
+      @apply text-green-800 bg-green-50;
+
+      &:hover {
+        @apply shadow shadow-green-700/40;
+      }
+    }
+
+    &.chip-blue {
+      @apply text-blue-600 bg-blue-50;
+
+      &:hover {
+        @apply shadow shadow-blue-700/40;
+      }
+    }
+  }
 }
