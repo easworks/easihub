@@ -13,18 +13,22 @@
       transition-all;
 
     &.chip-green {
-      @apply text-green-800 bg-green-50;
+      @apply text-green-800 bg-green-50
+        border border-green-500;
 
       &:hover {
-        @apply shadow shadow-green-700/40;
+        @apply bg-green-100 border-green-100
+          shadow shadow-green-700/40;
       }
     }
 
-    &.chip-blue {
-      @apply text-blue-600 bg-blue-50;
+    &.chip-indigo {
+      @apply text-indigo-600 bg-indigo-50
+        border border-indigo-400;
 
       &:hover {
-        @apply shadow shadow-blue-700/40;
+        @apply bg-indigo-100 border-indigo-100
+          shadow shadow-indigo-700/40;
       }
     }
   }
