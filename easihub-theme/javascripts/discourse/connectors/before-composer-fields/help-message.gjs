@@ -103,9 +103,9 @@ export class MessageTemplate extends Component {
       <div class="overflow-hidden transition-all duration-300 ease-in-out {{if this.expanded 'max-h-96 opacity-100' 'max-h-0 opacity-0'}}">
         <div class="pt-4 prose text-sm text-justify">
           <AsyncContent @asyncData={{this.help.contentPromise}}>
-            <:default as |content|>
+            <:content as |content|>
               {{{content}}}
-            </:default>
+            </:content>
             <:loading>
               <div class="spinner small"></div>
             </:loading>
