@@ -5,8 +5,7 @@ import { computed } from "@ember/object";
 export class DomainGenericCard extends Component {
 
   <template>
-    <div class="relative rounded-2xl border overflow-hidden
-      border-blue-100 bg-blue-50/35 shadow-md shadow-blue-50/75">
+    <div class="category-card domain-generic">
       <div class="absolute top-0 left-0 w-full h-1 bg-primary-500"></div>
       {{!-- header --}}
       <div class="p-2 px-4">
@@ -51,6 +50,20 @@ export class DomainGenericCard extends Component {
           @items={{@category.eas.topicTags.list}} 
           @chipClass="chip-green"/>
       {{/if}}
+
+      <div class="divider"></div>
+
+      <div class="cta-container @container">
+        <div class="grid-cols-6">
+          <button class="btn btn-raised col-span-3 source-color-primary-500">Ask Questions</button>
+          <button class="btn btn-stroked col-span-3 source-color-primary-500">Browse Topic</button>
+
+          <button class="btn btn-stroked col-span-2">Discussion</button>
+          <button class="btn btn-stroked col-span-2">Use Cases</button>
+          <button class="btn btn-stroked col-span-2">Jobs</button>
+        </div>
+      </div>
+
       
     </div>
 
