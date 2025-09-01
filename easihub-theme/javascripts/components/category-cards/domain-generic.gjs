@@ -43,8 +43,6 @@ export class DomainGenericCard extends Component {
           @items={{@category.eas.areas.list}}/>
       {{/if}}
 
-      {{log @category.eas}}
-
        {{#if @category.eas.topicTags.list.length}}
         <ChipsSection 
           @title={{@category.eas.topicTags.label}}

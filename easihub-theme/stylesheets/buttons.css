@@ -79,21 +79,14 @@
 
     background-color: var(--source-color);
 
-    @apply before:absolute after:absolute ring-0 ring-black/10;
+    @apply before:absolute;
 
     &::before {
       @apply pointer-events-none transition-all inset-0 rounded-md
-        bg-gradient-to-b
-        from-white/15 
+        bg-white/15 
         opacity-50;
     }
 
-    &::after {
-      @apply pointer-events-none inset-0 rounded-md
-        bg-gradient-to-b from-white/10
-        from-[46%] to-[54%]
-        mix-blend-overlay;
-    }
 
 
     &:hover, &:focus {

@@ -18,9 +18,7 @@
     --color-red-900: oklch(39.6% 0.141 25.723);
     --color-red-950: oklch(25.8% 0.092 26.042);
     --color-amber-400: oklch(82.8% 0.189 84.429);
-    --color-yellow-100: oklch(97.3% 0.071 103.193);
     --color-yellow-500: oklch(79.5% 0.184 86.047);
-    --color-yellow-700: oklch(55.4% 0.135 66.442);
     --color-green-50: oklch(98.2% 0.018 155.826);
     --color-green-100: oklch(96.2% 0.044 156.743);
     --color-green-300: oklch(87.1% 0.15 154.449);
@@ -322,6 +320,12 @@
   }
   .left-0 {
     left: calc(var(--spacing) * 0);
+  }
+  .col-span-2 {
+    grid-column: span 2 / span 2;
+  }
+  .row-span-2 {
+    grid-row: span 2 / span 2;
   }
   .container {
     width: 100%;
@@ -876,6 +880,9 @@
   .w-full {
     width: 100%;
   }
+  .flex-none {
+    flex: none;
+  }
   .flex-grow {
     flex-grow: 1;
   }
@@ -894,9 +901,6 @@
   .cursor-default {
     cursor: default;
   }
-  .cursor-none {
-    cursor: none;
-  }
   .cursor-pointer {
     cursor: pointer;
   }
@@ -905,6 +909,9 @@
   }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .grid-cols-\[auto_1fr_auto\] {
+    grid-template-columns: auto 1fr auto;
   }
   .flex-col {
     flex-direction: column;
@@ -937,6 +944,9 @@
       margin-block-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
+  .gap-y-2 {
+    row-gap: calc(var(--spacing) * 2);
+  }
   .divide-y {
     :where(& > :not(:last-child)) {
       --tw-divide-y-reverse: 0;
@@ -950,6 +960,9 @@
     :where(& > :not(:last-child)) {
       border-color: var(--color-gray-200);
     }
+  }
+  .self-center {
+    align-self: center;
   }
   .overflow-hidden {
     overflow: hidden;
@@ -1006,9 +1019,6 @@
   }
   .bg-white {
     background-color: var(--color-white);
-  }
-  .bg-yellow-100 {
-    background-color: var(--color-yellow-100);
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
@@ -1079,6 +1089,9 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .text-blue-700 {
+    color: var(--color-blue-700);
+  }
   .text-blue-800 {
     color: var(--color-blue-800);
   }
@@ -1115,11 +1128,11 @@
   .text-yellow-500 {
     color: var(--color-yellow-500);
   }
-  .text-yellow-700 {
-    color: var(--color-yellow-700);
-  }
   .capitalize {
     text-transform: capitalize;
+  }
+  .italic {
+    font-style: italic;
   }
   .opacity-0 {
     opacity: 0%;
@@ -1185,6 +1198,9 @@
   }
   .source-color-d-primary {
     --source-color: var(--primary);
+  }
+  .source-color-primary-500 {
+    --source-color: var(--color-primary-500);
   }
   .hover\:scale-105 {
     &:hover {
@@ -1259,6 +1275,16 @@
           --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--primary) 50%, transparent) var(--tw-shadow-alpha), transparent);
         }
       }
+    }
+  }
+  .\@lg\:col-span-1 {
+    @container (width >= 32rem) {
+      grid-column: span 1 / span 1;
+    }
+  }
+  .\@lg\:row-span-1 {
+    @container (width >= 32rem) {
+      grid-row: span 1 / span 1;
     }
   }
   .\@xl\:grid-cols-2 {
@@ -1578,17 +1604,7 @@
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
     background-color: var(--source-color);
-    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    --tw-ring-color: color-mix(in srgb, #000 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      --tw-ring-color: color-mix(in oklab, var(--color-black) 10%, transparent);
-    }
     &::before {
-      content: var(--tw-content);
-      position: absolute;
-    }
-    &::after {
       content: var(--tw-content);
       position: absolute;
     }
@@ -1596,32 +1612,14 @@
       pointer-events: none;
       inset: calc(var(--spacing) * 0);
       border-radius: var(--radius-md);
-      --tw-gradient-position: to bottom in oklab;
-      background-image: linear-gradient(var(--tw-gradient-stops));
-      --tw-gradient-from: color-mix(in srgb, #fff 15%, transparent);
+      background-color: color-mix(in srgb, #fff 15%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
-        --tw-gradient-from: color-mix(in oklab, var(--color-white) 15%, transparent);
+        background-color: color-mix(in oklab, var(--color-white) 15%, transparent);
       }
-      --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
       opacity: 50%;
       transition-property: all;
       transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
       transition-duration: var(--tw-duration, var(--default-transition-duration));
-    }
-    &::after {
-      pointer-events: none;
-      inset: calc(var(--spacing) * 0);
-      border-radius: var(--radius-md);
-      --tw-gradient-position: to bottom in oklab;
-      background-image: linear-gradient(var(--tw-gradient-stops));
-      --tw-gradient-from: color-mix(in srgb, #fff 10%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        --tw-gradient-from: color-mix(in oklab, var(--color-white) 10%, transparent);
-      }
-      --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-      --tw-gradient-from-position: 46%;
-      --tw-gradient-to-position: 54%;
-      mix-blend-mode: overlay;
     }
     &:hover, &:focus {
       &::before {
