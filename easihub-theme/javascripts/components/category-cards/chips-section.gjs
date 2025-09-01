@@ -10,8 +10,8 @@ export class ChipsSection extends Component {
       <div class="mt-2">
         <div class="flex flex-wrap gap-2">
           {{#each @items as |item|}}
-            <div class="card-chip {{if item.color (concat 'chip-' item.color) ''}} cursor-default">
-              {{item.text}}
+            <div class="card-chip cursor-default {{@chipClass}}">
+              {{item}}
             </div>
           {{/each}}
         </div>

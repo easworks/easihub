@@ -41,13 +41,15 @@ export class DomainGenericCard extends Component {
       {{#if @category.eas.areas.list.length}}
         <ChipsSection 
           @title={{@category.eas.areas.label}}
-          @items={{@category.eas.areas.list}}/>
+          @items={{@category.eas.areas.list}}
+          @chipClass="chip-indigo"/>
       {{/if}}
 
        {{#if @category.eas.topicTags.list.length}}
         <ChipsSection 
           @title={{@category.eas.topicTags.label}}
-          @items={{@category.eas.topicTags.list}} />
+          @items={{@category.eas.topicTags.list}} 
+          @chipClass="chip-green"/>
       {{/if}}
       
     </div>

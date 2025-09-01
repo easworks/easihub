@@ -49,36 +49,36 @@ const CUSTOM_DATA = {
     areas: {
       label: 'Generic Areas',
       list: [
-        { text: 'Technical Architecture', color: 'indigo' },
-        { text: 'API & Integration', color: 'indigo' },
-        { text: 'Data Migration', color: 'indigo' },
-        { text: 'Platform Comparison', color: 'indigo' },
-        { text: 'Solution Design', color: 'indigo' },
-        { text: 'Cloud Integration', color: 'indigo' },
-        { text: 'Security Framework', color: 'indigo' },
-        { text: 'Performance Tuning', color: 'indigo' },
-        { text: 'Requirements Analysis', color: 'indigo' },
-        { text: 'Cross-Platform Development', color: 'indigo' },
-        { text: 'Vendor Integration', color: 'indigo' },
-        { text: 'Performance Optimization', color: 'indigo' },
-        { text: 'Security Implementation', color: 'indigo' },
-        { text: 'Database Design', color: 'indigo' }
+        'Technical Architecture',
+        'API & Integration',
+        'Data Migration',
+        'Platform Comparison',
+        'Solution Design',
+        'Cloud Integration',
+        'Security Framework',
+        'Performance Tuning',
+        'Requirements Analysis',
+        'Cross-Platform Development',
+        'Vendor Integration',
+        'Performance Optimization',
+        'Security Implementation',
+        'Database Design'
       ]
     },
     topicTags: {
       label: 'Topic Tags',
       list: [
-        { text: 'Development Tools', color: 'green' },
-        { text: 'System Integration', color: 'green' },
-        { text: 'Best Practices', color: 'green' },
-        { text: 'API Development', color: 'green' },
-        { text: 'DevOps', color: 'green' },
-        { text: 'Database Optimization', color: 'indigo' },
-        { text: 'Cloud Migration', color: 'indigo' },
-        { text: 'Microservices', color: 'indigo' },
-        { text: 'DevOps Practices', color: 'indigo' },
-        { text: 'Code Review', color: 'indigo' },
-        { text: 'Documentation', color: 'indigo' }
+        'Development Tools',
+        'System Integration',
+        'Best Practices',
+        'API Development',
+        'DevOps',
+        'Database Optimization',
+        'Cloud Migration',
+        'Microservices',
+        'DevOps Practices',
+        'Code Review',
+        'Documentation'
       ]
     }
   },
@@ -89,34 +89,34 @@ const CUSTOM_DATA = {
     areas: {
       label: 'Strategic Areas',
       list: [
-        { text: 'Digital Transformation', color: 'indigo' },
-        { text: 'Governance Framework', color: 'indigo' },
-        { text: 'Change Management', color: 'indigo' },
-        { text: 'Risk Management', color: 'indigo' },
-        { text: 'Executive Leadership', color: 'indigo' },
-        { text: 'ROI & Business Case', color: 'indigo' },
-        { text: 'Strategic Planning', color: 'indigo' },
-        { text: 'Compliance Management', color: 'indigo' },
-        { text: 'Stakeholder Management', color: 'indigo' },
-        { text: 'Budget Planning', color: 'indigo' },
-        { text: 'Resource Management', color: 'indigo' },
-        { text: 'Performance Metrics', color: 'indigo' }
+        'Digital Transformation',
+        'Governance Framework',
+        'Change Management',
+        'Risk Management',
+        'Executive Leadership',
+        'ROI & Business Case',
+        'Strategic Planning',
+        'Compliance Management',
+        'Stakeholder Management',
+        'Budget Planning',
+        'Resource Management',
+        'Performance Metrics'
       ]
     },
     topicTags: {
       label: 'Topic Tags',
       list: [
-        { text: 'CIO Leadership', color: 'green' },
-        { text: 'ERP Director', color: 'green' },
-        { text: 'Change Manager', color: 'green' },
-        { text: 'Executive Strategy', color: 'green' },
-        { text: 'Governance Board', color: 'green' },
-        { text: 'Digital Strategy', color: 'green' },
-        { text: 'Strategic Planning', color: 'green' },
-        { text: 'Policy Development', color: 'green' },
-        { text: 'Executive Reporting', color: 'green' },
-        { text: 'Organizational Change', color: 'green' },
-        { text: 'Compliance Framework', color: 'green' }
+        'CIO Leadership',
+        'ERP Director',
+        'Change Manager',
+        'Executive Strategy',
+        'Governance Board',
+        'Digital Strategy',
+        'Strategic Planning',
+        'Policy Development',
+        'Executive Reporting',
+        'Organizational Change',
+        'Compliance Framework'
       ]
     }
   }
