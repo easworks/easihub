@@ -13,7 +13,6 @@ export default apiInitializer(api => {
     return class extends Composer {
       @tracked customization;
       @tracked customFields = {};
-      @tracked selectedContentType;
       @tracked customFieldValues = {};
     };
   });
@@ -53,7 +52,7 @@ export default apiInitializer(api => {
 
     hydrateComposerCustomization(customization, model);
 
-    model.set('tags', []);
+    // model.set('tags', []);
 
     model.set('customization', customization);
 
@@ -251,6 +250,10 @@ function getCustomTags() {
     module: {
       label: i18n(themePrefix('composer.custom-tags.module.label')),
       options: TAG_OPTIONS.module
+    },
+    system:{
+      label: i18n(themePrefix('composer.custom-tags.system.label')),
+      options: TAG_OPTIONS.system
     }
   };
 }

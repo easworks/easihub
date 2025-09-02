@@ -9,6 +9,8 @@ export const SPECIAL_TAGS = new Set([
   'use-cases'
 ]);
 
+export const TOPIC_CONTENT_TYPES = SPECIAL_TAGS;
+
 export const SPECIAL_CATEGORIES = {
   feedback: 179
 };
@@ -31,23 +33,16 @@ export const TAG_OPTIONS = {
     'module-hrm': 'HRM Module',
     'module-finance': 'Finance Module',
     'module-analytics': 'Analytics Module'
+  },
+  system: {
+    'dev': 'Development (DEV)',
+    'test': 'Test (TST)',
+    'qa': 'Quality Assurance (QA)',
+    'staging': 'Staging (STG)',
+    'prod': 'Production (PRD)',
+    'sandbox': 'Sandbox',
+    'training': 'Training'
   }
-};
-
-export const getAreaOptions = (model) => {
-  const hasParentCategory = model && model.category.parent_category_id;
-
-  if (hasParentCategory) {
-    return {
-      'technical-area': 'Technical Area',
-      'generic-topic': 'Generic Topic'
-    };
-  }
-
-  return {
-    'generic-topic': 'Generic Topic',
-    'strategy': 'Strategy Tags'
-  };
 };
 
 export const TAG_CATEGORIES = {

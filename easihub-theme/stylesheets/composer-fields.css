@@ -41,5 +41,11 @@
     @apply text-base;
   }
 
+  .custom-composer-fields {
+    @apply bg-gray-100 p-2.5 rounded-lg;
+  }
 
+  select.form-control {
+    @apply m-0;
+  }
 }

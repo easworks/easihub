@@ -145,7 +145,7 @@
   }
 
   .category-title-header {
-    @apply relative py-4 h-72 overflow-visible mb-7 rounded-2xl;
+    @apply relative py-4 h-72 overflow-visible rounded-2xl;
   }
 
   .category-title-name {
@@ -242,7 +242,29 @@
   }
   .fk-d-button-tooltip .btn .fa.d-icon {
       @apply text-white;
-  }}
+  }
+
+  /* composer height set */
+
+  .btn.toggle-fullscreen {
+    @apply hidden;
+  }
+
+  @media (min-width: 768px) {
+    #reply-control.open {
+      @apply h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)];
+    }
+  }
+
+  /* styling for tag banner */
+  .tag-title-header {
+    @apply h-72 overflow-visible rounded-2xl items-center;
+  }
+
+  .tag-title-contents {
+    @apply relative left-3 -top-6 text-white
+  }
+}
 
 @utility d-link-color-* {
   --d-link-color:--value(--color-*)

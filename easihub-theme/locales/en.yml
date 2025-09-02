@@ -269,5 +269,7 @@ en:
       area:
         label: "Step 2: Select Topic Area"
       module:
-        label: "Step 3: Select Module"
+        label: "Step 4: Select Module"
+      system:
+        label: "Step 5: Select System Environment"
 

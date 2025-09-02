@@ -15,8 +15,6 @@ import { getAreaCategories,TAG_CATEGORIES } from '../../../consts';
 export class CustomFields extends Component {
   @service composer;
 
-  @tracked selectedAreaTag = null;
-
   constructor() {
     super(...arguments);
   }
@@ -26,7 +24,7 @@ export class CustomFields extends Component {
   }
 
   get customFields() {
-    const selectedType = this.args.model.selectedContentType;
+    const selectedType = this.args.model.contentType;
     
     if (!selectedType) {
       return [];
@@ -63,26 +61,43 @@ export class CustomFields extends Component {
     return customization?.genericTags?.tag_group?.tag_names || [];
   }
 
+  get selectedTopicType() {
+    return this.args.model.customization?.selectedTopicType;
+  }
+
   get showRelatedTags() {
-    return this.selectedAreaTag === 'technical-area' || this.selectedAreaTag === 'generic-topic';
+    return this.selectedTopicType === 'technical-area' || this.selectedTopicType === 'generic-topic';
   }
 
   get relatedTagsToShow() {
-    if (this.selectedAreaTag === 'technical-area') {
+    if (this.selectedTopicType === 'technical-area') {
       return this.technicalTags;
-    } else if (this.selectedAreaTag === 'generic-topic') {
+    } else if (this.selectedTopicType === 'generic-topic') {
       return this.genericTags;
     }
     return [];
   }
 
   get relatedTagsLabel() {
-    if (this.selectedAreaTag === 'technical-area') {
+    if (this.selectedTopicType === 'technical-area') {
       return 'Step 3: Select Technical Tag';
-    } else if (this.selectedAreaTag === 'generic-topic') {
+    } else if (this.selectedTopicType === 'generic-topic') {
       return 'Step 3: Select Generic Tag';
     }
     return this.customTags?.related_tags?.label || 'Related Tags';
+  }
+
+  get currentSelectedRelatedTag() {
+    const currentTags = this.args.model.tags || [];
+    const relatedTags = [...this.technicalTags, ...this.genericTags];
+    return currentTags.find(tag => relatedTags.includes(tag)) || '';
+  }
+
+  get currentSelectedModuleTag() {
+    const currentTags = this.args.model.tags || [];
+    const moduleOptions = this.customTags?.module?.options || {};
+    const moduleKeys = Object.keys(moduleOptions);
+    return currentTags.find(tag => moduleKeys.includes(tag)) || '';
   }
 
   @action
@@ -119,18 +134,34 @@ export class CustomFields extends Component {
       currentTags = [currentTags];
     }
 
-    const categoryTags = key === 'area' ? getAreaCategories(this.args.model) : (TAG_CATEGORIES[key] || []);
-    currentTags = currentTags.filter(t => !categoryTags.includes(t));
+    // Preserve topic type tags when filtering
+    const topicTypeTags = ['technical-area', 'generic-topic'];
+    const preservedTopicTypeTags = currentTags.filter(t => topicTypeTags.includes(t));
 
-    if (event.target.value) {
+    let tagsToRemove = [];
+    if (key === 'related_tags') {
+      tagsToRemove = [...this.technicalTags, ...this.genericTags];
+    } else if (key === 'area') {
+      tagsToRemove = getAreaCategories(this.args.model);
+    } else {
+      tagsToRemove = TAG_CATEGORIES[key] || [];
+    }
+
+    currentTags = currentTags.filter(t => !tagsToRemove.includes(t));
+
+    // Re-add preserved topic type tags
+    preservedTopicTypeTags.forEach(tag => {
+      if (!currentTags.includes(tag)) {
+        currentTags.push(tag);
+      }
+    });
+
+    if (event.target.value && !currentTags.includes(event.target.value)) {
       currentTags.push(event.target.value);
     }
 
-    if (key === 'area') {
-      this.selectedAreaTag = event.target.value;
-    }
-
     this.args.model.set("tags", [...currentTags]);
+    this.args.model.notifyPropertyChange('tags');
   }
 
 
@@ -138,12 +169,13 @@ export class CustomFields extends Component {
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
       {{#if this.showRelatedTags}}
-        <div class="field-group mb-4">
+        <div class="field-group">
           <label class="block text-sm font-medium text-gray-700 mb-2">
             {{this.relatedTagsLabel}}
           </label>
           <select
             class="form-control p-2"
+            value={{this.currentSelectedRelatedTag}}
             {{on "change" (fn this.updateCustomTag "related_tags")}}
           >
             <option value="">Select related tags...</option>
@@ -155,26 +187,44 @@ export class CustomFields extends Component {
       {{/if}}
 
       {{#if this.customTags.module}}
-      <div class="field-group mb-4">
-        <label class="block text-sm font-medium text-gray-700 mb-2">
-          {{this.customTags.module.label}}
-        </label>
-        <select
-          class="form-control p-2"
-          {{on "change" (fn this.updateCustomTag "module")}}
-        >
-          <option value="">Select module tags...</option>
-          {{#each-in this.customTags.module.options as |optionKey optionLabel|}}
-          <option value={{optionKey}}>{{optionLabel}}</option>
-          {{/each-in}}
-        </select>
-      </div>
+        <div class="field-group">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {{this.customTags.module.label}}
+          </label>
+          <select
+            class="form-control p-2"
+            value={{this.currentSelectedModuleTag}}
+            {{on "change" (fn this.updateCustomTag "module")}}
+          >
+            <option value="">Select module tags...</option>
+            {{#each-in this.customTags.module.options as |optionKey optionLabel|}}
+            <option value={{optionKey}}>{{optionLabel}}</option>
+            {{/each-in}}
+          </select>
+        </div>
+      {{/if}}
+      {{#if this.customTags.system}}
+          <div class="field-group">
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            {{this.customTags.system.label}}
+          </label>
+          <select
+            class="form-control p-2"
+            value={{this.currentSelectedSystemTag}}
+            {{on "change" (fn this.updateCustomTag "system")}}
+          >
+            <option value="">Select system tags...</option>
+            {{#each-in this.customTags.system.options as |optionKey optionLabel|}}
+            <option value={{optionKey}}>{{optionLabel}}</option>
+            {{/each-in}}
+          </select>
+        </div>
       {{/if}}
     </div>
     {{/if}}
 
     {{#if this.customFields}}
-    <div class="custom-composer-fields">
+    <div class="custom-composer-fields mt-2">
       {{#each this.customFields as |field|}}
         {{#if field.isSection}}
         <div class="section-divider mt-6 mb-4">
@@ -182,7 +232,7 @@ export class CustomFields extends Component {
           <hr class="border-gray-300 mb-2">
         </div>
         {{else}}
-        <div class="field-group mb-4">
+        <div class="field-group">
           <label class="block text-sm font-medium text-gray-700 mb-2">
             {{field.label}}
           </label>
