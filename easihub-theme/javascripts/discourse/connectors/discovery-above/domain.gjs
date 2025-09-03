@@ -15,7 +15,7 @@ export class DiscoveryAboveDomainHub extends Component  {
           grid gap-4 gap-y-2 grid-cols-[auto_1fr_auto]
           bg-blue-50 text-blue-700
           text-sm">
-        <i class="fas fa-circle-question text-lg flex-none 
+        <i class="fa-solid fa-circle-question text-lg flex-none 
           row-span-2 @lg:row-span-1 transition-all"></i>
         <span class="col-span-2 @lg:col-span-1 transition-all">
           Need help choosing?
@@ -39,7 +39,7 @@ export class DiscoveryAboveDomainHub extends Component  {
       <div class="flex justify-between items-center text-sm">
         <h3 class="flex items-center gap-4">
           <div class="icon-bg bg-green-100">
-            <i class="fas fa-star text-yellow-500"></i>
+            <i class="fa-solid fa-star text-yellow-500"></i>
           </div>
           <span class="font-bold">Generic {{@category.name}} Topics</span>
         </h3>

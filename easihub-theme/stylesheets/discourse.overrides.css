@@ -145,7 +145,7 @@
   }
 
   .category-title-header {
-    @apply relative py-4 h-72 overflow-visible mb-7 rounded-2xl;
+    @apply relative py-4 h-72 overflow-visible rounded-2xl;
   }
 
   .category-title-name {
@@ -201,9 +201,21 @@
   .title-and-category .tags-input {
     @apply max-w-full w-full;
   }
+  
+  .title-and-category .category-input {
+    @apply flex w-full gap-4 max-w-full justify-between mt-2; 
+  }
 
-  .formatted-selection {
-    @apply px-4 py-1.5 rounded-4xl text-white bg-amber-400;
+  .category-input .select-kit.single-select {
+    @apply flex-1 h-[2.3rem];
+  }
+
+  .category-input .topic-type-selector {
+    @apply flex-1 w-full;
+  }
+
+  .topic-type-selector .form-control {
+    @apply w-full;
   }
 
   /* styling for composer */
@@ -212,8 +224,46 @@
     @apply overflow-scroll;
   }
 
+  /* styling for create-topic button */
 
+  .fk-d-button-tooltip .btn {
+      @apply bg-primary-500 text-primary-50 relative overflow-hidden;
+      background: linear-gradient(to right, var(--color-primary-500) 50%, var(--color-primary-700) 50%);
+      background-size: 200% 100%;
+      background-position: right bottom;
+      transition: all .3s ease-out;
+  }
+  .fk-d-button-tooltip .btn:hover {
+      background-position: left bottom;
+      @apply text-white;
+  }
+  .fk-d-button-tooltip .btn:hover .fa.d-icon {
+      @apply text-white;
+  }
+  .fk-d-button-tooltip .btn .fa.d-icon {
+      @apply text-white;
+  }
 
+  /* composer height set */
+
+  .btn.toggle-fullscreen {
+    @apply hidden;
+  }
+
+  @media (min-width: 768px) {
+    #reply-control.open {
+      @apply h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)];
+    }
+  }
+
+  /* styling for tag banner */
+  .tag-title-header {
+    @apply h-72 overflow-visible rounded-2xl items-center;
+  }
+
+  .tag-title-contents {
+    @apply relative left-3 -top-6 text-white
+  }
 }
 
 @utility d-link-color-* {

@@ -1,6 +1,6 @@
 @layer components {
   .eas-tabs {
-    @apply flex items-center flex-wrap;
+    @apply flex items-center flex-wrap mb-3;
 
     > .tab {
       @apply p-1 px-4 rounded-tl-lg rounded-tr-lg

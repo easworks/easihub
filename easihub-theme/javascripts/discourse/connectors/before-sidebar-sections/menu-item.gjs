@@ -225,7 +225,7 @@ const publicMenu = [
     icon: 'fa-comments',
     route: {
       name: 'tag.show',
-      models: ['discussion']
+      models: ['discussions']
     },
   },
   {

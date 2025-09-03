@@ -1,7 +1,19 @@
 @layer components {
 
-  .custom-composer-tags .form-control {
-    @apply border border-gray-300 rounded-sm;
+  .field-group .form-control {
+    @apply border border-gray-300 rounded-sm px-2 py-2 bg-white;
+  }
+
+  .composer-fields .content-type-selector {
+    @apply bg-gray-100 p-2.5 rounded-lg;
+  }
+
+  .composer-fields .category-input,.tags-input {
+    @apply bg-gray-100 p-2.5 rounded-lg;
+  }
+
+  .composer-fields .custom-composer-tags {
+    @apply bg-gray-100 p-2.5 rounded-lg;
   }
 
   /* content type styling */
@@ -11,11 +23,11 @@
   }
   
   .content-type-tab {
-    @apply flex-1 flex-col items-center gap-2 py-1 px-2 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm font-medium cursor-pointer transition-all duration-200 ease-in-out;
+    @apply w-32 flex flex-1 flex-col items-center gap-2 py-1 px-2 border border-gray-300 rounded-lg bg-white text-gray-700 text-sm font-medium cursor-pointer transition-all duration-200 ease-in-out;
   }
   
   .content-type-tab:hover {
-    @apply border-gray-400 bg-gray-50 text-gray-900;
+    @apply border-gray-400 bg-primary-300 text-gray-900;
   }
   
   .content-type-tab.active {
@@ -27,5 +39,18 @@
   
   .tab-icon {
     @apply text-base;
+  }
+
+  .custom-composer-fields {
+    @apply bg-gray-100 p-2.5 rounded-lg;
+
+    .d-editor-textarea-wrapper {
+      @apply flex;
+    }
+  }
+  
+
+  select.form-control {
+    @apply m-0;
   }
 }

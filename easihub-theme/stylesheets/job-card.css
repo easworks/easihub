@@ -1,0 +1,251 @@
+@layer components {
+  .job-layout {
+    @apply flex gap-6 h-[70vh] mt-3;
+  }
+
+  .jobs-sidebar {
+    @apply w-1/3 overflow-y-auto border-r border-gray-200 pr-4;
+  }
+
+  .jobs-list {
+    @apply space-y-4;
+  }
+
+  .job-preview {
+    @apply flex-1 overflow-y-auto mb-2;
+  }
+
+  .job-card {
+    @apply bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl p-4 cursor-pointer transition-all duration-300 relative overflow-hidden;
+  }
+
+  .job-card.active {
+    @apply bg-gradient-to-r from-blue-50 to-blue-100 border-l-4 border-l-blue-500 shadow-md;
+  }
+
+  .job-card::before {
+    @apply content-[''] absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-0 transition-opacity duration-300;
+  }
+
+  .job-card:hover {
+    @apply -translate-y-1 shadow-[0_20px_40px_rgba(0,0,0,0.1)] border-blue-500;
+  }
+
+  .job-card:hover::before {
+    @apply opacity-100;
+  }
+
+  .job-header {
+    @apply flex justify-between items-start mb-4;
+  }
+
+  .job-meta {
+    @apply flex-1;
+  }
+
+  .job-title {
+    @apply text-xl font-bold text-slate-800 m-0 mb-2 leading-tight;
+  }
+
+  .company-info {
+    @apply flex items-center gap-4
+  }
+
+  .company-name {
+    @apply text-base font-semibold text-blue-500;
+  }
+
+  .job-location {
+    @apply flex items-center gap-2 text-sm text-slate-500;
+  }
+
+  .job-location svg {
+    @apply text-slate-400;
+  }
+
+  .company-logo {
+    @apply w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 text-white rounded-xl flex items-center justify-center text-xl font-bold shadow-[0_4px_12px_rgba(59,130,246,0.3)];
+  }
+
+  .job-badges {
+    @apply flex flex-wrap gap-2 mb-4;
+  }
+
+  .job-badges span {
+    @apply px-3 py-1.5 rounded-full text-xs font-medium;
+  }
+
+  .employment-badge {
+    @apply bg-blue-100 text-blue-800;
+  }
+
+  .location-badge {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .level-badge {
+    @apply bg-amber-100 text-amber-800;
+  }
+
+  .skill-tags {
+    @apply flex flex-wrap gap-1.5 mb-5;
+  }
+
+  .skill-tags span {
+    @apply px-2.5 py-1 rounded-2xl text-xs font-medium;
+  }
+
+  .skill-badge {
+    @apply bg-slate-100 text-slate-600 border border-slate-200;
+  }
+
+  .tech-badge {
+    @apply bg-purple-100 text-purple-600 border border-purple-300;
+  }
+
+  .industry-badge {
+    @apply bg-red-50 text-red-600 border border-red-200;
+  }
+
+  .job-footer {
+    @apply flex justify-between items-center pt-4 border-t border-slate-100 mt-auto;
+  }
+
+  .posted-date {
+    @apply flex items-center gap-2 text-sm text-slate-500;
+  }
+
+  .posted-date svg {
+    @apply text-slate-400;
+  }
+
+  .apply-btn {
+    @apply flex items-center gap-2 bg-gradient-to-br from-blue-500 to-blue-700 text-white border-none py-2.5 px-5 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200;
+  }
+
+  .apply-btn:hover {
+    @apply bg-gradient-to-br from-blue-700 to-blue-800 -translate-y-px shadow-[0_8px_20px_rgba(59,130,246,0.4)];
+  }
+
+  .apply-btn svg {
+    @apply transition-transform duration-200;
+  }
+
+  .apply-btn:hover svg {
+    @apply translate-x-0.5;
+  }
+
+  .no-jobs {
+    @apply text-center text-slate-500 py-12 px-4 text-lg;
+  }
+
+  .job-preview-content {
+    @apply bg-white rounded-2xl p-6 h-full;
+  }
+
+  .preview-header {
+    @apply border-b border-gray-200 pb-4 mb-6;
+  }
+
+  .preview-title {
+    @apply text-2xl font-bold text-gray-900 mb-2;
+  }
+
+  .preview-company {
+    @apply text-lg font-semibold text-blue-600 mb-1;
+  }
+
+  .preview-location {
+    @apply text-gray-600 mb-3;
+  }
+
+  .preview-badges {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .preview-badge {
+    @apply bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm;
+  }
+
+  .preview-body {
+    @apply space-y-6;
+  }
+
+  .preview-section h3 {
+    @apply text-lg font-bold text-gray-900 mb-3;
+  }
+
+  .preview-section p {
+    @apply text-gray-700 leading-relaxed;
+  }
+
+  .job-desc {
+    @apply text-gray-700 whitespace-pre-wrap leading-relaxed;
+  }
+
+  .tags-container {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .skill-tag {
+    @apply bg-purple-100 text-purple-700 px-2 py-1 rounded text-sm;
+  }
+
+  .tech-tag {
+    @apply bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm;
+  }
+
+  .benefit-tag {
+    @apply bg-green-100 text-green-700 px-2 py-1 rounded text-sm;
+  }
+
+  .industry-tag {
+    @apply bg-orange-100 text-orange-700 px-2 py-1 rounded text-sm;
+  }
+
+  .qualifications-list {
+    @apply space-y-2;
+  }
+
+  .qualification-item {
+    @apply bg-gray-50 p-3 rounded-lg text-gray-700;
+  }
+
+  .preview-footer {
+    @apply mt-8 pt-6 border-t border-gray-200;
+  }
+
+  .apply-button {
+    @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 inline-block;
+  }
+
+  .quick-apply-btn {
+    @apply bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors;
+  }
+
+  .load-more {
+    @apply text-center mt-4;
+  }
+
+  .load-more-btn {
+    @apply bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors min-w-[120px];
+  }
+
+  .loading, .error, .no-jobs, .no-selection {
+    @apply text-center text-gray-500 py-8;
+  }
+
+  @media (max-width: 768px) {
+    .job-layout {
+      @apply flex-col h-auto;
+    }
+    
+    .jobs-sidebar {
+      @apply w-full border-r-0 border-b border-gray-200 pr-0 pb-4 max-h-96;
+    }
+    
+    .job-preview {
+      @apply mt-4;
+    }
+  }
+}

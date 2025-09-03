@@ -50,13 +50,13 @@ export default class NavigationBarComponent extends Component {
 
     switch (type) {
       case 'domain': {
-        buttonsToShow = ['Hubs', 'Articles', 'Events', 'Jobs'];
+        buttonsToShow = ['Hubs', 'Ask Questions', 'Discussions', 'Articles', 'Jobs'];
       } break;
       case 'software': {
-        buttonsToShow = ['Hubs', 'Browse All Questions', 'Articles', 'Bulletins', 'Events', 'Jobs'];
+        buttonsToShow = ['Ask Questions', 'Discussions', 'Use Cases', 'Articles', 'Jobs'];
       } break;
       case 'technical-area': {
-        buttonsToShow = ['Overview', 'Ask Questions', 'Discussion', 'Use Cases'];
+        buttonsToShow = ['Overview', 'Ask Questions', 'Discussions', 'Use Cases'];
       } break;
     }
 
@@ -90,7 +90,7 @@ export default class NavigationBarComponent extends Component {
       case 'Browse All Questions': return { route: 'tags.showCategory', models: [categoryPath, 'questions'] };
       case 'Bulletins': return { route: 'tags.showCategory', models: [categoryPath, 'bulletins'] };
       case 'Ask Questions': return { route: 'tags.showCategory', models: [categoryPath, 'questions'] };
-      case 'Discussion': return { route: 'tags.showCategory', models: [categoryPath, 'discussion'] };
+      case 'Discussions': return { route: 'tags.showCategory', models: [categoryPath, 'discussions'] };
       case 'Use Cases': return { route: 'tags.showCategory', models: [categoryPath, 'use-cases'] };
       case 'Unanswered': return { route: 'tags.showCategory', models: [categoryPath, 'unanswered'] };
       case 'Latest': return { route: 'tags.showCategory', models: [categoryPath, 'latest'] };
@@ -118,17 +118,17 @@ export default class NavigationBarComponent extends Component {
 }
 
 const itemMap = {
-  "Overview": { text: "Overview", icon: "fas fa-home" },
-  "Hubs": { text: "Hubs", icon: "fas fa-network-wired" },
-  "Browse All Questions": { text: "Browse All Questions", icon: "fas fa-question-circle" },
-  "Ask Questions": { text: "Ask Questions", icon: "fas fa-question" },
-  "Discussion": { text: "Discussion", icon: "fas fa-comments" },
-  "Use Cases": { text: "Use Cases", icon: "fas fa-lightbulb" },
-  "Articles": { text: "Articles", icon: "fas fa-file-alt" },
-  "Bulletins": { text: "Bulletins", icon: "fas fa-thumbtack" },
-  "Events": { text: "Events", icon: "fas fa-calendar-alt" },
-  "Jobs": { text: "Jobs", icon: "fas fa-briefcase" },
-  "Unanswered": { text: "Unanswered", icon: "fas fa-question-circle" },
-  "Latest": { text: "Latest", icon: "fas fa-clock" },
-  "Hot": { text: "Hot", icon: "fas fa-fire" }
+  "Overview": { text: "Overview", icon: "fa-solid fa-home" },
+  "Hubs": { text: "Hubs", icon: "fa-solid fa-network-wired" },
+  "Browse All Questions": { text: "Browse All Questions", icon: "fa-solid fa-question-circle" },
+  "Ask Questions": { text: "Ask Questions", icon: "fa-solid fa-question" },
+  "Discussions": { text: "Discussions", icon: "fa-solid fa-comments" },
+  "Use Cases": { text: "Use Cases", icon: "fa-solid fa-lightbulb" },
+  "Articles": { text: "Articles", icon: "fa-solid fa-file-alt" },
+  "Bulletins": { text: "Bulletins", icon: "fa-solid fa-thumbtack" },
+  "Events": { text: "Events", icon: "fa-solid fa-calendar-alt" },
+  "Jobs": { text: "Jobs", icon: "fa-solid fa-briefcase" },
+  "Unanswered": { text: "Unanswered", icon: "fa-solid fa-question-circle" },
+  "Latest": { text: "Latest", icon: "fa-solid fa-clock" },
+  "Hot": { text: "Hot", icon: "fa-solid fa-fire" }
 };
