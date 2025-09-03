@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.12 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -45,6 +45,7 @@
     --color-slate-400: oklch(70.4% 0.04 256.788);
     --color-slate-500: oklch(55.4% 0.046 257.417);
     --color-slate-600: oklch(44.6% 0.043 257.281);
+    --color-slate-700: oklch(37.2% 0.044 257.287);
     --color-slate-800: oklch(27.9% 0.041 260.031);
     --color-slate-900: oklch(20.8% 0.042 265.755);
     --color-gray-50: oklch(98.5% 0.002 247.839);
@@ -316,17 +317,14 @@
   .static {
     position: static;
   }
-  .top-0 {
-    top: calc(var(--spacing) * 0);
-  }
-  .left-0 {
-    left: calc(var(--spacing) * 0);
-  }
   .col-span-2 {
     grid-column: span 2 / span 2;
   }
   .col-span-3 {
     grid-column: span 3 / span 3;
+  }
+  .col-span-6 {
+    grid-column: span 6 / span 6;
   }
   .row-span-2 {
     grid-row: span 2 / span 2;
@@ -863,9 +861,6 @@
   .aspect-square {
     aspect-ratio: 1 / 1;
   }
-  .h-1 {
-    height: calc(var(--spacing) * 1);
-  }
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
@@ -883,6 +878,9 @@
   }
   .w-full {
     width: 100%;
+  }
+  .max-w-max {
+    max-width: max-content;
   }
   .flex-none {
     flex: none;
@@ -1054,6 +1052,9 @@
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
+  .pt-1 {
+    padding-top: calc(var(--spacing) * 1);
+  }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
   }
@@ -1218,6 +1219,9 @@
   .source-color-primary-500 {
     --source-color: var(--color-primary-500);
   }
+  .source-color-slate-700 {
+    --source-color: var(--color-slate-700);
+  }
   .hover\:scale-105 {
     &:hover {
       @media (hover: hover) {
@@ -1305,6 +1309,11 @@
   }
   .\@xl\:grid-cols-2 {
     @container (width >= 36rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .\@2xl\:grid-cols-2 {
+    @container (width >= 42rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
@@ -1685,6 +1694,50 @@
     &:hover, &:focus {
       &::before {
         opacity: 5%;
+      }
+    }
+    &:disabled, &.disabled {
+      background-color: var(--color-slate-200);
+      color: var(--color-slate-400);
+      &::before, &::after {
+        display: none;
+      }
+    }
+  }
+  .btn-text {
+    --source-color: currentColor;
+    display: block;
+    width: max-content;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    padding: calc(var(--spacing) * 1);
+    padding-inline: calc(var(--spacing) * 4);
+    text-align: center;
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    background-color: transparent;
+    color: var(--source-color);
+    &::before {
+      content: var(--tw-content);
+      position: absolute;
+    }
+    &::before {
+      pointer-events: none;
+      inset: calc(var(--spacing) * 0);
+      background-color: var(--color-slate-500);
+      opacity: 0%;
+      transition-property: all;
+      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+      transition-duration: var(--tw-duration, var(--default-transition-duration));
+    }
+    &:hover, &:focus {
+      &::before {
+        opacity: 10%;
       }
     }
     &:disabled, &.disabled {
@@ -2763,6 +2816,9 @@
     }
     &.domain-generic {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--spacing) * 4);
       overflow: hidden;
       border-radius: var(--radius-2xl);
       border-style: var(--tw-border-style);
@@ -2778,12 +2834,22 @@
       @supports (color: color-mix(in lab, red, red)) {
         --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-blue-50) 75%, transparent) var(--tw-shadow-alpha), transparent);
       }
+      &::before {
+        content: '';
+        position: absolute;
+        top: calc(var(--spacing) * 0);
+        left: calc(var(--spacing) * 0);
+        height: calc(var(--spacing) * 1);
+        width: 100%;
+        background-color: var(--color-primary-500);
+      }
       .cta-container {
         container-type: inline-size;
         > div {
           display: grid;
           gap: calc(var(--spacing) * 2);
-          padding: calc(var(--spacing) * 4);
+          padding-inline: calc(var(--spacing) * 4);
+          padding-bottom: calc(var(--spacing) * 2);
         }
         .btn {
           width: 100%;

@@ -3,7 +3,7 @@ import { concat } from '@ember/helper';
 
 export class ChipsSection extends Component {
   <template>
-    <div class="p-4">
+    <div class="px-4">
       <div>
         <span class="font-semibold text-gray-600 text-sm">{{@title}}</span>
       </div>
