@@ -26,20 +26,20 @@ export default class JobCardComponent extends Component {
     if (!this.args.category) {
       return {
         domain_name: null,
-        software_name: 'Oracle ERP'
+        software_name: null
       };
     }
 
     if (this.args.category.parentCategory) {
       return {
         domain_name: this.args.category.parentCategory.name,
-        software_name: 'Oracle ERP'
+        software_name: this.args.category.name
       };
     }
 
     return {
       domain_name: this.args.category.name,
-      software_name: 'Oracle ERP'
+      software_name: this.args.category.name
     };
   }
 
@@ -53,10 +53,10 @@ export default class JobCardComponent extends Component {
 
   @action
   async fetchJobCount() {
-    const { domain_name } = this.getCategoryDetails();
+    const { domain_name, software_name } = this.getCategoryDetails();
     const data = {
       domain_name,
-      software_name: "Oracle ERP",
+      software_name,
       topic_type: 'jobs'
     };
 

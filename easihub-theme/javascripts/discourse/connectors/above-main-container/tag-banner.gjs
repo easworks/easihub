@@ -24,7 +24,7 @@ export class TagBanner extends Component {
   }
 
   retrySetup(attempt) {
-    if (attempt > 10) return; // Max 10 attempts
+    if (attempt > 5) return;
     
     const tagTitleHeader = document.querySelector('.tag-title-header');
     const tagBannerText = document.querySelector('.tag-title-contents h1');
@@ -85,7 +85,6 @@ export class TagBanner extends Component {
   }
 
   <template>
-    {{log this.router.currentRoute.attributes.category.parentCategory.uploaded_background.url this.router.currentRoute.attributes.category.uploaded_background.url}}
     {{#if this.isTagPage}}
       <div class="cat-desc flex items-center absolute top-66 left-169 w-[48%] h-36 p-4 bg-white rounded-2xl shadow-lg gap-4 overflow-hidden z-10">
         <span class="block overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis;">

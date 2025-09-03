@@ -14,7 +14,7 @@ en:
       by-tag:
         articles: Propose Article
         bulletins: Post Bulletin
-        discussion: Start Discussion
+        discussions: Start Discussion
         events: Add Event
         jobs: Post Jobs
         questions: Ask Question
@@ -38,7 +38,7 @@ en:
       by-tag: 
         articles: Write an Article
         bulletins: Share a Bulletin
-        discussion: Start a Discussion
+        discussions: Start a Discussion
         events: Create an Event
         jobs: Post a Job Opening
         questions: Ask a Question
@@ -56,7 +56,7 @@ en:
       by-tag:
         articles: Publish Article
         bulletins: Share Bulletin
-        discussion: Create Discussion
+        discussions: Create Discussion
         events: Publish Event
         jobs: Post Job
         questions: Submit Question
@@ -79,7 +79,7 @@ en:
         attempted_solutions_label: "Step 6: Attempted Solutions (Explain what you've already attempted)"
         attempted_solutions_placeholder: "Explain what methods you tried (config steps, API calls, scripts) and what happened..."
       
-      discussion:
+      discussions:
         title_label: "Step 2: Discussion Title (Frame your topic)"
         title_placeholder: "What are pros/cons of customizing Oracle Fusion workflows?"
         context_label: "Step 4: Discussion Context (Describe your thoughts or objective)"
@@ -202,7 +202,7 @@ en:
 
             **Example:** "Salesforce Spring '25 release adds native GraphQL support"
 
-        discussion:
+        discussions:
           header: 💡 Need help structuring your discussion? 
           content: |
             Discussions explore open-ended ideas, trade-offs, or product strategies. 

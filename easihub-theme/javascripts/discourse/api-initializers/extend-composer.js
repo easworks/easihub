@@ -17,7 +17,7 @@ export default apiInitializer(api => {
     };
   });
 
-  const LOCKED_TAGS = ["questions", "discussion", "use-cases", "articles", "bulletins", "events", "jobs", "feedback"];
+  const LOCKED_TAGS = ["questions", "discussions", "use-cases", "articles", "bulletins", "events", "jobs", "feedback"];
 
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
@@ -55,21 +55,25 @@ export default apiInitializer(api => {
     // model.set('tags', []);
 
     model.set('customization', customization);
-
-
   });
 
   api.customizeComposerText({
     'actionTitle': (model) => {
-      return model?.customization?.actionTitle;
-    },
-    'titlePlaceholder': (model) => {
-      return model?.customization?.fields?.titlePlaceholder;
-    },
+      if(model.contentType) {
+        const i18nId = `composer.action-title.by-tag.${model.contentType}`;
+        return i18n(themePrefix(i18nId));
+      }
+    }
   });
 
   api.registerValueTransformer('composer-save-button-label', () => {
-    return composer.model?.customization?.saveButtonLabel;
+    const model = composer.model;
+    if (model?.contentType) {
+      const i18nId = `composer.create_topic.by-tag.${model.contentType}`;
+      const fallbackId = 'composer.create_topic.by-tag.default';
+      return themePrefix(i18nId) || themePrefix(fallbackId);
+    }
+    return model?.customization?.saveButtonLabel;
   });
 
   api.modifyClass("component:tag-chooser", {
@@ -85,9 +89,6 @@ export default apiInitializer(api => {
       }
     }
   });
-
-
-
 });
 
 function hydrateComposerCustomization(customization, model) {

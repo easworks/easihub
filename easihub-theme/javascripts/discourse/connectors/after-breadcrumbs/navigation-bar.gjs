@@ -50,13 +50,13 @@ export default class NavigationBarComponent extends Component {
 
     switch (type) {
       case 'domain': {
-        buttonsToShow = ['Hubs', 'Ask Questions', 'Discussion', 'Articles', 'Jobs'];
+        buttonsToShow = ['Hubs', 'Ask Questions', 'Discussions', 'Articles', 'Jobs'];
       } break;
       case 'software': {
-        buttonsToShow = ['Ask Questions', 'Discussion', 'Use Cases', 'Articles', 'Jobs'];
+        buttonsToShow = ['Ask Questions', 'Discussions', 'Use Cases', 'Articles', 'Jobs'];
       } break;
       case 'technical-area': {
-        buttonsToShow = ['Overview', 'Ask Questions', 'Discussion', 'Use Cases'];
+        buttonsToShow = ['Overview', 'Ask Questions', 'Discussions', 'Use Cases'];
       } break;
     }
 
@@ -90,7 +90,7 @@ export default class NavigationBarComponent extends Component {
       case 'Browse All Questions': return { route: 'tags.showCategory', models: [categoryPath, 'questions'] };
       case 'Bulletins': return { route: 'tags.showCategory', models: [categoryPath, 'bulletins'] };
       case 'Ask Questions': return { route: 'tags.showCategory', models: [categoryPath, 'questions'] };
-      case 'Discussion': return { route: 'tags.showCategory', models: [categoryPath, 'discussion'] };
+      case 'Discussions': return { route: 'tags.showCategory', models: [categoryPath, 'discussions'] };
       case 'Use Cases': return { route: 'tags.showCategory', models: [categoryPath, 'use-cases'] };
       case 'Unanswered': return { route: 'tags.showCategory', models: [categoryPath, 'unanswered'] };
       case 'Latest': return { route: 'tags.showCategory', models: [categoryPath, 'latest'] };
@@ -122,7 +122,7 @@ const itemMap = {
   "Hubs": { text: "Hubs", icon: "fas fa-network-wired" },
   "Browse All Questions": { text: "Browse All Questions", icon: "fas fa-question-circle" },
   "Ask Questions": { text: "Ask Questions", icon: "fas fa-question" },
-  "Discussion": { text: "Discussion", icon: "fas fa-comments" },
+  "Discussions": { text: "Discussions", icon: "fas fa-comments" },
   "Use Cases": { text: "Use Cases", icon: "fas fa-lightbulb" },
   "Articles": { text: "Articles", icon: "fas fa-file-alt" },
   "Bulletins": { text: "Bulletins", icon: "fas fa-thumbtack" },

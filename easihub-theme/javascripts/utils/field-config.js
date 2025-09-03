@@ -20,7 +20,7 @@ const fieldConfig = {
     }
   ],
 
-  discussion: [
+  discussions: [
     {
       key: "title",
       type: "input",
