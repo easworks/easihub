@@ -111,7 +111,7 @@ const LeafTemplate =
       {{#if @item.route}}
       <LinkTo @route={{@item.route.name}} @models={{@item.route.models}}
         class="menu-link">
-        <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
+        <i class="menu-icon fa-icon fa-solid {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
         {{#if @item.badge}}
           <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
@@ -122,7 +122,7 @@ const LeafTemplate =
       </LinkTo>
       {{else}}
       <a class="menu-link" href={{@item.href}}>
-        <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
+        <i class="menu-icon fa-icon fa-solid {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
         {{#if @item.badge}}
           <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
@@ -140,12 +140,12 @@ const BranchTemplate =
     <li class="menu-item has-children {{if @item.expanded 'expanded'}}"
         style="{{concat '--level:' @item.level ';'}}">
       <button class="menu-link" {{on 'click' @item.toggleExpansion}}>
-        <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
+        <i class="menu-icon fa-icon fa-solid {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
         {{#if @item.badge}}
           <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
         {{/if}}
-        <i class="fa-icon fas fa-chevron-down expand-icon"></i>
+        <i class="fa-icon fa-solid fa-chevron-down expand-icon"></i>
       </button>
       <TreeComponent @items={{@item.children}} @child=true @expanded={{@item.expanded}}/>
     </li>

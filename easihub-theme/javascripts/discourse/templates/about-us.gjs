@@ -8,7 +8,7 @@ export default RouteTemplate(
       <div class="hero-grid"></div>
       <div class="hero-content">
         <div class="hero-badge">
-          <i class="fas fa-sparkles"></i>
+          <i class="fa-solid fa-sparkles"></i>
           <span>Transforming Enterprise Application Excellence</span>
         </div>
         <h1 class="hero-title">
