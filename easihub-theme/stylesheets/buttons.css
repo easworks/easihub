@@ -142,7 +142,7 @@
   .btn-text {
     --source-color: currentColor;
 
-    @apply block p-1 px-4 rounded-md font-medium text-center text-sm
+    @apply relative block p-1 px-4 rounded-md font-medium text-center text-sm
       transition-all w-max overflow-hidden;
 
     background-color: transparent;
@@ -171,5 +171,9 @@
         @apply hidden;
       }
     }
+  }
+
+  .btn-icon {
+    @apply rounded-full grid place-content-center p-2;
   }
 }

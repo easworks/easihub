@@ -35,7 +35,7 @@ export class DomainGenericCard extends Component {
       </div>
       
       {{!-- content --}}
-      <div class="px-4">
+      <div class="px-4 grid gap-4">
         <p class="text-sm">{{@category.description}}</p>
         {{#if @category.eas.whenToPost}}
           <p class="rounded-lg border border-blue-200 bg-blue-50/65 p-1 px-2
