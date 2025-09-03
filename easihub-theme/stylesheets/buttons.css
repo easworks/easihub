@@ -75,7 +75,7 @@
     --source-color: transparent;
 
     @apply block p-1 px-4 rounded-md font-medium text-center text-sm
-      transition-all w-max;
+      transition-all;
 
     background-color: var(--source-color);
 
@@ -171,9 +171,5 @@
         @apply hidden;
       }
     }
-  }
-
-  .btn-icon {
-    @apply rounded-full grid place-content-center p-2;
   }
 }

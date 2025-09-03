@@ -11,6 +11,7 @@ import discourseComputed from "discourse/lib/decorators";
 import Composer from "discourse/models/composer";
 import { getFieldConfig } from '../../../utils/shared-helpers';
 import { getAreaCategories,TAG_CATEGORIES } from '../../../consts';
+import ComposerEditor from 'discourse/components/composer-editor';
 
 export class CustomFields extends Component {
   @service composer;
@@ -268,13 +269,15 @@ export class CustomFields extends Component {
             {{on "change" (fn this.updateCustomField field.key)}}
           />
           {{else}}
-          <textarea
+          <ComposerEditor>
+          </ComposerEditor>
+          {{!-- <textarea
             class="form-control w-full"
             placeholder={{field.placeholder}}
             rows="4"
             value={{get this.args.model.customFieldValues field.key}}
             {{on "input" (fn this.updateCustomField field.key)}}
-          ></textarea>
+          ></textarea> --}}
           {{/if}}
         </div>
         {{/if}}

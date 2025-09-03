@@ -1804,7 +1804,6 @@
   .btn-flat {
     --source-color: transparent;
     display: block;
-    width: max-content;
     border-radius: var(--radius-md);
     padding: calc(var(--spacing) * 1);
     padding-inline: calc(var(--spacing) * 4);
@@ -1936,12 +1935,6 @@
         display: none;
       }
     }
-  }
-  .btn-icon {
-    display: grid;
-    place-content: center;
-    border-radius: calc(infinity * 1px);
-    padding: calc(var(--spacing) * 2);
   }
 }
 @layer components {
@@ -2217,6 +2210,9 @@
     border-radius: var(--radius-lg);
     background-color: var(--color-gray-100);
     padding: calc(var(--spacing) * 2.5);
+    .d-editor-textarea-wrapper {
+      display: flex;
+    }
   }
   select.form-control {
     margin: calc(var(--spacing) * 0);
