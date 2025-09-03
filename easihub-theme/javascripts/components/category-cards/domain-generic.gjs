@@ -1,8 +1,15 @@
 import Component from '@glimmer/component';
 import { ChipsSection } from './chips-section';
 import { computed } from "@ember/object";
+import { LinkTo } from '@ember/routing';
+import { array } from '@ember/helper';
+import Category from 'discourse/models/category';
 
 export class DomainGenericCard extends Component {
+
+  get categorySlug() {
+    return Category.slugFor(this.args.category);
+  }
 
   <template>
     <div class="category-card domain-generic">
@@ -58,18 +65,39 @@ export class DomainGenericCard extends Component {
 
       <div class="cta-container @container">
         <div class="grid-cols-6">
-          <button class="btn btn-raised col-span-3 source-color-primary-500 py-2">Ask Questions</button>
-          <button class="btn btn-stroked col-span-3 source-color-primary-500 py-2">Browse Topic</button>
+          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'questions'}}
+            class="btn btn-raised col-span-3 source-color-primary-500 py-2">
+            Ask Questions
+          </LinkTo>
+          <LinkTo @route="discovery.category" @models={{array this.categorySlug}}
+            class="btn btn-stroked col-span-3 source-color-primary-500 py-2">
+            Browse Topic
+          </LinkTo>
 
-          <button class="btn btn-stroked col-span-2 source-color-slate-700">Discussion</button>
-          <button class="btn btn-stroked col-span-2 source-color-slate-700">Use Cases</button>
-          <button class="btn btn-stroked col-span-2 source-color-slate-700">Jobs</button>
+          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'discussions'}}
+            class="btn btn-stroked col-span-2 source-color-slate-700">
+            Discussions
+          </LinkTo>
+          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'use-cases'}}
+            class="btn btn-stroked col-span-2 source-color-slate-700">
+            Use Cases
+          </LinkTo>
+          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'jobs'}}
+            class="btn btn-stroked col-span-2 source-color-slate-700">
+            Jobs
+          </LinkTo>
 
           <div class="divider col-span-6"></div>    
           
           <div class="flex justify-between col-span-6">
-            <button class="btn btn-text source-color-slate-700 max-w-max">Articles</button>
-            <button class="btn btn-text source-color-slate-700 max-w-max">Events</button>
+          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'articles'}}
+            class="btn btn-text source-color-slate-700 max-w-max">
+            Articles
+          </LinkTo>
+          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'articles'}}
+            class="btn btn-text source-color-slate-700 max-w-max">
+            Events
+          </LinkTo>
           </div>
         </div>
       </div>
