@@ -12,7 +12,7 @@ export class DomainGenericCard extends Component {
   }
 
   <template>
-    <div class="category-card domain-generic">
+    <div class="category-card domain-generic" style="--color-category: #{{@category.color}};">
       {{!-- header --}}
       <div class="px-4 pt-1">
         <div class="flex gap-2 flex-wrap mt-3 text-xs font-semibold uppercase">
@@ -24,19 +24,25 @@ export class DomainGenericCard extends Component {
           {{/each}}
         </div>
         <div class="mt-4 flex gap-4 items-center">
-          <div class="rounded-lg bg-primary-500 text-white
+          <div class="rounded-lg bg-category text-white
             text-sm font-semibold
             grid place-content-center aspect-square
             w-10">
             {{@category.eas.avatarText}}
           </div>
-          <span class="font-bold text-lg">{{@category.name}}</span>
+          <LinkTo @route="discovery.category" @models={{array this.categorySlug}}
+            class="font-bold text-lg text-blue-950">
+            {{@category.name}}
+          </LinkTo>
+          {{!-- <span class="font-bold text-lg">{{@category.name}}</span> --}}
         </div>
       </div>
       
       {{!-- content --}}
       <div class="px-4 grid gap-4">
-        <p class="text-sm">{{@category.description}}</p>
+        {{#if @category.description}}
+          <p class="text-sm">{{@category.description}}</p>
+        {{/if}}
         {{#if @category.eas.whenToPost}}
           <p class="rounded-lg border border-blue-200 bg-blue-50/65 p-1 px-2
             text-xs text-blue-800">

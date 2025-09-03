@@ -32,7 +32,7 @@
 
       &::before {
         content: '';
-        @apply absolute top-0 left-0 w-full h-1 bg-primary-500;
+        @apply absolute top-0 left-0 w-full h-1 bg-category;
       }
 
       .cta-container {

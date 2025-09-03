@@ -1,5 +1,5 @@
 import { cached } from '@glimmer/tracking';
-import { computed } from "@ember/object";
+import { action, computed } from "@ember/object";
 import { withPluginApi } from 'discourse/lib/plugin-api';
 import Site from "discourse/models/site";
 
@@ -36,9 +36,10 @@ export default {
           return ids.map(id => byId.get(id));
         }
 
+        @action
         isOfType(...type) {
-          const eas = this.eas;
-          return type.every(t => eas?.types?.includes(t));
+          const types = this.eas?.types || [];
+          return type.every(t => types.includes(t));
         }
       });
     });

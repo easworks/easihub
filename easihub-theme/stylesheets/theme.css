@@ -82,6 +82,8 @@
   --color-outline-variant: var(--color-slate-300);
 
   --color-on-primary: var(--color-white);
+
+  --color-category: var(--color-primary-500);
 }
 
 @theme {
