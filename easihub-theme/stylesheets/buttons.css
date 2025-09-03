@@ -126,7 +126,7 @@
 
     &:hover, &:focus {
       &::before {
-        @apply opacity-5;
+        @apply opacity-10;
       }
     }
 
