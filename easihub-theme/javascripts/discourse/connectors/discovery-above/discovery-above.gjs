@@ -12,7 +12,7 @@ export default class DiscoveryAboveComponent extends Component {
 
   <template>
     {{#if @category}}
-      {{#if (fn @category.isOfType 'hub' 'domain')}}
+      {{#if (@category.isOfType 'hub' 'domain')}}
         <DiscoveryAboveDomainHub @category={{@category}}/>
       {{/if}}
 

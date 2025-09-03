@@ -27,13 +27,19 @@
 
     &.domain-generic {
       @apply relative rounded-2xl border overflow-hidden
+        flex flex-col gap-4
         border-blue-100 bg-blue-50/35 shadow-md shadow-blue-50/75;
+
+      &::before {
+        content: '';
+        @apply absolute top-0 left-0 w-full h-1 bg-category;
+      }
 
       .cta-container {
         @apply @container;
 
         > div {
-          @apply grid gap-2 p-4;
+          @apply grid gap-2 px-4 pb-2;
         }
 
         .btn {

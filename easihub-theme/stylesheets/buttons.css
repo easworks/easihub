@@ -126,7 +126,7 @@
 
     &:hover, &:focus {
       &::before {
-        @apply opacity-5;
+        @apply opacity-10;
       }
     }
 
@@ -137,5 +137,43 @@
         @apply hidden;
       }
     }
+  }
+
+  .btn-text {
+    --source-color: currentColor;
+
+    @apply relative block p-1 px-4 rounded-md font-medium text-center text-sm
+      transition-all w-max overflow-hidden;
+
+    background-color: transparent;
+    color: var(--source-color);
+
+    @apply before:absolute;
+
+    &::before {
+      @apply pointer-events-none transition-all inset-0
+        bg-slate-500 
+        opacity-0;
+    }
+
+
+
+    &:hover, &:focus {
+      &::before {
+        @apply opacity-10;
+      }
+    }
+
+    &:disabled, &.disabled {
+      @apply text-slate-400 bg-slate-200;
+
+      &::before, &::after {
+        @apply hidden;
+      }
+    }
+  }
+
+  .btn-icon {
+    @apply rounded-full grid place-content-center p-2;
   }
 }

@@ -47,7 +47,7 @@ export class DiscoveryAboveDomainHub extends Component  {
       </div>
       
       <div class="@container">
-        <div class="grid gap-4 mt-4 grid-cols-1 @xl:grid-cols-2">
+        <div class="grid gap-4 mt-4 grid-cols-1 @2xl:grid-cols-2">
           {{#each @category.genericSubcategories as |category|}}
           <DomainGenericCard @category={{category}}/>
           {{/each}}
