@@ -4,7 +4,11 @@
   }
 
   .jobs-sidebar {
-    @apply w-1/3 overflow-y-auto border-r border-gray-200 pr-4;
+    @apply w-5/12 overflow-y-auto border-r border-gray-200 pr-4;
+  }
+
+  .jobs-sidebar::-webkit-scrollbar-thumb {
+    @apply bg-primary-400;
   }
 
   .jobs-list {
@@ -13,6 +17,10 @@
 
   .job-preview {
     @apply flex-1 overflow-y-auto mb-2;
+  }
+
+  .job-preview::-webkit-scrollbar-thumb {
+    @apply bg-primary-400;
   }
 
   .job-card {
@@ -151,12 +159,16 @@
     @apply text-2xl font-bold text-gray-900 mb-2;
   }
 
+  .preview-company-info {
+    @apply flex items-center gap-6 mb-3;
+  }
+
   .preview-company {
-    @apply text-lg font-semibold text-blue-600 mb-1;
+    @apply text-lg font-semibold text-blue-600;
   }
 
   .preview-location {
-    @apply text-gray-600 mb-3;
+    @apply text-gray-600;
   }
 
   .preview-badges {

@@ -62,12 +62,17 @@ export class CustomFields extends Component {
     return customization?.genericTags?.tag_group?.tag_names || [];
   }
 
+  get strategyTags() {
+    const customization = this.args.model.customization;
+    return customization?.strategyTags?.tag_group?.tag_names || [];
+  }
+
   get selectedTopicType() {
     return this.args.model.customization?.selectedTopicType;
   }
 
   get showRelatedTags() {
-    return this.selectedTopicType === 'technical-area' || this.selectedTopicType === 'generic-topic';
+    return this.selectedTopicType === 'technical-area' || this.selectedTopicType === 'generic-topic' || this.selectedTopicType === 'strategy';
   }
 
   get relatedTagsToShow() {
@@ -75,22 +80,26 @@ export class CustomFields extends Component {
       return this.technicalTags;
     } else if (this.selectedTopicType === 'generic-topic') {
       return this.genericTags;
+    } else if (this.selectedTopicType === 'strategy') {
+      return this.strategyTags;
     }
     return [];
   }
 
   get relatedTagsLabel() {
     if (this.selectedTopicType === 'technical-area') {
-      return 'Step 3: Select Technical Tag';
+      return 'Select Technical Tag';
     } else if (this.selectedTopicType === 'generic-topic') {
-      return 'Step 3: Select Generic Tag';
+      return 'Select Generic Tag';
+    } else if (this.selectedTopicType === 'strategy') {
+      return 'Select Strategy Tag';
     }
     return this.customTags?.related_tags?.label || 'Related Tags';
   }
 
   get currentSelectedRelatedTag() {
     const currentTags = this.args.model.tags || [];
-    const relatedTags = [...this.technicalTags, ...this.genericTags];
+    const relatedTags = [...this.technicalTags, ...this.genericTags, ...this.strategyTags];
     return currentTags.find(tag => relatedTags.includes(tag)) || '';
   }
 
@@ -136,12 +145,12 @@ export class CustomFields extends Component {
     }
 
     // Preserve topic type tags when filtering
-    const topicTypeTags = ['technical-area', 'generic-topic'];
+    const topicTypeTags = ['technical-area', 'generic-topic', 'strategy'];
     const preservedTopicTypeTags = currentTags.filter(t => topicTypeTags.includes(t));
 
     let tagsToRemove = [];
     if (key === 'related_tags') {
-      tagsToRemove = [...this.technicalTags, ...this.genericTags];
+      tagsToRemove = [...this.technicalTags, ...this.genericTags, ...this.strategyTags];
     } else if (key === 'area') {
       tagsToRemove = getAreaCategories(this.args.model);
     } else {
@@ -167,6 +176,7 @@ export class CustomFields extends Component {
 
 
   <template>
+    {{log this.args}}
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
       {{#if this.showRelatedTags}}

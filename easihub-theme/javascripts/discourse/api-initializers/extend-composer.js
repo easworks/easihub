@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import { apiInitializer } from 'discourse/lib/api';
 import { i18n } from "discourse-i18n";
-import { relationCatIdAndTechId, SPECIAL_TAGS, TAG_OPTIONS } from '../../consts';
+import { GENERIC_TOPIC_MAPPING, relationCatIdAndTechId, SPECIAL_TAGS, TAG_OPTIONS } from '../../consts';
 
 export default apiInitializer(api => {
 
@@ -116,6 +116,9 @@ function hydrateComposerCustomization(customization, model) {
           if (tagGroups.genericTags) {
             customization.genericTags = tagGroups.genericTags;
           }
+          if (tagGroups.strategyTags) {
+            customization.strategyTags = tagGroups.strategyTags;
+          }
           model.set('customization', { ...customization });
         }
       });
@@ -145,6 +148,9 @@ function hydrateComposerCustomization(customization, model) {
           if (tagGroups.genericTags) {
             customization.genericTags = tagGroups.genericTags;
           }
+          if (tagGroups.strategyTags) {
+            customization.strategyTags = tagGroups.strategyTags;
+          }
           model.set('customization', { ...customization });
         }
       });
@@ -168,6 +174,9 @@ function hydrateComposerCustomization(customization, model) {
           }
           if (tagGroups.genericTags) {
             customization.genericTags = tagGroups.genericTags;
+          }
+          if (tagGroups.strategyTags) {
+            customization.strategyTags = tagGroups.strategyTags;
           }
           model.set('customization', { ...customization });
         }
@@ -193,6 +202,9 @@ function hydrateComposerCustomization(customization, model) {
           }
           if (tagGroups.genericTags) {
             customization.genericTags = tagGroups.genericTags;
+          }
+          if (tagGroups.strategyTags) {
+            customization.strategyTags = tagGroups.strategyTags;
           }
           model.set('customization', { ...customization });
         }
@@ -220,10 +232,11 @@ async function technicalTags(model) {
       const promises = techIds.map(techId => fetch(`/tag_groups/${techId}.json`).then(res => res.json()));
       const results = await Promise.all(promises);
 
-      if (results.length >= 2) {
+      if (results.length >= 3) {
         return {
           technicalTags: results[0],
-          genericTags: results[1]
+          genericTags: results[1],
+          strategyTags: results[2]
         };
       } else if (results.length === 1) {
         return {

@@ -64,9 +64,9 @@ export class TagBanner extends Component {
     if(tagBannerText) {
       if(route.attributes.category.parentCategory) {
         const parentCatName = route.attributes.category.parentCategory.name;
-        tagBannerText.innerHTML = `<div class="flex flex-col"><span class="text-lg">${parentCatName}</span><span class="text-base">${currentCatName}</span><span class="text-sm">${tagName}</span></div>`;
+        tagBannerText.innerHTML = `<div class="flex flex-col text-white"><span class="text-lg">${parentCatName}</span><span class="text-base">${currentCatName}</span><span class="text-sm">${tagName}</span></div>`;
       } else {
-        tagBannerText.innerHTML = `<div class="flex flex-col"><span class="text-base">${currentCatName}</span><span class="text-sm">${tagName}</span></div>`;
+        tagBannerText.innerHTML = `<div class="flex flex-col text-white"><span class="text-base">${currentCatName}</span><span class="text-sm">${tagName}</span></div>`;
       }
     }
   }
@@ -86,7 +86,7 @@ export class TagBanner extends Component {
 
   <template>
     {{#if this.isTagPage}}
-      <div class="cat-desc flex items-center absolute top-66 left-169 w-[48%] h-36 p-4 bg-white rounded-2xl shadow-lg gap-4 overflow-hidden z-10">
+      <div class="cat-desc flex items-center absolute top-51 mx-8 h-36 p-4 bg-white rounded-2xl shadow-lg gap-4 overflow-hidden z-10">
         <span class="block overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis;">
           {{{this.router.currentRoute.attributes.category.description}}}
         </span>

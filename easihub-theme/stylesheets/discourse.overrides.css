@@ -133,7 +133,7 @@
 
   /* styling for banner on category page */
   .navigation-container {
-    @apply mt-16 gap-2;
+    @apply mt-12 gap-2;
   }
 
   .navigation-controls {
@@ -262,7 +262,17 @@
   }
 
   .tag-title-contents {
-    @apply relative left-3 -top-6 text-white
+    @apply relative left-3 -top-6;
+
+    h1 {
+      @apply text-white;
+    }
+  }
+
+  /* styling for tag-banner and main-outlet */
+
+  #main-outlet {
+    @apply relative
   }
 }
 

@@ -44,6 +44,10 @@
   .custom-composer-fields {
     @apply bg-gray-100 p-2.5 rounded-lg;
 
+    .d-editor-textarea-column {
+      @apply max-h-48 min-h-24 h-48;
+    }
+
     .d-editor-textarea-wrapper {
       @apply flex;
     }

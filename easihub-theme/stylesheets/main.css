@@ -7,6 +7,7 @@
 @import './navigation-bar.css'; 
 @import './composer-fields.css';
 @import './job-card.css';
+@import './non-login-container.css';
 
 @import './hero.css';
 @import './app-footer.css';

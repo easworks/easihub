@@ -176,12 +176,15 @@ export default class JobCardComponent extends Component {
         <div class="job-header">
           <div class="job-meta">
             <h3 class="job-title">${job_title}</h3>
-            <div class="company-name">${company_name}</div>
-            <div class="job-location">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-              ${job_location}
+            <div class="company-info">
+              <div class="company-name">${company_name}</div>
+              <span class="text-gray-400">|</span>
+              <div class="job-location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                ${job_location}
+              </div>
             </div>
           </div>
         </div>
@@ -228,8 +231,11 @@ export default class JobCardComponent extends Component {
       <div class="job-preview-content">
         <div class="preview-header">
           <h2 class="preview-title">${job_title}</h2>
-          <div class="preview-company">${company_name}</div>
-          <div class="preview-location">${job_location}</div>
+          <div class="preview-company-info">
+            <div class="preview-company">${company_name}</div>
+            <span class="text-gray-400">|</span>
+            <div class="preview-location">${job_location}</div>
+          </div>
           <div class="preview-badges">
             <span class="preview-badge">${employment_type}</span>
             <span class="preview-badge">${work_location_type}</span>
