@@ -14,9 +14,10 @@ export default class DiscoveryList extends Component {
     const categories = featuredHubs
       .map(id => this.site.categoriesById.get(id))
       .filter(Boolean);
-    return CategoryList
-      .fromArray(categories)
-      .withComponent(DomainCategoryCard);
+    const list = CategoryList
+      .fromArray(categories);
+      list.component = DomainCategoryCard;
+    return list;
   }
 
   get mode() {

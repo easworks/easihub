@@ -1,6 +1,8 @@
 import { cached, tracked } from '@glimmer/tracking';
 import { withPluginApi } from 'discourse/lib/plugin-api';
+import CategoryList from 'discourse/models/category-list';
 import { SoftwareCategoryCard } from '../../components/category-cards/software';
+import { SoftwareHubListHeader } from '../../components/category-list-header/software-hub';
 
 export default {
   initialize: () => withPluginApi(api => {
@@ -15,15 +17,9 @@ export default {
     });
 
     api.modifyClass('model:category-list', klass => class extends klass {
+      @tracked parentCategory;
       @tracked component;
-
-      withComponent(component) {
-        if (!component) {
-          throw new Error(`argument 'component' not provided`);
-        }
-        this.component = component;
-        return this;
-      }
+      @tracked headerComponent;
     });
 
     api.modifyClass('model:category', klass => class extends klass {
@@ -53,10 +49,17 @@ export default {
         const base = await super.model(...arguments);
         if (base.category) {
           if (base.category.isOfType('hub', 'domain')) {
-            if (base.subcategoryList) {
-              base.subcategoryList.categories
-                .withComponent(SoftwareCategoryCard);
-            }
+            const softwareHubs = base.category.subcategories
+              .filter(c => c.isOfType('hub', 'software'));
+
+            base.subcategoryList.categories = CategoryList
+              .fromArray(softwareHubs);
+
+            base.subcategoryList.categories.parentCategory = base.category;
+            base.subcategoryList.categories.component = SoftwareCategoryCard;
+            base.subcategoryList.categories.headerComponent = SoftwareHubListHeader;
+
+            base.subcategoryList.init();
           }
         }
         return base;

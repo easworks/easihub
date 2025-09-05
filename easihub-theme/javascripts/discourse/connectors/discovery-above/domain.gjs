@@ -12,9 +12,10 @@ export class DiscoveryAboveDomainHub extends Component  {
   }
 
   get categories() {
-    return CategoryList
-      .fromArray(this.args.category.genericSubcategories)
-      .withComponent(DomainGenericCard);
+    const list = CategoryList
+      .fromArray(this.args.category.genericSubcategories);
+    list.component = DomainGenericCard;
+    return list;
   }
 
   <template>
@@ -56,7 +57,7 @@ export class DiscoveryAboveDomainHub extends Component  {
         </div>
         
 
-        <CategoriesBoxes @categories={{this.categories}}/>
+        <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
       </div>
     </div>
     
