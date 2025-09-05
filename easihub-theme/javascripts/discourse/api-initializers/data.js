@@ -43,7 +43,42 @@ const CUSTOM_DATA = {
     genericSubcategories: [1999, 2474],
   },
   1588: {
+    avatarText: 'SAP',
     types: ['hub', 'software'],
+    areas: {
+      label: 'Technical Areas',
+      list: [
+        'Integration Frameworks',
+        'Server Customization',
+        'Database Management',
+        'Reporting & Analytics',
+        'Security Framework',
+        'Performance Optimization',
+        'Cloud Platform Integration',
+        'Fiori Development',
+        'ABAP Programming',
+        'Data Migration',
+        'System Administration',
+        'BTP Development',
+      ]
+    },
+    topicTags: {
+      label: 'Topic Tags',
+      list: [
+        'ABAP',
+        'Fiori',
+        'HANA',
+        'SAPUI5',
+        'CDS Views',
+        'OData',
+        'BTP',
+        'Analytics Cloud',
+        'SuccessFactors',
+        'Ariba',
+        'Concur',
+        'MDG',
+      ]
+    }
   },
   1999: {
     avatarText: 'ERP',

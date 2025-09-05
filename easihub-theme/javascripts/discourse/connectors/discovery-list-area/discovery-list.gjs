@@ -4,6 +4,7 @@ import { eq } from 'truth-helpers';
 import CategoriesBoxes from 'discourse/components/categories-boxes';
 import CategoryList from 'discourse/models/category-list';
 import { featuredHubs } from '../../../utils/featured-hubs';
+import { DomainCategoryCard } from '../../../components/category-cards/domain'
 
 export default class DiscoveryList extends Component {
   @service site;
@@ -13,7 +14,9 @@ export default class DiscoveryList extends Component {
     const categories = featuredHubs
       .map(id => this.site.categoriesById.get(id))
       .filter(Boolean);
-    return CategoryList.fromArray(categories);
+    return CategoryList
+      .fromArray(categories)
+      .withComponent(DomainCategoryCard);
   }
 
   get mode() {

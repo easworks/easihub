@@ -1,5 +1,6 @@
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { withPluginApi } from 'discourse/lib/plugin-api';
+import { SoftwareCategoryCard } from '../../components/category-cards/software';
 
 export default {
   initialize: () => withPluginApi(api => {
@@ -10,6 +11,18 @@ export default {
         list.init();
         list.set("fetchedLastPage", true);
         return list;
+      }
+    });
+
+    api.modifyClass('model:category-list', klass => class extends klass {
+      @tracked component;
+
+      withComponent(component) {
+        if (!component) {
+          throw new Error(`argument 'component' not provided`);
+        }
+        this.component = component;
+        return this;
       }
     });
 
@@ -34,5 +47,21 @@ export default {
         return base;
       }
     });
+
+    api.modifyClass('route:discovery.category', klass => class extends klass {
+      async model() {
+        const base = await super.model(...arguments);
+        if (base.category) {
+          if (base.category.isOfType('hub', 'domain')) {
+            if (base.subcategoryList) {
+              base.subcategoryList.categories
+                .withComponent(SoftwareCategoryCard);
+            }
+          }
+        }
+        return base;
+      }
+    });
+
   })
 };

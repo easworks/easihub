@@ -1,12 +1,20 @@
 import { cached } from '@glimmer/tracking';
 import Component from '@glimmer/component';
-import { DomainGenericCard } from '../../../components/category-cards/domain-generic';
 import { get } from '@ember/helper';
+import CategoriesBoxes from 'discourse/components/categories-boxes';
+import { DomainGenericCard } from '../../../components/category-cards/domain-generic';
+import CategoryList from 'discourse/models/category-list';
 
 export class DiscoveryAboveDomainHub extends Component  {
   
   get primarySubcategory() {
     return this.args.category.genericSubcategories?.[0];
+  }
+
+  get categories() {
+    return CategoryList
+      .fromArray(this.args.category.genericSubcategories)
+      .withComponent(DomainGenericCard);
   }
 
   <template>
@@ -46,13 +54,8 @@ export class DiscoveryAboveDomainHub extends Component  {
         <span class="font-semibold text-slate-500">{{@category.genericSubcategories.length}} communities</span>
       </div>
       
-      <div class="@container">
-        <div class="grid gap-4 mt-4 grid-cols-1 @2xl:grid-cols-2">
-          {{#each @category.genericSubcategories as |category|}}
-          <DomainGenericCard @category={{category}}/>
-          {{/each}}
-        </div>
-      </div>
+
+      <CategoriesBoxes @categories={{this.categories}}/>
     </div>
   </template>
 }

@@ -25,7 +25,7 @@
       }
     }
 
-    &.domain-generic {
+    &.domain-generic, &.software {
       @apply relative rounded-2xl border overflow-hidden
         flex flex-col gap-4
         border-blue-100 bg-blue-50/35 shadow-md shadow-blue-50/75;
