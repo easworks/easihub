@@ -1464,11 +1464,6 @@
       grid-row: span 1 / span 1;
     }
   }
-  .\@2xl\:grid-cols-2 {
-    @container (width >= 42rem) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
 }
 @layer base {
   :root {
@@ -3529,10 +3524,10 @@
       transition-property: all;
       transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
       transition-duration: var(--tw-duration, var(--default-transition-duration));
-      @container (width >= 36rem) {
+      @container (width >= 48rem) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-      @container (width >= 56rem) {
+      @container (width >= 72rem) {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
