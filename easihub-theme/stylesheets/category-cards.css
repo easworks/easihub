@@ -28,7 +28,7 @@
     &.domain-generic, &.software {
       @apply relative rounded-2xl border overflow-hidden
         flex flex-col gap-4
-        border-blue-100 bg-blue-50/35 shadow-md shadow-blue-50/75;
+        shadow-md;
 
       &::before {
         content: '';
@@ -46,6 +46,14 @@
           @apply w-full text-xs;
         }
       }
+    }
+
+    &.domain-generic  {
+      @apply border-blue-100 bg-blue-50/35 shadow-blue-50/75;
+    }
+
+    &.software {
+      @apply border-slate-200 bg-slate-100/35 shadow-slate-100/75;
     }
   }
 }
