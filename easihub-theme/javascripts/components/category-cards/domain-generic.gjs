@@ -7,10 +7,6 @@ import Category from 'discourse/models/category';
 
 export class DomainGenericCard extends Component {
 
-  get categorySlug() {
-    return Category.slugFor(this.args.category);
-  }
-
   <template>
     <div class="category-card domain-generic" style="--color-category: #{{@category.color}};">
       {{!-- header --}}
@@ -30,7 +26,7 @@ export class DomainGenericCard extends Component {
             w-10">
             {{@category.eas.avatarText}}
           </div>
-          <LinkTo @route="discovery.category" @models={{array this.categorySlug}}
+          <LinkTo @route="discovery.category" @models={{array @category.slugPathWithId}}
             class="font-bold text-lg text-blue-950">
             {{@category.name}}
           </LinkTo>
@@ -71,24 +67,24 @@ export class DomainGenericCard extends Component {
 
       <div class="cta-container @container">
         <div class="grid-cols-6">
-          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'questions'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'questions'}}
             class="btn btn-raised col-span-3 source-color-primary-500 py-2">
             Ask Questions
           </LinkTo>
-          <LinkTo @route="discovery.category" @models={{array this.categorySlug}}
+          <LinkTo @route="discovery.category" @models={{array @category.slugPathWithId}}
             class="btn btn-stroked col-span-3 source-color-primary-500 py-2">
             Browse Topic
           </LinkTo>
 
-          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'discussions'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'discussions'}}
             class="btn btn-stroked col-span-2 source-color-slate-700">
             Discussions
           </LinkTo>
-          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'use-cases'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'use-cases'}}
             class="btn btn-stroked col-span-2 source-color-slate-700">
             Use Cases
           </LinkTo>
-          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'jobs'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'jobs'}}
             class="btn btn-stroked col-span-2 source-color-slate-700">
             Jobs
           </LinkTo>
@@ -96,11 +92,11 @@ export class DomainGenericCard extends Component {
           <div class="divider col-span-6"></div>    
           
           <div class="flex justify-between col-span-6">
-          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'articles'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'articles'}}
             class="btn btn-text source-color-slate-700 max-w-max">
             Articles
           </LinkTo>
-          <LinkTo @route="tags.showCategory" @models={{array this.categorySlug 'articles'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'events'}}
             class="btn btn-text source-color-slate-700 max-w-max">
             Events
           </LinkTo>

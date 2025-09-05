@@ -15,8 +15,13 @@ export default {
 
     api.modifyClass('model:category', klass => class extends klass {
       @cached
-      get linkModels() {
-        return [this.path.substring(3)];
+      get slugFor() {
+        return klass.slugFor(this);
+      }
+
+      @cached
+      get slugPathWithId() {
+        this.path.substring(3);
       }
     });
 

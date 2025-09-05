@@ -64,7 +64,7 @@ export function createMenuItemFromCategory(category, parent) {
     return null;
   }
 
-  const models = category.linkModels;
+  const models = [category.slugPathWithId];
 
    const data =  {
     id: `category-${category.id}`,

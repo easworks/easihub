@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { LinkTo } from '@ember/routing';
+import { array } from '@ember/helper';
 import { i18n } from "discourse-i18n";
 import CategoryPill from './pill';
 
@@ -20,7 +21,7 @@ export default class DefaultCategoryCard extends Component  {
         <div class="flex gap-4 items-center">
           <img src={{@category.uploaded_logo.url}} class="h-10"/>
           <h3 class="text-xl font-bold text-d-primary">
-            <LinkTo @route="discovery.category" @models={{@category.linkModels}} class="d-link-color-d-primary">
+            <LinkTo @route="discovery.category" @models={{array @category.slugPathWithId}} class="d-link-color-d-primary">
               {{@category.name}}
             </LinkTo>
           </h3>
@@ -38,7 +39,7 @@ export default class DefaultCategoryCard extends Component  {
         </div>
         {{/if}}
         <div class="divider mt-auto"></div>
-        <LinkTo @route="discovery.category" @models={{@category.linkModels}}
+        <LinkTo @route="discovery.category" @models={{array @category.slugPathWithId}}
           class="btn btn-raised w-full text-base py-2 source-color-d-primary">
           {{i18n (themePrefix 'discovery-list-area.explore')}}
         </LinkTo>
