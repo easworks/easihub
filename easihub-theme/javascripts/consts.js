@@ -66,3 +66,79 @@ export const relationCatIdAndTechId = {
   2153: [668],
   2156: [669]
 };
+
+
+export const GENERIC_TOPIC_CHIPS = {
+  'generic-areas': {
+    label: 'Generic Areas',
+    list: [
+      'Technical Architecture',
+      'API & Integration',
+      'Data Migration',
+      'Platform Comparison',
+      'Solution Design',
+      'Cloud Integration',
+      'Security Framework',
+      'Performance Tuning',
+      'Requirements Analysis',
+      'Cross-Platform Development',
+      'Vendor Integration',
+      'Performance Optimization',
+      'Security Implementation',
+      'Database Design'
+    ],
+    class: 'chip-indigo'
+  },
+  'generic-topic-tags': {
+    label: 'Topic Tags',
+    list: [
+      'Development Tools',
+      'System Integration',
+      'Best Practices',
+      'API Development',
+      'DevOps',
+      'Database Optimization',
+      'Cloud Migration',
+      'Microservices',
+      'DevOps Practices',
+      'Code Review',
+      'Documentation'
+    ],
+    class: 'chip-green'
+  },
+  'strategic-areas': {
+    label: 'Strategic Areas',
+    list: [
+      'Digital Transformation',
+      'Governance Framework',
+      'Change Management',
+      'Risk Management',
+      'Executive Leadership',
+      'ROI & Business Case',
+      'Strategic Planning',
+      'Compliance Management',
+      'Stakeholder Management',
+      'Budget Planning',
+      'Resource Management',
+      'Performance Metrics'
+    ],
+    class: 'chip-indigo'
+  },
+  'strategic-topic-tags': {
+    label: 'Topic Tags',
+    list: [
+      'CIO Leadership',
+      'ERP Director',
+      'Change Manager',
+      'Executive Strategy',
+      'Governance Board',
+      'Digital Strategy',
+      'Strategic Planning',
+      'Policy Development',
+      'Executive Reporting',
+      'Organizational Change',
+      'Compliance Framework'
+    ],
+    class: 'chip-green'
+  }
+};

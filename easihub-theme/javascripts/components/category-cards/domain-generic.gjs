@@ -4,8 +4,24 @@ import { computed } from "@ember/object";
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import Category from 'discourse/models/category';
+import { GENERIC_TOPIC_CHIPS } from '../../consts';
 
 export class DomainGenericCard extends Component {
+
+  get chips() {
+    if(this.args.category.isOfType('strategy')) {
+      return [
+        GENERIC_TOPIC_CHIPS['strategic-areas'],
+        GENERIC_TOPIC_CHIPS['strategic-topic-tags'],
+      ];
+    }
+    else {
+      return [
+        GENERIC_TOPIC_CHIPS['generic-areas'],
+        GENERIC_TOPIC_CHIPS['generic-topic-tags'],
+      ];
+    }
+  }
 
   <template>
     <div class="category-card domain-generic" style="--color-category: #{{@category.color}};">
@@ -49,21 +65,16 @@ export class DomainGenericCard extends Component {
 
       <div class="divider mt-auto"></div>
 
-      {{#if @category.eas.areas.list.length}}
-        <ChipsSection 
-          @title={{@category.eas.areas.label}}
-          @items={{@category.eas.areas.list}}
-          @chipClass="chip-indigo"/>
-      {{/if}}
+      {{#if this.chips.length}}
+        {{#each this.chips as |chipSection|}}
+          <ChipsSection 
+            @title={{chipSection.label}}
+            @items={{chipSection.list}}
+            @chipClass={{chipSection.class}}/>
+        {{/each}}
 
-       {{#if @category.eas.topicTags.list.length}}
-        <ChipsSection 
-          @title={{@category.eas.topicTags.label}}
-          @items={{@category.eas.topicTags.list}} 
-          @chipClass="chip-green"/>
+        <div class="divider"></div>
       {{/if}}
-
-      <div class="divider"></div>
 
       <div class="cta-container @container">
         <div class="grid-cols-6">

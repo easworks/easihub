@@ -13,7 +13,6 @@ export class SoftwareHubListHeader extends Component {
         </div>
         <span class="font-bold">{{this.category.name}} Software Hubs</span>
       </h3>
-      {{log @model}}
       <span class="font-semibold text-slate-500">Active Platforms - {{@categories.length}}</span>
     </div>
   </template>
