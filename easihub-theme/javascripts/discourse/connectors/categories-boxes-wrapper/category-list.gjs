@@ -1,7 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import DomainCategoryCard from '../../../components/category-cards/domain';
-import DefaultCategoryCard from '../../../components/category-cards/default';
+import { DomainCategoryCard } from '../../../components/category-cards/domain';
+import { SoftwareCategoryCard } from '../../../components/category-cards/software';
+import { DefaultCategoryCard } from '../../../components/category-cards/default';
 
 export default class CategoryBoxesWrapper extends Component {
   @tracked uniform = true;
@@ -14,6 +15,10 @@ export default class CategoryBoxesWrapper extends Component {
   getComponent(category) {
     if (category.isOfType('hub', 'domain')) {
       return DomainCategoryCard;
+    }
+
+    if (category.isOfType('hub', 'software')) {
+      return SoftwareCategoryCard;
     }
 
     return DefaultCategoryCard;

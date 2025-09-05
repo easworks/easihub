@@ -4,7 +4,7 @@ import { array } from '@ember/helper';
 import { i18n } from "discourse-i18n";
 import CategoryPill from './pill';
 
-export default class DefaultCategoryCard extends Component  {
+export class DefaultCategoryCard extends Component  {
   get categoryType() {
     if (!this.args.category.parent) {
       return ;

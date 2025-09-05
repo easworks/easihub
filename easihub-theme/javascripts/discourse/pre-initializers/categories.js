@@ -21,7 +21,7 @@ export default {
 
       @cached
       get slugPathWithId() {
-        this.path.substring(3);
+        return this.path.substring(3);
       }
     });
 

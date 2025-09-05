@@ -42,6 +42,9 @@ const CUSTOM_DATA = {
     types: ['hub', 'domain'],
     genericSubcategories: [1999, 2474],
   },
+  1588: {
+    types: ['hub', 'software'],
+  },
   1999: {
     avatarText: 'ERP',
     badges: ['General Topics'],
