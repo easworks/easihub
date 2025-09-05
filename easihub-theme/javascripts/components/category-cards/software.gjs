@@ -4,8 +4,24 @@ import { computed } from "@ember/object";
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import Category from 'discourse/models/category';
+import { getRandomItems } from '../../utils/array-helpers';
 
 export class SoftwareCategoryCard extends Component {
+
+  get chips() {
+    return [
+      {
+        label: 'Technical Areas',
+        list: getRandomItems(this.args.category.parentCategory.eas.technicalAreas, 5),
+        class: 'chip-indigo'
+      },
+      {
+        label: 'Topic Tags',
+        list: this.args.category.eas.topicTags,
+        class: 'chip-green'
+      }
+    ] 
+  }
 
   <template>
     <div class="category-card software" style="--color-category: #{{@category.color}};">
@@ -50,21 +66,16 @@ export class SoftwareCategoryCard extends Component {
 
       <div class="divider mt-auto"></div>
 
-      {{#if @category.eas.areas.list.length}}
-        <ChipsSection 
-          @title={{@category.eas.areas.label}}
-          @items={{@category.eas.areas.list}}
-          @chipClass="chip-indigo"/>
-      {{/if}}
+      {{#if this.chips.length}}
+        {{#each this.chips as |chipSection|}}
+          <ChipsSection 
+            @title={{chipSection.label}}
+            @items={{chipSection.list}}
+            @chipClass={{chipSection.class}}/>
+        {{/each}}
 
-       {{#if @category.eas.topicTags.list.length}}
-        <ChipsSection 
-          @title={{@category.eas.topicTags.label}}
-          @items={{@category.eas.topicTags.list}} 
-          @chipClass="chip-green"/>
+        <div class="divider"></div>
       {{/if}}
-
-      <div class="divider"></div>
 
       <div class="cta-container @container">
         <div class="grid-cols-6">
