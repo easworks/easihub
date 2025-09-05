@@ -1,15 +1,36 @@
-import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { eq } from 'truth-helpers';
+import CategoriesBoxes from 'discourse/components/categories-boxes';
+import CategoryList from 'discourse/models/category-list';
 import { featuredHubs } from '../../../utils/featured-hubs';
-import CategoryListComponent from '../categories-boxes-wrapper/category-list';
 
 export default class DiscoveryList extends Component {
   @service site;
   @service router;
 
   get featuredCategories()  {
-    return featuredHubs.map(id => this.site.categoriesById.get(id))
+    const categories = featuredHubs
+      .map(id => this.site.categoriesById.get(id))
       .filter(Boolean);
+    return CategoryList.fromArray(categories);
+  }
+
+  get mode() {
+    const route = this.router.currentRoute;
+
+    if (route.name === 'discovery.categories') {
+      return 'domains';
+    }
+
+    if (
+      route.name === 'discovery.category' && 
+      this.args.category?.isOfType('hub', 'domain')
+    ) {
+      return 'software';
+    }
+
+    return 'default';
   }
 
   get showFeatured() {
@@ -17,12 +38,10 @@ export default class DiscoveryList extends Component {
   }
 
   <template>
-    {{#if this.showFeatured}}
-    <div class="@container">
-      <div class="category-boxes">
-        <CategoryListComponent @categories={{this.featuredCategories}}/>
-      </div>
-    </div>
+    {{#if (eq this.mode 'domains')}}
+      <CategoriesBoxes @categories={{this.featuredCategories}}/>
+    {{else if (eq this.mode 'software')}}
+
     {{else}}
       {{yield}}
     {{/if}}

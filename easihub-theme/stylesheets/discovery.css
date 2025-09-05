@@ -4,7 +4,11 @@
   }
 
   .category-boxes {
-    @apply grid gap-8 transition-all
+    @apply @container;
+
+    > .category-boxes-wrapper {
+      @apply grid gap-8 transition-all
         grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3;
+    }
   }
 }

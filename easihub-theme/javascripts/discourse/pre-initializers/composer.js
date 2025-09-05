@@ -1,4 +1,3 @@
-import { cached } from '@glimmer/tracking';
 import { computed } from '@ember/object';
 import { withPluginApi } from 'discourse/lib/plugin-api';
 import { TOPIC_CONTENT_TYPES } from '../../consts';
@@ -8,7 +7,6 @@ export default {
     api.modifyClass('model:composer', (Composer) => class extends Composer {
       @computed('tags.[]')
       get tagsByPurpose() {
-        console.debug('tagsByPurpose computed', [...this.tags]);
         let contentType;
         let optional = [];
 

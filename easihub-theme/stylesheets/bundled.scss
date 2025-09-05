@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.12 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -3505,17 +3505,20 @@
     container-type: inline-size;
   }
   .category-boxes {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: calc(var(--spacing) * 8);
-    transition-property: all;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-    @container (width >= 36rem) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    @container (width >= 56rem) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    container-type: inline-size;
+    > .category-boxes-wrapper {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: calc(var(--spacing) * 8);
+      transition-property: all;
+      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+      transition-duration: var(--tw-duration, var(--default-transition-duration));
+      @container (width >= 36rem) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      @container (width >= 56rem) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
   }
 }
