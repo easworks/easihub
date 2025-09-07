@@ -1,0 +1,151 @@
+@layer components {
+  .main-nav {
+    @apply flex items-center gap-2;
+  }
+
+  .nav-item {
+    @apply relative;
+  }
+
+  .nav-link {
+    @apply flex items-center px-4 py-3 text-gray-700 no-underline font-medium text-sm rounded-md transition-all duration-200 ease-in-out whitespace-nowrap cursor-pointer;
+  }
+
+  .nav-link:hover {
+    @apply bg-primary-500 text-white;
+  }
+
+  .nav-link.active {
+    @apply bg-primary-500 text-white;
+  }
+
+  /* Dropdown indicators */
+  .nav-item.has-dropdown .nav-link::after {
+    content: '▼';
+    @apply ml-2 text-xs opacity-60 transition-transform duration-200 ease-in-out;
+  }
+
+  .nav-item.has-dropdown.open .nav-link::after {
+    @apply rotate-180;
+  }
+
+  /* Dropdown menus */
+  .dropdown {
+    @apply absolute top-full left-0 bg-white rounded-lg shadow-lg border border-gray-200 min-w-[280px] opacity-0 invisible -translate-y-2 transition-all duration-300 ease-in-out z-50;
+  }
+
+  .nav-item.has-dropdown.open .dropdown {
+    @apply opacity-100 visible translate-y-0;
+  }
+
+  .dropdown-item {
+    @apply border-b border-gray-100;
+  }
+
+  .dropdown-item:last-child {
+    @apply border-b-0;
+  }
+
+  .dropdown-link {
+    @apply block px-5 py-3 text-gray-700 no-underline text-sm transition-all duration-200 ease-in-out;
+  }
+
+  .dropdown-link:hover {
+    @apply bg-gray-50 text-gray-900 pl-6;
+  }
+
+  /* Mega dropdown for Hubs */
+  .mega-dropdown {
+    @apply min-w-[500px] max-w-[600px] p-6;
+  }
+
+  .mega-grid {
+    @apply grid grid-cols-2 gap-6;
+  }
+
+  .mega-column h4 {
+    @apply text-gray-900 text-sm font-semibold mb-3 pb-2 border-b-2 border-primary-500;
+  }
+
+  .mega-column .dropdown-link {
+    @apply py-2 text-xs;
+  }
+
+  .cta-button {
+    @apply bg-primary-500 text-white px-5 py-2 rounded-md font-semibold text-sm transition-all duration-200 ease-in-out ml-4 no-underline border-0 cursor-pointer;
+  }
+
+  .cta-button-login {
+    @apply border-primary-500 text-primary-500 px-5 py-2 font-semibold text-sm rounded-md transition-all duration-200 ease-in-out ml-4 no-underline cursor-pointer; 
+  }
+
+  .cta-button-login {
+    @apply bg-primary-500 text-white;
+  }
+
+  .cta-button:hover {
+    @apply bg-primary-600 -translate-y-px;
+  }
+
+  /* Mobile menu toggle */
+  .mobile-menu-toggle {
+    @apply hidden bg-transparent border-0 text-xl text-gray-700 cursor-pointer p-2;
+  }
+
+  /* Content area */
+  .content {
+    @apply max-w-[1200px] mx-auto my-8 px-4;
+  }
+
+  .hero-section {
+    @apply bg-white rounded-xl p-12 text-center shadow mb-12;
+  }
+
+  .hero-section h1 {
+    @apply text-4xl font-bold text-gray-900 mb-4;
+  }
+
+  .hero-section p {
+    @apply text-lg text-gray-600 max-w-[600px] mx-auto mb-8;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .mobile-menu-toggle {
+      @apply block;
+    }
+
+    .main-nav {
+      @apply hidden absolute top-full left-0 right-0 bg-white border-t border-gray-200 flex-col p-4 gap-0;
+    }
+
+    .main-nav.open {
+      @apply flex;
+    }
+
+    .nav-item {
+      @apply w-full;
+    }
+
+    .nav-link {
+      @apply w-full justify-between;
+    }
+
+    .dropdown {
+      @apply static opacity-100 visible transform-none shadow-none border-0 bg-gray-50 mt-2 rounded-md;
+    }
+
+    .nav-container {
+      @apply flex-wrap;
+    }
+
+    .hero-section {
+      @apply p-8;
+    }
+
+    .hero-section h1 {
+      @apply text-2xl;
+    }
+  }
+
+}

@@ -7,8 +7,9 @@ export default apiInitializer(api => {
     const route = router.currentRoute;
 
     const el = getSearchElement();
-    if (!el)
+    if (!el) {
       return;
+    }
 
     if (route.name === 'discovery.categories') {
       const user = api.getCurrentUser();
@@ -19,7 +20,7 @@ export default apiInitializer(api => {
     }
 
     el.classList.remove('hidden');
-  })
+  });
 });
 
 function getSearchElement() {

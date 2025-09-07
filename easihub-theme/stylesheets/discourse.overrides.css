@@ -252,8 +252,16 @@
 
   @media (min-width: 768px) {
     #reply-control.open {
-      @apply h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)];
+      @apply h-[calc(100vh-4rem)] min-h-[calc(100vh-4rem)] max-w-[68%];
     }
+  }
+
+  .toolbar-visible::-webkit-scrollbar-thumb {
+    @apply bg-gray-400;
+  }
+
+  .toolbar-visible::-webkit-scrollbar {
+    @apply w-2.5;
   }
 
   /* styling for tag banner */

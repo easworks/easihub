@@ -8,6 +8,8 @@
 @import './composer-fields.css';
 @import './job-card.css';
 @import './non-login-container.css';
+@import './main-header.css';
+@import './non-loggedin-homepage.css';
 
 @import './hero.css';
 @import './app-footer.css';

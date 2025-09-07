@@ -111,8 +111,17 @@ export class CustomFields extends Component {
   }
 
   @action
-  updateCustomField(key, event) {
-    const value = event.target.value;
+  updateCustomField(key, eventOrValue) {
+    let value;
+    
+    // Handle both event objects and direct values
+    if (typeof eventOrValue === 'string') {
+      value = eventOrValue;
+    } else if (eventOrValue && eventOrValue.target) {
+      value = eventOrValue.target.value;
+    } else {
+      value = eventOrValue;
+    }
 
     if (!this.args.model.customFieldValues) {
       this.args.model.set('customFieldValues', {});
@@ -176,7 +185,6 @@ export class CustomFields extends Component {
 
 
   <template>
-    {{log this.args}}
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
       {{#if this.showRelatedTags}}
@@ -279,15 +287,13 @@ export class CustomFields extends Component {
             {{on "change" (fn this.updateCustomField field.key)}}
           />
           {{else}}
-          <ComposerEditor>
+          <ComposerEditor 
+            @value={{get this.args.model.customFieldValues field.key}}
+            @placeholder={{field.placeholder}}
+            @onChange={{fn this.updateCustomField field.key}}
+            @fieldKey={{field.key}}
+          >
           </ComposerEditor>
-          {{!-- <textarea
-            class="form-control w-full"
-            placeholder={{field.placeholder}}
-            rows="4"
-            value={{get this.args.model.customFieldValues field.key}}
-            {{on "input" (fn this.updateCustomField field.key)}}
-          ></textarea> --}}
           {{/if}}
         </div>
         {{/if}}
