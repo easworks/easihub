@@ -36,8 +36,8 @@
         @apply max-w-6xl mx-auto px-5;
       }
 
-      .btn {
-        @apply py-2.5 px-5 rounded-lg font-semibold text-sm no-underline border-0 cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-1.5;
+      .btn-hero{
+        @apply w-42 py-2.5 px-4 rounded-lg font-semibold text-sm no-underline border-0 cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-1.5;
       }
 
       .btn-primary {
@@ -201,11 +201,11 @@
       }
 
       .hero-stats {
-        @apply flex gap-3 mb-6 flex-wrap;
+        @apply flex gap-3 mb-6 flex-wrap justify-between;
       }
 
       .stat-item {
-        @apply bg-white py-3 px-4 rounded-xl border border-gray-200 text-center min-w-28 transition-all duration-200 shadow-sm;
+        @apply bg-white py-3 px-4 rounded-xl border border-gray-200 text-center w-42 min-w-28 transition-all duration-200 shadow-sm;
       }
 
       .stat-item:hover {
@@ -221,7 +221,7 @@
       }
 
       .hero-actions {
-        @apply flex gap-3 mb-5 flex-wrap;
+        @apply flex gap-3 mb-5 flex-wrap justify-between;
       }
 
       .quick-guidelines {
@@ -627,7 +627,7 @@
           @apply flex-col items-center;
         }
 
-        .btn {
+        .btn-hero{
           @apply w-full max-w-72;
         }
       }

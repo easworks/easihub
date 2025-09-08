@@ -6,6 +6,8 @@ export default apiInitializer(api => {
   api.onPageChange(() => {
     setTimeout(() => {
       const route = router.currentRouteName;
+      const currentUser = router.currentUser;
+
 
       const el = getSearchBannerElement();
       const mainOutletWrapper = getMainOutletWrapperElement();
@@ -15,7 +17,7 @@ export default apiInitializer(api => {
         if (el) {
           el.classList.add('hidden');
         }
-        if (mainOutletWrapper) {
+        if (mainOutletWrapper && !currentUser) {
           mainOutletWrapper.classList.add('max-w-full', 'p-0');
         }
         if (mainOutlet) {
@@ -25,7 +27,7 @@ export default apiInitializer(api => {
         if (el) {
           el.classList.remove('hidden');
         }
-        if (mainOutletWrapper) {
+        if (mainOutletWrapper ) {
           mainOutletWrapper.classList.remove('max-w-full', 'p-0');
         }
         if (mainOutlet) {
@@ -37,7 +39,7 @@ export default apiInitializer(api => {
 });
 
 function getSearchBannerElement() {
-  return document.querySelector('.above-main-container-outlet.search-banner.welcome-banner');
+  return document.querySelector('.welcome-banner');
 }
 
 function getMainOutletWrapperElement() {

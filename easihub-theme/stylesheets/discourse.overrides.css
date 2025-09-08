@@ -282,6 +282,12 @@
   #main-outlet {
     @apply relative
   }
+
+  /* styling for search input on homepage */
+
+  .search-menu-container.menu-panel-results {
+    @apply w-full mr-2;
+  }
 }
 
 @utility d-link-color-* {

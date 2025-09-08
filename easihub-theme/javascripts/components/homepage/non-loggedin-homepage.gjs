@@ -1,9 +1,13 @@
 import Component from '@glimmer/component';
 import PluginOutlet from 'discourse/components/plugin-outlet';
 import lazyHash from 'discourse/helpers/lazy-hash';
+import { service } from '@ember/service';
+import hideApplicationSidebar from "discourse/helpers/hide-application-sidebar";
 
 export default class NonLoggedinHomepage extends Component {
+
   <template>
+    {{hideApplicationSidebar}}
     <div class="main-container">
       <section class="hero-wrap">
         <div class="container-wrap">
@@ -67,13 +71,13 @@ export default class NonLoggedinHomepage extends Component {
               </div>
 
               <div class="hero-actions">
-                <a class="btn btn-primary" href="/tag/questions">
+                <a class="btn-hero btn-primary" href="/tag/questions">
                   <i class="fas fa-question-circle"></i> Ask a Question
                 </a>
-                <a class="btn btn-secondary" href="/tag/discussions">
+                <a class="btn-hero btn-secondary" href="/tag/discussions">
                   <i class="fas fa-comments"></i> Browse Discussions
                 </a>
-                <a class="btn btn-tertiary" href="/tag/jobs">
+                <a class="btn-hero btn-tertiary" href="/tag/jobs">
                   <i class="fas fa-briefcase"></i> View EA Jobs
                 </a>
               </div>

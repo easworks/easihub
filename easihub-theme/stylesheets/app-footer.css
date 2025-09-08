@@ -1,269 +1,334 @@
 @layer components {
-  /* Footer Container Structure */
-  .app-footer {
-    @apply relative overflow-hidden text-white 
-           bg-gradient-to-br from-slate-900 to-slate-800;
+  :root {
+      --secondary-purple: #8b5cf6;
+      --success-green: #10b981;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      --white: #ffffff;
+  }
 
-    /* Primary gradient border at top */
-    &::before {
-      @apply absolute top-0 left-0 right-0 h-1 z-10 
-             bg-gradient-to-r from-primary-500 to-purple-600;
-      content: '';
-    }
+  /* Demo Content */
+  .demo-content {
+    @apply min-h-[60vh] bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-center p-8;
+  }
 
-    .footer-container {
-      @apply max-w-7xl mx-auto px-5 md:px-6 relative z-20;
-    }
+  .demo-content h1 {
+    @apply text-3xl text-gray-800 mb-4;
+  }
 
-    .main-footer {
-      @apply py-10 md:py-16 pb-8 md:pb-10;
-    }
+  .demo-content p {
+    @apply text-lg text-gray-600 max-w-2xl;
+  }
 
-    /* Main Footer Grid (4 columns) */
-    .footer-grid {
-      @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 
-             gap-8 md:gap-10 lg:gap-12 mb-8 lg:mb-10;
-    }
+  /* Community Footer */
+  .community-footer {
+    @apply bg-gradient-to-br from-gray-900 to-gray-800 pt-8 pb-0 text-gray-200;
+  }
 
-    /* Base section styling */
-    .footer-section {
-      @apply transition-all duration-300 p-6 rounded-xl -m-6;
+  .footer-container {
+    @apply max-w-6xl mx-auto px-6;
+  }
 
-      &:hover {
-        @apply bg-white/5 backdrop-blur-sm -translate-y-1;
+  /* Community Banner */
+  .community-banner {
+    @apply bg-gradient-to-br from-primary-500 to-primary-800 text-white py-5 px-6 rounded-lg my-6 mb-8 flex items-center justify-between gap-6 shadow-xl;
+  }
+
+  .banner-content h3 {
+    @apply text-lg font-semibold mb-1 text-white;
+  }
+
+  .banner-content p {
+    @apply text-sm opacity-90 m-0 text-white/85;
+  }
+
+  .banner-content .brand-note {
+    @apply text-xs mt-1 opacity-70 italic text-white/70;
+  }
+
+  .banner-actions {
+    @apply flex gap-3 flex-shrink-0 items-center;
+  }
+
+  .banner-cta {
+    @apply no-underline py-2.5 px-5 rounded-md font-semibold text-xs inline-flex items-center gap-1.5 transition-all duration-200 whitespace-nowrap;
+  }
+
+  .banner-cta.primary {
+    @apply bg-white text-primary-500;
+  }
+
+  .banner-cta.primary:hover {
+    @apply opacity-90 -translate-y-0.5;
+  }
+
+  .banner-cta.secondary {
+    @apply bg-white/15 text-white border border-white/25;
+  }
+
+  .banner-cta.secondary:hover {
+    @apply bg-white/25 border-white/40;
+  }
+
+  /* Footer Grid */
+  .footer-grid {
+    @apply grid grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 py-8;
+  }
+
+  .footer-section {
+    @apply bg-white/[0.02] border border-white/[0.08] rounded-xl p-6 transition-all duration-300;
+  }
+
+  .footer-section:hover {
+    @apply bg-white/[0.03] border-white/[0.12] -translate-y-0.5;
+  }
+
+  /* Brand Section */
+  .brand-header {
+    @apply flex gap-3 items-center mb-4;
+  }
+
+  .brand-logo {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br from-primary-500 to-primary-800 font-bold text-base text-white;
+  }
+
+  .brand-title {
+    @apply font-semibold text-lg text-gray-100;
+  }
+
+  .brand-tagline {
+    @apply text-primary-500 text-xs mb-4 font-semibold bg-primary-500/10 py-2 px-3 rounded-md border border-primary-500/20;
+  }
+
+  .brand-description {
+    @apply text-gray-300 text-sm mb-5 leading-relaxed;
+  }
+
+  .brand-description strong {
+    @apply text-primary-500 font-semibold;
+  }
+
+  /* Stats Panels */
+  .stats-panels {
+    @apply grid grid-cols-4 gap-3;
+  }
+
+  .stat-panel {
+    @apply bg-white/[0.04] border border-white/[0.12] rounded-lg py-4 px-2 text-center backdrop-blur-sm transition-all duration-300;
+  }
+
+  .stat-panel:hover {
+    @apply bg-primary-500/[0.08] border-primary-500/15 -translate-y-0.5;
+  }
+
+  .stat-panel .stat-number {
+    @apply block font-bold text-lg text-primary-500 mb-1;
+  }
+
+  .stat-panel .stat-label {
+    @apply block text-xs uppercase tracking-wide text-gray-400 font-medium leading-none whitespace-nowrap;
+  }
+
+  /* Footer Column Headers */
+  .footer-column h4 {
+    @apply text-sm font-semibold mb-4 flex gap-2 items-center text-gray-100;
+  }
+
+  .footer-column h4 i {
+    @apply text-primary-500 w-4 text-sm;
+  }
+
+  /* Footer Links */
+  .footer-column ul {
+    @apply list-none;
+  }
+
+  .footer-column li {
+    @apply my-1.5;
+  }
+
+  .footer-column a {
+    @apply flex gap-2 items-center text-xs text-gray-300 no-underline py-1.5 px-2 rounded-md transition-all duration-200;
+  }
+
+  .footer-column a i {
+    @apply text-gray-500 w-3.5 text-xs transition-colors duration-200;
+  }
+
+  .footer-column a:hover {
+    @apply text-gray-100 bg-white/[0.04] pl-3;
+  }
+
+  .footer-column a:hover i {
+    @apply text-primary-500;
+  }
+
+  .footer-column a.primary {
+    @apply text-primary-500 font-medium;
+  }
+
+  .footer-column a.primary:hover {
+    @apply text-primary-400 bg-primary-500/[0.08];
+  }
+
+  /* EASiHub Platform Section */
+  .easihub-platform .footer-column h4 {
+    @apply text-primary-500 bg-primary-500/10 py-3 rounded-lg -mx-2 mb-4 border border-primary-500/20;
+  }
+
+  .easihub-platform .footer-column a {
+    @apply font-medium;
+  }
+
+  .easihub-platform .footer-column a:hover {
+    @apply bg-primary-500/[0.08] text-white;
+  }
+
+  /* Contact Bar */
+  .contact-bar {
+    @apply flex justify-between items-center gap-8 my-4 mb-8 bg-primary-500/[0.08] border border-primary-500/15 rounded-xl py-5 px-6;
+  }
+
+  .contact-content {
+    @apply flex-1;
+  }
+
+  .contact-heading {
+    @apply text-base font-semibold text-gray-100 mb-3 flex items-center gap-2;
+  }
+
+  .contact-heading i {
+    @apply text-primary-500 text-sm;
+  }
+
+  .contact-items {
+    @apply flex gap-6 flex-wrap;
+  }
+
+  .contact-item {
+    @apply flex gap-2 items-center text-xs;
+  }
+
+  .contact-item i {
+    @apply text-primary-500 w-4 text-xs;
+  }
+
+  .contact-item,
+  .contact-item span {
+    @apply text-gray-300;
+  }
+
+  .contact-item a {
+    @apply text-gray-300 no-underline transition-colors duration-200;
+  }
+
+  .contact-item a:hover {
+    @apply text-primary-500;
+  }
+
+  .contact-social {
+    @apply flex items-center gap-4 flex-shrink-0;
+  }
+
+  .contact-social h5 {
+    @apply text-sm font-semibold text-gray-100 m-0;
+  }
+
+  .social-platforms {
+    @apply flex gap-2;
+  }
+
+  .social-platforms a {
+    @apply w-8 h-8 rounded-md bg-white/[0.06] border border-white/[0.12] flex items-center justify-center text-gray-300 no-underline transition-all duration-200;
+  }
+
+  .social-platforms a:hover {
+    @apply bg-primary-500/[0.12] text-primary-500 border-primary-500/20 -translate-y-0.5;
+  }
+
+  /* Footer Bottom */
+  .footer-bottom {
+    @apply border-t border-white/[0.08] py-5 bg-black/15 -mx-6 px-6;
+  }
+
+  .footer-bottom-content {
+    @apply flex justify-between items-center gap-4 flex-wrap max-w-6xl mx-auto;
+  }
+
+  .copyright {
+    @apply text-gray-400 text-xs;
+  }
+
+  .legal-links {
+    @apply flex gap-5 flex-wrap;
+  }
+
+  .legal-links a {
+    @apply text-gray-400 no-underline text-xs py-1 px-2 rounded border border-transparent transition-colors duration-200;
+  }
+
+  .legal-links a:hover {
+    @apply text-gray-300 border-white/10;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+      .footer-grid {
+        @apply grid-cols-2 gap-6;
       }
-    }
 
-    /* About EASIHUB Section */
-    .footer-about {
-      @apply md:col-span-2 lg:col-span-2;
-
-      h3 {
-        @apply text-xl md:text-2xl font-bold mb-4 text-primary-500 
-               flex items-center gap-3;
-
-        i {
-          @apply text-3xl bg-gradient-to-r from-primary-500 
-                 to-purple-600 bg-clip-text text-transparent;
-        }
+      .stats-panels {
+        @apply grid-cols-2;
       }
 
-      p {
-        @apply text-slate-300 leading-relaxed text-sm font-normal;
-      }
-    }
-
-    /* Navigation Links */
-    .footer-navi {
-      h4 {
-        @apply text-lg font-semibold mb-5 text-white 
-               flex items-center gap-2;
-
-        i {
-          @apply text-primary-500 text-base w-5;
-        }
+      .contact-bar {
+        @apply flex-col gap-6 text-center;
       }
 
-      ul {
-        @apply list-none p-0 m-0;
-
-        li {
-          @apply mb-3;
-
-          a {
-            @apply text-slate-300 no-underline transition-all 
-                   duration-300 text-sm flex items-center gap-2 
-                   py-1 rounded-md font-normal;
-
-            i {
-              @apply text-primary-500 text-xs w-4 
-                     transition-all duration-300 opacity-80;
-            }
-
-            &:hover {
-              @apply text-white pl-2 translate-x-1;
-
-              i {
-                @apply text-purple-400 translate-x-1 opacity-100;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    /* Platform Communities */
-    .footer-communities {
-      h4 {
-        @apply text-lg font-semibold mb-5 text-white 
-               flex items-center gap-2;
-
-        i {
-          @apply text-primary-500 text-base w-5;
-        }
+      .contact-items {
+        @apply justify-center;
       }
 
-      .communities-grid {
-        @apply grid grid-cols-1 md:grid-cols-2 gap-5;
-
-        ul {
-          @apply list-none p-0 m-0;
-
-          li {
-            @apply mb-2;
-
-            a {
-              @apply text-slate-300 no-underline transition-all 
-                     duration-300 text-xs flex items-center gap-2 
-                     py-1 rounded font-normal;
-
-              i {
-                @apply text-primary-500 text-xs w-3 
-                       transition-all duration-300 opacity-80;
-              }
-
-              &:hover {
-                @apply text-white pl-1 translate-x-1;
-
-                i {
-                  @apply text-purple-400 translate-x-1 opacity-100;
-                }
-              }
-            }
-          }
-        }
+      .contact-social {
+        @apply justify-center;
       }
-    }
-
-    /* Connect & Support Section */
-    .footer-connect {
-      h4 {
-        @apply text-lg font-semibold mb-5 text-white 
-               flex items-center gap-2;
-
-        i {
-          @apply text-primary-500 text-base w-5;
-        }
-      }
-
-      .social-platforms {
-        @apply flex gap-2 md:gap-3 mb-5 flex-wrap 
-               justify-start md:justify-start;
-
-        a {
-          @apply w-10 h-10 bg-white/10 flex items-center 
-                 justify-center rounded-lg text-slate-300 
-                 transition-all duration-300 backdrop-blur-sm 
-                 border border-white/10;
-
-          &:hover {
-            @apply bg-gradient-to-r from-primary-500 to-purple-600 
-                   text-white -translate-y-1 shadow-lg;
-            box-shadow: 0 8px 25px rgba(73, 73, 252, 0.4);
-          }
-
-          i {
-            @apply text-base;
-          }
-        }
-      }
-
-      .support-info {
-        @apply bg-white/5 p-4 rounded-xl border border-white/10 
-               backdrop-blur-sm;
-
-        h5 {
-          @apply text-xs font-semibold text-primary-500 mb-1 
-                 uppercase tracking-wide;
-        }
-
-        p {
-          @apply text-slate-300 text-xs leading-relaxed m-0;
-
-          a {
-            @apply text-white no-underline font-medium 
-                   transition-colors duration-300;
-
-            &:hover {
-              @apply text-primary-500;
-            }
-          }
-        }
-      }
-    }
-
-    /* Code of Conduct Section */
-    .code-conduct {
-      @apply bg-white/5 p-5 md:p-6 rounded-2xl border border-white/10 
-             backdrop-blur-sm mb-8 md:mb-10;
-
-      h4 {
-        @apply font-semibold mb-3 text-white flex items-start 
-               gap-2 text-sm;
-
-        i {
-          @apply text-primary-500 text-base mt-0.5;
-        }
-      }
-
-      p {
-        @apply text-slate-300 leading-relaxed m-0 text-xs 
-               flex gap-2;
-
-        a {
-          @apply text-primary-500 no-underline font-medium 
-                 transition-all duration-300;
-
-          &:hover {
-            @apply text-purple-400 underline;
-          }
-        }
-      }
-    }
-
-    /* Footer Bottom */
-    .footer-bottom {
-      @apply py-5 md:py-6 text-center bg-black/30 -mx-5 md:-mx-6 
-             border-t border-white/10;
 
       .footer-bottom-content {
-        @apply flex flex-col items-center gap-3 md:gap-4 px-5 md:px-6;
+        @apply flex-col text-center;
       }
-
-      p {
-        @apply text-slate-400 text-xs m-0 font-medium;
-      }
-
-      .policy-links {
-        @apply flex gap-3 md:gap-5 flex-wrap justify-center;
-
-        a {
-          @apply text-slate-400 no-underline text-xs 
-                 transition-all duration-300 py-1 px-3 
-                 rounded-md border border-transparent font-normal;
-
-          &:hover {
-            @apply text-primary-500 border-primary-500/30 
-                   bg-primary-500/10;
-          }
-        }
-      }
-    }
   }
 
-  /* Loading Animation */
-  .app-footer {
-    animation: slideUp 0.8s ease-out;
-  }
+  @media (max-width: 768px) {
+      .footer-grid {
+        @apply grid-cols-1 gap-6;
+      }
 
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      .contact-items {
+        @apply flex-col gap-3;
+      }
+
+      .legal-links {
+        @apply flex-col items-center gap-2;
+      }
+
+      .community-banner {
+        @apply flex-col text-center gap-4;
+      }
+
+      .banner-actions {
+        @apply w-full flex-col gap-2;
+      }
+
+      .banner-cta {
+        @apply w-full justify-center;
+      }
   }
 }
