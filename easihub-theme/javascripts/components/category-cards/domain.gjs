@@ -1,12 +1,10 @@
 import Component from '@glimmer/component';
 import { LinkTo } from '@ember/routing';
+import { array } from '@ember/helper';
 import { i18n } from "discourse-i18n";
+import CategoryPill from './pill';
 
-export class CategoryCardComponent extends Component  {
-
-  get linkModels() {
-    return categoryLinkModel(this.args.category);
-  }
+export class DomainCategoryCard extends Component  {
 
   get categoryType() {
     if (!this.args.category.parent) {
@@ -24,7 +22,7 @@ export class CategoryCardComponent extends Component  {
         <div class="flex gap-4 items-center">
           <img src={{@category.uploaded_logo.url}} class="h-10"/>
           <h3 class="text-xl font-bold text-d-primary">
-            <LinkTo @route="discovery.category" @models={{this.linkModels}} class="d-link-color-d-primary">
+            <LinkTo @route="discovery.category" @models={{array @category.slugPathWithId}} class="d-link-color-d-primary">
               {{@category.name}}
             </LinkTo>
           </h3>
@@ -37,12 +35,12 @@ export class CategoryCardComponent extends Component  {
         <div class="divider"></div>
         <div class="flex gap-2 flex-wrap">
           {{#each @category.subcategories as |category|}}
-          <CategoryPillComponent @category={{category}}/>
+          <CategoryPill @category={{category}}/>
           {{/each}}
         </div>
         {{/if}}
         <div class="divider mt-auto"></div>
-        <LinkTo @route="discovery.category" @models={{this.linkModels}}
+        <LinkTo @route="discovery.category" @models={{array @category.slugPathWithId}}
           class="btn btn-raised w-full text-base py-2 source-color-d-primary">
           {{i18n (themePrefix 'discovery-list-area.explore')}}
         </LinkTo>
@@ -50,26 +48,3 @@ export class CategoryCardComponent extends Component  {
   </template>
 }
 
-class CategoryPillComponent extends Component {
-  get linkModels() {
-    return categoryLinkModel(this.args.category);
-  }
-
-  <template>
-    <LinkTo @route="discovery.category" @models={{this.linkModels}}
-      class="px-4 p-1 rounded bg-primary-50
-        text-sm flex-grow text-center text-primary-500
-        hover:bg-primary-100 font-semibold hover:scale-105
-        hover:shadow shadow-slate-500/50
-        transition-all">
-      {{@category.name}}
-    </LinkTo>
-  </template>
-
-}
-
-function categoryLinkModel(category) {
-  return [
-    category.path.substring(3)
-  ];
-}

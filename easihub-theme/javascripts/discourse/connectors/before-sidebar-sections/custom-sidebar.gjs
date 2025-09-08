@@ -59,8 +59,6 @@ export default class CustomSidebarComponent extends Component {
   }
 
   <template>
-    {{@log this.urld.router.currentRoute}}
-    {{@log this.urld.router.currentRoute.name}}
     {{#if this.showCustomMenu}}
       <div id="custom-sidebar">
         <TreeComponent @items={{this.menuItems}} />

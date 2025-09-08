@@ -56,7 +56,6 @@ export const getAreaCategories = (model) => {
 };
 
 export const relationCatIdAndTechId = {
-  "DEMO": ["ERP Technical"," ERP Generic"," ERP Strategy"],
   69: [661, 670, 671],
   14: [662, 672, 673],
   5: [663, 674, 675],
@@ -65,5 +64,80 @@ export const relationCatIdAndTechId = {
   1033: [666, 678, 679],
   1034: [667, 676, 677],
   2153: [668, 686, 687],
-  2156: [669, 684, 685]
+};
+
+
+export const GENERIC_TOPIC_CHIPS = {
+  'generic-areas': {
+    label: 'Generic Areas',
+    list: [
+      'Technical Architecture',
+      'API & Integration',
+      'Data Migration',
+      'Platform Comparison',
+      'Solution Design',
+      'Cloud Integration',
+      'Security Framework',
+      'Performance Tuning',
+      'Requirements Analysis',
+      'Cross-Platform Development',
+      'Vendor Integration',
+      'Performance Optimization',
+      'Security Implementation',
+      'Database Design'
+    ],
+    class: 'chip-indigo'
+  },
+  'generic-topic-tags': {
+    label: 'Topic Tags',
+    list: [
+      'Development Tools',
+      'System Integration',
+      'Best Practices',
+      'API Development',
+      'DevOps',
+      'Database Optimization',
+      'Cloud Migration',
+      'Microservices',
+      'DevOps Practices',
+      'Code Review',
+      'Documentation'
+    ],
+    class: 'chip-green'
+  },
+  'strategic-areas': {
+    label: 'Strategic Areas',
+    list: [
+      'Digital Transformation',
+      'Governance Framework',
+      'Change Management',
+      'Risk Management',
+      'Executive Leadership',
+      'ROI & Business Case',
+      'Strategic Planning',
+      'Compliance Management',
+      'Stakeholder Management',
+      'Budget Planning',
+      'Resource Management',
+      'Performance Metrics'
+    ],
+    class: 'chip-indigo'
+  },
+  'strategic-topic-tags': {
+    label: 'Topic Tags',
+    list: [
+      'CIO Leadership',
+      'ERP Director',
+      'Change Manager',
+      'Executive Strategy',
+      'Governance Board',
+      'Digital Strategy',
+      'Strategic Planning',
+      'Policy Development',
+      'Executive Reporting',
+      'Organizational Change',
+      'Compliance Framework'
+    ],
+    class: 'chip-green'
+  }
 };

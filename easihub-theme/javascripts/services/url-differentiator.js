@@ -40,6 +40,8 @@ export default class UrlDifferentiatorService extends Service {
     // this must be done last as it is being observed by
     // other components/services
     this.routeName = this.#computeRouteName(route);
+
+    // console.debug('[url]', route.name, this.routeName);
   }
 
   #computeRouteName(route) {

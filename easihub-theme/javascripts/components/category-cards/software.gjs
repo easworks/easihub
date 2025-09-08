@@ -4,39 +4,40 @@ import { computed } from "@ember/object";
 import { LinkTo } from '@ember/routing';
 import { array } from '@ember/helper';
 import Category from 'discourse/models/category';
-import { GENERIC_TOPIC_CHIPS } from '../../consts';
+import { getRandomItems } from '../../utils/array-helpers';
 
-export class DomainGenericCard extends Component {
+export class SoftwareCategoryCard extends Component {
 
   get chips() {
-    if(this.args.category.isOfType('strategy')) {
-      return [
-        GENERIC_TOPIC_CHIPS['strategic-areas'],
-        GENERIC_TOPIC_CHIPS['strategic-topic-tags'],
-      ];
-    }
-    else {
-      return [
-        GENERIC_TOPIC_CHIPS['generic-areas'],
-        GENERIC_TOPIC_CHIPS['generic-topic-tags'],
-      ];
-    }
+    return [
+      {
+        label: 'Technical Areas',
+        list: getRandomItems(this.args.category.parentCategory.eas.technicalAreas, 5),
+        class: 'chip-indigo'
+      },
+      {
+        label: 'Topic Tags',
+        list: this.args.category.eas.topicTags,
+        class: 'chip-green'
+      }
+    ] 
   }
 
   <template>
-    <div class="category-card domain-generic" style="--color-category: #{{@category.color}};">
+    <div class="category-card software" style="--color-category: #{{@category.color}};">
       {{!-- header --}}
       <div class="px-4 pt-1">
         <div class="flex gap-2 flex-wrap mt-3 text-xs font-semibold uppercase">
           {{#if @category.parentCategory}}
             <div class="rounded-lg p-1 px-2 bg-indigo-50 border border-indigo-200 text-indigo-800">{{@category.parentCategory.name}}</div>
           {{/if}}
+          <div class="rounded-lg p-1 px-2 bg-blue-50 border border-blue-200 text-blue-800">Software Hub</div>
           {{#each @category.eas.badges as |badge|}}
             <div class="rounded-lg p-1 px-2 bg-green-50 border border-green-500 text-green-800">{{badge}}</div>
           {{/each}}
         </div>
         <div class="mt-4 flex gap-4 items-center">
-          <div class="rounded-lg bg-category text-white
+          <div class="rounded-lg text-category border-2 border-category
             text-sm font-semibold
             grid place-content-center aspect-square
             w-10">
@@ -53,7 +54,7 @@ export class DomainGenericCard extends Component {
       {{!-- content --}}
       <div class="px-4 grid gap-4">
         {{#if @category.description}}
-          <p class="text-sm">{{@category.description}}</p>
+          <p class="text-sm line-clamp-5">{{@category.description}}</p>
         {{/if}}
         {{#if @category.eas.whenToPost}}
           <p class="rounded-lg border border-blue-200 bg-blue-50/65 p-1 px-2
@@ -106,6 +107,10 @@ export class DomainGenericCard extends Component {
           <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'articles'}}
             class="btn btn-text source-color-slate-700 max-w-max">
             Articles
+          </LinkTo>
+           <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'bulletins'}}
+            class="btn btn-text source-color-slate-700 max-w-max">
+            Bulletins
           </LinkTo>
           <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'events'}}
             class="btn btn-text source-color-slate-700 max-w-max">
