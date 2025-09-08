@@ -1,9 +1,9 @@
 import DiscourseTemplateMap from 'discourse/lib/discourse-template-map';
 
 {
-  const original = DiscourseTemplateMap.setModuleNames;
+  const original = DiscourseTemplateMap.setModuleNames.bind(DiscourseTemplateMap);
   DiscourseTemplateMap.setModuleNames = function () {
-    const base = original.call(this, ...arguments);
+    const base = original(...arguments);
 
     // discover-categories template override
     {
