@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
-import { featuredHubs } from '../../../utils/featured-hubs';
+import Category from 'discourse/models/category';
 import { constructMenu, createMenuItemFromCategory } from './menu-item';
 
 export default class CustomSidebarComponent extends Component {
@@ -17,9 +17,8 @@ export default class CustomSidebarComponent extends Component {
   @tracked activeItem = null;
 
   hydrateHubChildren(hubItem) {
-    const categories = featuredHubs
-      .map(id => this.site.categoriesById.get(id))
-      .filter(Boolean);
+    const categories = Category.list()
+      .filter(c => !c.parentCatgory && c.eas?.featured);
 
     return categories.map(category => {
       const item  = createMenuItemFromCategory(category, hubItem);
@@ -59,8 +58,6 @@ export default class CustomSidebarComponent extends Component {
   }
 
   <template>
-    {{@log this.urld.router.currentRoute}}
-    {{@log this.urld.router.currentRoute.name}}
     {{#if this.showCustomMenu}}
       <div id="custom-sidebar">
         <TreeComponent @items={{this.menuItems}} />
@@ -111,7 +108,7 @@ const LeafTemplate =
       {{#if @item.route}}
       <LinkTo @route={{@item.route.name}} @models={{@item.route.models}}
         class="menu-link">
-        <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
+        <i class="menu-icon fa-icon fa-solid {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
         {{#if @item.badge}}
           <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
@@ -122,7 +119,7 @@ const LeafTemplate =
       </LinkTo>
       {{else}}
       <a class="menu-link" href={{@item.href}}>
-        <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
+        <i class="menu-icon fa-icon fa-solid {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
         {{#if @item.badge}}
           <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
@@ -140,12 +137,12 @@ const BranchTemplate =
     <li class="menu-item has-children {{if @item.expanded 'expanded'}}"
         style="{{concat '--level:' @item.level ';'}}">
       <button class="menu-link" {{on 'click' @item.toggleExpansion}}>
-        <i class="menu-icon fa-icon fas {{@item.icon}}"></i>
+        <i class="menu-icon fa-icon fa-solid {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
         {{#if @item.badge}}
           <span class="badge {{@item.badge.classes}}">{{@item.badge.count}}</span>
         {{/if}}
-        <i class="fa-icon fas fa-chevron-down expand-icon"></i>
+        <i class="fa-icon fa-solid fa-chevron-down expand-icon"></i>
       </button>
       <TreeComponent @items={{@item.children}} @child=true @expanded={{@item.expanded}}/>
     </li>

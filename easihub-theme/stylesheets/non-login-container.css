@@ -1,0 +1,175 @@
+@layer components {
+  .text-container {
+    @apply flex justify-center bg-white text-black px-5 py-4 shadow-md mb-3 rounded-2xl;
+  }
+
+  .content-wrap {
+    @apply flex-1;
+  }
+
+  .banner-text h1 {
+    @apply relative text-left text-xl text-primary-600;
+  }
+
+  h1 {
+    @apply text-5xl leading-tight text-gray-800;
+  }
+
+  .animated-text {
+    @apply font-bold inline-block align-bottom text-lg mb-1.5;
+  }
+
+  #typewriter-box {
+    @apply inline-flex font-bold text-white rounded-md whitespace-nowrap overflow-hidden border-0 text-lg leading-[30px] h-[7.5] px-4 bg-gradient-to-r from-primary-500 to-purple-500;
+  }
+
+  #typewriter-box {
+    animation: typing 5s steps(40, end) infinite;
+  }
+
+  #typewriter {
+    @apply inline-block overflow-hidden border-r-2 border-white;
+    white-space: nowrap;
+    animation: typing 5s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
+    width: 0;
+  }
+
+  #typewriter::before {
+    content: "Enterprise Resource Planning (ERP)";
+    animation: typewriter-text 36s infinite;
+  }
+
+
+  @keyframes typing {
+    0% { width: 0; }
+    25% { width: 100%; }
+    50% { width: 100%; }
+    75% { width: 100%; }
+    100% { width: 0; }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: white; }
+  }
+
+  @keyframes typewriter-text {
+    0%, 11.1% { content: "Enterprise Resource Planning (ERP)"; }
+    11.1%, 22.2% { content: "Customer Relationship Management (CRM)"; }
+    22.2%, 33.3% { content: "Product Lifecycle Management (PLM)"; }
+    33.3%, 44.4% { content: "Supply Chain Management (SCM)"; }
+    44.4%, 55.5% { content: "Business Analytics / BI (BA/BI)"; }
+    55.5%, 66.6% { content: "Cloud Platforms (Cloud Tech.)"; }
+    66.6%, 77.7% { content: "Human Capital Management (HCM)"; }
+    77.7%, 88.8% { content: "Manufacturing Execution Systems (MES)"; }
+    88.8%, 100% { content: "Quality Management Systems (QMS)"; }
+  }
+
+
+  .hero-description {
+    @apply text-base text-gray-600 mb-4 leading-7;
+  }
+
+  .connection-text {
+    @apply text-sm text-gray-500 mb-4 font-medium;
+  }
+
+  .brand-name {
+    @apply font-bold text-primary-600;
+  }
+
+  .acronym {
+    @apply font-semibold text-primary-600;
+  }
+
+  .ai-highlight {
+    @apply font-semibold text-primary-600;
+  }
+
+  .button-container {
+    @apply m-0 flex gap-2 mt-6;
+  }
+
+  .login-button {
+    @apply bg-primary-600 text-white border-0 px-5 py-2 cursor-pointer rounded text-base transition-colors duration-300;
+  }
+  .login-button:hover {
+    @apply bg-primary-700 opacity-90;
+  }
+
+  .sign-up-button {
+    @apply bg-white text-primary-600 border border-primary-600 px-5 py-2 cursor-pointer rounded text-sm font-bold transition-colors duration-300;
+  }
+  .sign-up-button:hover {
+    @apply bg-primary-50 text-primary-600;
+  }
+
+  .visit-community {
+    @apply inline-flex items-center gap-1.5 m-2 text-primary-600 font-medium no-underline transition-colors duration-300;
+  }
+  .visit-community:hover {
+    @apply text-primary-700;
+  }
+  .visit-community:hover .explore-text {
+    @apply underline underline-offset-2;
+  }
+  .visit-community i {
+    @apply text-primary-600 transition-transform duration-300;
+  }
+  .visit-community:hover i {
+    @apply translate-x-1;
+  }
+
+  .image-container {
+    @apply flex-1 m-auto;
+  }
+
+  /* USP BLOCK STYLING */
+
+  .usp-wrap {
+    @apply mt-5;
+  }
+
+  .usp-highlights {
+    @apply grid grid-cols-3 gap-3 mt-3.5;
+  }
+
+  .usp-card {
+    @apply bg-white border border-gray-200 rounded-xl p-3 shadow-md flex flex-col gap-1.5 text-left text-gray-900;
+  }
+
+  .usp-head {
+    @apply flex items-center gap-2;
+  }
+
+  .usp-icon {
+    @apply w-7 h-7 rounded-md grid place-items-center bg-indigo-100 text-indigo-600 text-sm flex-none;
+  }
+
+  .usp-title {
+    @apply text-sm font-extrabold leading-tight text-gray-900 m-0;
+  }
+
+  .usp-desc {
+    @apply text-xs text-gray-500 m-0;
+  }
+
+  .usp-list {
+    @apply list-none mt-1.5 mb-0 p-0 grid gap-1;
+  }
+
+  .usp-list li {
+    @apply text-xs text-slate-700 flex gap-1.5 items-start leading-tight;
+  }
+
+  .usp-list li::before {
+    content: "✓";
+    @apply text-indigo-600 font-bold;
+  }
+
+  .usp-caption {
+    @apply text-xs text-white/90 mt-2;
+  }
+
+
+}

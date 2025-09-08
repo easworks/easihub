@@ -64,9 +64,7 @@ export function createMenuItemFromCategory(category, parent) {
     return null;
   }
 
-  const models = [
-    category.path.substring(3)
-  ];
+  const models = [category.slugPathWithId];
 
    const data =  {
     id: `category-${category.id}`,
@@ -225,7 +223,7 @@ const publicMenu = [
     icon: 'fa-comments',
     route: {
       name: 'tag.show',
-      models: ['discussion']
+      models: ['discussions']
     },
   },
   {

@@ -1,6 +1,6 @@
+import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
 import Service, { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import { SPECIAL_CATEGORIES } from '../consts';
 
 export default class UrlDifferentiatorService extends Service {
@@ -13,13 +13,14 @@ export default class UrlDifferentiatorService extends Service {
     const route = transition.to;
 
     this.#processRoute(route);
-  }
+  };
 
   constructor() {
     super(...arguments);
     this.router.on('routeDidChange', this.#callback);
-    if (this.router.currentRoute)
+    if (this.router.currentRoute) {
       this.#processRoute(this.router.currentRoute);
+    }
   }
 
   willDestroy() {
@@ -31,13 +32,16 @@ export default class UrlDifferentiatorService extends Service {
     if (controller) {
       this.model = controller.model;
     }
-    else
+    else {
       this.model = null;
+    }
 
 
     // this must be done last as it is being observed by
     // other components/services
     this.routeName = this.#computeRouteName(route);
+
+    // console.debug('[url]', route.name, this.routeName);
   }
 
   #computeRouteName(route) {
@@ -52,8 +56,9 @@ export default class UrlDifferentiatorService extends Service {
     }
 
     if (isAdminRoute(route)) {
-      if (!route.name.startsWith('admin.'))
+      if (!route.name.startsWith('admin.')) {
         return `admin.${route.name}`;
+      }
     }
 
     return route.name;
@@ -62,17 +67,20 @@ export default class UrlDifferentiatorService extends Service {
   #parseSegmentBasedRoute(route) {
     const segments = route.params.category_slug_path_with_id.split('/');
 
-    if (segments.length === 2 && numeric.test(segments[1]))
+    if (segments.length === 2 && numeric.test(segments[1])) {
       return `${route.name}.domain`;
+    }
 
     if (segments.length === 3 && numeric.test(segments[2])) {
-      if (genericTopicsPattern.test(segments[1]))
+      if (genericTopicsPattern.test(segments[1])) {
         return `${route.name}.technical-area`;
+      }
       return `${route.name}.software`;
     }
 
-    if (segments.length === 4 && numeric.test(segments[3]))
+    if (segments.length === 4 && numeric.test(segments[3])) {
       return `${route.name}.technical-area`;
+    }
 
     return route.name;
   }

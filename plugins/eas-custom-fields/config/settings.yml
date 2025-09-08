@@ -1,0 +1,4 @@
+plugins:
+  eas_custom_fields_enabled:
+    default: false
+    client: true

@@ -6,10 +6,16 @@
 @import './sidebar.css';
 @import './navigation-bar.css'; 
 @import './composer-fields.css';
+@import './job-card.css';
+@import './non-login-container.css';
+@import './main-header.css';
+@import './non-loggedin-homepage.css';
+@import './loggedin-homepage.css';
 
 @import './hero.css';
 @import './app-footer.css';
 @import './discovery.css';
+@import './category-cards.css';
 
 /* Custom styles can go here */
 
@@ -42,6 +48,11 @@
 @layer components {
   .divider {
     @apply border-b border-outline-variant;
+  }
+
+  .icon-bg {
+    @apply grid place-content-center p-2 aspect-square
+      rounded-md bg-slate-100 max-w-max;
   }
   
 }

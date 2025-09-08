@@ -1,20 +1,29 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { fn } from '@ember/helper';
+import {eq} from 'truth-helpers';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { htmlSafe } from "@ember/template";
 import { cook } from "discourse/lib/text";
+import AsyncContent from "discourse/components/async-content";
 import { i18n } from 'discourse-i18n';
-import { createPromiseProxy } from '../../../utils/promise-proxy';
 import { CONTENT_TYPES, getFieldConfig } from '../../../utils/shared-helpers';
+import { service } from '@ember/service';
 
 export class MessageTemplate extends Component {
-
+  @service router;
   @tracked expanded;
-  @tracked selectedContentType = '';
 
   contentTypes = CONTENT_TYPES;
+
+  // constructor() {
+  //   super(...arguments);
+  //   const currentTagOpened = this.tagID;
+  //   if(currentTagOpened) {
+  //     this.selectedContentType = currentTagOpened;
+  //   }
+  // }
 
   @action
   toggleExpansion() {
@@ -23,34 +32,16 @@ export class MessageTemplate extends Component {
 
   @action
   onContentTypeChange(contentType) {
-    this.selectedContentType = contentType;
-    this.args.model.set('selectedContentType', this.selectedContentType);
-
-    let currentTags = this.args.model.tags || [];
-    if (!Array.isArray(currentTags)) {
-      currentTags = [currentTags];
-    }
-
-    const contentTypeValues = this.contentTypes.map(type => type.value);
-    currentTags = currentTags.filter(tag => !contentTypeValues.includes(tag));
-
-    currentTags.push(contentType);
-    this.args.model.set('tags', [...currentTags]);
-
-    document.querySelectorAll('.content-type-tab').forEach(tab => {
-      tab.classList.remove('active');
-    });
-    event.target.closest('.content-type-tab').classList.add('active');
-
-    const titleInput = document.getElementById('reply-title');
-    if (this.titleField && titleInput) {
-      titleInput.placeholder = this.titleField.placeholder;
-    }
+    this.args.model.contentType = contentType;
   }
 
+  // get tagID() {
+  //   return this.router.currentRoute.params.tag_id;
+  // }
+
   get help() {
-    if (this.selectedContentType) {
-      return this.getHelpForContentType(this.selectedContentType);
+    if (this.args.model.contentType) {
+      return this.getHelpForContentType(this.args.model.contentType);
     }
     return null;
   }
@@ -60,19 +51,16 @@ export class MessageTemplate extends Component {
     const rawHeader = i18n(themePrefix(`${i18nBase}.header`));
     const rawContent = i18n(themePrefix(`${i18nBase}.content`));
 
-    const processedContent = createPromiseProxy(
-    cook(rawContent)
-      .then(htmlSafe)
-  );
+    const contentPromise = cook(rawContent).then(htmlSafe);
 
     return {
       header: rawHeader,
-      content: processedContent
+      contentPromise: contentPromise
     };
   }
 
   get titleField() {
-    const selectedType = this.args.model.selectedContentType;
+    const selectedType = this.args.model.contentType;
     if (!selectedType) {
       return null;
     }
@@ -85,7 +73,6 @@ export class MessageTemplate extends Component {
 
 
   <template>
-
     {{#if this.help}}
     <div class="p-2 mb-4 bg-primary-50 rounded-lg border-l-4 border-l-primary-500">
       <h4 class="flex gap-4 items-center justify-between">
@@ -104,20 +91,28 @@ export class MessageTemplate extends Component {
 
       <div class="overflow-hidden transition-all duration-300 ease-in-out {{if this.expanded 'max-h-96 opacity-100' 'max-h-0 opacity-0'}}">
         <div class="pt-4 prose text-sm text-justify">
-          {{{this.help.content.content}}}
+          <AsyncContent @asyncData={{this.help.contentPromise}}>
+            <:content as |content|>
+              {{{content}}}
+            </:content>
+            <:loading>
+              <div class="spinner small"></div>
+            </:loading>
+          </AsyncContent>
         </div>
       </div>
     </div>
     {{/if}}
 
-    <div class="content-type-selector mb-4">
+    <div class="content-type-selector">
       <label class="block text-sm font-medium text-gray-700 mb-2">
-        Content Type
+        Step 1: What type of content are you creating?
       </label>
       <div class="content-type-wrap">
+
         {{#each this.contentTypes as |type|}}
           <button type="button"
-            class="content-type-tab"
+            class="content-type-tab {{if (eq type.value @model.contentType) 'active'}}"
             {{on "click" (fn this.onContentTypeChange type.value)}}
           >
             <span class="tab-icon">{{type.icon}}</span>
