@@ -3,8 +3,15 @@ import PluginOutlet from 'discourse/components/plugin-outlet';
 import lazyHash from 'discourse/helpers/lazy-hash';
 import { service } from '@ember/service';
 import hideApplicationSidebar from "discourse/helpers/hide-application-sidebar";
+import CategoriesBoxes from 'discourse/components/categories-boxes';
 
-export default class NonLoggedinHomepage extends Component {
+export class AnonymousHomepage extends Component {
+
+get categories() {
+    const list = Category.list()
+      .filter(c => c.isOfType('hub', 'domain') && c.featured);
+    return list;
+  }
 
   <template>
     {{hideApplicationSidebar}}
@@ -284,21 +291,7 @@ export default class NonLoggedinHomepage extends Component {
             </p>
           </div>
           <div id="list-area">
-            <PluginOutlet
-              @name="discovery-list-area"
-              @outletArgs={{lazyHash
-                category=@model.category
-                tag=@model.tag
-                model=@model
-              }}
-              @defaultGlimmer={{true}}
-            >
-              <PluginOutlet
-                @name="discovery-list-container-top"
-                @connectorTagName="span"
-                @outletArgs={{lazyHash category=@model.category tag=@model.tag}}
-              />
-            </PluginOutlet>
+            <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
           </div>
           <div style="text-align: center; margin-top: 32px">
             <a class="btn btn-primary" href="/signup"

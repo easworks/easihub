@@ -27,6 +27,11 @@ export default {
         }
 
         @cached
+        get featured() {
+          return this.eas?.featured || false;
+        }
+
+        @cached
         get genericSubcategories() {
           const ids = this.eas?.genericSubcategories;
           if (!ids) {

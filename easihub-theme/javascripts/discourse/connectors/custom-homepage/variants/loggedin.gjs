@@ -5,8 +5,11 @@ import { service } from '@ember/service';
 import PluginOutlet from 'discourse/components/plugin-outlet';
 import lazyHash from 'discourse/helpers/lazy-hash';
 import { tracked } from '@glimmer/tracking';
+import CategoriesBoxes from 'discourse/components/categories-boxes';
+import CategoryList from 'discourse/models/category-list';
+import Category from 'discourse/models/category';
 
-export default class LoggedinHomepage extends Component {
+export class LoggedinHomepage extends Component {
   @service currentUser;
   @service store;
 
@@ -32,6 +35,12 @@ export default class LoggedinHomepage extends Component {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  get categories() {
+    const list = Category.list()
+      .filter(c => c.isOfType('hub', 'domain'));
+    return list;
   }
 
   <template>
@@ -212,21 +221,7 @@ export default class LoggedinHomepage extends Component {
       </div>
     </div>
     <div id="domains">
-      <PluginOutlet
-        @name="discovery-list-area"
-        @outletArgs={{lazyHash
-          category=@model.category
-          tag=@model.tag
-          model=@model
-        }}
-        @defaultGlimmer={{true}}
-      >
-        <PluginOutlet
-          @name="discovery-list-container-top"
-          @connectorTagName="span"
-          @outletArgs={{lazyHash category=@model.category tag=@model.tag}}
-        />
-      </PluginOutlet>
+      <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
     </div>
 
   </template>
