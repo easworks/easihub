@@ -1,8 +1,8 @@
 import RouteTemplate from 'ember-route-template';
 
 import { eq, and, not } from 'truth-helpers';
-import NonLoggedinHomepage from '../../../../components/homepage/non-loggedin-homepage';
-import LoggedinHomepage from '../../../../components/homepage/loggedin-homepage';
+import NonLoggedinHomepage from '../../homepage/non-loggedin-homepage';
+import LoggedinHomepage from '../../homepage/loggedin-homepage';
 
 export default RouteTemplate(
   <template>
