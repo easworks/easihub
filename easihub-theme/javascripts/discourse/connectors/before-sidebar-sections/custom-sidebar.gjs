@@ -5,7 +5,7 @@ import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
-import { featuredHubs } from '../../../utils/featured-hubs';
+import Category from 'discourse/models/category';
 import { constructMenu, createMenuItemFromCategory } from './menu-item';
 
 export default class CustomSidebarComponent extends Component {
@@ -17,9 +17,8 @@ export default class CustomSidebarComponent extends Component {
   @tracked activeItem = null;
 
   hydrateHubChildren(hubItem) {
-    const categories = featuredHubs
-      .map(id => this.site.categoriesById.get(id))
-      .filter(Boolean);
+    const categories = Category.list()
+      .filter(c => !c.parentCatgory && c.eas?.featured);
 
     return categories.map(category => {
       const item  = createMenuItemFromCategory(category, hubItem);

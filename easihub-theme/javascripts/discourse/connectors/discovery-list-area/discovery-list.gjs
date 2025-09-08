@@ -2,8 +2,8 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { eq } from 'truth-helpers';
 import CategoriesBoxes from 'discourse/components/categories-boxes';
+import Category from 'discourse/models/category';
 import CategoryList from 'discourse/models/category-list';
-import { featuredHubs } from '../../../utils/featured-hubs';
 import { DomainCategoryCard } from '../../../components/category-cards/domain'
 
 export default class DiscoveryList extends Component {
@@ -11,9 +11,8 @@ export default class DiscoveryList extends Component {
   @service router;
 
   get featuredCategories()  {
-    const categories = featuredHubs
-      .map(id => this.site.categoriesById.get(id))
-      .filter(Boolean);
+    const categories = Category.list()
+      .filter(c => !c.parentCatgory && c.eas?.featured);
     const list = CategoryList
       .fromArray(categories);
       list.component = DomainCategoryCard;

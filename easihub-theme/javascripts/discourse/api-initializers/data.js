@@ -40,6 +40,7 @@ const CUSTOM_DATA = {
   14: {
     avatarText: 'CRM',
     types: ['hub', 'domain'],
+    featured: true,
     genericSubcategories: [2000],
     technicalAreas: [
       'Integration Frameworks',
@@ -83,6 +84,7 @@ const CUSTOM_DATA = {
   69: {
     avatarText: 'ERP',
     types: ['hub', 'domain'],
+    featured: true,
     genericSubcategories: [1999, 2474],
     technicalAreas: [
       'Integration Frameworks',
@@ -266,5 +268,128 @@ const CUSTOM_DATA = {
     types: ['generic', 'strategy'],
     badges: ['Strategy'],
     whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  5: {
+    avatarText: 'PLM',
+    types: ['hub', 'domain'],
+    featured: true,
+    genericSubcategories: [],
+    technicalAreas: [
+      'Product Development',
+      'CAD Integration',
+      'Document Management',
+      'Change Management',
+      'BOM Management',
+      'Configuration Management',
+      'Workflow Automation',
+      'Data Migration',
+      'System Integration',
+      'Compliance Management',
+    ]
+  },
+  1031: {
+    avatarText: 'BA/BI',
+    types: ['hub', 'domain'],
+    featured: true,
+    genericSubcategories: [],
+    technicalAreas: [
+      'Data Warehousing',
+      'ETL Processes',
+      'Reporting Tools',
+      'Dashboard Development',
+      'Data Analytics',
+      'Business Intelligence',
+      'Data Visualization',
+      'Performance Management',
+      'Predictive Analytics',
+      'Data Mining',
+    ]
+  },
+  1032: {
+    avatarText: 'Cloud',
+    types: ['hub', 'domain'],
+    featured: true,
+    genericSubcategories: [],
+    technicalAreas: [
+      'AWS Integration',
+      'Azure Services',
+      'Google Cloud Platform',
+      'Container Management',
+      'Serverless Computing',
+      'Cloud Security',
+      'DevOps Automation',
+      'Microservices',
+      'API Management',
+      'Cloud Migration',
+    ]
+  },
+  1033: {
+    avatarText: 'MES',
+    types: ['hub', 'domain'],
+    featured: true,
+    genericSubcategories: [],
+    technicalAreas: [
+      'Production Scheduling',
+      'Quality Management',
+      'Equipment Management',
+      'Labor Management',
+      'Material Tracking',
+      'Performance Analysis',
+      'Maintenance Management',
+      'Shop Floor Control',
+      'Data Collection',
+      'Compliance Reporting',
+    ]
+  },
+  1034: {
+    avatarText: 'SCM',
+    types: ['hub', 'domain'],
+    genericSubcategories: [],
+    technicalAreas: [
+      'Demand Planning',
+      'Inventory Management',
+      'Procurement',
+      'Supplier Management',
+      'Logistics',
+      'Warehouse Management',
+      'Transportation',
+      'Order Management',
+      'Supply Chain Analytics',
+      'Risk Management',
+    ]
+  },
+  2153: {
+    avatarText: 'HCM',
+    types: ['hub', 'domain'],
+    genericSubcategories: [],
+    technicalAreas: [
+      'Payroll Systems',
+      'Benefits Management',
+      'Talent Management',
+      'Performance Management',
+      'Recruitment',
+      'Employee Self-Service',
+      'Time & Attendance',
+      'Learning Management',
+      'Succession Planning',
+      'HR Analytics',
+    ]
+  },
+  2156: {
+    avatarText: 'QMS',
+    types: ['hub', 'domain'],
+    genericSubcategories: [],
+    technicalAreas: [
+      'Document Control',
+      'Audit Management',
+      'Corrective Actions',
+      'Risk Assessment',
+      'Compliance Management',
+      'Training Management',
+      'Non-Conformance Management',
+      'Quality Planning',
+      'Statistical Process Control',
+      'Supplier Quality',
+    ]
   }
 };
