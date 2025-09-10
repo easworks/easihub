@@ -1,0 +1,70 @@
+@layer components {
+  .activity-grid {
+    @apply grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4;
+  }
+
+  .activity-item {
+    @apply border border-gray-200 rounded-lg h-full p-4 transition-all duration-200 ease-in-out cursor-pointer;
+  }
+
+  .activity-item:hover {
+    @apply border-blue-500 -translate-y-px shadow-lg;
+    box-shadow: 0 4px 12px rgba(73, 73, 252, 0.1);
+  }
+
+  .activity-meta {
+    @apply flex flex-col items-baseline gap-2 mb-2 text-xs text-gray-500;
+  }
+
+  .activity-content {
+    @apply flex flex-col mt-auto;
+  }
+
+  .activity-wrap {
+    @apply w-full flex justify-between;
+  }
+
+  .activity-info {
+    @apply inline-flex gap-1;
+  }
+
+  .activity-tag {
+    @apply bg-blue-500 text-white px-2 py-1 rounded text-xs font-semibold;
+  }
+
+  .activity-tag.sap {
+    @apply bg-[#0073e6];
+  }
+
+  .activity-tag.oracle {
+    @apply bg-[#f80000];
+  }
+
+  .activity-tag.salesforce {
+    @apply bg-[#00a1e0];
+  }
+
+  .activity-tag.plm {
+    @apply bg-[#ff6b35];
+  }
+
+  .domain-label {
+    @apply text-gray-400 text-xs bg-gray-100 px-1.5 py-0.5 rounded-sm uppercase tracking-wider;
+  }
+
+  .activity-title-text {
+    @apply text-sm font-semibold text-gray-900 mb-1.5 leading-tight;
+  }
+
+  .activity-excerpt {
+    @apply text-sm text-gray-600 leading-tight;
+  }
+
+  .activity-status {
+    @apply inline-flex items-center gap-1 text-xs text-green-600 font-medium ml-2;
+  }
+
+  .activity-status.answered {
+    @apply text-green-600;
+  }
+}

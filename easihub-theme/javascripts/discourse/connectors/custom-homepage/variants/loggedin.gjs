@@ -4,37 +4,17 @@ import DButton from "discourse/components/d-button";
 import { service } from '@ember/service';
 import PluginOutlet from 'discourse/components/plugin-outlet';
 import lazyHash from 'discourse/helpers/lazy-hash';
-import { tracked } from '@glimmer/tracking';
 import CategoriesBoxes from 'discourse/components/categories-boxes';
 import CategoryList from 'discourse/models/category-list';
 import Category from 'discourse/models/category';
+import RecentTopicsLoggedIn from '../../../../components/recent-topics-loggedin';
 
 export class LoggedinHomepage extends Component {
   @service currentUser;
-  @service store;
-
-  @tracked latestTopics = [];
-
-  constructor() {
-    super(...arguments);
-    this.getRecentTopics();
-  }
 
   get currentUsername() {
     let username = this.currentUser.username;
     return `${username.toUpperCase()} !`;
-  }
-
-  async getRecentTopics() {
-    try {
-      const topicList = await this.store.findFiltered('topicList', {
-        filter: 'latest',
-        params: { per_page: 6 }
-      });
-      this.latestTopics = topicList.topics.slice(0, 6);
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   get categories() {
@@ -44,6 +24,7 @@ export class LoggedinHomepage extends Component {
   }
 
   <template>
+    {{log this.latestTopics}}
     <section class="welcome-section">
       <div class="container">
         <div class="welcome-content">
@@ -123,104 +104,12 @@ export class LoggedinHomepage extends Component {
         </div>
 
         <div class="activity-grid">
-          <div class="activity-item">
-            <div class="activity-meta">
-              <div class="activity-wrap">
-                <div class="activity-info">
-                  <span class="activity-tag sap">SAP S/4HANA</span>
-                  <span class="domain-label">ERP Systems</span>
-                </div>
-                <div>
-                  <span>Posted by Sarah M. • 15 min ago</span>
-                </div>
-              </div>
-              <span class="activity-status answered">
-                <i class="fas fa-check-circle"></i> 3 answers
-              </span>
-            </div>
-            <div class="activity-title-text">
-              S/4HANA migration - custom ABAP compatibility issues
-            </div>
-            <div class="activity-excerpt">
-              Running into deprecated function modules during our conversion from
-              ECC to S/4HANA...
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div class="activity-meta">
-              <div class="activity-wrap">
-                <div class="activity-info">
-                  <span class="activity-tag salesforce">Salesforce Lightning</span>
-                  <span class="domain-label">CRM Systems</span>
-                </div>
-                <div>
-                  <span>Posted by Mike R. • 28 min ago</span>
-                </div>
-              </div>
-              <span class="activity-status answered">
-                <i class="fas fa-check-circle"></i> 2 answers
-              </span>
-            </div>
-            <div class="activity-title-text">
-              Lightning component performance optimization techniques
-            </div>
-            <div class="activity-excerpt">
-              Looking for best practices to improve load times for custom Lightning
-              components...
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div class="activity-meta">
-              <div class="activity-wrap">
-                <div class="activity-info">
-                  <span class="activity-tag plm">Teamcenter PLM</span>
-                  <span class="domain-label">PLM Systems</span>
-                </div>
-                <div>
-                  <span>Posted by David T. • 2 hours ago</span>
-                </div>
-              </div>
-              <span class="activity-status answered">
-                <i class="fas fa-check-circle"></i> Solved
-              </span>
-            </div>
-            <div class="activity-title-text">
-              Teamcenter workflow approval process customization
-            </div>
-            <div class="activity-excerpt">
-              Successfully implemented multi-level approval workflows for
-              engineering changes...
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div class="activity-meta">
-              <div class="activity-wrap">
-                <div class="activity-info">
-                  <span class="activity-tag oracle">Oracle ERP Cloud</span>
-                  <span class="domain-label">ERP Systems</span>
-                </div>
-                <div>
-                  <span>Posted by Lisa K. • 3 hours ago</span>
-                </div>
-              </div>
-              <span class="activity-status answered">
-                <i class="fas fa-check-circle"></i> 1 answer
-              </span>
-            </div>
-            <div class="activity-title-text">
-              Oracle ERP Cloud integration with legacy systems
-            </div>
-            <div class="activity-excerpt">
-              Need guidance on middleware options for connecting Oracle Cloud ERP...
-            </div>
-          </div>
+          <RecentTopicsLoggedIn />
         </div>
       </div>
     </div>
     <div id="domains">
+      <span class="domain-title">Enterprise Application Hubs</span>
       <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
     </div>
 

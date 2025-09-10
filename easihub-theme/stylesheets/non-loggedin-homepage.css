@@ -37,7 +37,7 @@
       }
 
       .btn-hero{
-        @apply w-42 py-2.5 px-4 rounded-lg font-semibold text-sm no-underline border-0 cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-1.5;
+        @apply w-42 py-1 px-3 rounded-lg font-semibold text-sm no-underline border-0 cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-1.5;
       }
 
       .btn-primary {
@@ -89,16 +89,19 @@
         @apply grid grid-cols-2 gap-10 items-start;
       }
 
-      .hero-text {
+      /* .hero-text {
         @apply pt-2.5;
-      }
+      } */
 
-      .hero-badge {
-        @apply inline-flex items-center gap-1.5 bg-primary-500/10 text-primary-500 py-1.5 px-2.5 rounded-2xl text-xs font-semibold mb-4 uppercase tracking-wider;
+      .home-anonymous-page {
+        .hero-badge {
+          @apply mb-3 border border-primary-500/40;
+        }
       }
+        
 
       .hero-text h1 {
-        @apply text-4xl font-bold text-gray-900 mb-4 leading-tight;
+        @apply text-3xl font-bold text-gray-900 mb-4 leading-tight;
       }
 
       .hero-text .highlight {
@@ -196,16 +199,16 @@
         }
       }
 
-      .hero-subtitle {
+      .hero-subtitle-anon {
         @apply text-sm text-gray-600 mb-5 leading-relaxed;
       }
 
       .hero-stats {
-        @apply flex gap-3 mb-6 flex-wrap justify-between;
+        @apply flex gap-3 mb-4 justify-between;
       }
 
       .stat-item {
-        @apply bg-white py-3 px-4 rounded-xl border border-gray-200 text-center w-42 min-w-28 transition-all duration-200 shadow-sm;
+        @apply bg-white py-1 px-3 rounded-xl border border-gray-200 text-center w-42 min-w-28 transition-all duration-200 shadow-sm;
       }
 
       .stat-item:hover {
@@ -221,7 +224,7 @@
       }
 
       .hero-actions {
-        @apply flex gap-3 mb-5 flex-wrap justify-between;
+        @apply flex gap-3 mb-4 justify-between;
       }
 
       .quick-guidelines {

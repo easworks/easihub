@@ -11,6 +11,7 @@
 @import './main-header.css';
 @import './non-loggedin-homepage.css';
 @import './loggedin-homepage.css';
+@import './recent-topics-loggedin.css';
 
 @import './hero.css';
 @import './app-footer.css';

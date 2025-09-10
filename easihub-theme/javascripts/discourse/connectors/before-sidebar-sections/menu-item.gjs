@@ -1,6 +1,8 @@
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
+
+
 export class MenuItemBadge {
   @tracked count;
   @tracked class;
@@ -102,8 +104,9 @@ const publicMenu = [
     label: 'Home',
     icon: 'fa-home',
     route: {
-      name: 'discovery.categories'
+      name: `discovery.index`
     }
+
   },
   {
     id: 'more',

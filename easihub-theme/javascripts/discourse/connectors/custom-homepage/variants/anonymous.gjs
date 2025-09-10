@@ -4,16 +4,21 @@ import lazyHash from 'discourse/helpers/lazy-hash';
 import { service } from '@ember/service';
 import hideApplicationSidebar from "discourse/helpers/hide-application-sidebar";
 import CategoriesBoxes from 'discourse/components/categories-boxes';
+import Category from 'discourse/models/category';
+import { LinkTo } from '@ember/routing';
+import bodyClass from 'discourse/helpers/body-class';
+
 
 export class AnonymousHomepage extends Component {
 
-get categories() {
+  get categories() {
     const list = Category.list()
       .filter(c => c.isOfType('hub', 'domain') && c.featured);
     return list;
   }
 
   <template>
+    {{bodyClass "home-anonymous-page"}}
     {{hideApplicationSidebar}}
     <div class="main-container">
       <section class="hero-wrap">
@@ -56,7 +61,7 @@ get categories() {
                 <li>Tableau dashboard optimizations</li>
               </ul>
 
-              <p class="hero-subtitle">
+              <p class="hero-subtitle-anon">
                 Practical, vendor-neutral answers for enterprise apps. Get help
                 from practitioners working with SAP, Oracle, Salesforce, Workday,
                 PLM, Cloud & BI—every day.
@@ -78,15 +83,15 @@ get categories() {
               </div>
 
               <div class="hero-actions">
-                <a class="btn-hero btn-primary" href="/tag/questions">
+                <LinkTo @route="tag.show" @model={{'questions'}} class="btn-hero btn-primary">
                   <i class="fas fa-question-circle"></i> Ask a Question
-                </a>
-                <a class="btn-hero btn-secondary" href="/tag/discussions">
+                </LinkTo>
+                <LinkTo @route="tag.show" @model={{'discussions'}} class="btn-hero btn-secondary">
                   <i class="fas fa-comments"></i> Browse Discussions
-                </a>
-                <a class="btn-hero btn-tertiary" href="/tag/jobs">
+                </LinkTo>
+                <LinkTo @route="tag.show" @model={{'jobs'}} class="btn-hero btn-tertiary">
                   <i class="fas fa-briefcase"></i> View EA Jobs
-                </a>
+                </LinkTo>
               </div>
 
               <div class="quick-guidelines">
