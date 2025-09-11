@@ -38,7 +38,7 @@ export class TagBanner extends Component {
   }
 
   get isTagPage() {
-    return this.router.currentRouteName === "tags.showCategory" || this.router.currentRouteName === 'tag.show';
+    return this.router.currentRouteName === "tags.showCategory";
   }
 
   get parentCategoryBannerImage() {
