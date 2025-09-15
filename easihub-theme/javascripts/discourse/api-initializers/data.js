@@ -41,7 +41,7 @@ const CUSTOM_DATA = {
     avatarText: 'CRM',
     types: ['hub', 'domain'],
     featured: true,
-    genericSubcategories: [2000],
+    genericSubcategories: [2000,2475],
     technicalAreas: [
       'Integration Frameworks',
       'Server Customization',
@@ -79,6 +79,162 @@ const CUSTOM_DATA = {
       'Entity Configuration',
       'Solution Management',
       'Integration Services',
+    ]
+  },
+  2000: {
+    avatarText: 'CRM',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2475: {
+    avatarText: 'CRM',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.'
+  },
+  1589: {
+    avatarText: 'SF',
+    types: ['hub', 'software'],
+    topicTags: [
+      'ABAP',
+      'Fiori',
+      'HANA',
+      'SAPUI5',
+      'CDS Views',
+      'OData',
+      'BTP',
+      'Analytics Cloud',
+      'SuccessFactors',
+      'Ariba',
+      'Concur',
+      'MDG',
+    ]
+  },
+  1598: {
+    avatarText: 'AC',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
+  1599: {
+    avatarText: 'OC',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Event Rules',
+      'Table I/O',
+      'EnterpriseOne',
+      'Business Views',
+      'OMW',
+      'UBE Development',
+      'Data Browser',
+      'Application Designer',
+      'Server Manager',
+      'Database Integration',
+      'Web Development',
+      'Mobile Applications',
+    ]
+  },
+  1600: {
+    avatarText: 'HS',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Event Rules',
+      'Table I/O',
+      'EnterpriseOne',
+      'Business Views',
+      'OMW',
+      'UBE Development',
+      'Data Browser',
+      'Application Designer',
+      'Server Manager',
+      'Database Integration',
+      'Web Development',
+      'Mobile Applications',
+    ]
+  },
+  1601: {
+    avatarText: '365',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Event Rules',
+      'Table I/O',
+      'EnterpriseOne',
+      'Business Views',
+      'OMW',
+      'UBE Development',
+      'Data Browser',
+      'Application Designer',
+      'Server Manager',
+      'Database Integration',
+      'Web Development',
+      'Mobile Applications',
+    ]
+  },
+  1602: {
+    avatarText: 'CX',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Event Rules',
+      'Table I/O',
+      'EnterpriseOne',
+      'Business Views',
+      'OMW',
+      'UBE Development',
+      'Data Browser',
+      'Application Designer',
+      'Server Manager',
+      'Database Integration',
+      'Web Development',
+      'Mobile Applications',
+    ]
+  },
+  1603: {
+    avatarText: 'ZS',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Event Rules',
+      'Table I/O',
+      'EnterpriseOne',
+      'Business Views',
+      'OMW',
+      'UBE Development',
+      'Data Browser',
+      'Application Designer',
+      'Server Manager',
+      'Database Integration',
+      'Web Development',
+      'Mobile Applications',
+    ]
+  },
+  1604: {
+    avatarText: 'ZH',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Event Rules',
+      'Table I/O',
+      'EnterpriseOne',
+      'Business Views',
+      'OMW',
+      'UBE Development',
+      'Data Browser',
+      'Application Designer',
+      'Server Manager',
+      'Database Integration',
+      'Web Development',
+      'Mobile Applications',
     ]
   },
   69: {
@@ -125,6 +281,18 @@ const CUSTOM_DATA = {
       'Integration Services',
     ]
   },
+  1999: {
+    avatarText: 'ERP',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2474: {
+    avatarText: 'ERP',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
   1588: {
     avatarText: 'SAP',
     types: ['hub', 'software'],
@@ -143,137 +311,11 @@ const CUSTOM_DATA = {
       'MDG',
     ]
   },
-  1589: {
-    avatarText: 'SF',
-    types: ['hub', 'software'],
-    topicTags: [
-      'ABAP',
-      'Fiori',
-      'HANA',
-      'SAPUI5',
-      'CDS Views',
-      'OData',
-      'BTP',
-      'Analytics Cloud',
-      'SuccessFactors',
-      'Ariba',
-      'Concur',
-      'MDG',
-    ]
-  },
-  1590: {
-    avatarText: 'INF',
-    types: ['hub', 'software'],
-    topicTags: [
-      'Coleman AI',
-      'Birst Analytics',
-      'ION Platform',
-      'Supply Chain',
-      'Manufacturing',
-      'Healthcare',
-      'Distribution',
-      'Financial Management',
-      'Asset Management',
-      'Human Capital Management',
-      'Fashion',
-      'Automotive',
-    ]
-  },
-  1591: {
-    avatarText: 'JDE',
-    types: ['hub', 'software'],
-    topicTags: [
-      'Event Rules',
-      'Table I/O',
-      'EnterpriseOne',
-      'Business Views',
-      'OMW',
-      'UBE Development',
-      'Data Browser',
-      'Application Designer',
-      'Server Manager',
-      'Database Integration',
-      'Web Development',
-      'Mobile Applications',
-    ]
-  },
-  1592: {
-    avatarText: '365',
-    types: ['hub', 'software'],
-    topicTags: [
-      'Power Apps',
-      'Power BI',
-      'Finance & Operations',
-      'Sales',
-      'Customer Service',
-      'Field Service',
-      'Common Data Service',
-      'Power Automate',
-      'Supply Chain',
-      'Commerce',
-      'Human Resources',
-      'Project Operations',
-    ]
-  },
-  1598: {
-    avatarText: 'AC',
-    types: ['hub', 'software'],
-    topicTags: [
-      'Power Apps',
-      'Power BI',
-      'Finance & Operations',
-      'Sales',
-      'Customer Service',
-      'Field Service',
-      'Common Data Service',
-      'Power Automate',
-      'Supply Chain',
-      'Commerce',
-      'Human Resources',
-      'Project Operations',
-    ]
-  },
-  1599: {
-    avatarText: 'OC',
-    types: ['hub', 'software'],
-    topicTags: [
-      'Event Rules',
-      'Table I/O',
-      'EnterpriseOne',
-      'Business Views',
-      'OMW',
-      'UBE Development',
-      'Data Browser',
-      'Application Designer',
-      'Server Manager',
-      'Database Integration',
-      'Web Development',
-      'Mobile Applications',
-    ]
-  },
-  1999: {
-    avatarText: 'ERP',
-    types: ['generic'],
-    badges: ['General Topics'],
-    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
-  },
-  2000: {
-    avatarText: 'CRM',
-    types: ['generic'],
-    badges: ['General Topics'],
-    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
-  },
-  2474: {
-    avatarText: 'ERP',
-    types: ['generic', 'strategy'],
-    badges: ['Strategy'],
-    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
-  },
   5: {
     avatarText: 'PLM',
     types: ['hub', 'domain'],
     featured: true,
-    genericSubcategories: [],
+    genericSubcategories: [1581, 2476],
     technicalAreas: [
       'Product Development',
       'CAD Integration',
@@ -287,11 +329,41 @@ const CUSTOM_DATA = {
       'Compliance Management',
     ]
   },
+  1581: {
+    avatarText: 'PLM',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2476: {
+    avatarText: 'PLM',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  686: {
+    avatarText: 'TC',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
   1031: {
     avatarText: 'BA/BI',
     types: ['hub', 'domain'],
     featured: true,
-    genericSubcategories: [],
+    genericSubcategories: [1585, 2477],
     technicalAreas: [
       'Data Warehousing',
       'ETL Processes',
@@ -305,11 +377,41 @@ const CUSTOM_DATA = {
       'Data Mining',
     ]
   },
+  1585: {
+    avatarText: 'BA/BI',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2477: {
+    avatarText: 'BA/BI',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  1037: {
+    avatarText: 'TU',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
   1032: {
     avatarText: 'Cloud',
     types: ['hub', 'domain'],
     featured: true,
-    genericSubcategories: [],
+    genericSubcategories: [2005, 2478],
     technicalAreas: [
       'AWS Integration',
       'Azure Services',
@@ -323,11 +425,41 @@ const CUSTOM_DATA = {
       'Cloud Migration',
     ]
   },
+  2005: {
+    avatarText: 'Cloud',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2478: {
+    avatarText: 'Cloud',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  1045: {
+    avatarText: 'AWS',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
   1033: {
     avatarText: 'MES',
     types: ['hub', 'domain'],
     featured: true,
-    genericSubcategories: [],
+    genericSubcategories: [1582, 2479],
     technicalAreas: [
       'Production Scheduling',
       'Quality Management',
@@ -341,10 +473,40 @@ const CUSTOM_DATA = {
       'Compliance Reporting',
     ]
   },
+  1582: {
+    avatarText: 'MES',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2479: {
+    avatarText: 'MES',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  1051: {
+    avatarText: 'SOE',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
   1034: {
     avatarText: 'SCM',
     types: ['hub', 'domain'],
-    genericSubcategories: [],
+    genericSubcategories: [2154, 2480],
     technicalAreas: [
       'Demand Planning',
       'Inventory Management',
@@ -358,10 +520,40 @@ const CUSTOM_DATA = {
       'Risk Management',
     ]
   },
+  2154: {
+    avatarText: 'SCM',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2480: {
+    avatarText: 'SCM',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  2007: {
+    avatarText: 'IBP',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
   2153: {
     avatarText: 'HCM',
     types: ['hub', 'domain'],
-    genericSubcategories: [],
+    genericSubcategories: [2155, 2481],
     technicalAreas: [
       'Payroll Systems',
       'Benefits Management',
@@ -375,10 +567,40 @@ const CUSTOM_DATA = {
       'HR Analytics',
     ]
   },
+  2155: {
+    avatarText: 'HCM',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2481: {
+    avatarText: 'HCM',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  2163: {
+    avatarText: 'WK',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
   2156: {
     avatarText: 'QMS',
     types: ['hub', 'domain'],
-    genericSubcategories: [],
+    genericSubcategories: [2157, 2482],
     technicalAreas: [
       'Document Control',
       'Audit Management',
@@ -391,5 +613,35 @@ const CUSTOM_DATA = {
       'Statistical Process Control',
       'Supplier Quality',
     ]
-  }
+  },
+  2157: {
+    avatarText: 'QMS',
+    types: ['generic'],
+    badges: ['General Topics'],
+    whenToPost: 'Technical topics spanning multiple vendors (architecture, integrations, comparisons, development).',
+  },
+  2482: {
+    avatarText: 'QMS',
+    types: ['generic', 'strategy'],
+    badges: ['Strategy'],
+    whenToPost: 'Executive strategy, governance frameworks, organizational transformation, and business-level planning.',
+  },
+  2290: {
+    avatarText: 'MQE',
+    types: ['hub', 'software'],
+    topicTags: [
+      'Power Apps',
+      'Power BI',
+      'Finance & Operations',
+      'Sales',
+      'Customer Service',
+      'Field Service',
+      'Common Data Service',
+      'Power Automate',
+      'Supply Chain',
+      'Commerce',
+      'Human Resources',
+      'Project Operations',
+    ]
+  },
 };

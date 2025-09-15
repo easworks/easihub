@@ -55,13 +55,13 @@ export class TopicTypeSelector extends Component {
     this.selectedAreaTag = event.target.value;
     this.args.composer.set("tags", [...currentTags]);
     
-    if (!this.args.composer.customization) {
-      this.args.composer.set('customization', {});
-    }
-    this.args.composer.customization.selectedTopicType = event.target.value;
+    const currentCustomization = this.args.composer.customization || {};
+    this.args.composer.set('customization', {
+      ...currentCustomization,
+      selectedTopicType: event.target.value
+    });
     
     this.args.composer.notifyPropertyChange('tags');
-    this.args.composer.notifyPropertyChange('customization');
   }
 
   <template>

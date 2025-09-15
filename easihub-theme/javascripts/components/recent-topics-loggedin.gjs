@@ -87,7 +87,6 @@ export default class RecentTopicsLoggedin extends Component {
   }
 
   <template>
-    {{log this.latestTopics}}
     {{#if this.latestTopics}}
     {{#each this.latestTopics as |topic|}}
     {{#let 

@@ -262,6 +262,13 @@
       /* Live Activity Feed - Reduced padding */
       .activity-preview {
         @apply bg-white border border-gray-200 rounded-xl p-5 shadow-lg;
+        @apply  w-full bg-white relative;
+        background-image:
+        linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
+        radial-gradient(circle 500px at 0% 20%, rgba(139,92,246,0.3), transparent),
+        radial-gradient(circle 500px at 100% 0%, rgba(59,130,246,0.3), transparent);
+        background-size: "48px 48px, 48px 48px, 100% 100%, 100% 100%";
       }
 
       .activity-header {
@@ -336,7 +343,7 @@
 
       /* Why Choose Section */
       .why-choose {
-        @apply bg-white;
+        @apply bg-gray-200;
       }
 
       .start-grid {
@@ -365,7 +372,7 @@
 
       /* How It Works - Reduced spacing */
       .how-it-works {
-        @apply bg-gray-50;
+        @apply bg-white;
       }
 
       .how-it-works-grid {
@@ -373,20 +380,37 @@
       }
 
       .step-card {
-        @apply text-center;
+        @apply text-center p-4 rounded-xl border border-gray-200 shadow-xl;
       }
 
       .step-number {
-        @apply w-14 h-14 bg-primary-500 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto mb-4;
+        @apply w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4;
+      }
+
+      .step-card:nth-child(1) .step-number {
+        @apply bg-gradient-to-r from-primary-300/20 to-blue-300/20;
+        @apply border-1 border-primary-400/30;
+        @apply shadow-md shadow-primary-500/20;
+        @apply text-primary-800;
       }
 
       .step-card:nth-child(2) .step-number {
-        @apply bg-green-500;
+        @apply bg-gradient-to-r from-emerald-300/20 to-teal-300/20;
+        @apply border-1 border-emerald-400/30;
+        @apply shadow-md shadow-emerald-500/20;
+        @apply text-teal-800;
       }
 
       .step-card:nth-child(3) .step-number {
-        @apply bg-orange-500;
+        @apply bg-gradient-to-r from-orange-300/20 to-amber-300/20;
+        @apply border-1 border-orange-400/30;
+        @apply shadow-md shadow-orange-500/20;
+        @apply text-amber-800;
       }
+
+      /* .step-card:nth-child(3) .step-number {
+        @apply bg-orange-500;
+      } */
 
       .step-title {
         @apply text-lg font-semibold text-gray-900 mb-2.5;
@@ -398,6 +422,15 @@
 
       .step-example {
         @apply text-xs text-gray-500 italic;
+      }
+
+      /* Domains Card - background */
+      .domains {
+        @apply bg-gray-200;
+      }
+
+      .category-boxes-wrapper > * {
+        @apply bg-white;
       }
 
       /* Topics Grid - Reduced spacing */

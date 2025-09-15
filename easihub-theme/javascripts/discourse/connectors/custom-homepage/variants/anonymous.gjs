@@ -7,6 +7,8 @@ import CategoriesBoxes from 'discourse/components/categories-boxes';
 import Category from 'discourse/models/category';
 import { LinkTo } from '@ember/routing';
 import bodyClass from 'discourse/helpers/body-class';
+import HappeningNow from '../../../../components/happening-now';
+
 
 
 export class AnonymousHomepage extends Component {
@@ -120,64 +122,7 @@ export class AnonymousHomepage extends Component {
                 <div class="live-indicator"></div>
                 <h3 class="activity-title">Happening Now</h3>
               </div>
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag">SAP</span>
-                  <span>Mike R. • 8 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  S/4HANA Finance module - currency translation issues
-                </div>
-                <div class="discussion-excerpt">
-                  "Facing problems with multi-currency consolidation in new
-                  S/4HANA setup..."
-                </div>
-              </div>
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag" style="background: #00a1e0"
-                    >Salesforce</span
-                  >
-                  <span>Lisa K. • 12 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  Lightning migration - governor limits on large data sets
-                </div>
-                <div class="discussion-excerpt">
-                  "Hitting SOQL limits with our territory management component..."
-                </div>
-              </div>
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag" style="background: #ff6b35"
-                    >PLM</span
-                  >
-                  <span>David T. • 18 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  Teamcenter workflow approval process customization
-                </div>
-                <div class="discussion-excerpt">
-                  "Need help setting up multi-level approval workflows for
-                  engineering changes..."
-                </div>
-              </div>
-
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag" style="background: #f80000"
-                    >Oracle</span
-                  >
-                  <span>Mike R. • 8 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  Oracle ERP Cloud - GL account mapping best practices
-                </div>
-                <div class="discussion-excerpt">
-                  "Need advice on chart of accounts design for
-                  multi-subsidiary..."
-                </div>
-              </div>
+              <HappeningNow />
               <div style="text-align: center; margin-top: 16px">
                 <a
                   href="/live"
@@ -287,7 +232,7 @@ export class AnonymousHomepage extends Component {
       </section>
 
       <!-- Active Discussion Topics -->
-      <section class="section">
+      <section class="section domains">
         <div class="container-wrap">
           <div class="section-header">
             <h2 class="section-title">Trending Domains & Tags</h2>

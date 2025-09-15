@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { fn, get } from '@ember/helper';
+import { fn, get, key, concat } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
@@ -11,7 +11,11 @@ import discourseComputed from "discourse/lib/decorators";
 import Composer from "discourse/models/composer";
 import { getFieldConfig } from '../../../utils/shared-helpers';
 import { getAreaCategories,TAG_CATEGORIES } from '../../../consts';
-import ComposerEditor from 'discourse/components/composer-editor';
+import DEditor from 'discourse/components/d-editor';
+import TagChooser from "select-kit/components/tag-chooser";
+import MiniTagChooser from "select-kit/components/mini-tag-chooser";
+
+
 
 export class CustomFields extends Component {
   @service composer;
@@ -52,20 +56,20 @@ export class CustomFields extends Component {
     return this.args.model.customization?.tags;
   }
 
-  get technicalTags() {
-    const customization = this.args.model.customization;
-    return customization?.technicalTags?.tag_group?.tag_names || [];
-  }
+  // get technicalTags() {
+  //   const customization = this.args.model.customization;
+  //   return customization?.technicalTags?.tag_group?.tag_names || [];
+  // }
 
-  get genericTags() {
-    const customization = this.args.model.customization;
-    return customization?.genericTags?.tag_group?.tag_names || [];
-  }
+  // get genericTags() {
+  //   const customization = this.args.model.customization;
+  //   return customization?.genericTags?.tag_group?.tag_names || [];
+  // }
 
-  get strategyTags() {
-    const customization = this.args.model.customization;
-    return customization?.strategyTags?.tag_group?.tag_names || [];
-  }
+  // get strategyTags() {
+  //   const customization = this.args.model.customization;
+  //   return customization?.strategyTags?.tag_group?.tag_names || [];
+  // }
 
   get selectedTopicType() {
     return this.args.model.customization?.selectedTopicType;
@@ -75,16 +79,16 @@ export class CustomFields extends Component {
     return this.selectedTopicType === 'technical-area' || this.selectedTopicType === 'generic-topic' || this.selectedTopicType === 'strategy';
   }
 
-  get relatedTagsToShow() {
-    if (this.selectedTopicType === 'technical-area') {
-      return this.technicalTags;
-    } else if (this.selectedTopicType === 'generic-topic') {
-      return this.genericTags;
-    } else if (this.selectedTopicType === 'strategy') {
-      return this.strategyTags;
-    }
-    return [];
-  }
+  // get relatedTagsToShow() {
+  //   if (this.selectedTopicType === 'technical-area') {
+  //     return this.technicalTags;
+  //   } else if (this.selectedTopicType === 'generic-topic') {
+  //     return this.genericTags;
+  //   } else if (this.selectedTopicType === 'strategy') {
+  //     return this.strategyTags;
+  //   }
+  //   return [];
+  // }
 
   get relatedTagsLabel() {
     if (this.selectedTopicType === 'technical-area') {
@@ -97,18 +101,50 @@ export class CustomFields extends Component {
     return this.customTags?.related_tags?.label || 'Related Tags';
   }
 
-  get currentSelectedRelatedTag() {
-    const currentTags = this.args.model.tags || [];
-    const relatedTags = [...this.technicalTags, ...this.genericTags, ...this.strategyTags];
-    return currentTags.find(tag => relatedTags.includes(tag)) || '';
+  // get currentSelectedRelatedTag() {
+  //   const currentTags = this.args.model.tags || [];
+  //   const relatedTags = [...this.technicalTags, ...this.genericTags, ...this.strategyTags];
+  //   return currentTags.find(tag => relatedTags.includes(tag)) || '';
+  // }
+
+  // get currentSelectedModuleTag() {
+  //   const currentTags = this.args.model.tags || [];
+  //   const moduleOptions = this.customTags?.module?.options || {};
+  //   const moduleKeys = Object.keys(moduleOptions);
+  //   return currentTags.find(tag => moduleKeys.includes(tag)) || '';
+  // }
+
+  get allowedTagGroups() {
+    const allGroups = this.composer.model.category.allowed_tag_groups;
+
+    if(this.selectedTopicType === 'technical-area'){
+      return allGroups.filter(group => group.includes('Technical'));
+    } else if(this.selectedTopicType === 'generic-topic') {
+      return allGroups.filter(group => group.includes('Generic')); 
+    } else if(this.selectedTopicType === 'strategy') {
+      return allGroups.filter(group => group.includes('Strategy'));
+    }
+
+    return allGroups;
   }
 
-  get currentSelectedModuleTag() {
-    const currentTags = this.args.model.tags || [];
-    const moduleOptions = this.customTags?.module?.options || {};
-    const moduleKeys = Object.keys(moduleOptions);
-    return currentTags.find(tag => moduleKeys.includes(tag)) || '';
+  get allowedTags() {
+    const customization = this.args.model.customization;
+    if (!customization) return [];
+
+    console.log(this.selectedTopicType);
+
+    if (this.selectedTopicType === 'technical-area' && customization.technicalTags) {
+      return customization.technicalTags.tag_names || [];
+    } else if (this.selectedTopicType === 'generic-topic' && customization.genericTags) {
+      return customization.genericTags.tag_names || [];
+    } else if (this.selectedTopicType === 'strategy' && customization.strategyTags) {
+      return customization.strategyTags.tag_names || [];
+    }
+
+    return [];
   }
+
 
   @action
   updateCustomField(key, eventOrValue) {
@@ -159,7 +195,7 @@ export class CustomFields extends Component {
 
     let tagsToRemove = [];
     if (key === 'related_tags') {
-      tagsToRemove = [...this.technicalTags, ...this.genericTags, ...this.strategyTags];
+      // tagsToRemove = [...this.technicalTags, ...this.genericTags, ...this.strategyTags];
     } else if (key === 'area') {
       tagsToRemove = getAreaCategories(this.args.model);
     } else {
@@ -184,6 +220,8 @@ export class CustomFields extends Component {
   }
 
 
+
+
   <template>
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
@@ -192,7 +230,11 @@ export class CustomFields extends Component {
           <label class="block text-sm font-medium text-gray-700 mb-2">
             {{this.relatedTagsLabel}}
           </label>
-          <select
+          <MiniTagChooser
+            @tags={{this.allowedTags}}
+            @onChange={{fn this.updateCustomTag "related_tags"}}
+          />
+          {{!-- <select
             class="form-control p-2"
             value={{this.currentSelectedRelatedTag}}
             {{on "change" (fn this.updateCustomTag "related_tags")}}
@@ -201,8 +243,8 @@ export class CustomFields extends Component {
             {{#each this.relatedTagsToShow as |tagName|}}
             <option value={{tagName}}>{{tagName}}</option>
             {{/each}}
-          </select>
-        </div>
+          </select> --}}
+        </div> 
       {{/if}}
 
       {{#if this.customTags.module}}
@@ -227,16 +269,13 @@ export class CustomFields extends Component {
           <label class="block text-sm font-medium text-gray-700 mb-2">
             {{this.customTags.system.label}}
           </label>
-          <select
+          <input
+            type="text"
             class="form-control p-2"
+            placeholder={{this.customTags.system.placeholder}}
             value={{this.currentSelectedSystemTag}}
             {{on "change" (fn this.updateCustomTag "system")}}
-          >
-            <option value="">Select system tags...</option>
-            {{#each-in this.customTags.system.options as |optionKey optionLabel|}}
-            <option value={{optionKey}}>{{optionLabel}}</option>
-            {{/each-in}}
-          </select>
+          />
         </div>
       {{/if}}
     </div>
@@ -287,13 +326,19 @@ export class CustomFields extends Component {
             {{on "change" (fn this.updateCustomField field.key)}}
           />
           {{else}}
-          <ComposerEditor 
+          <DEditor 
+            @placeholder= {{field.placeholder}}
+            @value={{get this.args.model.customFieldValues field.key}}
+            @change={{fn this.updateCustomField field.key}}
+
+          />
+          {{!-- <ComposerEditor 
             @value={{get this.args.model.customFieldValues field.key}}
             @placeholder={{field.placeholder}}
             @onChange={{fn this.updateCustomField field.key}}
             @fieldKey={{field.key}}
           >
-          </ComposerEditor>
+          </ComposerEditor> --}}
           {{/if}}
         </div>
         {{/if}}

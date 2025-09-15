@@ -272,4 +272,5 @@ en:
         label: "Step 4: Select Module"
       system:
         label: "Step 5: Select System Environment"
+        placeholder: "Select System Tags.."
 

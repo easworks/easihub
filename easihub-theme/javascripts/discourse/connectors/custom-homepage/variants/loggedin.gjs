@@ -8,6 +8,8 @@ import CategoriesBoxes from 'discourse/components/categories-boxes';
 import CategoryList from 'discourse/models/category-list';
 import Category from 'discourse/models/category';
 import RecentTopicsLoggedIn from '../../../../components/recent-topics-loggedin';
+import { LinkTo } from '@ember/routing';
+
 
 export class LoggedinHomepage extends Component {
   @service currentUser;
@@ -24,7 +26,6 @@ export class LoggedinHomepage extends Component {
   }
 
   <template>
-    {{log this.latestTopics}}
     <section class="welcome-section">
       <div class="container">
         <div class="welcome-content">
@@ -66,6 +67,18 @@ export class LoggedinHomepage extends Component {
             />
         </div>
       </div>
+    </div>
+
+    <div class="w-full flex items-center justify-center bg-white border border-gray-200 rounded-xl p-3 mb-5 shadow-sm">
+      <span class="text-slate-900/70 text-sm">
+        Not sure where to begin?
+      </span>
+      <LinkTo>
+        <span class="text-primary-500 mx-1 text-sm font-semibold hover:text-primary-800 hover:underline">Start Exploring</span>
+      </LinkTo>
+      <span class="text-slate-900/70 text-sm">
+        our community →
+      </span>
     </div>
 
     <!-- Navigation Tabs -->
