@@ -119,6 +119,9 @@ function hydrateComposerCustomization(customization, model) {
           if (tagGroups.strategyTags) {
             customization.strategyTags = tagGroups.strategyTags;
           }
+          if (tagGroups.modulesTags) {
+            customization.modulesTags = tagGroups.modulesTags;
+          }
           model.set('customization', { ...customization });
         }
       });
@@ -151,6 +154,9 @@ function hydrateComposerCustomization(customization, model) {
           if (tagGroups.strategyTags) {
             customization.strategyTags = tagGroups.strategyTags;
           }
+          if (tagGroups.modulesTags) {
+            customization.modulesTags = tagGroups.modulesTags;
+          }
           model.set('customization', { ...customization });
         }
       });
@@ -177,6 +183,9 @@ function hydrateComposerCustomization(customization, model) {
           }
           if (tagGroups.strategyTags) {
             customization.strategyTags = tagGroups.strategyTags;
+          }
+          if (tagGroups.modulesTags) {
+            customization.modulesTags = tagGroups.modulesTags;
           }
           model.set('customization', { ...customization });
         }
@@ -205,6 +214,9 @@ function hydrateComposerCustomization(customization, model) {
           }
           if (tagGroups.strategyTags) {
             customization.strategyTags = tagGroups.strategyTags;
+          }
+          if (tagGroups.modulesTags) {
+            customization.modulesTags = tagGroups.modulesTags;
           }
           model.set('customization', { ...customization });
         }
@@ -236,7 +248,8 @@ async function technicalTags(model) {
         return {
           technicalTags: results[0],
           genericTags: results[1],
-          strategyTags: results[2]
+          strategyTags: results[2],
+          modulesTags: results[3]
         };
       } else if (results.length === 1) {
         return {
@@ -267,7 +280,7 @@ function getCustomTags() {
     },
     system:{
       label: i18n(themePrefix('composer.custom-tags.system.label')),
-      options: TAG_OPTIONS.system
+      placeholder: i18n(themePrefix('composer.custom-tags.system.placeholder')),
     }
   };
 }
