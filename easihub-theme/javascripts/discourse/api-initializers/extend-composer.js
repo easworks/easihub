@@ -9,18 +9,13 @@ export default apiInitializer(api => {
   const urld = api.container.lookup('service:url-differentiator');
   const composer = api.container.lookup('service:composer');
 
-  api.modifyClass('model:composer', (Composer) => {
-    return class extends Composer {
-      @tracked customization;
-      @tracked customFields = {};
-      @tracked customFieldValues = {};
-    };
-  });
+
 
   const LOCKED_TAGS = ["questions", "discussions", "use-cases", "articles", "bulletins", "events", "jobs", "feedback"];
 
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
+
 
     let customization = null;
     switch (route.name) {
@@ -28,7 +23,7 @@ export default apiInitializer(api => {
         if (urld.routeName === 'discovery.category.feedback') {
           customization = { type: 'by-category' };
         }
-        else if (urld.routeName === 'discovery.category.software') {
+        else if (urld.routeName === 'discovery.category.software' || urld.routeName === 'discovery.category.technical-area') {
           customization = { type: 'by-software' };
         }
         else if (urld.routeName === 'discovery.category.domain') {
@@ -89,9 +84,68 @@ export default apiInitializer(api => {
       }
     }
   });
+
+  api.modifyClass('model:composer', (Composer) => {
+    return class extends Composer {
+      @tracked selectedTopicType = null;
+
+      async save(opts) {
+        if (this.contentType === 'jobs') {
+          await this.postJobToAPI();
+        }
+        return this._super(opts);
+      }
+
+      async postJobToAPI() {
+        const fields = this.customFieldValues || {};
+        const category = this.category;
+
+        const jobData = {
+          job_title: fields.title || '',
+          company_name: fields.company || '',
+          job_location: fields.location || '',
+          employment_type: fields.job_type || '',
+          salary_range: fields.compensation_range || '',
+          work_location_type: fields.work_mode || '',
+          posted_date: fields.posting_date || new Date().toISOString().split('T')[0],
+          apply_button_label: 'Apply Now',
+          apply_url: fields.external || '',
+          seniority_level: fields.seniority || '',
+          job_id: `job_${Date.now()}`,
+          industry: category?.name || '',
+          comp_desc: '',
+          tech_skills: fields.skills || '',
+          benefits: fields.benefit || '',
+          qualifications: fields.qualification || '',
+          full_job_description: fields.desc || '',
+          c_logo: '',
+          domain_name: fields.domain || '',
+          software_name: fields.software || '',
+          contract_duration: fields.duration || '',
+          expected_hours_per_week: '',
+          required_skills: fields.skills || ''
+        };
+
+        try {
+          const response = await fetch('https://community.easihub.com/erp_db/api/erp-collections/jobs/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jobData)
+          });
+
+          if (!response.ok) {
+            console.error('Failed to post job:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error posting job:', error);
+        }
+      }
+    };
+  });
 });
 
 function hydrateComposerCustomization(customization, model) {
+
   switch (customization.type) {
     case 'by-category': {
       const category = customization.model.category;
@@ -245,12 +299,13 @@ async function technicalTags(model) {
       const results = await Promise.all(promises);
 
       if (results.length >= 3) {
-        return {
+        const tagGroups = {
           technicalTags: results[0],
           genericTags: results[1],
           strategyTags: results[2],
           modulesTags: results[3]
         };
+        return tagGroups;
       } else if (results.length === 1) {
         return {
           technicalTags: results[0]

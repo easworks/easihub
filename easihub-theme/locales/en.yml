@@ -269,8 +269,8 @@ en:
       area:
         label: "Step 2: Select Topic Area"
       module:
-        label: "Step 4: Select Module"
+        label: "Step 4: Select Module (optional)"
       system:
-        label: "Step 5: Select System Environment"
-        placeholder: "Select System Tags.."
+        label: "Step 5: System Environment (optional)"
+        placeholder: "E.g. SAP-S4/HANA 2022, etc."
 

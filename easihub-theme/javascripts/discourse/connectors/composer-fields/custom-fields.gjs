@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { fn, get, key, concat, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
+import {eq} from 'truth-helpers';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { observes } from "@ember-decorators/object";
@@ -76,31 +77,27 @@ export class CustomFields extends Component {
     return customization?.modulesTags?.tag_group?.tag_names || [];
   }
 
-  get selectedTopicType() {
-    return this.args.model.customization?.selectedTopicType;
-  }
-
-  get showRelatedTags() {
-    return this.selectedTopicType === 'technical-area' || this.selectedTopicType === 'generic-topic' || this.selectedTopicType === 'strategy';
-  }
+  // get showRelatedTags() {
+  //   return this.args.model.selectedTopicType === 'technical-area';
+  // }
 
   get relatedTagsToShow() {
-    if (this.selectedTopicType === 'technical-area') {
+    if (this.args.model.selectedTopicType === 'technical-area') {
       return this.technicalTags;
-    } else if (this.selectedTopicType === 'generic-topic') {
+    } else if (this.args.model.selectedTopicType === 'generic-topic') {
       return this.genericTags;
-    } else if (this.selectedTopicType === 'strategy') {
+    } else if (this.args.model.selectedTopicType === 'strategy') {
       return this.strategyTags;
     }
     return [];
   }
 
   get relatedTagsLabel() {
-    if (this.selectedTopicType === 'technical-area') {
+    if (this.args.model.selectedTopicType === 'technical-area') {
       return 'Select Technical Tag';
-    } else if (this.selectedTopicType === 'generic-topic') {
+    } else if (this.args.model.selectedTopicType === 'generic-topic') {
       return 'Select Generic Tag';
-    } else if (this.selectedTopicType === 'strategy') {
+    } else if (this.args.model.selectedTopicType === 'strategy') {
       return 'Select Strategy Tag';
     }
     return this.customTags?.related_tags?.label || 'Related Tags';
@@ -114,9 +111,7 @@ export class CustomFields extends Component {
 
   get currentSelectedModuleTag() {
     const currentTags = this.args.model.tags || [];
-    const moduleOptions = this.customTags?.module?.options || {};
-    const moduleKeys = Object.keys(moduleOptions);
-    return currentTags.find(tag => moduleKeys.includes(tag)) || '';
+    return currentTags.find(tag => this.moduleTags.includes(tag)) || '';
   }
 
   @tracked systemTagValue = '';
@@ -248,14 +243,11 @@ export class CustomFields extends Component {
     this.args.model.set("tags", [...currentTags]);
     this.args.model.notifyPropertyChange('tags');
   }
-
-
-
-
+  
   <template>
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
-      {{#if this.showRelatedTags}}
+      {{!-- {{#if this.showRelatedTags}} --}}
         <div class="field-group">
           <label class="block text-sm font-medium text-gray-700 mb-2">
             {{this.relatedTagsLabel}}
@@ -271,7 +263,7 @@ export class CustomFields extends Component {
             {{/each}}
           </select>
         </div> 
-      {{/if}}
+      {{!-- {{/if}} --}}
 
       {{#if this.customTags.module}}
         <div class="field-group">
@@ -284,9 +276,9 @@ export class CustomFields extends Component {
             {{on "change" (fn this.updateCustomTag "module")}}
           >
             <option value="">Select module tags...</option>
-            {{#each-in this.moduleTags as |optionKey optionLabel|}}
+            {{#each this.args.model.customization.modulesTags.tag_group.tag_names as |optionLabel|}}
             <option value={{optionLabel}}>{{optionLabel}}</option>
-            {{/each-in}}
+            {{/each}}
           </select>
         </div>
       {{/if}}
@@ -369,6 +361,8 @@ export class CustomFields extends Component {
         </div>
         {{/if}}
       {{/each}}
+      
+
     </div>
     {{/if}}
   </template>
