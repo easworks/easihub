@@ -8,14 +8,6 @@ export default class AppFooter extends Component {
     return new Date().getFullYear();
   }  
 
-
-  communityLinks = [
-    { text: "Explore", link: "/community", icon: "fas fa-rocket", primary: true },
-    { text: "Discussions", link: "/community/discussions", icon: "fas fa-comments" },
-    { text: "Experts", link: "/community/experts", icon: "fas fa-crown" },
-    { text: "Stories", link: "/community/success-stories", icon: "fas fa-trophy" }
-  ];
-
   socialLinks = [
     {
       href: "https://linkedin.com/company/easihub",
@@ -27,29 +19,36 @@ export default class AppFooter extends Component {
     { href: "mailto:hello@easihub.com", icon: "fas fa-envelope", label: "Email" }
   ];
 
-  platformLinks = [
-    { text: "Join Community", link: "/community", icon: "fas fa-users", primary: true },
-    { text: "Browse Experts", link: "/experts", icon: "fas fa-user-tie" },
-    { text: "Success Stories", link: "/stories", icon: "fas fa-trophy" },
-    { text: "Become Expert", link: "/experts/become", icon: "fas fa-star" },
-    { text: "EASiHub Talent", link: "/talent", icon: "fas fa-briefcase", primary: true },
-    { text: "Platform Features", link: "/features", icon: "fas fa-wand-magic-sparkles" }
+  popularLinks = [
+    { text: "ERP Systems", link: "/c/erp-enterprise-resource-planning/69", icon: "fas fa-building", primary: true },
+    { text: "CRM Platforms", link: "/c/crm-customer-relationship-management/14", icon: "fas fa-users" },
+    { text: "HCM Solutions", link: "/c/hcm-human-capital-management/2153", icon: "fas fa-user-group" },
+    { text: "PLM Platforms", link: "/c/plm-product-lifecycle-management/5", icon: "fas fa-cube" },
+    { text: "Analytics & BI", link: "/c/ba-bi-business-analysis-business-intelligence/1031", icon: "fas fa-chart-line", primary: true },
+    { text: "Supply Chain", link: "/c/scm-supply-chain-management/1034", icon: "fas fa-truck" },
+    { text: "View All Platforms", link: "/features", icon: "fas fa-th-large" },
   ];
 
-  companyLinks = [
-    { text: "About EASiHub", link: "/about", icon: "fas fa-info-circle" },
-    { text: "Careers", link: "/careers", icon: "fas fa-handshake" },
-    { text: "Press Kit", link: "/press", icon: "fas fa-newspaper" },
-    { text: "Contact", link: "/contact", icon: "fas fa-envelope" }
-  ];
-
-  resourcesLinks = [
+  communityLinks = [
+    { text: "Recent Discussions", link: "/discussions", icon: "fas fa-comments" },
+    { text: "Join Moderators", link: "/moderators", icon: "fas fa-handshake" },
+    { text: "Community Guidelines", link: "/guidelines", icon: "fas fa-list" },
+    { text: "Posting Guidelines", link: "/posting", icon: "fas fa-pen-to-square" },
+    { text: "Code of Conduct", link: "/code-of-conduct", icon: "fas fa-shield" },
     { text: "Help Center", link: "/help", icon: "fas fa-life-ring" },
-    { text: "Blog", link: "/blog", icon: "fas fa-newspaper" },
-    { text: "Community Guidelines", link: "/community/guidelines", icon: "fas fa-list" },
-    { text: "Posting Guidelines", link: "/community/posting-guidelines", icon: "fas fa-pen-to-square" },
-    { text: "Code of Conduct", link: "/community/code-of-conduct", icon: "fas fa-shield" },
-    { text: "Start Exploring", link: "/community", icon: "fas fa-compass" }
+    { text: "Contact Support", link: "/contact", icon: "fas fa-headset" },
+    { text: "Report Content", link: "/report", icon: "fas fa-flag" },
+  ];
+
+  platformLinks = [
+    { text: "Main Platform", link: "https://www.development.branches.easihub.com/", icon: "fas fa-globe" },
+    { text: "About Community", link: "/about", icon: "fas fa-users" },
+    { text: "EASiHub Talent", link: "/talent", icon: "fas fa-user-tie" },
+    { text: "EASiHub Academy", link: "/academy", icon: "fas fa-graduation-cap" },
+    { text: "Success Stories", link: "/success", icon: "fas fa-star" },
+    { text: "About EASiHub", link: "/easihub/help", icon: "fas fa-info-circle" },
+    { text: "Contact", link: "/contact", icon: "fas fa-envelope" },
+    { text: "Blog", link: "/blog", icon: "fas fa-blog" },
   ];
 
   contactItems = [
@@ -86,7 +85,7 @@ export default class AppFooter extends Component {
         </div>
 
         <!-- Community Quick-Links Bar -->
-        <div class="community-quicklinks-bar">
+        {{!-- <div class="community-quicklinks-bar">
             <div class="community-bar-header">
             <h5>
                 <i class="fas fa-users"></i>
@@ -104,7 +103,7 @@ export default class AppFooter extends Component {
                 </a>
             {{/each}}
             </div>
-        </div>
+        </div> --}}
 
         <!-- Main Footer Grid -->
         <div class="footer-grid">
@@ -120,12 +119,23 @@ export default class AppFooter extends Component {
                     Where enterprise application expertise meets opportunity. Connect with the professionals shaping how business gets done—from implementation to innovation across <strong>the world's most critical business systems.</strong>
                 </p>
 
-                <div class="social-links">
-                    {{#each this.socialLinks as |social|}}
-                    <a href={{social.href}} aria-label={{social.label}}>
-                        <i class={{social.icon}}></i>
-                    </a>
-                    {{/each}}
+                <div class="stats-panels">
+                    <div class="stat-panel">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Members</span>
+                    </div>
+                    <div class="stat-panel">
+                        <span class="stat-number">1K+</span>
+                        <span class="stat-label">Daily Posts</span>
+                    </div>
+                    <div class="stat-panel">
+                        <span class="stat-number">120+</span>
+                        <span class="stat-label">Countries</span>
+                    </div>
+                    <div class="stat-panel">
+                        <span class="stat-number">98%</span>
+                        <span class="stat-label">Solved</span>
+                    </div>
                 </div>
             </div>
 
@@ -134,10 +144,10 @@ export default class AppFooter extends Component {
             <div class="footer-column">
                 <h4>
                 <i class="fas fa-cube text-slate-300"></i>
-                Platform
+                Popular Platform
                 </h4>
                 <ul>
-                {{#each this.platformLinks as |link|}}
+                {{#each this.popularLinks as |link|}}
                     <li>
                     <a href={{link.link}} class="{{if link.primary "primary"}}">
                         <i class={{link.icon}}></i>
@@ -154,10 +164,10 @@ export default class AppFooter extends Component {
             <div class="footer-column">
                 <h4>
                 <i class="fas fa-building text-slate-300"></i>
-                Company
+                Community
                 </h4>
                 <ul>
-                {{#each this.companyLinks as |link|}}
+                {{#each this.communityLinks as |link|}}
                     <li>
                     <a href={{link.link}}>
                         <i class={{link.icon}}></i>
@@ -169,15 +179,15 @@ export default class AppFooter extends Component {
             </div>
             </div>
 
-            <!-- Resources Section -->
+            <!-- Easihub Platform Section -->
             <div class="footer-menu surface glass">
             <div class="footer-column">
-                <h4>
-                <i class="fas fa-book text-slate-300"></i>
-                Resources
+                <h4 class="easihub-block">
+                    <i class="fas fa-book text-slate-300"></i>
+                    EASiHub Platform
                 </h4>
                 <ul>
-                {{#each this.resourcesLinks as |link|}}
+                {{#each this.platformLinks as |link|}}
                     <li>
                     <a href={{link.link}}>
                         <i class={{link.icon}}></i>

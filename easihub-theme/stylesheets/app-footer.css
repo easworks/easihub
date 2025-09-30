@@ -1,5 +1,12 @@
 @layer components {
 
+.surface {
+    &.glass {
+      @apply rounded-lg border-1 border-outline-variant/12;
+      @apply bg-gradient-to-br from-outline-variant/6 to-outline-variant/3;
+    }
+  }
+
 .page-container {
   @apply bg-gradient-to-br from-slate-950 to-slate-900 px-20 py-14;
 }
@@ -272,22 +279,26 @@
 
 .stats-panels {
   @apply grid grid-cols-4 gap-3;
+
+  .stat-panel {
+    @apply bg-white/5 border border-white/12 rounded-lg px-2 py-4 text-center backdrop-blur-sm transition-all duration-300;
+  
+    .stat-number {
+      @apply block font-bold text-lg text-primary-500 mb-1;
+    }
+  
+    .stat-label {
+      @apply block text-xs uppercase tracking-wide text-slate-400 font-medium leading-none whitespace-nowrap;
+    }
+  }
+  
+  .stat-panel:hover {
+    @apply bg-blue-500/8 border-blue-500/15 -translate-y-0.5;
+  }
 }
 
-.stat-panel {
-  @apply bg-white/5 border border-white/12 rounded-lg px-2 py-4 text-center backdrop-blur-sm transition-all duration-300;
-
-  .stat-number {
-    @apply block font-bold text-lg text-primary-500 mb-1;
-  }
-
-  .stat-label {
-    @apply block text-xs uppercase tracking-wide text-slate-400 font-medium leading-none whitespace-nowrap;
-  }
-}
-
-.stat-panel:hover {
-  @apply bg-blue-500/8 border-blue-500/15 -translate-y-0.5;
+.easihub-block {
+  @apply text-primary-500 bg-blue-500/10 p-3 rounded-lg -m-2 mb-4 border border-blue-500/20;
 }
 
 .footer-bottom {

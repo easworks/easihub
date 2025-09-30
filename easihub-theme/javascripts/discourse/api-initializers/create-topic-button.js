@@ -38,7 +38,6 @@ export default apiInitializer(api => {
       get createTopicLabel() {
         const base = super.createTopicLabel;
 
-        console.log("d-nav",this.urld.routeName);
 
         switch (this.urld.routeName) {
           case 'tags.showCategory.technical-area':
@@ -52,7 +51,6 @@ export default apiInitializer(api => {
             const category = this.urld.model.category;
             const labelKey = category.id === 179 ? category.id : 'default';
             const label = themePrefix(`topic.create.by-category.${labelKey}`);
-            console.log(label);
 
             return label;
           }

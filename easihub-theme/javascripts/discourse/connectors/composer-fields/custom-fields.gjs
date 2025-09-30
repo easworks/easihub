@@ -82,22 +82,52 @@ export class CustomFields extends Component {
   // }
 
   get relatedTagsToShow() {
-    if (this.args.model.selectedTopicType === 'technical-area') {
+    let topicType = this.args.model.selectedTopicType;
+    
+    // If no topic type is selected, detect from category
+    if (!topicType) {
+      const categorySlug = this.args.model.category?.slug || '';
+      if (categorySlug.includes('generic')) {
+        topicType = 'generic-topic';
+      } else if (categorySlug.includes('strategy')) {
+        topicType = 'strategy';
+      } else {
+        topicType = 'technical-area';
+      }
+    }
+    
+    if (topicType === 'technical-area') {
       return this.technicalTags;
-    } else if (this.args.model.selectedTopicType === 'generic-topic') {
+    } else if (topicType === 'generic-topic') {
       return this.genericTags;
-    } else if (this.args.model.selectedTopicType === 'strategy') {
+    } else if (topicType === 'strategy') {
       return this.strategyTags;
     }
     return [];
   }
 
+
+
   get relatedTagsLabel() {
-    if (this.args.model.selectedTopicType === 'technical-area') {
+    let topicType = this.args.model.selectedTopicType;
+    
+    // If no topic type is selected, detect from category
+    if (!topicType) {
+      const categorySlug = this.args.model.category?.slug || '';
+      if (categorySlug.includes('generic')) {
+        topicType = 'generic-topic';
+      } else if (categorySlug.includes('strategy')) {
+        topicType = 'strategy';
+      } else {
+        topicType = 'technical-area';
+      }
+    }
+    
+    if (topicType === 'technical-area') {
       return 'Select Technical Tag';
-    } else if (this.args.model.selectedTopicType === 'generic-topic') {
+    } else if (topicType === 'generic-topic') {
       return 'Select Generic Tag';
-    } else if (this.args.model.selectedTopicType === 'strategy') {
+    } else if (topicType === 'strategy') {
       return 'Select Strategy Tag';
     }
     return this.customTags?.related_tags?.label || 'Related Tags';
@@ -245,6 +275,7 @@ export class CustomFields extends Component {
   }
   
   <template>
+    {{log @model}}
     {{#if this.customTags}}
     <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
       {{!-- {{#if this.showRelatedTags}} --}}

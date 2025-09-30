@@ -5,6 +5,7 @@ export default apiInitializer(api => {
 
   api.onPageChange(() => {
     const route = router.currentRoute;
+
     if (route.name === 'discovery.category') {
       setTimeout(() => {
         const el = getHeaderDescription();

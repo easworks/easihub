@@ -73,17 +73,12 @@ export class TopicTypeSelector extends Component {
   constructor() {
     super(...arguments);
     if (this.isSubcategory) {
+      this.selectedTopicType = 'technical-area';
       this.args.composer.set('selectedTopicType', 'technical-area');
-      
-      setTimeout(() => {
-        const event = { target: { checked: true } };
-        this.updateTopicType(event);
-      }, 0);
     }
   }
 
   <template>
-    {{log this.composer this.router}}
     {{#if this.isSubcategory}}
     <div class="topic-type-selector field-group">
       <label class="checkbox-label">

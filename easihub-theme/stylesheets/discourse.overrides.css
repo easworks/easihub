@@ -184,7 +184,7 @@
     @apply pl-4;
   }
 
-  /* hiding composer default textarea and input and styling tags section*/
+  /* hiding composer default textarea and input and styling tags section - only when customized */
 
   .d-editor-textarea-wrapper {
     @apply hidden;

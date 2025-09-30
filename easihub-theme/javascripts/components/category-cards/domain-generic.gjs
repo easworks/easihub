@@ -42,7 +42,7 @@ export class DomainGenericCard extends Component {
             w-10">
             {{@category.eas.avatarText}}
           </div>
-          <LinkTo @route="discovery.category" @models={{array @category.slugPathWithId}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugPathWithId "overview"}}
             class="font-bold text-lg text-blue-950">
             {{@category.name}}
           </LinkTo>

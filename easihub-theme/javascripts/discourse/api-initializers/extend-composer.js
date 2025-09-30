@@ -10,12 +10,10 @@ export default apiInitializer(api => {
   const composer = api.container.lookup('service:composer');
 
 
-
   const LOCKED_TAGS = ["questions", "discussions", "use-cases", "articles", "bulletins", "events", "jobs", "feedback"];
 
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;
-
 
     let customization = null;
     switch (route.name) {
@@ -38,16 +36,9 @@ export default apiInitializer(api => {
       }
     }
 
-    if (!customization) {
-      model.set('customization', null);
-      return;
-    }
-
     customization.model = urld.model;
 
     hydrateComposerCustomization(customization, model);
-
-    // model.set('tags', []);
 
     model.set('customization', customization);
   });
@@ -88,12 +79,13 @@ export default apiInitializer(api => {
   api.modifyClass('model:composer', (Composer) => {
     return class extends Composer {
       @tracked selectedTopicType = null;
+      @tracked customization = null;
 
       async save(opts) {
         if (this.contentType === 'jobs') {
           await this.postJobToAPI();
         }
-        return this._super(opts);
+        return this.super(opts);
       }
 
       async postJobToAPI() {
@@ -242,6 +234,7 @@ function hydrateComposerCustomization(customization, model) {
             customization.modulesTags = tagGroups.modulesTags;
           }
           model.set('customization', { ...customization });
+          model.notifyPropertyChange('customization');
         }
       });
     } break;
@@ -256,7 +249,6 @@ function hydrateComposerCustomization(customization, model) {
       }
 
       customization.tags = getCustomTags();
-
 
       technicalTags(customization.model).then(tagGroups => {
         if (tagGroups) {
@@ -299,13 +291,12 @@ async function technicalTags(model) {
       const results = await Promise.all(promises);
 
       if (results.length >= 3) {
-        const tagGroups = {
+        return {
           technicalTags: results[0],
           genericTags: results[1],
           strategyTags: results[2],
           modulesTags: results[3]
         };
-        return tagGroups;
       } else if (results.length === 1) {
         return {
           technicalTags: results[0]
@@ -314,9 +305,7 @@ async function technicalTags(model) {
 
       return null;
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error('Error fetching technical tags:', err);
-      return null;
+      return err;
     }
   }
 
@@ -339,7 +328,3 @@ function getCustomTags() {
     }
   };
 }
-
-
-
-
