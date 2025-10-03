@@ -214,6 +214,14 @@
     @apply flex-1 w-full;
   }
 
+  #reply-control .with-category .showing-ai-suggestions .category-input {
+    @apply max-w-full;
+  }
+
+  #reply-control .with-tags .showing-ai-suggestions .tags-input {
+    @apply max-w-full;
+  }
+
   .topic-type-selector .form-control {
     @apply w-full;
   }

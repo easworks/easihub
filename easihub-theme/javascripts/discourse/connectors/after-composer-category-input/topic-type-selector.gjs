@@ -54,7 +54,7 @@ export class TopicTypeSelector extends Component {
     }
     
     if (value) {
-      const contentTypeValues = ['questions', 'discussions', 'articles', 'events', 'use-cases', 'bulletins', 'jobs'];
+      const contentTypeValues = ['question', 'discussion', 'article', 'event', 'use-case', 'bulletin', 'job'];
       const contentTypeIndex = currentTags.findIndex(tag => contentTypeValues.includes(tag));
       
       if (contentTypeIndex !== -1) {

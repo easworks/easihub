@@ -85,13 +85,13 @@ export class AnonymousHomepage extends Component {
               </div>
 
               <div class="hero-actions">
-                <LinkTo @route="tag.show" @model={{'questions'}} class="btn-hero btn-primary">
+                <LinkTo @route="tag.show" @model={{'question'}} class="btn-hero btn-primary">
                   <i class="fas fa-question-circle"></i> Ask a Question
                 </LinkTo>
-                <LinkTo @route="tag.show" @model={{'discussions'}} class="btn-hero btn-secondary">
+                <LinkTo @route="tag.show" @model={{'discussion'}} class="btn-hero btn-secondary">
                   <i class="fas fa-comments"></i> Browse Discussions
                 </LinkTo>
-                <LinkTo @route="tag.show" @model={{'jobs'}} class="btn-hero btn-tertiary">
+                <LinkTo @route="tag.show" @model={{'job'}} class="btn-hero btn-tertiary">
                   <i class="fas fa-briefcase"></i> View EA Jobs
                 </LinkTo>
               </div>

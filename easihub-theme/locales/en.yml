@@ -12,13 +12,13 @@ en:
   topic:
     create: 
       by-tag:
-        articles: Propose Article
-        bulletins: Post Bulletin
-        discussions: Start Discussion
-        events: Add Event
-        jobs: Post Jobs
-        questions: Ask Question
-        use-cases: Share Use Case
+        article: Propose Article
+        bulletin: Post Bulletin
+        discussion: Start Discussion
+        event: Add Event
+        job: Post job
+        question: Ask Question
+        use-case: Share Use Case
         default: Ask Question
       by-category:
         default: Ask Question
@@ -36,13 +36,13 @@ en:
   composer:
     action-title:
       by-tag: 
-        articles: Write an Article
-        bulletins: Share a Bulletin
-        discussions: Start a Discussion
-        events: Create an Event
-        jobs: Post a Job Opening
-        questions: Ask a Question
-        use-cases: Document a Use Case
+        article: Write an Article
+        bulletin: Share a Bulletin
+        discussion: Start a Discussion
+        event: Create an Event
+        job: Post a Job Opening
+        question: Ask a Question
+        use-case: Document a Use Case
         default: Ask a Question
       by-category:
         default: Ask a Question
@@ -54,13 +54,13 @@ en:
 
     create_topic:
       by-tag:
-        articles: Publish Article
-        bulletins: Share Bulletin
-        discussions: Create Discussion
-        events: Publish Event
-        jobs: Post Job
-        questions: Submit Question
-        use-cases: Share Use Case
+        article: Publish Article
+        bulletin: Share Bulletin
+        discussion: Create Discussion
+        event: Publish Event
+        job: Post Job
+        question: Submit Question
+        use-case: Share Use Case
         default: Submit Question
       by-category:
         default: Submit Question
@@ -71,7 +71,7 @@ en:
         default: Submit Question
 
     fields:
-      questions:
+      question:
         title_label: "Step 2: Title (Describe your question briefly)"
         title_placeholder: "Clearly state your question related to a domain, software, or technical area (e.g., 'SAP API error in OAuth setup')"
         problem_details_label: "Step 5: Problem Details (Include error, setup info, or code snippet)"
@@ -79,7 +79,7 @@ en:
         attempted_solutions_label: "Step 6: Attempted Solutions (Explain what you've already attempted)"
         attempted_solutions_placeholder: "Explain what methods you tried (config steps, API calls, scripts) and what happened..."
       
-      discussions:
+      discussion:
         title_label: "Step 2: Discussion Title (Frame your topic)"
         title_placeholder: "What are pros/cons of customizing Oracle Fusion workflows?"
         context_label: "Step 4: Discussion Context (Describe your thoughts or objective)"
@@ -95,7 +95,7 @@ en:
         outcome_label: "Step 7: Outcome (Summarize the impact)"
         outcome_placeholder: "E.g., Reduced manual entry by 60%, improved data accuracy across ERP-PLM"
 
-      articles:
+      article:
         title_label: "Step 2: Article Title (Summarize your article)"
         title_placeholder: "Enter a clear, descriptive article title"
         content_label: "Step 5: Article Content or External URL"
@@ -107,7 +107,7 @@ en:
         author_placeholder: "Author name or reference (e.g., John Doe)"
         publication_date_label: "Step 9: Publication Date"
 
-      bulletins:
+      bulletin:
         title_label: "Step 2: Bulletin Title (Summarize your bulletin)"
         title_placeholder: "E.g., Oracle Fusion Q2 Update Released"
         desc_label: "Step 5: Description or URL"
@@ -121,7 +121,7 @@ en:
         author_label: "Step 10: Author / Publisher"
         author_placeholder: "Author name or reference (e.g., John Doe)"
 
-      events:
+      event:
         title_label: "Step 2: Event Title (Summarize your event)"
         title_placeholder: "E.g., Join our SAP S/4HANA API Workshop - June 2025"
         type_label: "Step 5: Type of Event"
@@ -133,7 +133,7 @@ en:
         Website_placeholder: "Official Event Website URL"
         start_date_label: "Step 9: Start Date"
         end_date_label: "Step 10: End Date"
-      jobs:
+      job:
         section1_label: "Basic Job Details"
         title_label: "Job Title"
         title_placeholder: "e.g., SAP Basis Consultant (Mid-Level), PLM Solution Architect – Teamcenter (Lead)"
@@ -168,7 +168,7 @@ en:
         external_label: "External Apply URL"
         external_placeholder: "https://..."
         email_label: "Contact Email"
-        email_placeholder: "e.g. jobs@company.com"
+        email_placeholder: "e.g. job@company.com"
         company_logo_label: "Company Logo"
         posting_date_label: "Posting Date"
         expiry_date_label: "Expiry Date"
@@ -180,7 +180,7 @@ en:
       show-less: Show Less ▲
 
       by-tag: 
-        articles:
+        article:
           header: 💡 Need help asking a great question?
           content: |
             A great question includes software and technical context 
@@ -193,19 +193,19 @@ en:
 
             Ask clearly, and others can help you faster.
 
-        bulletins:
+        bulletin:
           header: 💡 Need help writing a bulletin?
           content: |
-            Bulletins are ideal for quick product updates, release announcements, 
+            bulletin are ideal for quick product updates, release announcements, 
             security advisories, or breaking system news. Keep it short and focused. 
             You may link to an external bulletin or summarize it.
 
             **Example:** "Salesforce Spring '25 release adds native GraphQL support"
 
-        discussions:
+        discussion:
           header: 💡 Need help structuring your discussion? 
           content: |
-            Discussions explore open-ended ideas, trade-offs, or product strategies. 
+            discussion explore open-ended ideas, trade-offs, or product strategies. 
             You can frame your discussion around a domain, a product, or a technical topic.
 
             **Example 1:** "What are pros/cons of integrating Salesforce with Azure AD vs Okta?"
@@ -213,16 +213,16 @@ en:
 
             Use this form when you're looking to spark thoughtful conversation and input from others.
         
-        events:
+        event:
           header: 💡 Need help listing your event?
           content: |
             Use this form to promote webinars, product launches, conferences, 
-            or community events. Be sure to include the title, software or domain 
+            or community event. Be sure to include the title, software or domain 
             it relates to, the event type, and a URL or agenda.
 
             **Example:** "Join our SAP S/4HANA API Workshop - June 2025"
 
-        jobs:
+        job:
           header: 💡 Need help writing a quality job post?
           content: |
             Use specific job titles, domain/software (e.g., SAP, Salesforce, Teamcenter),
@@ -231,7 +231,7 @@ en:
 
             **Example:** "Teamcenter Integration Consultant (Remote, Contract) with 5+ years experience"
 
-        questions:
+        question:
           header: 💡 Need help asking a great question? 
           content: |
             A great question includes software and technical context 
@@ -241,7 +241,7 @@ en:
             
             Ask clearly, and others can help you faster.        
         
-        use-cases:
+        use-case:
           header: 💡 Need help structuring your use case?
           content: |
             Use cases share real implementations across domains, software, or technical areas. 

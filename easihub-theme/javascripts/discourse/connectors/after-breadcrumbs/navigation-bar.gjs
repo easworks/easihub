@@ -84,14 +84,14 @@ export default class NavigationBarComponent extends Component {
     switch (type) {
       case 'Hubs': return { route: 'discovery.category', models: [categoryPath] };
       case 'Overview': return { route: 'tags.showCategory', models: [categoryPath, 'overview'] };
-      case 'Articles': return { route: 'tags.showCategory', models: [categoryPath, 'articles'] };
-      case 'Events': return { route: 'tags.showCategory', models: [categoryPath, 'events'] };
-      case 'Jobs': return { route: 'tags.showCategory', models: [categoryPath, 'jobs'] };
-      case 'Browse All Questions': return { route: 'tags.showCategory', models: [categoryPath, 'questions'] };
-      case 'Bulletins': return { route: 'tags.showCategory', models: [categoryPath, 'bulletins'] };
-      case 'Ask Questions': return { route: 'tags.showCategory', models: [categoryPath, 'questions'] };
-      case 'Discussions': return { route: 'tags.showCategory', models: [categoryPath, 'discussions'] };
-      case 'Use Cases': return { route: 'tags.showCategory', models: [categoryPath, 'use-cases'] };
+      case 'Articles': return { route: 'tags.showCategory', models: [categoryPath, 'article'] };
+      case 'Events': return { route: 'tags.showCategory', models: [categoryPath, 'event'] };
+      case 'Jobs': return { route: 'tags.showCategory', models: [categoryPath, 'job'] };
+      case 'Browse All Questions': return { route: 'tags.showCategory', models: [categoryPath, 'question'] };
+      case 'Bulletins': return { route: 'tags.showCategory', models: [categoryPath, 'bulletin'] };
+      case 'Ask Questions': return { route: 'tags.showCategory', models: [categoryPath, 'question'] };
+      case 'Discussions': return { route: 'tags.showCategory', models: [categoryPath, 'discussion'] };
+      case 'Use Cases': return { route: 'tags.showCategory', models: [categoryPath, 'use-case'] };
       case 'Unanswered': return { route: 'tags.showCategory', models: [categoryPath, 'unanswered'] };
       case 'Latest': return { route: 'tags.showCategory', models: [categoryPath, 'latest'] };
       case 'Hot': return { route: 'tags.showCategory', models: [categoryPath, 'hot'] };

@@ -1,12 +1,12 @@
 
 export const SPECIAL_TAGS = new Set([
-  'articles',
-  'bulletins',
-  'discussions',
-  'events',
-  'jobs',
-  'questions',
-  'use-cases'
+  'article',
+  'bulletin',
+  'discussion',
+  'event',
+  'job',
+  'question',
+  'use-case'
 ]);
 
 export const TOPIC_CONTENT_TYPES = SPECIAL_TAGS;

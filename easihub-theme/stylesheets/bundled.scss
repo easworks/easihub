@@ -1868,6 +1868,12 @@
     width: 100%;
     flex: 1;
   }
+  #reply-control .with-category .showing-ai-suggestions .category-input {
+    max-width: 100%;
+  }
+  #reply-control .with-tags .showing-ai-suggestions .tags-input {
+    max-width: 100%;
+  }
   .topic-type-selector .form-control {
     width: 100%;
   }

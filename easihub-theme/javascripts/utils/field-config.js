@@ -1,5 +1,5 @@
 const fieldConfig = {
-  questions: [
+  question: [
     {
       key: "title",
       type: "input",
@@ -20,7 +20,7 @@ const fieldConfig = {
     }
   ],
 
-  discussions: [
+  discussion: [
     {
       key: "title",
       type: "input",
@@ -35,7 +35,7 @@ const fieldConfig = {
     }
   ],
 
-  use_cases: [
+  use_case: [
     {
       key: "title",
       type: "input",
@@ -62,7 +62,7 @@ const fieldConfig = {
     }
   ],
 
-  articles: [
+  article: [
     {
       key: "title",
       type: "input",
@@ -99,7 +99,7 @@ const fieldConfig = {
     }
   ],
 
-  bulletins: [
+  bulletin: [
     {
       key: "title",
       type: "input",
@@ -142,7 +142,7 @@ const fieldConfig = {
     }
   ],
 
-  events: [
+  event: [
     {
       key: "title",
       type: "input",
@@ -195,7 +195,7 @@ const fieldConfig = {
     }
   ],
 
-  jobs: [
+  job: [
     {
       key: "section1_label",
       label: "Basic Job Details"

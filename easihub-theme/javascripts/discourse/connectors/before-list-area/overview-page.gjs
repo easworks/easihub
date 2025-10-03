@@ -27,7 +27,7 @@ export default class OverviewPage extends Component {
     try {
       const topicList = await this.store.findFiltered('topicList', {
         filter: 'latest',
-        params: { per_page: 3, tags: 'questions' }
+        params: { per_page: 3, tags: 'question' }
       });
       this.questionTopics = topicList.topics || [];
     } catch (error) {
@@ -71,19 +71,19 @@ export default class OverviewPage extends Component {
           </div>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <LinkTo @route="tags.showCategory" @models={{array "questions"}} class="bg-blue-100 hover:bg-blue-200 p-4 rounded-xl shadow text-blue-900 font-bold transition">Ask Questions</LinkTo>
-            <LinkTo @route="tags.showCategory" @models={{array "discussions"}} class="bg-green-100 hover:bg-green-200 p-4 rounded-xl shadow text-green-900 font-bold transition">Discussions</LinkTo>
-            <LinkTo @route="tags.showCategory" @models={{array "use-cases"}} class="bg-yellow-100 hover:bg-yellow-200 p-4 rounded-xl shadow text-yellow-900 font-bold transition">Use-Cases</LinkTo>
-            <LinkTo @route="tags.showCategory" @models={{array "articles"}} class="bg-purple-100 hover:bg-purple-200 p-4 rounded-xl shadow text-purple-900 font-bold transition">Articles</LinkTo>
-            <LinkTo @route="tags.showCategory" @models={{array "events"}} class="bg-pink-100 hover:bg-pink-200 p-4 rounded-xl shadow text-pink-900 font-bold transition">Events</LinkTo>
-            <LinkTo @route="tags.showCategory" @models={{array "jobs"}} class="bg-indigo-100 hover:bg-indigo-200 p-4 rounded-xl shadow text-indigo-900 font-bold transition">Jobs</LinkTo>
-            <LinkTo @route="tags.showCategory" @models={{array "bulletins"}} class="bg-red-100 hover:bg-red-200 p-4 rounded-xl shadow text-red-900 font-bold transition">Bulletins</LinkTo>
+            <LinkTo @route="tags.showCategory" @models={{array "question"}} class="bg-blue-100 hover:bg-blue-200 p-4 rounded-xl shadow text-blue-900 font-bold transition">Ask Questions</LinkTo>
+            <LinkTo @route="tags.showCategory" @models={{array "discussion"}} class="bg-green-100 hover:bg-green-200 p-4 rounded-xl shadow text-green-900 font-bold transition">Discussions</LinkTo>
+            <LinkTo @route="tags.showCategory" @models={{array "use-case"}} class="bg-yellow-100 hover:bg-yellow-200 p-4 rounded-xl shadow text-yellow-900 font-bold transition">Use-Cases</LinkTo>
+            <LinkTo @route="tags.showCategory" @models={{array "article"}} class="bg-purple-100 hover:bg-purple-200 p-4 rounded-xl shadow text-purple-900 font-bold transition">Articles</LinkTo>
+            <LinkTo @route="tags.showCategory" @models={{array "event"}} class="bg-pink-100 hover:bg-pink-200 p-4 rounded-xl shadow text-pink-900 font-bold transition">Events</LinkTo>
+            <LinkTo @route="tags.showCategory" @models={{array "job"}} class="bg-indigo-100 hover:bg-indigo-200 p-4 rounded-xl shadow text-indigo-900 font-bold transition">Jobs</LinkTo>
+            <LinkTo @route="tags.showCategory" @models={{array "bulletin"}} class="bg-red-100 hover:bg-red-200 p-4 rounded-xl shadow text-red-900 font-bold transition">Bulletins</LinkTo>
           </div>
 
           <div class="space-y-3">
             <div class="flex justify-between items-center">
               <h3 class="text-xl font-semibold text-gray-800">Can you solve these questions?</h3>
-              <LinkTo @route="discovery.latest" @query={{hash tags="questions"}} class="text-blue-600 hover:underline text-sm">View all unsolved questions</LinkTo>
+              <LinkTo @route="discovery.latest" @query={{hash tags="question"}} class="text-blue-600 hover:underline text-sm">View all unsolved questions</LinkTo>
             </div>
             <ul class="space-y-2 text-gray-700">
               {{#each this.latestQuestions as |topic|}}
@@ -102,7 +102,7 @@ export default class OverviewPage extends Component {
           <div class="space-y-3">
             <div class="flex justify-between items-center">
               <h3 class="text-xl font-semibold text-gray-800">See what’s trending</h3>
-              <LinkTo @route="discovery.top" @query={{hash tags="questions"}} class="text-blue-600 hover:underline text-sm">View all trending questions</LinkTo>
+              <LinkTo @route="discovery.top" @query={{hash tags="question"}} class="text-blue-600 hover:underline text-sm">View all trending questions</LinkTo>
             </div>
             <ul class="space-y-2 text-gray-700">
               {{#each this.latestTrending as |topic|}}

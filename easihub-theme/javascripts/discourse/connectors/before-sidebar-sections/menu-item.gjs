@@ -172,7 +172,7 @@ const publicMenu = [
     showDots: true
   },
   {
-    id: 'questions',
+    id: 'question',
     label: 'Questions',
     route: {
       name: 'tag.show',
@@ -210,7 +210,7 @@ const publicMenu = [
     icon: 'fa-building',
     children: [
       {
-        id: 'jobs',
+        id: 'job',
         label: 'Jobs',
         icon: 'fa-briefcase',
         route: {
@@ -221,7 +221,7 @@ const publicMenu = [
     ]
   },
   {
-    id: 'discussions',
+    id: 'discussion',
     label: 'Discussions',
     icon: 'fa-comments',
     route: {
@@ -230,7 +230,7 @@ const publicMenu = [
     },
   },
   {
-    id: 'articles',
+    id: 'article',
     label: 'Articles',
     icon: 'fa-file-alt',
     route: {
@@ -239,7 +239,7 @@ const publicMenu = [
     },
   },
   {
-    id: 'use-cases',
+    id: 'use-case',
     label: 'Use Cases',
     icon: 'fa-briefcase',
     route: {
@@ -248,7 +248,7 @@ const publicMenu = [
     },
   },
   {
-    id: 'events',
+    id: 'event',
     label: 'Events',
     icon: 'fa-calendar-alt',
     route: {
@@ -257,7 +257,7 @@ const publicMenu = [
     },
   },
   {
-    id: 'bulletins',
+    id: 'bulletin',
     label: 'Bulletins',
     icon: 'fa-bell',
     route: {

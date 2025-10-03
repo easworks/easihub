@@ -10,7 +10,7 @@ export default apiInitializer(api => {
   const composer = api.container.lookup('service:composer');
 
 
-  const LOCKED_TAGS = ["questions", "discussions", "use-cases", "articles", "bulletins", "events", "jobs", "feedback"];
+  const LOCKED_TAGS = ["question", "discussion", "use-case", "article", "bulletin", "event", "job", "feedback"];
 
   api.onAppEvent('composer:open', ({ model }) => {
     const route = router.currentRoute;

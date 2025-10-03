@@ -79,7 +79,7 @@ export class SoftwareCategoryCard extends Component {
 
       <div class="cta-container @container">
         <div class="grid-cols-6">
-          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'questions'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'question'}}
             class="btn btn-raised col-span-3 source-color-primary-500 py-2">
             Ask Questions
           </LinkTo>
@@ -88,15 +88,15 @@ export class SoftwareCategoryCard extends Component {
             Browse Topic
           </LinkTo>
 
-          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'discussions'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'discussion'}}
             class="btn btn-stroked col-span-2 source-color-slate-700">
             Discussions
           </LinkTo>
-          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'use-cases'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'use-case'}}
             class="btn btn-stroked col-span-2 source-color-slate-700">
             Use Cases
           </LinkTo>
-          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'jobs'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'job'}}
             class="btn btn-stroked col-span-2 source-color-slate-700">
             Jobs
           </LinkTo>
@@ -104,15 +104,15 @@ export class SoftwareCategoryCard extends Component {
           <div class="divider col-span-6"></div>    
           
           <div class="flex justify-between col-span-6">
-          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'articles'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'article'}}
             class="btn btn-text source-color-slate-700 max-w-max">
             Articles
           </LinkTo>
-           <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'bulletins'}}
+           <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'bulletin'}}
             class="btn btn-text source-color-slate-700 max-w-max">
             Bulletins
           </LinkTo>
-          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'events'}}
+          <LinkTo @route="tags.showCategory" @models={{array @category.slugFor 'event'}}
             class="btn btn-text source-color-slate-700 max-w-max">
             Events
           </LinkTo>
