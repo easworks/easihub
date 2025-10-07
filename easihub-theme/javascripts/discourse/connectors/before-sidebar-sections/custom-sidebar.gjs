@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import { tracked, cached } from '@glimmer/tracking';
 import { concat } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
@@ -7,6 +7,8 @@ import { LinkTo } from '@ember/routing';
 import { service } from '@ember/service';
 import Category from 'discourse/models/category';
 import { constructMenu, createMenuItemFromCategory } from './menu-item';
+import { defaultHomepage } from 'discourse/lib/utilities';
+
 
 export default class CustomSidebarComponent extends Component {
   @service site;
@@ -101,12 +103,30 @@ class TreeComponent extends Component {
   </template>
 }
 
-const LeafTemplate =
+class LeafTemplate extends Component {
+  @service router;
+
+  @cached
+  get isIndex() {
+    return this.args.item.route.name === 'discovery.index';
+  }
+
+  @cached
+  static get homepage() {
+    return `discovery.${defaultHomepage() || 'custom'}`;
+  }
+
+  get currentWhen() {
+    return this.isIndex ?
+      LeafTemplate.homepage :
+      undefined;
+  }
+
   <template>
     <li class="menu-item"
         style="{{concat '--level:' @item.level ';'}}">
       {{#if @item.route}}
-      <LinkTo @route={{@item.route.name}} @models={{@item.route.models}}
+      <LinkTo @route={{@item.route.name}} @models={{@item.route.models}} @current-when={{this.currentWhen}}
         class="menu-link">
         <i class="menu-icon fa-icon fa-solid {{@item.icon}}"></i>
         <span class="menu-label">{{@item.label}}</span>
@@ -130,7 +150,8 @@ const LeafTemplate =
       </a>
       {{/if}}
     </li>
-  </template>;
+  </template>
+}
 
 const BranchTemplate =
   <template>

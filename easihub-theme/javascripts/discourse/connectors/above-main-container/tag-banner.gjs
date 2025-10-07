@@ -38,7 +38,11 @@ export class TagBanner extends Component {
   }
 
   get isTagPage() {
-    return this.router.currentRouteName === "tags.showCategory" || this.router.currentRouteName === 'tag.show';
+    return this.router.currentRouteName === "tags.showCategory";
+  }
+
+  get showCatDesc() {
+    return this.isTagPage && this.router.currentRoute?.attributes?.category?.description;
   }
 
   get parentCategoryBannerImage() {
@@ -85,7 +89,7 @@ export class TagBanner extends Component {
   }
 
   <template>
-    {{#if this.isTagPage}}
+    {{#if this.showCatDesc}}
       <div class="cat-desc flex items-center absolute top-51 mx-8 h-36 p-4 bg-white rounded-2xl shadow-lg gap-4 overflow-hidden z-10">
         <span class="block overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis;">
           {{{this.router.currentRoute.attributes.category.description}}}

@@ -184,15 +184,15 @@
     @apply pl-4;
   }
 
-  /* hiding composer default textarea and input and styling tags section*/
+  /* hiding composer default textarea and input and styling tags section - only when customized */
 
-  .d-editor-textarea-wrapper {
+  /* .d-editor-textarea-wrapper {
     @apply hidden;
   }
 
   .title-and-category .title-input {
     @apply hidden
-  }
+  } */
 
   .title-and-category {
     @apply flex-col items-baseline;
@@ -212,6 +212,14 @@
 
   .category-input .topic-type-selector {
     @apply flex-1 w-full;
+  }
+
+  #reply-control .with-category .showing-ai-suggestions .category-input {
+    @apply max-w-full;
+  }
+
+  #reply-control .with-tags .showing-ai-suggestions .tags-input {
+    @apply max-w-full;
   }
 
   .topic-type-selector .form-control {
@@ -267,6 +275,9 @@
   /* styling for tag banner */
   .tag-title-header {
     @apply h-72 overflow-visible rounded-2xl items-center;
+    @apply w-full bg-black relative;
+    background: radial-gradient(70% 55% at 50% 50%, #2a5d77 0%, #184058 18%, #0f2a43 34%, #0a1b30 50%, #071226 66%, #040d1c 80%, #020814 92%, #01040d 97%, #000309 100%), 
+                radial-gradient(160% 130% at 10% 10%, rgba(0,0,0,0) 38%, #000309 76%, #000208 100%), radial-gradient(160% 130% at 90% 90%, rgba(0,0,0,0) 38%, #000309 76%, #000208 100%);
   }
 
   .tag-title-contents {
@@ -287,6 +298,16 @@
 
   .search-menu-container.menu-panel-results {
     @apply w-full mr-2;
+  }
+
+  .cooked {
+    /* @apply prose; */
+    --tw-prose-pre-bg: var(--inline-code-bg);
+    code {
+      &::before, &::after {
+        @apply hidden;
+      }
+    }
   }
 }
 

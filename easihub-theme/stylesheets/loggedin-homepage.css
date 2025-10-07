@@ -34,7 +34,7 @@
   }
 
   .btn-home {
-    @apply py-2.5 px-4 rounded-lg font-semibold text-sm no-underline border-0 cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-1.5;
+    @apply py-2.5 px-4 rounded-lg font-semibold text-sm no-underline border border-primary-500/70 cursor-pointer transition-all duration-200 inline-flex items-center justify-center gap-1.5;
   }
 
   .btn-primary {
@@ -54,20 +54,27 @@
   }
 
   .btn-outline {
-    @apply bg-transparent text-white border border-white/30;
+    @apply bg-transparent text-primary-500 border border-primary-500/70;
   }
 
   .btn-outline:hover {
-    @apply bg-white/10 border-white/50;
+    @apply bg-white/10 border-primary-500/70;
   }
 
   /* Welcome Section */
   .welcome-section {
     @apply bg-gradient-to-br from-primary-500 to-primary-400 text-white py-6;
+    @apply w-full bg-white relative;
+    background-image:
+      linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
+      radial-gradient(circle 500px at 0% 20%, rgba(139,92,246,0.3), transparent),
+      radial-gradient(circle 500px at 100% 0%, rgba(59,130,246,0.3), transparent);
+    background-size: "48px 48px, 48px 48px, 100% 100%, 100% 100%";
   }
 
   .welcome-content {
-    @apply text-center;
+    @apply text-center text-black;
   }
 
   .welcome-greeting {
@@ -79,15 +86,15 @@
   }
 
   .welcome-actions {
-    @apply flex justify-center gap-3 flex-wrap mb-4;
+    @apply flex justify-center gap-3 flex-wrap mb-4 ;
   }
 
   .posting-hint {
-    @apply flex items-center justify-center gap-2 text-sm opacity-90 bg-white/10 py-2 px-4 mx-40 rounded-2xl backdrop-blur-sm;
+    @apply flex items-center justify-center gap-2 text-sm opacity-90 bg-primary-200/80 py-2 px-4 mx-40 rounded-2xl backdrop-blur-sm;
   }
 
   .posting-hint i {
-    @apply text-white/80;
+    @apply text-black;
   }
 
   /* Search Bar */
@@ -117,7 +124,7 @@
 
   /* Navigation Tabs */
   .navigation-tabs {
-    @apply bg-white border border-gray-200 rounded-xl py-4 px-5 mb-6 flex justify-between items-center flex-wrap gap-4;
+    @apply bg-white border border-gray-200 rounded-xl py-4 px-5 mb-6 flex justify-between items-center flex-wrap gap-4 shadow-sm;
   }
 
   .tab-links {
@@ -235,7 +242,7 @@
 
   /* Recent Activity */
   .recent-activity {
-    @apply bg-white border border-gray-200 rounded-xl p-6 mb-6;
+    @apply bg-white border border-gray-200 rounded-xl p-6 mb-6 shadow-sm;
   }
 
   .activity-header {
@@ -251,6 +258,10 @@
     animation: pulse-ring 2s infinite;
   }
 
+  .domain-title {
+    @apply text-xl text-black font-semibold py-2 mb-4;
+  }
+
   @keyframes pulse-ring {
       0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
       70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
@@ -263,59 +274,6 @@
 
   .view-all-link:hover {
     @apply text-primary-800;
-  }
-
-  .activity-grid {
-    @apply grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4;
-  }
-
-  .activity-item {
-    @apply border border-gray-200 rounded-lg p-4 transition-all duration-200 cursor-pointer;
-  }
-
-  .activity-item:hover {
-    @apply border-primary-500 -translate-y-0.5 shadow-lg;
-  }
-
-  .activity-meta {
-    @apply flex items-baseline gap-2 mb-2.5 text-xs text-gray-500;
-  }
-
-  .activity-wrap {
-    @apply flex flex-col gap-2;
-  }
-
-  .activity-info {
-    @apply flex gap-2;
-  }
-
-  .activity-tag {
-    @apply bg-primary-500 text-white py-1 px-2 rounded text-xs font-semibold max-w-24;
-  }
-
-  .activity-tag.sap { background: #0073e6; }
-  .activity-tag.oracle { background: #f80000; }
-  .activity-tag.salesforce { background: #00a1e0; }
-  .activity-tag.plm { background: #ff6b35; }
-
-  .domain-label {
-    @apply text-gray-400 text-xs bg-gray-100 py-0.5 px-1.5 rounded text-xs uppercase tracking-wider;
-  }
-
-  .activity-title-text {
-    @apply text-sm font-semibold text-gray-900 mb-1.5 leading-relaxed;
-  }
-
-  .activity-excerpt {
-    @apply text-xs text-gray-600 leading-relaxed;
-  }
-
-  .activity-status {
-    @apply inline-flex items-center ml-auto gap-1 text-xs text-green-500 font-medium;
-  }
-
-  .activity-status.answered {
-    @apply text-green-500;
   }
 
   /* Mobile Responsive */

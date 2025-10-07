@@ -14,14 +14,14 @@ export default apiInitializer(api => {
 
         let allowedByRoute = false;
 
-        const route = this.router.currentRoute;
-
-        switch (route.name) {
-          case 'tags.showCategory': {
+        switch (this.urld.routeName) {
+          case 'tags.showCategory.technical-area':
+          case 'tags.showCategory.software': {
             const tag = this.urld.model.tag;
             allowedByRoute = SPECIAL_TAGS.has(tag.id);
           } break;
-          case 'discovery.category': {
+          case 'discovery.category.technical-area':
+          case 'discovery.category.software': {
             allowedByRoute = true;
           } break;
         }
@@ -38,18 +38,20 @@ export default apiInitializer(api => {
       get createTopicLabel() {
         const base = super.createTopicLabel;
 
-        const route = this.router.currentRoute;
 
-        switch (route.name) {
-          case 'tags.showCategory': {
+        switch (this.urld.routeName) {
+          case 'tags.showCategory.technical-area':
+          case 'tags.showCategory.software': {
             const tag = this.urld.model.tag;
             const label = themePrefix(`topic.create.by-tag.${tag.id}`);
             return label;
           }
-          case 'discovery.category': {
+          case 'discovery.category.technical-area':
+          case 'discovery.category.software': {
             const category = this.urld.model.category;
             const labelKey = category.id === 179 ? category.id : 'default';
             const label = themePrefix(`topic.create.by-category.${labelKey}`);
+
             return label;
           }
         }

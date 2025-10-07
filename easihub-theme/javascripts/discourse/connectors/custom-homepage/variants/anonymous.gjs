@@ -4,16 +4,23 @@ import lazyHash from 'discourse/helpers/lazy-hash';
 import { service } from '@ember/service';
 import hideApplicationSidebar from "discourse/helpers/hide-application-sidebar";
 import CategoriesBoxes from 'discourse/components/categories-boxes';
+import Category from 'discourse/models/category';
+import { LinkTo } from '@ember/routing';
+import bodyClass from 'discourse/helpers/body-class';
+import HappeningNow from '../../../../components/happening-now';
+
+
 
 export class AnonymousHomepage extends Component {
 
-get categories() {
+  get categories() {
     const list = Category.list()
       .filter(c => c.isOfType('hub', 'domain') && c.featured);
     return list;
   }
 
   <template>
+    {{bodyClass "home-anonymous-page"}}
     {{hideApplicationSidebar}}
     <div class="main-container">
       <section class="hero-wrap">
@@ -56,7 +63,7 @@ get categories() {
                 <li>Tableau dashboard optimizations</li>
               </ul>
 
-              <p class="hero-subtitle">
+              <p class="hero-subtitle-anon">
                 Practical, vendor-neutral answers for enterprise apps. Get help
                 from practitioners working with SAP, Oracle, Salesforce, Workday,
                 PLM, Cloud & BI—every day.
@@ -78,15 +85,15 @@ get categories() {
               </div>
 
               <div class="hero-actions">
-                <a class="btn-hero btn-primary" href="/tag/questions">
+                <LinkTo @route="tag.show" @model={{'question'}} class="btn-hero btn-primary">
                   <i class="fas fa-question-circle"></i> Ask a Question
-                </a>
-                <a class="btn-hero btn-secondary" href="/tag/discussions">
+                </LinkTo>
+                <LinkTo @route="tag.show" @model={{'discussion'}} class="btn-hero btn-secondary">
                   <i class="fas fa-comments"></i> Browse Discussions
-                </a>
-                <a class="btn-hero btn-tertiary" href="/tag/jobs">
+                </LinkTo>
+                <LinkTo @route="tag.show" @model={{'job'}} class="btn-hero btn-tertiary">
                   <i class="fas fa-briefcase"></i> View EA Jobs
-                </a>
+                </LinkTo>
               </div>
 
               <div class="quick-guidelines">
@@ -115,64 +122,7 @@ get categories() {
                 <div class="live-indicator"></div>
                 <h3 class="activity-title">Happening Now</h3>
               </div>
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag">SAP</span>
-                  <span>Mike R. • 8 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  S/4HANA Finance module - currency translation issues
-                </div>
-                <div class="discussion-excerpt">
-                  "Facing problems with multi-currency consolidation in new
-                  S/4HANA setup..."
-                </div>
-              </div>
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag" style="background: #00a1e0"
-                    >Salesforce</span
-                  >
-                  <span>Lisa K. • 12 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  Lightning migration - governor limits on large data sets
-                </div>
-                <div class="discussion-excerpt">
-                  "Hitting SOQL limits with our territory management component..."
-                </div>
-              </div>
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag" style="background: #ff6b35"
-                    >PLM</span
-                  >
-                  <span>David T. • 18 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  Teamcenter workflow approval process customization
-                </div>
-                <div class="discussion-excerpt">
-                  "Need help setting up multi-level approval workflows for
-                  engineering changes..."
-                </div>
-              </div>
-
-              <div class="discussion-item">
-                <div class="discussion-meta">
-                  <span class="discussion-tag" style="background: #f80000"
-                    >Oracle</span
-                  >
-                  <span>Mike R. • 8 min ago</span>
-                </div>
-                <div class="discussion-title">
-                  Oracle ERP Cloud - GL account mapping best practices
-                </div>
-                <div class="discussion-excerpt">
-                  "Need advice on chart of accounts design for
-                  multi-subsidiary..."
-                </div>
-              </div>
+              <HappeningNow />
               <div style="text-align: center; margin-top: 16px">
                 <a
                   href="/live"
@@ -282,7 +232,7 @@ get categories() {
       </section>
 
       <!-- Active Discussion Topics -->
-      <section class="section">
+      <section class="section domains">
         <div class="container-wrap">
           <div class="section-header">
             <h2 class="section-title">Trending Domains & Tags</h2>

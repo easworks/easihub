@@ -224,7 +224,7 @@ export default class ContentCardComponent extends Component {
     };
 
     try {
-      const response = await fetch('https://easihub.com/erp_db/api/erp-collections/count', {
+      const response = await fetch('https://community.easihub.com/erp_db/api/erp-collections/count', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -268,7 +268,7 @@ export default class ContentCardComponent extends Component {
         page_size: this.pageSize
       };
       
-      const response = await fetch('https://easihub.com/erp_db/api/erp-collections', {
+      const response = await fetch('https://community.easihub.com/erp_db/api/erp-collections', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -9,7 +9,7 @@ export function addLayersToStyleSheets() {
  * @returns {HTMLElement}
  */
 function getContainer() {
-  return document.querySelector('discourse-assets-stylesheets')
+  return document.querySelector('discourse-assets-stylesheets');
 }
 
 /**
@@ -24,7 +24,8 @@ function wrapDiscourseAssetsCss() {
     'common',
     'desktop',
     'common_theme',
-    'desktop_theme'
+    'desktop_theme',
+    'discourse-ai'
   ]);
   const current = currentThemeId();
 
@@ -36,8 +37,9 @@ function wrapDiscourseAssetsCss() {
   const pluginStyles = [];
 
   for (const link of links) {
-    if (link.getAttribute('data-theme-id') === current.toString())
+    if (link.getAttribute('data-theme-id') === current.toString()) {
       continue;
+    }
 
     const target = link.getAttribute('data-target');
     if (target) {
@@ -53,7 +55,7 @@ function wrapDiscourseAssetsCss() {
         }
       }
       catch (e) {
-        console.error('could not parse url')
+        console.error('could not parse url', e);
       }
     }
   }
@@ -151,8 +153,9 @@ async function processStyleLink(linkElement) {
     ].join('\n');
 
     const target = linkElement.getAttribute('data-target');
-    if (target)
+    if (target) {
       styleElement.setAttribute('data-target', target);
+    }
 
     linkElement.parentElement.replaceChild(styleElement, linkElement);
   } catch (error) {
@@ -184,9 +187,8 @@ function extractFontFaces(contents, baseUrl) {
   const css = contents.replace(fontFaceRegex, '');
 
   return {
-    css,
-    fontFaces
-  }
+    css,fontFaces
+  };
 }
 
 function resolveRelativeUrls(fontFace, baseUrl) {

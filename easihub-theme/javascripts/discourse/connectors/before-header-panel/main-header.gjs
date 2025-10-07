@@ -2,10 +2,14 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
 import { service } from '@ember/service';
+import { LinkTo } from "@ember/routing";
+import { defaultHomepage } from 'discourse/lib/utilities';
+import { cached } from '@glimmer/tracking';
 
 export class MainHeader extends Component {
   @service router;
   @service currentUser;
+  @service category;
 
   constructor() {
     super(...arguments);
@@ -44,8 +48,9 @@ export class MainHeader extends Component {
     return !this.currentUser;
   }
 
-  get isCurrentURLHomePage() {
-    return this.router.currentRouteName === 'discovery.categories';
+  @cached
+  static get homepage() {
+    return `discovery.${defaultHomepage() || 'custom'}`;
   }
 
   get isCurrentURLHubsPage() {
@@ -84,7 +89,7 @@ export class MainHeader extends Component {
   <template>
     <nav class="main-nav ml-12" id="mainNav">
         <div class="nav-item">
-            <a href="/" class="nav-link {{if this.isCurrentURLHomePage 'active'}}">Home</a>
+          <LinkTo @route="discovery.index" class="nav-link" @current-when={{MainHeader.homepage}}>Home</LinkTo>
         </div>
         
         <div class="nav-item has-dropdown">
@@ -108,19 +113,19 @@ export class MainHeader extends Component {
                 <div class="mega-grid">
                     <div class="mega-column">
                         <h4>Core Business Systems</h4>
-                        <a href="/c/erp-enterprise-resource-planning/69" class="dropdown-link">ERP - Enterprise Resource Planning</a>
-                        <a href="/c/crm-customer-relationship-management/14" class="dropdown-link">CRM - Customer Relationship Management</a>
-                        <a href="/c/scm-supply-chain-management/1034" class="dropdown-link">SCM - Supply Chain Management</a>
-                        <a href="/c/hcm-human-capital-management/2153" class="dropdown-link">HCM - Human Capital Management</a>
-                        <a href="/c/plm-product-lifecycle-management/5" class="dropdown-link">PLM - Product Lifecycle</a>
+                        <LinkTo @route="discovery.category" @model="erp-enterprise-resource-planning/69" class="dropdown-link">ERP - Enterprise Resource Planning</LinkTo>
+                        <LinkTo @route="discovery.category" @model="crm-customer-relationship-management/14" class="dropdown-link">CRM - Customer Relationship Management</LinkTo>
+                        <LinkTo @route="discovery.category" @model="scm-supply-chain-management/1034" class="dropdown-link">SCM - Supply Chain Management</LinkTo>
+                        <LinkTo @route="discovery.category" @model="hcm-human-capital-management/2153" class="dropdown-link">HCM - Human Capital Management</LinkTo>
+                        <LinkTo @route="discovery.category" @model="plm-product-lifecycle-management/5" class="dropdown-link">PLM - Product Lifecycle</LinkTo>
                     </div>
                     <div class="mega-column">
                         <h4>Technology & Analytics</h4>
-                        <a href="/c/cloud-platforms/1032" class="dropdown-link">Cloud Platforms</a>
-                        <a href="/c/ba-bi-business-analysis-business-intelligence/1031" class="dropdown-link">BA/BI - Business Analytics</a>
-                        <a href="/c/mes-manufacturing-execution-system/1033" class="dropdown-link">MES - Manufacturing Execution</a>
-                        <a href="/c/qms-quality-management-system/2156" class="dropdown-link">QMS - Quality Management</a>
-                        <a href="#" class="dropdown-link">All Hubs</a>
+                        <LinkTo @route="discovery.category" @model="cloud-platforms/1032" class="dropdown-link">Cloud Platforms</LinkTo>
+                        <LinkTo @route="discovery.category" @model="ba-bi-business-analysis-business-intelligence/1031" class="dropdown-link">BA/BI - Business Analytics</LinkTo>
+                        <LinkTo @route="discovery.category" @model="mes-manufacturing-execution-system/1033" class="dropdown-link">MES - Manufacturing Execution</LinkTo>
+                        <LinkTo @route="discovery.category" @model="qms-quality-management-system/2156" class="dropdown-link">QMS - Quality Management</LinkTo>
+                        <LinkTo @route="discovery.categories" class="dropdown-link">All Hubs</LinkTo>
                     </div>
                 </div>
             </div>
@@ -130,7 +135,7 @@ export class MainHeader extends Component {
             <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Community</a>
             <div class="dropdown">
                 <div class="dropdown-item">
-                    <a href="/community-guidelines" class="dropdown-link">Community Guidelines</a>
+                    <a href="/guidelines" class="dropdown-link">Community Guidelines</a>
                 </div>
                 <div class="dropdown-item">
                     <a href="/code-of-conduct" class="dropdown-link">Code of Conduct</a>
@@ -164,16 +169,16 @@ export class MainHeader extends Component {
                     <a href="/support" class="dropdown-link">Contact Support</a>
                 </div>
                 <div class="dropdown-item">
-                    <a href="/c/feedback/179" class="dropdown-link">Submit Feedback</a>
+                    <LinkTo @route="discovery.category" @model="feedback/179" class="dropdown-link">Submit Feedback</LinkTo>
                 </div>
             </div>
         </div>
-        {{#if this.loggedIn}}
+        {{!-- {{#if this.loggedIn}} --}}
           {{!-- <div class="btn-container">
             <a href="/signup" class="cta-button">Join Community</a>
             <a href="/login" class="cta-button-login">Login</a>
           </div> --}}
-        {{/if}}
+        {{!-- {{/if}} --}}
         <button class="mobile-menu-toggle" {{on "click" this.toggleMobileMenu}}>
             <span></span>
             <span></span>

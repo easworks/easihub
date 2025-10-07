@@ -61,7 +61,7 @@ export default class JobCardComponent extends Component {
     };
 
     try {
-      const response = await fetch('https://easihub.com/erp_db/api/erp-collections/jobs/count', {
+      const response = await fetch('https://community.easihub.com/erp_db/api/erp-collections/jobs/count', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -96,7 +96,7 @@ export default class JobCardComponent extends Component {
         page_size: this.pageSize
       };
       
-      const response = await fetch('https://easihub.com/erp_db/api/erp-collections/jobs', {
+      const response = await fetch('https://community.easihub.com/erp_db/api/erp-collections/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -125,7 +125,7 @@ export default class JobCardComponent extends Component {
   async fetchJobDetails(jobId) {
     this.isLoadingDetails = true;
     try {
-      const response = await fetch('https://easihub.com/erp_db/api/erp-collections/jobs/details', {
+      const response = await fetch('https://community.easihub.com/erp_db/api/erp-collections/jobs/details', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ job_id: jobId })

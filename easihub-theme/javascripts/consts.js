@@ -1,12 +1,12 @@
 
 export const SPECIAL_TAGS = new Set([
-  'articles',
-  'bulletins',
-  'discussions',
-  'events',
-  'jobs',
-  'questions',
-  'use-cases'
+  'article',
+  'bulletin',
+  'discussion',
+  'event',
+  'job',
+  'question',
+  'use-case'
 ]);
 
 export const TOPIC_CONTENT_TYPES = SPECIAL_TAGS;
@@ -16,7 +16,15 @@ export const SPECIAL_CATEGORIES = {
 };
 
 export const GENERIC_TOPIC_MAPPING = {
-  69: [1999, 2474]  // erp
+  69: [1999, 2474],
+  14: [2000, 2475],
+  5: [1581, 2476],
+  1031: [1585, 2477],
+  1032: [2005, 2478],
+  1033: [1582, 2479],
+  1034: [2154, 2480],
+  2153: [2155, 2481],
+  2156: [2157, 2482]
 };
 
 export const TAG_OPTIONS = {
@@ -56,14 +64,16 @@ export const getAreaCategories = (model) => {
 };
 
 export const relationCatIdAndTechId = {
-  69: [661, 670, 671],
-  14: [662, 672, 673],
-  5: [663, 674, 675],
-  1031: [664, 680, 681],
-  1032: [665, 682, 683],
-  1033: [666, 678, 679],
-  1034: [667, 676, 677],
-  2153: [668, 686, 687],
+  //domian_cat_id:  technical, generic, strategy, module
+  69: [736, 718, 719, 709],
+  14: [737, 720, 721, 710],
+  5: [738, 722, 723, 711],
+  1031: [739, 728, 729, 714],
+  1032: [740, 730, 731, 715],
+  1033: [741, 726, 727, 713],
+  1034: [742, 724, 725, 712],
+  2153: [743, 734, 735, 717],
+  2156: [744, 732, 733, 716]
 };
 
 
