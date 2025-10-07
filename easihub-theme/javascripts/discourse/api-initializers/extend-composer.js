@@ -13,6 +13,12 @@ export default apiInitializer(api => {
   const LOCKED_TAGS = ["question", "discussion", "use-case", "article", "bulletin", "event", "job", "feedback"];
 
   api.onAppEvent('composer:open', ({ model }) => {
+    // Only apply customization for new topics, not when editing existing posts
+    if (model.action !== 'createTopic') {
+      model.set('customization', null);
+      return;
+    }
+
     const route = router.currentRoute;
 
     let customization = null;
@@ -36,16 +42,23 @@ export default apiInitializer(api => {
       }
     }
 
+    if (!customization) {
+      model.set('customization', null);
+      return;
+    }
+
     customization.model = urld.model;
 
     hydrateComposerCustomization(customization, model);
+
+    // model.set('tags', []);
 
     model.set('customization', customization);
   });
 
   api.customizeComposerText({
     'actionTitle': (model) => {
-      if(model.contentType) {
+      if(model.action === 'createTopic' && model.customization && model.contentType) {
         const i18nId = `composer.action-title.by-tag.${model.contentType}`;
         return i18n(themePrefix(i18nId));
       }
@@ -54,12 +67,14 @@ export default apiInitializer(api => {
 
   api.registerValueTransformer('composer-save-button-label', () => {
     const model = composer.model;
-    if (model?.contentType) {
-      const i18nId = `composer.create_topic.by-tag.${model.contentType}`;
-      const fallbackId = 'composer.create_topic.by-tag.default';
-      return themePrefix(i18nId) || themePrefix(fallbackId);
+    if (model?.action === 'createTopic' && model?.customization) {
+      if (model.contentType) {
+        const i18nId = `composer.create_topic.by-tag.${model.contentType}`;
+        const fallbackId = 'composer.create_topic.by-tag.default';
+        return themePrefix(i18nId) || themePrefix(fallbackId);
+      }
+      return model.customization.saveButtonLabel;
     }
-    return model?.customization?.saveButtonLabel;
   });
 
   api.modifyClass("component:tag-chooser", {
@@ -85,7 +100,7 @@ export default apiInitializer(api => {
         if (this.contentType === 'jobs') {
           await this.postJobToAPI();
         }
-        return this.super(opts);
+        return super.save(opts);
       }
 
       async postJobToAPI() {

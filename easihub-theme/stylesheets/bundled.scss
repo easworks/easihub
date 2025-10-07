@@ -1838,12 +1838,6 @@
   .category-title-description.no-logo {
     padding-left: calc(var(--spacing) * 4);
   }
-  .d-editor-textarea-wrapper {
-    display: none;
-  }
-  .title-and-category .title-input {
-    display: none;
-  }
   .title-and-category {
     flex-direction: column;
     align-items: baseline;
@@ -1940,6 +1934,14 @@
   .search-menu-container.menu-panel-results {
     margin-right: calc(var(--spacing) * 2);
     width: 100%;
+  }
+  .cooked {
+    --tw-prose-pre-bg: var(--inline-code-bg);
+    code {
+      &::before, &::after {
+        display: none;
+      }
+    }
   }
 }
 @layer components {

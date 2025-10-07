@@ -13,6 +13,7 @@ import { service } from '@ember/service';
 
 export class MessageTemplate extends Component {
   @service router;
+  @service composer;
   @tracked expanded;
 
   contentTypes = CONTENT_TYPES;
@@ -38,6 +39,10 @@ export class MessageTemplate extends Component {
   // get tagID() {
   //   return this.router.currentRoute.params.tag_id;
   // }
+
+  get createTopic() {
+    return this.composer.model?.action === 'createTopic';
+  }
 
   get help() {
     if (this.args.model.contentType) {
@@ -73,54 +78,56 @@ export class MessageTemplate extends Component {
 
 
   <template>
-    {{#if this.help}}
-    <div class="p-2 mb-4 bg-primary-50 rounded-lg border-l-4 border-l-primary-500">
-      <h4 class="flex gap-4 items-center justify-between">
-        <span class="font-bold">
-          {{{this.help.header}}}
-        </span>
-        <span class="text-primary-400 mr-2 cursor-pointer text-sm"
-          {{on 'click' this.toggleExpansion}}>
-          {{#if this.expanded}}
-            {{i18n (themePrefix 'composer.help-message.show-less')}}
-          {{else}}
-            {{i18n (themePrefix 'composer.help-message.show-more')}}
-          {{/if}}
-        </span>
-      </h4>
+    {{#if this.createTopic}}
+      {{#if this.help}}
+      <div class="p-2 mb-4 bg-primary-50 rounded-lg border-l-4 border-l-primary-500">
+        <h4 class="flex gap-4 items-center justify-between">
+          <span class="font-bold">
+            {{{this.help.header}}}
+          </span>
+          <span class="text-primary-400 mr-2 cursor-pointer text-sm"
+            {{on 'click' this.toggleExpansion}}>
+            {{#if this.expanded}}
+              {{i18n (themePrefix 'composer.help-message.show-less')}}
+            {{else}}
+              {{i18n (themePrefix 'composer.help-message.show-more')}}
+            {{/if}}
+          </span>
+        </h4>
 
-      <div class="overflow-hidden transition-all duration-300 ease-in-out {{if this.expanded 'max-h-96 opacity-100' 'max-h-0 opacity-0'}}">
-        <div class="pt-4 prose text-sm text-justify">
-          <AsyncContent @asyncData={{this.help.contentPromise}}>
-            <:content as |content|>
-              {{{content}}}
-            </:content>
-            <:loading>
-              <div class="spinner small"></div>
-            </:loading>
-          </AsyncContent>
+        <div class="overflow-hidden transition-all duration-300 ease-in-out {{if this.expanded 'max-h-96 opacity-100' 'max-h-0 opacity-0'}}">
+          <div class="pt-4 prose text-sm text-justify">
+            <AsyncContent @asyncData={{this.help.contentPromise}}>
+              <:content as |content|>
+                {{{content}}}
+              </:content>
+              <:loading>
+                <div class="spinner small"></div>
+              </:loading>
+            </AsyncContent>
+          </div>
         </div>
       </div>
-    </div>
-    {{/if}}
+      {{/if}}
 
-    <div class="content-type-selector">
-      <label class="block text-sm font-medium text-gray-700 mb-2">
-        Step 1: What type of content are you creating?
-      </label>
-      <div class="content-type-wrap">
+      <div class="content-type-selector">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Step 1: What type of content are you creating?
+        </label>
+        <div class="content-type-wrap">
 
-        {{#each this.contentTypes as |type|}}
-          <button type="button"
-            class="content-type-tab {{if (eq type.value @model.contentType) 'active'}}"
-            {{on "click" (fn this.onContentTypeChange type.value)}}
-          >
-            <span class="tab-icon">{{type.icon}}</span>
-            {{type.label}}
-          </button>
-        {{/each}}
+          {{#each this.contentTypes as |type|}}
+            <button type="button"
+              class="content-type-tab {{if (eq type.value @model.contentType) 'active'}}"
+              {{on "click" (fn this.onContentTypeChange type.value)}}
+            >
+              <span class="tab-icon">{{type.icon}}</span>
+              {{type.label}}
+            </button>
+          {{/each}}
+        </div>
       </div>
-    </div>
+    {{/if}}
   </template>
 }
 

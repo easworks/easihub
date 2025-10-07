@@ -9,7 +9,7 @@ import { service } from '@ember/service';
 export class TopicTypeSelector extends Component {
   @service router;
   @service composer;
-  @tracked selectedTopicType = "technical-area"
+
 
   get isGenericOrStrategyCategory() {
     const categorySlug = this.args.composer?.category?.slug || '';
@@ -21,7 +21,7 @@ export class TopicTypeSelector extends Component {
   }
 
   get isTechnicalAreaChecked() {
-    return this.selectedTopicType === "technical-area";
+    return this.args.composer.selectedTopicType === "technical-area";
   }
 
   get areaOptions() {
@@ -40,7 +40,7 @@ export class TopicTypeSelector extends Component {
     currentTags = currentTags.filter(t => !topicTypeValues.includes(t));
 
     const value = this.isSubcategory ? (event.target.checked ? 'technical-area' : 'generic-topic') : event.target.value;
-    this.selectedTopicType = value;
+    this.args.composer.selectedTopicType = value;
     
     // Change categoryId based on GENERIC_TOPIC_MAPPING
     const parentCategoryId = this.args.composer?.category?.parentCategory?.id;
@@ -68,13 +68,20 @@ export class TopicTypeSelector extends Component {
     this.args.composer.set('selectedTopicType', value);
     this.args.composer.notifyPropertyChange('tags');
     this.args.composer.notifyPropertyChange('selectedTopicType');
+    this.args.composer.notifyPropertyChange('categoryId');
   }
 
   constructor() {
     super(...arguments);
     if (this.isSubcategory) {
-      this.selectedTopicType = 'technical-area';
-      this.args.composer.set('selectedTopicType', 'technical-area');
+      this.args.composer.selectedTopicType = 'technical-area';
+    } else if (this.isGenericOrStrategyCategory) {
+      const categorySlug = this.args.composer?.category?.slug || '';
+      if (categorySlug.includes('generic')) {
+        this.args.composer.selectedTopicType = 'generic-topic';
+      } else if (categorySlug.includes('strategy')) {
+        this.args.composer.selectedTopicType = 'strategy';
+      }
     }
   }
 
@@ -94,7 +101,7 @@ export class TopicTypeSelector extends Component {
     <div class="topic-type-selector field-group">
       <select
         class="form-control p-2"
-        value={{this.currentSelectedTopicType}}
+        value={{this.args.composer.selectedTopicType}}
         {{on "change" this.updateTopicType}}
       >
         <option value="">Select Topic type...</option>

@@ -53,6 +53,10 @@ export class CustomFields extends Component {
     }));
   }
 
+  get createTopic() {
+    return this.args.model.action === 'createTopic';
+  }
+
   get customTags() {
     return this.args.model.customization?.tags;
   }
@@ -275,126 +279,127 @@ export class CustomFields extends Component {
   }
   
   <template>
-    {{log @model}}
-    {{#if this.customTags}}
-    <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
-      {{!-- {{#if this.showRelatedTags}} --}}
-        <div class="field-group">
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            {{this.relatedTagsLabel}}
-          </label>
-          <select
-            class="form-control p-2"
-            value={{this.currentSelectedRelatedTag}}
-            {{on "change" (fn this.updateCustomTag "related_tags")}}
-          >
-            <option value="">Select related tags...</option>
-            {{#each this.relatedTagsToShow as |tagName|}}
-            <option value={{tagName}}>{{tagName}}</option>
-            {{/each}}
-          </select>
-        </div> 
-      {{!-- {{/if}} --}}
-
-      {{#if this.customTags.module}}
-        <div class="field-group">
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            {{this.customTags.module.label}}
-          </label>
-          <select
-            class="form-control p-2"
-            value={{this.currentSelectedModuleTag}}
-            {{on "change" (fn this.updateCustomTag "module")}}
-          >
-            <option value="">Select module tags...</option>
-            {{#each this.args.model.customization.modulesTags.tag_group.tag_names as |optionLabel|}}
-            <option value={{optionLabel}}>{{optionLabel}}</option>
-            {{/each}}
-          </select>
-        </div>
-      {{/if}}
-      {{#if this.customTags.system}}
+    {{#if this.createTopic}}
+      {{#if this.customTags}}
+      <div class="custom-composer-tags flex gap-4 item-center justify-baseline">
+        {{!-- {{#if this.showRelatedTags}} --}}
           <div class="field-group">
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            {{this.customTags.system.label}}
-          </label>
-          <input
-            type="text"
-            class="form-control p-2"
-            placeholder={{this.customTags.system.placeholder}}
-            value={{this.currentSelectedSystemTag}}
-            {{on "input" this.updateSystemTag}}
-            {{on "keydown" this.preventEnterSubmit}}
-          />
-        </div>
-      {{/if}}
-    </div>
-    {{/if}}
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              {{this.relatedTagsLabel}}
+            </label>
+            <select
+              class="form-control p-2"
+              value={{this.currentSelectedRelatedTag}}
+              {{on "change" (fn this.updateCustomTag "related_tags")}}
+            >
+              <option value="">Select related tags...</option>
+              {{#each this.relatedTagsToShow as |tagName|}}
+              <option value={{tagName}}>{{tagName}}</option>
+              {{/each}}
+            </select>
+          </div> 
+        {{!-- {{/if}} --}}
 
-    {{#if this.customFields}}
-    <div class="custom-composer-fields mt-2">
-      {{#each this.customFields as |field|}}
-        {{#if field.isSection}}
-        <div class="section-divider mt-6 mb-4">
-          <h3 class="text-lg font-semibold text-gray-800">{{field.label}}</h3>
-          <hr class="border-gray-300 mb-2">
-        </div>
-        {{else}}
-        <div class="field-group">
-          <label class="block text-sm font-medium text-gray-700 mb-2">
-            {{field.label}}
-          </label>
-          {{#if field.isInput}}
-          <input
-            type="text"
-            class="form-control w-full"
-            placeholder={{field.placeholder}}
-            value={{get this.args.model.customFieldValues field.key}}
-            {{on "input" (fn this.updateCustomField field.key)}}
-          />
-          {{else if field.isDate}}
-          <input
-            type="date"
-            class="form-control w-full"
-            value={{get this.args.model.customFieldValues field.key}}
-            {{on "input" (fn this.updateCustomField field.key)}}
-          />
-          {{else if field.isSelect}}
-          <select
-            class="form-control w-full"
-            {{on "change" (fn this.updateCustomField field.key)}}
-          >
-            <option value="">Select...</option>
-            {{#each-in field.options as |optionKey optionLabel|}}
-            <option value={{optionKey}}>{{optionLabel}}</option>
-            {{/each-in}}
-          </select>
-          {{else if field.isFile}}
-          <input
-            type="file"
-            class="form-control w-full"
-            {{on "change" (fn this.updateCustomField field.key)}}
-          />
-          {{else}}
-          <DEditor 
-            @placeholder={{field.placeholder}}
-            @value={{get this.args.model.customFieldValues field.key}}
-            @change={{fn this.updateCustomField field.key}}
-          />
-          {{!-- <ComposerEditor 
-            @value={{get this.args.model.customFieldValues field.key}}
-            @placeholder={{field.placeholder}}
-            @onChange={{fn this.updateCustomField field.key}}
-            @fieldKey={{field.key}}
-          >
-          </ComposerEditor> --}}
-          {{/if}}
-        </div>
+        {{#if this.customTags.module}}
+          <div class="field-group">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              {{this.customTags.module.label}}
+            </label>
+            <select
+              class="form-control p-2"
+              value={{this.currentSelectedModuleTag}}
+              {{on "change" (fn this.updateCustomTag "module")}}
+            >
+              <option value="">Select module tags...</option>
+              {{#each this.args.model.customization.modulesTags.tag_group.tag_names as |optionLabel|}}
+              <option value={{optionLabel}}>{{optionLabel}}</option>
+              {{/each}}
+            </select>
+          </div>
         {{/if}}
-      {{/each}}
-      
+        {{#if this.customTags.system}}
+            <div class="field-group">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              {{this.customTags.system.label}}
+            </label>
+            <input
+              type="text"
+              class="form-control p-2"
+              placeholder={{this.customTags.system.placeholder}}
+              value={{this.currentSelectedSystemTag}}
+              {{on "input" this.updateSystemTag}}
+              {{on "keydown" this.preventEnterSubmit}}
+            />
+          </div>
+        {{/if}}
+      </div>
+      {{/if}}
 
-    </div>
+      {{#if this.customFields}}
+      <div class="custom-composer-fields mt-2">
+        {{#each this.customFields as |field|}}
+          {{#if field.isSection}}
+          <div class="section-divider mt-6 mb-4">
+            <h3 class="text-lg font-semibold text-gray-800">{{field.label}}</h3>
+            <hr class="border-gray-300 mb-2">
+          </div>
+          {{else}}
+          <div class="field-group">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              {{field.label}}
+            </label>
+            {{#if field.isInput}}
+            <input
+              type="text"
+              class="form-control w-full"
+              placeholder={{field.placeholder}}
+              value={{get this.args.model.customFieldValues field.key}}
+              {{on "input" (fn this.updateCustomField field.key)}}
+            />
+            {{else if field.isDate}}
+            <input
+              type="date"
+              class="form-control w-full"
+              value={{get this.args.model.customFieldValues field.key}}
+              {{on "input" (fn this.updateCustomField field.key)}}
+            />
+            {{else if field.isSelect}}
+            <select
+              class="form-control w-full"
+              {{on "change" (fn this.updateCustomField field.key)}}
+            >
+              <option value="">Select...</option>
+              {{#each-in field.options as |optionKey optionLabel|}}
+              <option value={{optionKey}}>{{optionLabel}}</option>
+              {{/each-in}}
+            </select>
+            {{else if field.isFile}}
+            <input
+              type="file"
+              class="form-control w-full"
+              {{on "change" (fn this.updateCustomField field.key)}}
+            />
+            {{else}}
+            <DEditor 
+              @placeholder={{field.placeholder}}
+              @value={{get this.args.model.customFieldValues field.key}}
+              @change={{fn this.updateCustomField field.key}}
+            />
+            {{!-- <ComposerEditor 
+              @value={{get this.args.model.customFieldValues field.key}}
+              @placeholder={{field.placeholder}}
+              @onChange={{fn this.updateCustomField field.key}}
+              @fieldKey={{field.key}}
+            >
+            </ComposerEditor> --}}
+            {{/if}}
+          </div>
+          {{/if}}
+        {{/each}}
+        
+
+      </div>
+      {{/if}}
     {{/if}}
   </template>
 }

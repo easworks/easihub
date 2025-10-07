@@ -186,13 +186,13 @@
 
   /* hiding composer default textarea and input and styling tags section - only when customized */
 
-  .d-editor-textarea-wrapper {
+  /* .d-editor-textarea-wrapper {
     @apply hidden;
   }
 
   .title-and-category .title-input {
     @apply hidden
-  }
+  } */
 
   .title-and-category {
     @apply flex-col items-baseline;
@@ -298,6 +298,16 @@
 
   .search-menu-container.menu-panel-results {
     @apply w-full mr-2;
+  }
+
+  .cooked {
+    /* @apply prose; */
+    --tw-prose-pre-bg: var(--inline-code-bg);
+    code {
+      &::before, &::after {
+        @apply hidden;
+      }
+    }
   }
 }
 
