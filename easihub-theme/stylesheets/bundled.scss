@@ -5382,6 +5382,7 @@
     width: 100%;
   }
   .container {
+    width: 100%;
     flex: calc(1/12 * 100%);
   }
   #domains {
@@ -5395,6 +5396,9 @@
     padding: calc(var(--spacing) * 5);
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+    @media (width >= 28rem) {
+      flex: 95%;
+    }
   }
   .btn-home {
     display: inline-flex;

@@ -34,11 +34,11 @@
   }
 
   .container {
-    @apply flex-1/12;
+    @apply flex-1/12 w-full;
   }
 
   #domains {
-    @apply flex-11/12 mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
+    @apply flex-11/12 md:flex-[95%] mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
   }
 
   .btn-home {

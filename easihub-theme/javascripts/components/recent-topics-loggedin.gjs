@@ -10,6 +10,7 @@ export default class RecentTopicsLoggedin extends Component {
   @service store
 
   @tracked latestTopics = [];
+  @tracked isLoading = true;
 
   constructor() {
     super(...arguments);
@@ -18,6 +19,7 @@ export default class RecentTopicsLoggedin extends Component {
 
   async getRecentTopics() {
     try {
+      this.isLoading = true;
       const topicList = await this.store.findFiltered('topicList', {
         filter: 'latest',
         params: { per_page: 6 }
@@ -25,6 +27,8 @@ export default class RecentTopicsLoggedin extends Component {
       this.latestTopics = topicList.topics;
     } catch (error) {
       console.error(error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -87,7 +91,11 @@ export default class RecentTopicsLoggedin extends Component {
   }
 
   <template>
-    {{#if this.latestTopics}}
+    {{#if this.isLoading}}
+      <div class="loading-spinner animate-pulse">
+        Loading topics...
+      </div>
+    {{else if this.latestTopics}}
     {{#each this.latestTopics as |topic|}}
     {{#let 
       (this.formatCategoryTag topic)
