@@ -29,8 +29,16 @@
     @apply text-base font-semibold leading-snug;
   }
 
+  .main-wrapper {
+    @apply flex w-full;
+  }
+
   .container {
-    @apply max-w-6xl mx-auto;
+    @apply flex-1/12;
+  }
+
+  #domains {
+    @apply flex-11/12 mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
   }
 
   .btn-home {

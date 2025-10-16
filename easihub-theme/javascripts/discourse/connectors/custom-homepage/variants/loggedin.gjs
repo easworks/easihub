@@ -106,24 +106,26 @@ export class LoggedinHomepage extends Component {
     </div>
 
     <!-- Recent Activity -->
-    <div class="container">
-      <div class="recent-activity">
-        <div class="activity-header">
-          <h2 class="activity-title">
-            <div class="live-indicator"></div>
-            Recent Activity
-          </h2>
-          <a href="/latest" class="view-all-link">View All →</a>
-        </div>
+    <div class="main-wrapper">
+      <div id="domains">
+        <span class="domain-title">Enterprise Application Hubs</span>
+        <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
+      </div>
+      <div class="container">
+        <div class="recent-activity">
+          <div class="activity-header">
+            <h2 class="activity-title">
+              <div class="live-indicator"></div>
+              Recent Activity
+            </h2>
+            <a href="/latest" class="view-all-link">View All →</a>
+          </div>
 
-        <div class="activity-grid">
-          <RecentTopicsLoggedIn />
+          <div class="activity-grid">
+            <RecentTopicsLoggedIn />
+          </div>
         </div>
       </div>
-    </div>
-    <div id="domains">
-      <span class="domain-title">Enterprise Application Hubs</span>
-      <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
     </div>
 
   </template>

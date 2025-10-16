@@ -37,11 +37,12 @@ export class DiscoveryAboveDomainHub extends Component  {
               configurations and customizations.
             {{/if}}
           </span>
-          <button class="btn btn-flat source-color-primary-500 text-white
-            self-center
-            col-span-2 @lg:col-span-1 transition-all">
+          <a 
+            href="https://easihub.com/community/posting-guidelines" 
+            rel="Posting Guidelines"
+            class="btn btn-flat source-color-primary-500 text-white self-center col-span-2 @lg:col-span-1 transition-all">
             Posting Guide
-          </button>
+          </a>
         </div>
       </div>
 

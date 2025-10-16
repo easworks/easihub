@@ -9,12 +9,12 @@ export class CustomTagDataRender extends Component {
 
   get isContentTag() {
     const tagId = this.router.currentRoute?.attributes?.tag?.id;
-    return ['articles', 'events', 'bulletins'].includes(tagId);
+    return ['article', 'event', 'bulletin'].includes(tagId);
   }
 
   get isJobTag() {
     const tagId = this.router.currentRoute?.attributes?.tag?.id;
-    return tagId === 'jobs';
+    return tagId === 'job';
   }
 
   get currentCategory() {

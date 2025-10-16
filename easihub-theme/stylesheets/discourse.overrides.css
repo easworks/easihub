@@ -300,15 +300,25 @@
     @apply w-full mr-2;
   }
 
-  .cooked {
-    /* @apply prose; */
-    --tw-prose-pre-bg: var(--inline-code-bg);
+  .contents .cooked {
+    @apply prose;
+    --tw-prose-code: var(--color-primary-500); /* inline code text color */
+    --tw-prose-pre-bg: var(--hljs-bg);
+    --tw-prose-pre-code: var(--color-slate-900);
+    --hljs-tag: var(--color-slate-400);
     code {
       &::before, &::after {
         @apply hidden;
       }
     }
   }
+
+  /* to increase max width of body */
+
+  body.has-sidebar-page .wrap {
+    @apply max-w-none;
+  }
+
 }
 
 @utility d-link-color-* {
