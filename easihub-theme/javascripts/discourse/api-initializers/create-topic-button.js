@@ -6,7 +6,6 @@ export default apiInitializer(api => {
 
   api.modifyClass('component:discovery/navigation',
     DiscoveryNavigation => class extends DiscoveryNavigation {
-      @service router;
       @service('url-differentiator') urld;
 
       get canCreateTopic() {
@@ -15,12 +14,10 @@ export default apiInitializer(api => {
         let allowedByRoute = false;
 
         switch (this.urld.routeName) {
-          case 'tags.showCategory.technical-area':
           case 'tags.showCategory.software': {
             const tag = this.urld.model.tag;
             allowedByRoute = SPECIAL_TAGS.has(tag.id);
           } break;
-          case 'discovery.category.technical-area':
           case 'discovery.category.software': {
             allowedByRoute = true;
           } break;
@@ -32,7 +29,6 @@ export default apiInitializer(api => {
 
   api.modifyClass('component:d-navigation',
     DNavigation => class extends DNavigation {
-      @service router;
       @service('url-differentiator') urld;
 
       get createTopicLabel() {
@@ -40,13 +36,11 @@ export default apiInitializer(api => {
 
 
         switch (this.urld.routeName) {
-          case 'tags.showCategory.technical-area':
           case 'tags.showCategory.software': {
             const tag = this.urld.model.tag;
             const label = themePrefix(`topic.create.by-tag.${tag.id}`);
             return label;
           }
-          case 'discovery.category.technical-area':
           case 'discovery.category.software': {
             const category = this.urld.model.category;
             const labelKey = category.id === 179 ? category.id : 'default';
@@ -59,4 +53,12 @@ export default apiInitializer(api => {
         return base;
       }
     });
+
+  api.modifyClass('component:create-topic-button',
+    klass => class extends klass {
+      get label() {
+        return this.args.label || 'topic.create';
+      }
+    }
+  );
 });

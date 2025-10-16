@@ -50,9 +50,9 @@ export default class UrlDifferentiatorService extends Service {
         if (this.model?.category.id === SPECIAL_CATEGORIES.feedback) {
           return `${route.name}.feedback`;
         }
-        return this.#parseSegmentBasedRoute(route);
+        return this.#parseCategoryRoute(route, this.model.category);
       case 'tags.showCategory':
-        return this.#parseSegmentBasedRoute(route);
+        return this.#parseCategoryRoute(route, this.model.category);
     }
 
     if (isAdminRoute(route)) {
@@ -64,30 +64,20 @@ export default class UrlDifferentiatorService extends Service {
     return route.name;
   }
 
-  #parseSegmentBasedRoute(route) {
-    const segments = route.params.category_slug_path_with_id.split('/');
-
-    if (segments.length === 2 && numeric.test(segments[1])) {
-      return `${route.name}.domain`;
-    }
-
-    if (segments.length === 3 && numeric.test(segments[2])) {
-      if (genericTopicsPattern.test(segments[1])) {
-        return `${route.name}.technical-area`;
+  #parseCategoryRoute(route, category) {
+    {
+      switch (true) {
+        case (category.isOfType('hub', 'domain')):
+          return `${route.name}.domain`;
+        case (category.isOfType('hub', 'software')):
+          return `${route.name}.software`;
+        default: {
+          return route.name;
+        }
       }
-      return `${route.name}.software`;
     }
-
-    if (segments.length === 4 && numeric.test(segments[3])) {
-      return `${route.name}.technical-area`;
-    }
-
-    return route.name;
   }
 }
-
-const numeric = /^\d+$/;
-const genericTopicsPattern = /^generic-.+-topics$/;
 
 function isAdminRoute(route) {
   let currentRoute = route;
