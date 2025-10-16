@@ -91,10 +91,10 @@ export class LoggedinHomepage extends Component {
           <a href="#software" class="tab-link">
             <i class="fas fa-cogs"></i> Find Software
           </a>
-          <a href="#latest" class="tab-link">
+          <a href="/latest" class="tab-link">
             <i class="fas fa-clock"></i> Latest Activity
           </a>
-          <a href="#guidelines" class="tab-link">
+          <a href="https://easihub.com/community/posting-guidelines " class="tab-link">
             <i class="fas fa-info-circle"></i> Guidelines
           </a>
         </div>
