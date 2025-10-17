@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import ContentCard from '../../../components/articles-card';
+import ContentCard from '../../../components/content-card';
 import JobCard from '../../../components/job-card';
 
 // Add error handling for dynamic imports

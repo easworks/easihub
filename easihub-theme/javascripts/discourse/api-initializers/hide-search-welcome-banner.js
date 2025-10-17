@@ -8,9 +8,20 @@ export default apiInitializer(api => {
       const route = router.currentRouteName;
       const currentUser = router.currentUser;
 
+
       const el = getSearchBannerElement();
       const mainOutletWrapper = getMainOutletWrapperElement();
       const mainOutlet = getMainOutletElement();
+
+      if (route === 'discovery.latest') {
+        if (el) {
+          el.classList.add('hidden');
+        }
+      } else {
+        if (el) {
+          el.classList.remove('hidden');
+        }
+      }
 
       if (route === 'discovery.custom') {
         if (el) {

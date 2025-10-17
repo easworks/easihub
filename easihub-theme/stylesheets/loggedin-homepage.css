@@ -33,12 +33,12 @@
     @apply flex w-full;
   }
 
-  .container {
-    @apply flex-1/12 w-full;
+  .main-wrapper .sidebar {
+    @apply md:w-4/12 w-full;
   }
 
   #domains {
-    @apply flex-11/12 md:flex-[95%] mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
+    @apply w-10/12 md:w-11/12 mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
   }
 
   .btn-home {

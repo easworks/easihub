@@ -1,70 +1,251 @@
 @layer components {
-  .activity-grid {
-    @apply grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4;
+  :root {
+    --radius: 8px;
+    --card-border: #e5e7eb;
+    --text-strong: #1f2937;
+    --text-muted: #6b7280;
+    --text-subtle: #9ca3af;
+    --bg-app: #f5f7fa;
+
+    /* Section accents */
+    --accent-recent: #8b5cf6; /* purple */
+    --accent-articles: #0b1f3b; /* deep navy for articles */
+    --accent-jobs: #06b6d4; /* cyan */
+    --accent-events: #f59e0b; /* amber */
   }
 
-  .activity-item {
-    @apply border border-gray-200 rounded-lg h-full p-4 transition-all duration-200 ease-in-out cursor-pointer;
+  .sidebar {
+    @apply bg-white rounded shadow-sm overflow-hidden;
+    border-radius: var(--radius);
   }
 
-  .activity-item:hover {
-    @apply border-blue-500 -translate-y-px shadow-lg;
-    box-shadow: 0 4px 12px rgba(73, 73, 252, 0.1);
+  .section {
+    @apply p-5 border-b border-gray-200 bg-white;
+  }
+  .section:last-child {
+    @apply border-b-0;
   }
 
-  .activity-meta {
-    @apply flex flex-col items-baseline gap-2 mb-2 text-xs text-gray-500;
+  /* section header */
+  .section-header {
+    @apply flex items-center justify-between mb-4;
+  }
+  .section-title {
+    @apply text-base font-bold flex items-center gap-2;
+    color: var(--text-strong);
+  }
+  .section-icon {
+    @apply text-lg;
   }
 
-  .activity-content {
-    @apply flex flex-col mt-auto;
+  .view-all {
+    @apply text-xs text-indigo-500 no-underline font-medium transition-colors duration-200 hover:text-indigo-600;
   }
 
-  .activity-wrap {
-    @apply w-full flex justify-between;
+  /* --- RECENT TOPICS --- */
+  .topic-item {
+    @apply border rounded p-3.5 bg-white mb-3 transition-all duration-200 box-border;
+    border-color: var(--card-border) !important;
+    border-radius: var(--radius);
+  }
+  .topic-item:last-child {
+    @apply mb-0;
+  }
+  .topic-link {
+    @apply block no-underline;
+    color: inherit;
+  }
+  .topic-title {
+    @apply text-sm font-semibold mb-1.5 leading-snug;
+    color: var(--text-strong);
+  }
+  .topic-item a:first-child:hover .topic-title {
+    @apply text-indigo-500;
+  }
+  .topic-body {
+    @apply text-xs leading-snug mb-1.5;
+    color: var(--text-muted);
+  }
+  .topic-meta {
+    @apply text-xs;
+    color: var(--text-muted);
+  }
+  .topic-footer {
+    @apply mt-2.5 pt-2.5 border-t border-gray-200;
+  }
+  .topic-view-all {
+    @apply text-xs text-indigo-500 no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200 hover:text-indigo-600;
   }
 
-  .activity-info {
-    @apply inline-flex gap-1;
+  /* --- ARTICLE CARDS --- */
+  .article-card {
+    @apply border rounded p-3.5 bg-white mb-3 transition-all duration-200 box-border;
+    border-color: var(--card-border) !important;
+    border-radius: var(--radius);
+  }
+  .article-card:last-child {
+    @apply mb-0;
+  }
+  .article-card .article-content {
+    @apply block no-underline;
+    color: inherit;
+  }
+  .article-card .article-content:hover .article-title {
+    color: var(--accent-articles);
+  }
+  .article-footer {
+    @apply mt-2.5 pt-2.5 border-t border-gray-200;
+  }
+  .article-view-all {
+    @apply text-xs no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200;
+    color: var(--accent-articles);
+  }
+  .article-view-all:hover {
+    @apply text-blue-800;
+  }
+  .article-title {
+    @apply text-sm font-semibold mb-1.5 leading-snug;
+    color: var(--text-strong);
+  }
+  .article-author {
+    @apply text-xs mb-1;
+    color: var(--text-muted);
+  }
+  .article-source {
+    @apply text-xs;
+    color: var(--text-subtle);
   }
 
-  .activity-tag {
-    @apply bg-blue-500 text-white px-2 py-1 rounded text-xs font-semibold;
+  /* --- JOB CARDS --- */
+  .job-card {
+    @apply border rounded p-3.5 bg-white mb-3 transition-all duration-200 box-border;
+    border-color: var(--card-border) !important;
+    border-radius: var(--radius);
+  }
+  .job-card:last-child {
+    @apply mb-0;
+  }
+  .job-card a:first-child:hover .job-title {
+    @apply text-indigo-500;
+  }
+  .job-title {
+    @apply text-sm font-semibold mb-1.5;
+    color: var(--text-strong);
+  }
+  .job-company {
+    @apply text-xs text-indigo-500 mb-1.5 font-medium;
+  }
+  .job-location {
+    @apply text-xs mb-2;
+    color: var(--text-muted);
+  }
+  .job-tags {
+    @apply flex flex-wrap gap-1.5;
+  }
+  .job-footer {
+    @apply mt-2.5 pt-2.5 border-t border-gray-200;
+  }
+  .job-view-all {
+    @apply text-xs text-indigo-500 no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200 hover:text-indigo-600;
   }
 
-  .activity-tag.sap {
-    @apply bg-[#0073e6];
+  /* --- EVENTS --- */
+  .event-card {
+    @apply border rounded bg-white p-3.5 mb-3 transition-all duration-200 box-border;
+    border-color: var(--card-border) !important;
+    border-radius: var(--radius);
+  }
+  .event-card:last-child {
+    @apply mb-0;
+  }
+  .event-card a:first-child:hover .event-title {
+    @apply text-indigo-500;
+  }
+  .event-title {
+    @apply text-sm font-semibold mb-1.5;
+    color: var(--text-strong);
+  }
+  .event-date {
+    @apply text-xs text-indigo-500 mb-1 font-medium;
+  }
+  .event-desc {
+    @apply text-xs leading-snug;
+    color: var(--text-muted);
+  }
+  .event-footer {
+    @apply mt-2.5 pt-2.5 border-t border-gray-200;
+  }
+  .event-view-all {
+    @apply text-xs text-indigo-500 no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200 hover:text-indigo-600;
   }
 
-  .activity-tag.oracle {
-    @apply bg-[#f80000];
+  /* tags + badges */
+  .tag {
+    @apply bg-violet-100 text-violet-800 px-2 py-1 rounded text-xs font-medium;
+  }
+  .tag.green {
+    @apply bg-green-100 text-green-800;
+  }
+  .tag.blue {
+    @apply bg-blue-100 text-blue-800;
+  }
+  .badge {
+    @apply inline-block bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full text-xs font-semibold ml-1.5;
+  }
+  .badge.new {
+    @apply bg-green-100 text-green-800;
   }
 
-  .activity-tag.salesforce {
-    @apply bg-[#00a1e0];
+  /* ──────────────────────────────────────────── */
+  /* Section differentiation */
+  .section--recent {
+    @apply border-t-4;
+    border-top-color: var(--accent-recent);
+  }
+  .section--articles {
+    @apply border-t-4;
+    border-top-color: var(--accent-articles);
+  }
+  .section--jobs {
+    @apply border-t-4;
+    border-top-color: var(--accent-jobs);
+  }
+  .section--events {
+    @apply border-t-4;
+    border-top-color: var(--accent-events);
   }
 
-  .activity-tag.plm {
-    @apply bg-[#ff6b35];
+  .section--recent .section-title {
+    @apply text-violet-700;
+  }
+  .section--articles .section-title {
+    color: var(--accent-articles);
+  }
+  .section--jobs .section-title {
+    @apply text-cyan-700;
+  }
+  .section--events .section-title {
+    @apply text-amber-700;
   }
 
-  .domain-label {
-    @apply text-gray-400 text-xs bg-gray-100 px-1.5 py-0.5 rounded-sm uppercase tracking-wider;
+  .section--recent .topic-item:hover {
+    border-color: var(--accent-recent) !important;
+    @apply shadow-lg;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.12);
   }
-
-  .activity-title-text {
-    @apply text-sm font-semibold text-gray-900 mb-1.5 leading-tight;
+  .section--articles .article-card:hover {
+    border-color: var(--accent-articles) !important;
+    @apply shadow-lg;
+    box-shadow: 0 2px 8px rgba(11, 31, 59, 0.12);
   }
-
-  .activity-excerpt {
-    @apply text-sm text-gray-600 leading-tight;
+  .section--jobs .job-card:hover {
+    border-color: var(--accent-jobs) !important;
+    @apply shadow-lg;
+    box-shadow: 0 2px 8px rgba(6, 182, 212, 0.12);
   }
-
-  .activity-status {
-    @apply inline-flex items-center gap-1 text-xs text-green-600 font-medium ml-2;
-  }
-
-  .activity-status.answered {
-    @apply text-green-600;
+  .section--events .event-card:hover {
+    border-color: var(--accent-events) !important;
+    @apply shadow-lg;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.12);
   }
 }
