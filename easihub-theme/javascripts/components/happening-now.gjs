@@ -11,7 +11,7 @@ export default class HappeningNow extends Component {
     this.getHappeningNowTopics();
   }
 
-  categories = [1588, 1589, 5, 1049]
+  categories = [1588, 1589, 2163, 686]
 
   async getHappeningNowTopics() {
     try {
