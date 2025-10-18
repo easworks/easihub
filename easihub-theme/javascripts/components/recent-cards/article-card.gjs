@@ -110,7 +110,7 @@ export default class ArticleCard extends Component {
             (this.getUrl article)
             as |author categoryUrl articleUrl|
           }}
-            <div class="article-card">
+            <div class="article-card" style="border-left: 3px solid #0b1f3b">
               <a href={{articleUrl}} class="article-content">
                 <div class="article-title">
                   {{article.title}}
