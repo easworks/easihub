@@ -44,6 +44,20 @@ export default {
       }
     });
 
+    api.modifyClass('route:discovery.categories',
+      klass => class extends klass {
+
+        async findCategories(parentCategory) {
+          const base = await super.findCategories(parentCategory);
+
+          base.categories = base.categories.filter(c => c.isOfType('hub'));
+          base.init();
+
+          return base;
+        }
+      }
+    );
+
     api.modifyClass('route:discovery.category', klass => class extends klass {
       async model() {
         const base = await super.model(...arguments);
