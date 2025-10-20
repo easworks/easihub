@@ -7,8 +7,11 @@ import lazyHash from 'discourse/helpers/lazy-hash';
 import CategoriesBoxes from 'discourse/components/categories-boxes';
 import CategoryList from 'discourse/models/category-list';
 import Category from 'discourse/models/category';
-import RecentTopicsLoggedIn from '../../../../components/recent-topics-loggedin';
 import { LinkTo } from '@ember/routing';
+import RecentCard from '../../../../components/recent-cards/recent-card.gjs';
+import ArticleCard from '../../../../components/recent-cards/article-card.gjs';
+import JobCard from '../../../../components/recent-cards/job.gjs';
+import EventCard from '../../../../components/recent-cards/event-card.gjs';
 
 
 export class LoggedinHomepage extends Component {
@@ -91,10 +94,10 @@ export class LoggedinHomepage extends Component {
           <a href="#software" class="tab-link">
             <i class="fas fa-cogs"></i> Find Software
           </a>
-          <a href="#latest" class="tab-link">
+          <a href="/latest" class="tab-link">
             <i class="fas fa-clock"></i> Latest Activity
           </a>
-          <a href="#guidelines" class="tab-link">
+          <a href="https://easihub.com/community/posting-guidelines " class="tab-link">
             <i class="fas fa-info-circle"></i> Guidelines
           </a>
         </div>
@@ -106,24 +109,17 @@ export class LoggedinHomepage extends Component {
     </div>
 
     <!-- Recent Activity -->
-    <div class="container">
-      <div class="recent-activity">
-        <div class="activity-header">
-          <h2 class="activity-title">
-            <div class="live-indicator"></div>
-            Recent Activity
-          </h2>
-          <a href="/latest" class="view-all-link">View All →</a>
-        </div>
-
-        <div class="activity-grid">
-          <RecentTopicsLoggedIn />
-        </div>
+    <div class="main-wrapper">
+      <div id="domains">
+        <span class="domain-title">Enterprise Application Hubs</span>
+        <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
       </div>
-    </div>
-    <div id="domains">
-      <span class="domain-title">Enterprise Application Hubs</span>
-      <CategoriesBoxes @categories={{this.categories}} class="mb-8"/>
+      <div class="sidebar">
+        <RecentCard/>
+        <ArticleCard/>
+        <JobCard/>
+        <EventCard/>
+      </div>
     </div>
 
   </template>

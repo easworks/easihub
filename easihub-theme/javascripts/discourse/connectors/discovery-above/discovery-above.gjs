@@ -9,14 +9,20 @@ import { fn } from '@ember/helper';
 
 export default class DiscoveryAboveComponent extends Component {
   // @service site;
+  @service router;
+
+  get currentRoute() {
+    return this.router.currentRouteName === 'discovery.category' || this.router.currentRouteName === 'discovery.custom';
+  }
 
   <template>
-    {{#if @category}}
-      {{#if (@category.isOfType 'hub' 'domain')}}
-        <DiscoveryAboveDomainHub @category={{@category}}/>
+    {{#if this.currentRoute}}
+      {{#if @category}}
+        {{#if (@category.isOfType 'hub' 'domain')}}
+          <DiscoveryAboveDomainHub @category={{@category}}/>
+        {{/if}}
+
       {{/if}}
-
     {{/if}}
-
   </template>
 }

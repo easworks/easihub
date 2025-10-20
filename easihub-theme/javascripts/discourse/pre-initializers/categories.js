@@ -7,6 +7,7 @@ import { SoftwareHubListHeader } from '../../components/category-list-header/sof
 export default {
   initialize: () => withPluginApi(api => {
     api.modifyClassStatic('model:category-list', {
+      pluginId: 'easihub_theme',
       fromArray(categories) {
         const list = new this();
         list.categories = categories;

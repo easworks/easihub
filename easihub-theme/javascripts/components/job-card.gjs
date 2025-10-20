@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { on } from '@ember/modifier';
+import { eq, gt, not } from 'truth-helpers';
+import { fn, and } from '@ember/helper';
 
 export default class JobCardComponent extends Component {
   @service router;
@@ -14,11 +16,13 @@ export default class JobCardComponent extends Component {
   @tracked isLoadingDetails = false;
   @tracked error = null;
   @tracked totalRecords = 0;
-  @tracked pageNum = 1;
+
   @tracked pageSize = 10;
+  @tracked currentPage = 1;
 
   constructor() {
     super(...arguments);
+    this.fetchJobCount();
     this.fetchJobs();
   }
 
@@ -43,13 +47,57 @@ export default class JobCardComponent extends Component {
     };
   }
 
-  get showMore() {
-    return this.jobs.length >= this.pageSize * this.pageNum;
+  get totalPages() {
+    return Math.ceil(this.totalRecords / this.pageSize);
   }
 
-  get showMoreButton() {
-    return this.showMore || this.isLoadingMore;
+  get startIndex() {
+    return (this.currentPage - 1) * this.pageSize;
   }
+
+  get endIndex() {
+    return this.startIndex + this.pageSize;
+  }
+
+  get currentJobs() {
+    return this.jobs;
+  }
+
+  get pageNumbers() {
+    const pages = [];
+    const maxVisible = 5;
+    
+    if (this.totalPages <= maxVisible) {
+      for (let i = 1; i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (this.currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) pages.push(i);
+        pages.push('...');
+        pages.push(this.totalPages);
+      } else if (this.currentPage >= this.totalPages - 2) {
+        pages.push(1);
+        pages.push('...');
+        for (let i = this.totalPages - 3; i <= this.totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push('...');
+        for (let i = this.currentPage - 1; i <= this.currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push('...');
+        pages.push(this.totalPages);
+      }
+    }
+    
+    return pages;
+  }
+
+
+
 
   @action
   async fetchJobCount() {
@@ -68,7 +116,7 @@ export default class JobCardComponent extends Component {
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const result = await response.json();
-      this.totalRecords = result.totalRecords || 0;
+      this.totalRecords = result || 0;
     } catch (error) {
       console.error('Error fetching job count:', error);
       this.totalRecords = 0;
@@ -78,9 +126,9 @@ export default class JobCardComponent extends Component {
   @action
   async fetchJobs(reset = true) {
     if (reset) {
-      this.pageNum = 1;
       this.jobs = [];
       this.isLoading = true;
+      this.currentPage = 1;
       await this.fetchJobCount();
     } else {
       this.isLoadingMore = true;
@@ -92,7 +140,7 @@ export default class JobCardComponent extends Component {
         domain_name,
         software_name,
         topic_type: 'jobs',
-        page_num: this.pageNum,
+        page_num: this.currentPage,
         page_size: this.pageSize
       };
       
@@ -105,13 +153,9 @@ export default class JobCardComponent extends Component {
       const result = await response.json();
       const newJobs = Array.isArray(result) ? result : (result?.data || []);
       
-      if (reset) {
-        this.jobs = newJobs;
-        if (newJobs.length > 0) {
-          this.selectedJob = newJobs[0];
-        }
-      } else {
-        this.jobs = [...this.jobs, ...newJobs];
+      this.jobs = newJobs;
+      if (newJobs.length > 0 && !this.selectedJob) {
+        this.selectedJob = newJobs[0];
       }
     } catch (error) {
       this.error = error?.message || 'Failed to load jobs';
@@ -140,14 +184,30 @@ export default class JobCardComponent extends Component {
   }
 
   @action
-  async loadMore(event) {
-    event.preventDefault();
-    const sidebar = document.querySelector('.jobs-sidebar');
-    const currentScrollTop = sidebar.scrollTop;
-    this.pageNum += 1;
-    await this.fetchJobs(false);
-    sidebar.scrollTop = currentScrollTop;
+  async goToPage(page) {
+    if (typeof page === 'number' && page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      await this.fetchJobs(false);
+    }
   }
+
+  @action
+  async nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      await this.fetchJobs(false);
+    }
+  }
+  
+  @action
+  async previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      await this.fetchJobs(false);
+    }
+  }
+
+
 
   @action
   selectJob(jobId) {
@@ -164,6 +224,28 @@ export default class JobCardComponent extends Component {
     this.selectedJob = null;
   }
 
+  @action
+  async shareJob(event, job) {
+    event.stopPropagation();
+    
+    const shareData = {
+      title: `${job.job_title} at ${job.company_name}`,
+      text: `Check out this job opportunity: ${job.job_title} at ${job.company_name} in ${job.job_location}`,
+      url: job.apply_url || window.location.href
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
+        alert('Job details copied to clipboard!');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  }
+
   templateJob(job, isActive = false) {
     const { _id, job_title, company_name, job_location, employment_type, work_location_type, seniority_level, required_skills, tech_skills, industry, posted_date } = job;
     
@@ -178,7 +260,7 @@ export default class JobCardComponent extends Component {
             <h3 class="job-title">${job_title}</h3>
             <div class="company-info">
               <div class="company-name">${company_name}</div>
-              <span class="text-gray-400">|</span>
+              <span class="text-gray-400 mx-2">|</span>
               <div class="job-location">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -208,9 +290,14 @@ export default class JobCardComponent extends Component {
             </svg>
             ${posted_date || 'Recently posted'}
           </div>
-          <a href="${job.apply_url || '#'}" target="_blank" class="quick-apply-btn" onclick="event.stopPropagation()">
-            Apply
-          </a>
+          <div class="apply-wrap">  
+            <button class="share-button" title="Share this job" data-job-id="${_id}">
+              <i class="fas fa-share-alt"></i>
+            </button>
+            <a href="${job.apply_url || '#'}" target="_blank" class="quick-apply-btn" onclick="event.stopPropagation()">
+              Apply
+            </a>
+          </div>
         </div>
       </div>
     `;
@@ -230,16 +317,28 @@ export default class JobCardComponent extends Component {
     return `
       <div class="job-preview-content">
         <div class="preview-header">
-          <h2 class="preview-title">${job_title}</h2>
-          <div class="preview-company-info">
-            <div class="preview-company">${company_name}</div>
-            <span class="text-gray-400">|</span>
-            <div class="preview-location">${job_location}</div>
-          </div>
-          <div class="preview-badges">
-            <span class="preview-badge">${employment_type}</span>
-            <span class="preview-badge">${work_location_type}</span>
-            <span class="preview-badge">${salary_range || 'Salary not disclosed'}</span>
+          <div class="preview-header-content">
+            <div class="preview-header-info">
+              <h2 class="preview-title">${job_title}</h2>
+              <div class="preview-company-info">
+                <div class="preview-company">${company_name}</div>
+                <span class="text-gray-400">|</span>
+                <div class="preview-location">${job_location}</div>
+              </div>
+              <div class="preview-badges">
+                <span class="preview-badge">${employment_type}</span>
+                <span class="preview-badge">${work_location_type}</span>
+                <span class="preview-badge">${salary_range || 'Salary not disclosed'}</span>
+              </div>
+            </div>
+            <div class="preview-header-actions">
+              <button class="share-btn" title="Share this job">
+                <i class="fas fa-share-alt"></i>
+              </button>
+              <a href="${apply_url}" target="_blank" class="apply-button">
+                ${apply_button_label || 'Apply Now'}
+              </a>
+            </div>
           </div>
         </div>
         
@@ -258,33 +357,51 @@ export default class JobCardComponent extends Component {
           
           ${industries ? `<div class="preview-section"><h3 class="preview-title">Industry</h3><div class="tags-container">${industries}</div></div>` : ''}
         </div>
-        
-        <div class="preview-footer">
-          <a href="${apply_url}" target="_blank" class="apply-button">
-            ${apply_button_label || 'Apply Now'}
-          </a>
-        </div>
       </div>
     `;
   }
 
   get renderedJobs() {
-    if (!this.jobs?.length) {
+    const jobsToRender = this.currentJobs;
+    if (!jobsToRender?.length) {
       return htmlSafe('<div class="no-jobs">No jobs available</div>');
     }
-    const html = this.jobs.map((job, index) => {
+    const html = jobsToRender.map((job, index) => {
       const isActive = this.selectedJob?._id === job._id;
       return this.templateJob(job, isActive);
     }).join('');
-    return htmlSafe(`<div class="jobs-list mt-2">${html}</div>`);
+    
+    const loadingIndicator = this.isLoadingMore ? '<div class="loading animate-pulse text-center py-4">Loading more jobs...</div>' : '';
+    
+    return htmlSafe(`<div class="jobs-list mt-2">${html}${loadingIndicator}</div>`);
   }
 
   @action
   handleJobClick(event) {
+    // Handle share button clicks
+    const shareButton = event.target.closest('.share-button');
+    if (shareButton) {
+      const jobId = shareButton.dataset.jobId;
+      const job = this.jobs.find(j => j._id === jobId);
+      if (job) {
+        this.shareJob(event, job);
+      }
+      return;
+    }
+
+    // Handle job card clicks
     const jobCard = event.target.closest('.job-card');
     if (jobCard) {
       const jobId = jobCard.dataset.jobId;
       this.selectJob(jobId);
+    }
+  }
+
+  @action
+  handleShareClick(event) {
+    const shareBtn = event.target.closest('.share-btn');
+    if (shareBtn && this.selectedJob) {
+      this.shareJob(event, this.selectedJob);
     }
   }
 
@@ -295,28 +412,54 @@ export default class JobCardComponent extends Component {
   <template>
     <div class="job-layout">
       <div class="jobs-sidebar" {{on "click" this.handleJobClick}}>
-        {{#if this.isLoading}}
-          <div class="loading">Loading jobs...</div>
-        {{else if this.error}}
-          <div class="error">{{this.error}}</div>
-        {{else}}
-          {{{this.renderedJobs}}}
-        {{/if}}
-        
-        {{#if this.showMoreButton}}
-          <div class="load-more">
-            <button 
-              class="load-more-btn {{if this.isLoadingMore 'animate-pulse'}}"
-              {{on "click" this.loadMore}}
-              disabled={{this.isLoadingMore}}
-            >
-              {{#if this.isLoadingMore}}Loading...{{else}}Load More{{/if}}
-            </button>
-          </div>
-        {{/if}}
+        <div class="jobs-container">
+          {{#if this.isLoading}}
+            <div class="loading animate-pulse">Loading jobs...</div>
+          {{else if this.error}}
+            <div class="error">{{this.error}}</div>
+          {{else}}
+            {{{this.renderedJobs}}}
+          {{/if}}
+        </div>
+        <div class="pagination-container">
+          {{#if (not this.isLoading)}}
+            {{#if (gt this.totalPages 1)}}
+              <div class="pagination">
+                <button 
+                  class="pagination-btn" 
+                  {{on "click" this.previousPage}}
+                  disabled={{eq this.currentPage 1}}
+                >
+                  Previous
+                </button>
+                
+                {{#each this.pageNumbers as |page|}}
+                  {{#if (eq page "...")}}
+                    <span class="pagination-ellipsis">...</span>
+                  {{else}}
+                    <button 
+                      class="pagination-btn {{if (eq page this.currentPage) 'active'}}"
+                      {{on "click" (fn this.goToPage page)}}
+                    >
+                      {{page}}
+                    </button>
+                  {{/if}}
+                {{/each}}
+                
+                <button 
+                  class="pagination-btn" 
+                  {{on "click" this.nextPage}}
+                  disabled={{eq this.currentPage this.totalPages}}
+                >
+                  Next
+                </button>
+              </div>
+            {{/if}}
+          {{/if}}
+        </div>
       </div>
 
-      <div class="job-preview">
+      <div class="job-preview" {{on "click" this.handleShareClick}}>
         {{{this.renderedJobDetails}}}
       </div>
     </div>

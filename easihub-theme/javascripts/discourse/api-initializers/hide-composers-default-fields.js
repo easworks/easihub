@@ -21,7 +21,7 @@ export default apiInitializer(api => {
       if (textarea) {
         textarea.classList.add('hidden');
       }
-    },100);
+    },0);
 
 
     if (model.action !== 'createTopic' || !model.customization) {

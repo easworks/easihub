@@ -36,7 +36,6 @@ export default class UrlDifferentiatorService extends Service {
       this.model = null;
     }
 
-
     // this must be done last as it is being observed by
     // other components/services
     this.routeName = this.#computeRouteName(route);

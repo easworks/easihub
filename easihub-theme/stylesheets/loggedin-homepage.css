@@ -29,8 +29,16 @@
     @apply text-base font-semibold leading-snug;
   }
 
-  .container {
-    @apply max-w-6xl mx-auto;
+  .main-wrapper {
+    @apply flex w-full;
+  }
+
+  .main-wrapper .sidebar {
+    @apply md:w-4/12 w-full;
+  }
+
+  #domains {
+    @apply w-10/12 md:w-11/12 mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
   }
 
   .btn-home {
