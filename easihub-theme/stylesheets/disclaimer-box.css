@@ -1,0 +1,8 @@
+@layer components {
+  .tip-box-collapsed {
+    @apply bg-primary-200/70 px-3.5 py-2.5 text-sm border-l-4 border-primary-600 rounded-lg mt-8;
+  }
+  .tip-box-collapsed a {
+    @apply text-primary-600 font-medium text-xs ml-1.5 no-underline cursor-pointer hover:underline;
+  }
+}

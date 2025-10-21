@@ -4,12 +4,16 @@ import concatClass from "discourse/helpers/concat-class";
 import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { on } from '@ember/modifier';
+import { ajax } from "discourse/lib/ajax";
+import { tracked } from '@glimmer/tracking';
 
 
 
 export default class TopicFallback extends Component {
   @service site;
   @service composer;
+  
+  @tracked isFollowing = this.args.model.details?.notifications_reason_id === 3;
 
   @action
   openReply() {
@@ -19,6 +23,28 @@ export default class TopicFallback extends Component {
       draftKey: this.args.model.draft_key,
       draftSequence: this.args.model.draft_sequence
     });
+  }
+
+  @action
+  async followTopic() {
+    const topicId = this.args.model.id;
+    const newNotificationLevel = this.isFollowing ? 1 : 3;
+    
+    try {
+      await ajax(`/t/${topicId}/notifications.json`, {
+        type: "POST",
+        data: { notification_level: newNotificationLevel },
+      });
+      
+      this.args.model.details.notifications_reason_id = newNotificationLevel;
+      this.isFollowing = newNotificationLevel === 3;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  get followButtonText() {
+    return this.isFollowing ? "Followed" : "Follow Topic";
   }
 
   get showReply() {
@@ -38,7 +64,6 @@ export default class TopicFallback extends Component {
   }
 
   <template>
-    {{log this.args.model}}
     {{#if this.showReply}}
     <div class="empty-state">
         <div class="empty-icon">
@@ -60,7 +85,7 @@ export default class TopicFallback extends Component {
         </button>
 
         <div class="secondary-actions">
-          <a href="#" class="secondary-link">
+          <a href="https://easihub.com/community/posting-guidelines" class="secondary-link">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
@@ -68,14 +93,14 @@ export default class TopicFallback extends Component {
             </svg>
             View Guidelines
           </a>
-          <a href="#" class="secondary-link">
+          <button class="secondary-link" {{on "click" this.followTopic}}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
               <path
                 d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
               />
             </svg>
-            Follow Topic
-          </a>
+            {{this.followButtonText}}
+          </button>
         </div>
       </div>
       {{/if}}

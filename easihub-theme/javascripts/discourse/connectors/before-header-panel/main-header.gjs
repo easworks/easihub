@@ -135,13 +135,13 @@ export class MainHeader extends Component {
             <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Community</a>
             <div class="dropdown">
                 <div class="dropdown-item">
-                    <a href="/guidelines" class="dropdown-link">Community Guidelines</a>
+                    <a href="https://easihub.com/community/guidelines " class="dropdown-link">Community Guidelines</a>
                 </div>
                 <div class="dropdown-item">
-                    <a href="/code-of-conduct" class="dropdown-link">Code of Conduct</a>
+                    <a href="https://easihub.com/community/code-of-conduct" class="dropdown-link">Code of Conduct</a>
                 </div>
                 <div class="dropdown-item">
-                    <a href="/moderator" class="dropdown-link">Become a Moderator</a>
+                    <a href="https://easihub.com/community/join-moderator" class="dropdown-link">Become a Moderator</a>
                 </div>
                 <div class="dropdown-item">
                     <a href="/roles" class="dropdown-link">Roles & Badges</a>

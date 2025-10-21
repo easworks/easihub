@@ -12,10 +12,23 @@ import RecentCard from '../../../../components/recent-cards/recent-card.gjs';
 import ArticleCard from '../../../../components/recent-cards/article-card.gjs';
 import JobCard from '../../../../components/recent-cards/job.gjs';
 import EventCard from '../../../../components/recent-cards/event-card.gjs';
+import { action } from '@ember/object';
+import { ajax } from "discourse/lib/ajax";
+import { tracked } from '@glimmer/tracking';
+
 
 
 export class LoggedinHomepage extends Component {
   @service currentUser;
+  @service router;
+  @service site;
+
+  @tracked allUsersCount = 0;
+
+  constructor() {
+    super(...arguments);
+    this.getAllUsers();
+  }
 
   get currentUsername() {
     let username = this.currentUser.username;
@@ -26,6 +39,20 @@ export class LoggedinHomepage extends Component {
     const list = Category.list()
       .filter(c => c.isOfType('hub', 'domain'));
     return list;
+  }
+
+  @action
+
+  async getAllUsers() {
+    let data = {
+      period: "all",
+      order: "topic-count"
+    } 
+    const res = await ajax("/directory_items.json",{
+      type: "GET",
+      data
+    })
+    this.allUsersCount = res.meta.total_rows_directory_items;
   }
 
   <template>
@@ -97,12 +124,12 @@ export class LoggedinHomepage extends Component {
           <a href="/latest" class="tab-link">
             <i class="fas fa-clock"></i> Latest Activity
           </a>
-          <a href="https://easihub.com/community/posting-guidelines " class="tab-link">
+          <a href="https://easihub.com/community/guidelines " class="tab-link">
             <i class="fas fa-info-circle"></i> Guidelines
           </a>
         </div>
         <div class="quick-stats">
-          <span class="stat">156 members online</span>
+          <span class="stat">{{this.allUsersCount}} members online</span>
           <span class="stat">45 discussions today</span>
         </div>
       </div>

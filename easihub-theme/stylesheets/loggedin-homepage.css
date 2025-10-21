@@ -66,23 +66,35 @@
   }
 
   .btn-outline:hover {
-    @apply bg-white/10 border-primary-500/70;
+    @apply bg-white/50 border-primary-500/70;
   }
 
   /* Welcome Section */
   .welcome-section {
     @apply bg-gradient-to-br from-primary-500 to-primary-400 text-white py-6;
-    @apply w-full bg-white relative;
+    @apply w-full bg-white relative z-1;
     background-image:
       linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(229,231,235,0.8) 1px, transparent 1px),
-      radial-gradient(circle 500px at 0% 20%, rgba(139,92,246,0.3), transparent),
-      radial-gradient(circle 500px at 100% 0%, rgba(59,130,246,0.3), transparent);
-    background-size: "48px 48px, 48px 48px, 100% 100%, 100% 100%";
+      radial-gradient(circle 850px at 0% 20%, rgba(139,92,246,0.3), transparent),
+      radial-gradient(circle 450px at 100% 90%, rgba(59,130,246,0.3), transparent);
+    background-size: 48px 48px, 48px 48px, 100% 100%, 100% 100%;
+  }
+  .welcome-section::before {
+    content: "";
+    position: absolute;
+    inset: 0; 
+    background-image: url('https://community.easihub.com/uploads/default/original/1X/370bcb681a541964b0f06fe12a9bc816c65750eb.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 32%;
+    opacity: 1;
+    z-index: 0;
+    pointer-events: none;
   }
 
   .welcome-content {
-    @apply text-center text-black;
+    @apply text-center text-black w-[70%];
   }
 
   .welcome-greeting {
@@ -98,7 +110,7 @@
   }
 
   .posting-hint {
-    @apply flex items-center justify-center gap-2 text-sm opacity-90 bg-primary-200/80 py-2 px-4 mx-40 rounded-2xl backdrop-blur-sm;
+    @apply flex items-center justify-center gap-2 text-sm opacity-90 bg-primary-200/80 py-2 px-4 mx-10 rounded-2xl backdrop-blur-sm;
   }
 
   .posting-hint i {
