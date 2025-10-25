@@ -319,6 +319,12 @@
     @apply max-w-none;
   }
 
+  /* change width of sidebar*/
+  @media(max-width: 1280px) {
+    :root {
+      --d-sidebar-width: 15em;
+    }
+  }
 }
 
 @utility d-link-color-* {

@@ -8,7 +8,7 @@
   }
 
 .page-container {
-  @apply bg-gradient-to-br from-slate-950 to-slate-900 px-20 py-14;
+  @apply bg-gradient-to-br from-slate-950 to-slate-900 sm:px-20 sm:py-14 px-2 py-0;
 }
 
 .welcome-banner-footer {

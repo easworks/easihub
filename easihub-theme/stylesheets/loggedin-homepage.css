@@ -34,11 +34,15 @@
   }
 
   .main-wrapper .sidebar {
-    @apply md:w-4/12 w-full;
+    @apply md:w-4/12 md:mt-0 w-full mt-3;
   }
 
   #domains {
-    @apply w-10/12 md:w-11/12 mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
+    @apply w-10/12 mr-6 bg-white border border-gray-200 rounded-xl p-5 shadow-sm;
+  }
+
+  .start-explore {
+    @apply md:w-full w-[85%] flex md:flex-row flex-col md:mx-0 mx-auto items-center justify-center bg-white border border-gray-200 rounded-xl p-3 mb-5 shadow-sm;
   }
 
   .btn-home {
@@ -71,7 +75,7 @@
 
   /* Welcome Section */
   .welcome-section {
-    @apply bg-gradient-to-br from-primary-500 to-primary-400 text-white py-6;
+    @apply bg-gradient-to-br from-primary-500 to-primary-400 text-white rounded-xl py-6;
     @apply w-full bg-white relative z-1;
     background-image:
       linear-gradient(to right, rgba(229,231,235,0.8) 1px, transparent 1px),
@@ -124,6 +128,10 @@
 
   .search-container {
     @apply flex gap-0 max-w-2xl mx-auto;
+  }
+
+  .search-sub-container {
+    @apply flex justify-between;
   }
 
   .search-input-home {
@@ -298,12 +306,20 @@
 
   /* Mobile Responsive */
   @media (max-width: 768px) {
-      .container {
+      .sub-container {
         @apply px-4;
       }
 
       .welcome-actions {
         @apply flex-col items-center;
+      }
+
+      .main-wrapper {
+        @apply flex-col;
+      }
+
+      #domains {
+        @apply w-full;
       }
 
       .btn-home {

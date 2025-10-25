@@ -1,6 +1,6 @@
 @layer components {
   .main-nav {
-    @apply flex items-center gap-2;
+    @apply flex items-center gap-2 rounded-lg;
   }
 
   .nav-item {
@@ -110,13 +110,13 @@
   }
 
   /* Mobile responsiveness */
-  @media (max-width: 768px) {
+  @media (max-width: 928px) {
     .mobile-menu-toggle {
       @apply block;
     }
 
     .main-nav {
-      @apply hidden absolute top-full left-0 right-0 bg-white border-t border-gray-200 flex-col p-4 gap-0;
+      @apply hidden absolute w-sm top-full left-0 right-0 bg-white border-t border-gray-200 flex-col p-4 gap-0;
     }
 
     .main-nav.open {
@@ -132,7 +132,11 @@
     }
 
     .dropdown {
-      @apply static opacity-100 visible transform-none shadow-none border-0 bg-gray-50 mt-2 rounded-md;
+      @apply opacity-100 transform-none invisible shadow-none border-0 bg-gray-50 mt-2 rounded-md;
+    }
+
+    .nav-item.has-dropdown.open .dropdown {
+      @apply opacity-100 visible translate-y-0;
     }
 
     .nav-container {

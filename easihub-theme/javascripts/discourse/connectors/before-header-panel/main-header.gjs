@@ -87,104 +87,102 @@ export class MainHeader extends Component {
   }
 
   <template>
-    <nav class="main-nav ml-12" id="mainNav">
-        <div class="nav-item">
-          <LinkTo @route="discovery.index" class="nav-link" @current-when={{MainHeader.homepage}}>Home</LinkTo>
-        </div>
-        
-        <div class="nav-item has-dropdown">
-            <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Software</a>
-            <div class="dropdown">
-                <div class="dropdown-item">
-                    <a href="#" class="dropdown-link">Browse All Software</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="#" class="dropdown-link">Search Software</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="#" class="dropdown-link">By Domain</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="nav-item has-dropdown">
-            <a href="#" class="nav-link {{if this.isCurrentURLHubsPage 'active'}}" {{on "click" this.toggleDropdown}}>Hubs</a>
-            <div class="dropdown mega-dropdown">
-                <div class="mega-grid">
-                    <div class="mega-column">
-                        <h4>Core Business Systems</h4>
-                        <LinkTo @route="discovery.category" @model="erp-enterprise-resource-planning/69" class="dropdown-link">ERP - Enterprise Resource Planning</LinkTo>
-                        <LinkTo @route="discovery.category" @model="crm-customer-relationship-management/14" class="dropdown-link">CRM - Customer Relationship Management</LinkTo>
-                        <LinkTo @route="discovery.category" @model="scm-supply-chain-management/1034" class="dropdown-link">SCM - Supply Chain Management</LinkTo>
-                        <LinkTo @route="discovery.category" @model="hcm-human-capital-management/2153" class="dropdown-link">HCM - Human Capital Management</LinkTo>
-                        <LinkTo @route="discovery.category" @model="plm-product-lifecycle-management/5" class="dropdown-link">PLM - Product Lifecycle</LinkTo>
-                    </div>
-                    <div class="mega-column">
-                        <h4>Technology & Analytics</h4>
-                        <LinkTo @route="discovery.category" @model="cloud-platforms/1032" class="dropdown-link">Cloud Platforms</LinkTo>
-                        <LinkTo @route="discovery.category" @model="ba-bi-business-analysis-business-intelligence/1031" class="dropdown-link">BA/BI - Business Analytics</LinkTo>
-                        <LinkTo @route="discovery.category" @model="mes-manufacturing-execution-system/1033" class="dropdown-link">MES - Manufacturing Execution</LinkTo>
-                        <LinkTo @route="discovery.category" @model="qms-quality-management-system/2156" class="dropdown-link">QMS - Quality Management</LinkTo>
-                        <LinkTo @route="discovery.categories" class="dropdown-link">All Hubs</LinkTo>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="nav-item has-dropdown">
-            <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Community</a>
-            <div class="dropdown">
-                <div class="dropdown-item">
-                    <a href="https://easihub.com/community/guidelines " class="dropdown-link">Community Guidelines</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="https://easihub.com/community/code-of-conduct" class="dropdown-link">Code of Conduct</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="https://easihub.com/community/join-moderator" class="dropdown-link">Become a Moderator</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="/roles" class="dropdown-link">Roles & Badges</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="/roles" class="dropdown-link">Report Content</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="nav-item">
-            <a href="/tag/jobs" class="nav-link">Jobs</a>
-        </div>
-        
-        <div class="nav-item has-dropdown">
-            <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Help</a>
-            <div class="dropdown">
-                <div class="dropdown-item">
-                    <a href="/help" class="dropdown-link">Help Center</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="/faq" class="dropdown-link">FAQ</a>
-                </div>
-                <div class="dropdown-item">
-                    <a href="/support" class="dropdown-link">Contact Support</a>
-                </div>
-                <div class="dropdown-item">
-                    <LinkTo @route="discovery.category" @model="feedback/179" class="dropdown-link">Submit Feedback</LinkTo>
-                </div>
-            </div>
-        </div>
-        {{!-- {{#if this.loggedIn}} --}}
-          {{!-- <div class="btn-container">
-            <a href="/signup" class="cta-button">Join Community</a>
-            <a href="/login" class="cta-button-login">Login</a>
-          </div> --}}
-        {{!-- {{/if}} --}}
-        <button class="mobile-menu-toggle" {{on "click" this.toggleMobileMenu}}>
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+    <nav class="main-nav ml-12 md:ml-2" id="mainNav">
+      <div class="nav-item">
+        <LinkTo @route="discovery.index" class="nav-link" @current-when={{MainHeader.homepage}}>Home</LinkTo>
+      </div>
+      
+      <div class="nav-item has-dropdown">
+          <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Software</a>
+          <div class="dropdown">
+              <div class="dropdown-item">
+                  <a href="#" class="dropdown-link">Browse All Software</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="#" class="dropdown-link">Search Software</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="#" class="dropdown-link">By Domain</a>
+              </div>
+          </div>
+      </div>
+      
+      <div class="nav-item has-dropdown">
+          <a href="#" class="nav-link {{if this.isCurrentURLHubsPage 'active'}}" {{on "click" this.toggleDropdown}}>Hubs</a>
+          <div class="dropdown mega-dropdown">
+              <div class="mega-grid">
+                  <div class="mega-column">
+                      <h4>Core Business Systems</h4>
+                      <LinkTo @route="discovery.category" @model="erp-enterprise-resource-planning/69" class="dropdown-link">ERP - Enterprise Resource Planning</LinkTo>
+                      <LinkTo @route="discovery.category" @model="crm-customer-relationship-management/14" class="dropdown-link">CRM - Customer Relationship Management</LinkTo>
+                      <LinkTo @route="discovery.category" @model="scm-supply-chain-management/1034" class="dropdown-link">SCM - Supply Chain Management</LinkTo>
+                      <LinkTo @route="discovery.category" @model="hcm-human-capital-management/2153" class="dropdown-link">HCM - Human Capital Management</LinkTo>
+                      <LinkTo @route="discovery.category" @model="plm-product-lifecycle-management/5" class="dropdown-link">PLM - Product Lifecycle</LinkTo>
+                  </div>
+                  <div class="mega-column">
+                      <h4>Technology & Analytics</h4>
+                      <LinkTo @route="discovery.category" @model="cloud-platforms/1032" class="dropdown-link">Cloud Platforms</LinkTo>
+                      <LinkTo @route="discovery.category" @model="ba-bi-business-analysis-business-intelligence/1031" class="dropdown-link">BA/BI - Business Analytics</LinkTo>
+                      <LinkTo @route="discovery.category" @model="mes-manufacturing-execution-system/1033" class="dropdown-link">MES - Manufacturing Execution</LinkTo>
+                      <LinkTo @route="discovery.category" @model="qms-quality-management-system/2156" class="dropdown-link">QMS - Quality Management</LinkTo>
+                      <LinkTo @route="discovery.categories" class="dropdown-link">All Hubs</LinkTo>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <div class="nav-item has-dropdown">
+          <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Community</a>
+          <div class="dropdown">
+              <div class="dropdown-item">
+                  <a href="https://easihub.com/community/guidelines " class="dropdown-link">Community Guidelines</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="https://easihub.com/community/code-of-conduct" class="dropdown-link">Code of Conduct</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="https://easihub.com/community/join-moderator" class="dropdown-link">Become a Moderator</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/roles" class="dropdown-link">Roles & Badges</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/roles" class="dropdown-link">Report Content</a>
+              </div>
+          </div>
+      </div>
+      
+      <div class="nav-item">
+          <a href="/tag/jobs" class="nav-link">Jobs</a>
+      </div>
+      
+      <div class="nav-item has-dropdown">
+          <a href="#" class="nav-link" {{on "click" this.toggleDropdown}}>Help</a>
+          <div class="dropdown">
+              <div class="dropdown-item">
+                  <LinkTo @route="help" class="dropdown-link">Help Center</LinkTo>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/faq" class="dropdown-link">FAQ</a>
+              </div>
+              <div class="dropdown-item">
+                  <a href="/support" class="dropdown-link">Contact Support</a>
+              </div>
+              <div class="dropdown-item">
+                  <LinkTo @route="discovery.category" @model="feedback/179" class="dropdown-link">Submit Feedback</LinkTo>
+              </div>
+          </div>
+      </div>
+      {{!-- {{#if this.loggedIn}} --}}
+        {{!-- <div class="btn-container">
+          <a href="/signup" class="cta-button">Join Community</a>
+          <a href="/login" class="cta-button-login">Login</a>
+        </div> --}}
+      {{!-- {{/if}} --}}
     </nav>
+    <button class="mobile-menu-toggle" {{on "click" this.toggleMobileMenu}}>
+      <i class="fa-solid fa-sliders"></i>
+    </button>
   </template>
 }
 

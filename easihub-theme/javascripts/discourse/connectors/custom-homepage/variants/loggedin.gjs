@@ -57,7 +57,7 @@ export class LoggedinHomepage extends Component {
 
   <template>
     <section class="welcome-section">
-      <div class="container">
+      <div class="sub-container">
         <div class="welcome-content">
           <h1 class="welcome-greeting">Welcome back, {{if this.currentUsername this.currentUsername null}}</h1>
           <p class="welcome-subtitle">
@@ -83,9 +83,9 @@ export class LoggedinHomepage extends Component {
     </section>
 
     <!-- Search Bar -->
-    <div class="container">
+    <div class="sub-container">
       <div class="search-section">
-        <div class="search-container">
+        <div class="search-sub-container">
           <SearchMenu 
             class="w-full"
           />
@@ -99,20 +99,22 @@ export class LoggedinHomepage extends Component {
       </div>
     </div>
 
-    <div class="w-full flex items-center justify-center bg-white border border-gray-200 rounded-xl p-3 mb-5 shadow-sm">
-      <span class="text-slate-900/70 text-sm">
-        Not sure where to begin?
-      </span>
-      <LinkTo>
-        <span class="text-primary-500 mx-1 text-sm font-semibold hover:text-primary-800 hover:underline">Start Exploring</span>
-      </LinkTo>
-      <span class="text-slate-900/70 text-sm">
-        our community →
-      </span>
+    <div class="sub-container">
+      <div class="start-explore">
+        <span class="text-slate-900/70 text-sm">
+          Not sure where to begin?
+        </span>
+        <a href="https://easihub.com/community/getting-started">
+          <span class="text-primary-500 mx-1 text-sm font-semibold hover:text-primary-800 hover:underline">Start Exploring</span>
+        </a>
+        <span class="text-slate-900/70 text-sm">
+          our community →
+        </span>
+      </div>
     </div>
 
     <!-- Navigation Tabs -->
-    <div class="container">
+    <div class="sub-container">
       <div class="navigation-tabs">
         <div class="tab-links">
           <a href="#domains" class="tab-link active">
